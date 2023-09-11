@@ -143,12 +143,12 @@ def main():
     window = QWidget()
     window.setWindowTitle('Библиотека 2.0')
     window.resize(600, 400)
-    БИБЛИОТЕКА = CREAT3E_sample_()
+    library = CREAT3E_sample_()
     layout = QVBoxLayout()
     author_label = QLabel("Books by John. T:")
     layout.addWidget(author_label)
 
-    for book in БИБЛИОТЕКА.find_books_by_author("John. T"):
+    for book in library.find_books_by_author("John. T"):
         book_label = QLabel(
             str(book))
         layout.addWidget(book_label)
@@ -156,13 +156,13 @@ def main():
     year_label = (
         QLabel("Books published after 1950:"))
     layout.addWidget(year_label)
-    for book in БИБЛИОТЕКА.find_books_published_after(1950):
+    for book in library.find_books_published_after(1950):
         book_label = QLabel(str(book))
         layout.addWidget(book_label)
-    total_pages_label = QLabel(f"Total Pages in Library: {БИБЛИОТЕКА.get_total_pages()}")
+    total_pages_label = QLabel(f"Total Pages in Library: {library.get_total_pages()}")
     layout.addWidget(total_pages_label)
 
-    genres_label = QLabel(f"Genres in Library: {', '.join(БИБЛИОТЕКА.get_genres())}")
+    genres_label = QLabel(f"Genres in Library: {', '.join(library.get_genres())}")
     layout.addWidget(genres_label)
 
     for i in range(10):
