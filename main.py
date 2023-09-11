@@ -4,7 +4,7 @@ import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel
 
 
-class КНИГА:
+class Book:
     """
     Класс, представляющий книгу
     """
@@ -39,7 +39,7 @@ class КНИГА:
         '''
         return f"Title: {self.title}\nAuthor: {self.author}\nYear: {self.publication_year}"
 
-class БИБЛИОТЕКА_2_0:
+class Library:
     """
     Класс, представляющий библиотеку
     """
@@ -87,43 +87,43 @@ class БИБЛИОТЕКА_2_0:
 
 
 def CREAT3E_sample_():
-    БИБЛИОТЕКА = БИБЛИОТЕКА_2_0()
-    book1 = КНИГА(
+    БИБЛИОТЕКА = Library()
+    book1 = Book(
         "THE BOOK 1",
         "John. T",
         1995,
         "8274827611",
         "Fiction",
         220)
-    book2 = КНИГА(
+    book2 = Book(
         "THE BOOK 2",
         "L.L. Horsev",
         "до н эры!!!",
         "9876543210",
         "Fiction",
         280)
-    book3 = КНИГА(
+    book3 = Book(
         "NOU NAME",
         "G.G. Irooskf",
         2020,
         "5432109876",
         "Dystopian",
         320)
-    book4 = КНИГА(
+    book4 = Book(
         "OKAY BOOK",
         "T.T. Orlov",
         2006,
         "5442449876",
         "Detective",
         250)
-    book5 = КНИГА(
+    book5 = Book(
         "TAYLER",
         "-",
         2010,
         "8787319875",
         "Detective",
         500)
-    book6 = КНИГА(
+    book6 = Book(
         "TAYLER2",
         "-",
         2014,
