@@ -1,11 +1,4 @@
-import os
 import time
-import random
-import datetime
-import requests
-import json
-import csv
-import sqlite3
 import pandas as pd
 import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel
