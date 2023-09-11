@@ -43,13 +43,13 @@ class Library:
     """
     Класс, представляющий библиотеку
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Создает новую библиотеку
         """
         self.books = []
 
-    def add_book(self, book):
+    def add_book(self, book: Book) -> None:
         """
         Добавляет книгу в библиотеку
         :param book:
@@ -57,7 +57,7 @@ class Library:
         """
         self.books.append(book)
 
-    def find_books_by_author(self, author):
+    def find_books_by_author(self, author: str) -> list:
         '''
         Возвращает список книг, написанных указанным автором
         :param author:
@@ -65,20 +65,20 @@ class Library:
         '''
         return [book for book in self.books if book.author == author]
 
-    def find_books_published_after(self, year):
+    def find_books_published_after(self, year: int) -> list:
         '''
         Возвращает список книг, выпущенных после указанного года
         '''
         return [book for book in self.books if book.publication_year > year]
 
-    def get_total_pages(self):
+    def get_total_pages(self) -> int:
         """
         Возвращает общее количество страниц в библиотеке
         :return:
         """
         return sum([book.pages for book in self.books])
 
-    def get_genres(self):
+    def get_genres(self) -> list:
         """
         Возвращает список жанров
         :return:
@@ -86,7 +86,7 @@ class Library:
         return list(set([book.genre for book in self.books]))
 
 
-def create_sample_library():
+def create_sample_library() -> Library:
     library = Library()
     book1 = Book(
         "THE BOOK 1",
@@ -138,7 +138,7 @@ def create_sample_library():
     library.add_book(book6)
     return library
 
-def main():
+def main() -> None:
     app = QApplication(sys.argv)
     window = QWidget()
     window.setWindowTitle('Библиотека 2.0')
