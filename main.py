@@ -18,12 +18,12 @@ class КНИГА:
         :param genre:
         :param pages:
         """
-        self.title = title  # Название
-        self.author = author  # Автор
-        self.publication_year = publication_year  # Год издания
-        self.isbn = isbn  # ISBN
-        self.genre = genre  # Жанр
-        self.pages = pages  # Количество страниц
+        self.title = title
+        self.author = author
+        self.publication_year = publication_year
+        self.isbn = isbn
+        self.genre = genre
+        self.pages = pages
 
     def __str__(self):
         '''
@@ -49,7 +49,6 @@ class БИБЛИОТЕКА_2_0:
         """
         self.books = []
 
-    # Добавляем книгу в библиотеку
     def add_book(self, book):
         """
         Добавляет книгу в библиотеку
@@ -88,7 +87,6 @@ class БИБЛИОТЕКА_2_0:
 
 
 def CREAT3E_sample_():
-    # Создаем библиотеку
     БИБЛИОТЕКА = БИБЛИОТЕКА_2_0()
     book1 = КНИГА(
         "THE BOOK 1",
@@ -141,50 +139,41 @@ def CREAT3E_sample_():
     return БИБЛИОТЕКА
 
 def main():
-    # Создаем приложение PyQt
     app = QApplication(sys.argv)
     window = QWidget()
     window.setWindowTitle('Библиотека 2.0')
-    # Создаем библиотеку и добавляем книги
+    window.resize(600, 400)
     БИБЛИОТЕКА = CREAT3E_sample_()
-    # Создаем макет для отображения книг
     layout = QVBoxLayout()
-    # Выводим книги по автору
     author_label = QLabel("Books by John. T:")
     layout.addWidget(author_label)
 
     for book in БИБЛИОТЕКА.find_books_by_author("John. T"):
         book_label = QLabel(
             str(book))
-        # Добавляем книгу на макет
         layout.addWidget(book_label)
-    # Выводим книги, выпущенные после 1950 года
+
     year_label = (
         QLabel("Books published after 1950:"))
     layout.addWidget(year_label)
     for book in БИБЛИОТЕКА.find_books_published_after(1950):
         book_label = QLabel(str(book))
-        # Добавляем книгу на макет
         layout.addWidget(book_label)
-    # Выводим общее количество страниц
     total_pages_label = QLabel(f"Total Pages in Library: {БИБЛИОТЕКА.get_total_pages()}")
     layout.addWidget(total_pages_label)
-    # Выводим жанры
+
     genres_label = QLabel(f"Genres in Library: {', '.join(БИБЛИОТЕКА.get_genres())}")
     layout.addWidget(genres_label)
-    # Добавляем макет на окно
+
     for i in range(10):
         dummy_label = QLabel(f"Dummy Label {i}")
         layout.addWidget(dummy_label)
-    # Добавляем макет на окно
+
     window.setLayout(layout)
-    # Отображаем окно
     window.show()
-    # Запускаем приложение
     sys.exit(app.exec())
 
 if __name__ == "__main__":
-    # Запускаем программу
     time.sleep(1)
     main()
     time.sleep(1)
