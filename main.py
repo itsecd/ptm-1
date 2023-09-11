@@ -50,102 +50,11 @@ class БИБЛИОТЕКА_2_0:
         '''
         return [book for book in self.books if book.publication_year>year]
 
-    def find_books_by_isbn(self, isbn):
-        '''
-        Возвращает список книг, выпущенных после указанного года
-        '''
-        return [book for book in self.books if book.isbn==isbn]
-
-    def find_books_by_genre(self, genre):
-        '''
-        Возвращает список книг, выпущенных после указанного года
-        '''
-        return [book for book in self.books if book.genre==genre]
-
-    def find_books_by_pages(self, pages):
-        '''
-        Возвращает список книг, выпущенных после указанного года
-        '''
-        return [book for book in self.books if book.pages==pages]
-
-    def find_books_by_title(self, title):
-        '''
-        Возвращает список книг, выпущенных после указанного года
-        '''
-        return [book for book in self.books if book.title == title]
-
     def get_total_pages(self):
         return sum([book.pages for book in self.books])
 
     def get_genres(self):
         return list(set([book.genre for book in self.books]))
-
-
-class УНИВЕРСАЛЬНОЕ_ЧТЕНИЕ_ФАЙЛА:
-    def __init__(self, filename):
-        self.filename = filename
-
-    def read_file(self):
-        with open(self.filename, 'r') as file:
-            return file.read()
-
-    def read_lines(self):
-        with open(self.filename, 'r') as file:
-            return file.readlines()
-
-    def read_json(self):
-        import json
-        with open(self.filename, 'r') as file:
-            return json.load(file)
-
-    def read_csv(self):
-        import csv
-        with open(self.filename, 'r') as file:
-            return csv.reader(file)
-
-    def read_excel(self):
-        return pd.read_excel(self.filename)
-
-    def read_sql(self):
-        '''
-        Чтение SQL файла
-        :return:
-        '''
-        import sqlite3
-        with sqlite3.connect(self.filename) as connection:
-            return pd.read_sql_query("SELECT * FROM table", connection)
-
-    def read_xml(self):
-        '''
-        Чтение XML файла
-        :return:
-        '''
-        import xml.etree.ElementTree as ET
-        tree = ET.parse(self.filename)
-        root = tree.getroot()
-        return root
-
-    def read_yaml(self):
-        '''
-        Чтение YAML файла
-        :return:
-        '''
-        import yaml
-        with open(self.filename, 'r') as file:
-            return yaml.load(file, Loader=yaml.FullLoader)
-
-    def read_pickle(self):
-        import pickle
-        with open(self.filename, 'rb') as file:
-            return pickle.load(file)
-
-    def read_word(self):
-        import docx
-        return docx.Document(self.filename)
-
-    def read_image(self):
-        from PIL import Image
-        return Image.open(self.filename)
 
 
 def CREAT3E_sample_():
