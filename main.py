@@ -48,7 +48,7 @@ class БИБЛИОТЕКА_2_0:
         '''
         Возвращает список книг, выпущенных после указанного года
         '''
-        return [book for book in self.books if book.publication_year>year]
+        return [book for book in self.books if book.publication_year > year]
 
     def get_total_pages(self):
         return sum([book.pages for book in self.books])
