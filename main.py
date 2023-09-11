@@ -5,7 +5,19 @@ from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel
 
 
 class КНИГА:
+    """
+    Класс, представляющий книгу
+    """
     def __init__(self, title, author, publication_year, isbn, genre, pages):
+        """
+        Создает новую книгу
+        :param title:
+        :param author:
+        :param publication_year:
+        :param isbn:
+        :param genre:
+        :param pages:
+        """
         self.title = title  # Название
         self.author = author  # Автор
         self.publication_year = publication_year  # Год издания
@@ -28,12 +40,22 @@ class КНИГА:
         return f"Title: {self.title}\nAuthor: {self.author}\nYear: {self.publication_year}"
 
 class БИБЛИОТЕКА_2_0:
+    """
+    Класс, представляющий библиотеку
+    """
     def __init__(self):
-        # Создаем пустой список книг
+        """
+        Создает новую библиотеку
+        """
         self.books = []
 
     # Добавляем книгу в библиотеку
     def add_book(self, book):
+        """
+        Добавляет книгу в библиотеку
+        :param book:
+        :return:
+        """
         self.books.append(book)
 
     def find_books_by_author(self, author):
@@ -51,9 +73,17 @@ class БИБЛИОТЕКА_2_0:
         return [book for book in self.books if book.publication_year > year]
 
     def get_total_pages(self):
+        """
+        Возвращает общее количество страниц в библиотеке
+        :return:
+        """
         return sum([book.pages for book in self.books])
 
     def get_genres(self):
+        """
+        Возвращает список жанров
+        :return:
+        """
         return list(set([book.genre for book in self.books]))
 
 
