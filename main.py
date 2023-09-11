@@ -86,8 +86,8 @@ class Library:
         return list(set([book.genre for book in self.books]))
 
 
-def CREAT3E_sample_():
-    БИБЛИОТЕКА = Library()
+def create_sample_library():
+    library = Library()
     book1 = Book(
         "THE BOOK 1",
         "John. T",
@@ -130,20 +130,20 @@ def CREAT3E_sample_():
         "8799319875",
         "Detective",
         650)
-    БИБЛИОТЕКА.add_book(book1)
-    БИБЛИОТЕКА.add_book(book2)
-    БИБЛИОТЕКА.add_book(book3)
-    БИБЛИОТЕКА.add_book(book4)
-    БИБЛИОТЕКА.add_book(book5)
-    БИБЛИОТЕКА.add_book(book6)
-    return БИБЛИОТЕКА
+    library.add_book(book1)
+    library.add_book(book2)
+    library.add_book(book3)
+    library.add_book(book4)
+    library.add_book(book5)
+    library.add_book(book6)
+    return library
 
 def main():
     app = QApplication(sys.argv)
     window = QWidget()
     window.setWindowTitle('Библиотека 2.0')
     window.resize(600, 400)
-    library = CREAT3E_sample_()
+    library = create_sample_library()
     layout = QVBoxLayout()
     author_label = QLabel("Books by John. T:")
     layout.addWidget(author_label)
