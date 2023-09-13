@@ -61,7 +61,7 @@ class Window(QMainWindow):
         symmetric_key_path - path to symmetric key
         encrypted_file_path - path to  encrypted file
         """
-        symmetric_file =  symmetric_key_path + '\\sym_key.txt'
+        symmetric_file = symmetric_key_path + '\\sym_key.txt'
         with open(symmetric_file, mode='rb') as key_file:
             encrypted_symmetric_key = key_file.read()
         private_pem = secret_key_path + '\\private_key.pem'
@@ -178,7 +178,7 @@ class Window(QMainWindow):
 
     def button_genkey_click(self):
         """The action when you click button genkey: open task 1"""    
-        self.chose_task=1
+        self.chose_task = 1
         self.label_bob.clear()
         self.label_bob.setText("Task 1: Generation Keys")
         self.label_bob.adjustSize()        
@@ -198,7 +198,7 @@ class Window(QMainWindow):
         
     def button_encryption_click(self):
         """The action when you click button encryption: open task 2"""    
-        self.chose_task=2
+        self.chose_task = 2
         self.label_bob.clear()
         self.label_bob.setText("Task 2: Encrypt data")
         self.label_bob.adjustSize()     
@@ -221,7 +221,7 @@ class Window(QMainWindow):
  
     def button_decryption_click(self):
         """The action when you click  button decryption: open task 3"""    
-        self.chose_task=3 
+        self.chose_task = 3 
         self.label_bob.clear()
         self.label_bob.setText("Task 3: Decrypt data")
         self.label_bob.adjustSize()      
@@ -249,17 +249,17 @@ class Window(QMainWindow):
         self.button_genkey = QtWidgets.QPushButton(self)
         self.button_encryption = QtWidgets.QPushButton(self)
         self.button_decryption = QtWidgets.QPushButton(self)
-        self.button_first_field=QtWidgets.QPushButton(self)
-        self.button_second_field=QtWidgets.QPushButton(self)
-        self.button_third_field=QtWidgets.QPushButton(self)
-        self.button_fourth_field=QtWidgets.QPushButton(self)
-        self.button_OK=QtWidgets.QPushButton(self)
+        self.button_first_field = QtWidgets.QPushButton(self)
+        self.button_second_field = QtWidgets.QPushButton(self)
+        self.button_third_field = QtWidgets.QPushButton(self)
+        self.button_fourth_field = QtWidgets.QPushButton(self)
+        self.button_OK = QtWidgets.QPushButton(self)
         self.field_first = QtWidgets.QLineEdit(self)
         self.field_second = QtWidgets.QLineEdit(self)
         self.field_third = QtWidgets.QLineEdit(self)
         self.field_fourth = QtWidgets.QLineEdit(self)
-        self.field_path_1 = self.field_path_2 = self.field_path_3 =self.fielt_path_4=os.getcwd()
-        self.chose_task=1    
+        self.field_path_1 = self.field_path_2 = self.field_path_3 = self.fielt_path_4 = os.getcwd()
+        self.chose_task = 1    
         self.field_first.hide()
         self.field_second.hide()
         self.field_third.hide()
@@ -313,12 +313,15 @@ class Window(QMainWindow):
         self.button_OK.clicked.connect(self.button_OK_click)
         self.button_encryption.clicked.connect(self.button_encryption_click)
         self.button_decryption.clicked.connect(self.button_decryption_click)
-        self.bit='0'
-        while    self.bit!='128' and self.bit!='192' and     self.bit!='256' :
-            text, ok = QInputDialog.getText(self, 'Input Dialog','Enter 128 or 192 or 256 bit:')
+        self.bit = '0'
+        while self.bit != "128" and self.bit != "192" and self.bit != "256":
+            text, ok = QInputDialog.getText(
+                self, "Input Dialog", "Enter 128 or 192 or 256 bit:"
+            )
             if ok:
-                self.bit=str(text)
+                self.bit = str(text)
                 print(self.bit)
+
 
         
 def application() -> None:
