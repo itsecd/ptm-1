@@ -16,13 +16,22 @@ from PyQt5.QtWidgets import (
     QInputDialog,
 )
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
-from cryptography.hazmat.primitives import serialization, hashes,padding as padding2
+from cryptography.hazmat.primitives import (
+    serialization,
+    hashes,
+    padding as padding2
+)
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
 
 class Window(QMainWindow):
     """The universal class"""
-    def key_generation_func(self,symmetric_key_path: str, public_key_path: str, secret_key_path: str) -> None:
+    def key_generation_func(
+        self,
+        symmetric_key_path: str,
+        public_key_path: str,
+        secret_key_path: str
+    ) -> None:
         """
         The function generate a key for tasks
         symmetric_key_path - path to  symmetric key
@@ -31,29 +40,50 @@ class Window(QMainWindow):
         """
         symmetric_key = os.urandom(int(int(self.bit)/8)) 
         keys = rsa.generate_private_key(
-            public_exponent=65537,
-            key_size=2048
+            public_exponent = 65537,
+            key_size = 2048
         )
         private_key = keys
         public_key = keys.public_key()
         public_pem = public_key_path + '\\publuc_key.pem'
-        with open(public_pem, 'wb') as public_out:
-            public_out.write(public_key.public_bytes(encoding=serialization.Encoding.PEM,
-                                                     format=serialization.PublicFormat.SubjectPublicKeyInfo))
+        with open(public_pem, "wb") as public_out:
+            public_out.write(
+                public_key.public_bytes(
+                    encoding = serialization.Encoding.PEM,
+                    format = serialization.PublicFormat.SubjectPublicKeyInfo,
+                )
+            )
         private_pem = secret_key_path + '\\private_key.pem'
-        with open(private_pem, 'wb',) as private_out:
-            private_out.write(private_key.private_bytes(encoding=serialization.Encoding.PEM,
-                                                        format=serialization.PrivateFormat.TraditionalOpenSSL,
-                                                        encryption_algorithm=serialization.NoEncryption()))
-        encrypted_symmetric_key = public_key.encrypt(symmetric_key,
-                                                    padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                                                                algorithm=hashes.SHA256(),
-                                                                label=None))
+        with open(
+            private_pem,
+            'wb'
+            ) as private_out:
+            private_out.write(
+                private_key.private_bytes(
+                    encoding = serialization.Encoding.PEM,
+                    format = serialization.PrivateFormat.TraditionalOpenSSL,
+                    encryption_algorithm = serialization.NoEncryption()
+                    )
+                    )
+        encrypted_symmetric_key = public_key.encrypt(
+            symmetric_key,
+            padding.OAEP( 
+                mgf = padding.MGF1(algorithm = hashes.SHA256()),
+                algorithms=hashes.SHA256(),
+                label=None
+                )
+            )
         symmetric_file = symmetric_key_path + '\\sym_key.txt'
         with open(symmetric_file, 'wb') as key_file:
             key_file.write(encrypted_symmetric_key)          
 
-    def encrypt_data(self,initial_file_path: str, secret_key_path: str, symmetric_key_path: str, encrypted_file_path: str) -> None:
+    def encrypt_data(
+        self,
+        initial_file_path: str,
+        secret_key_path: str,
+        symmetric_key_path: str,
+        encrypted_file_path: str
+        ) -> None:
         """
         The function encrypt data for tasks
         initial_file_path - path to file 
@@ -68,7 +98,12 @@ class Window(QMainWindow):
         with open(private_pem, 'rb') as pem_in:
             private_bytes = pem_in.read()
         private_key = load_pem_private_key(private_bytes, password=None)
-        d_symmetric_key = private_key.decrypt(encrypted_symmetric_key, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
+        d_symmetric_key = private_key.decrypt(
+            encrypted_symmetric_key,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(), label=None)
+                )
         initial_file = initial_file_path + '\\text.txt'
         with open(initial_file, 'r') as _file:
             initial_content = _file.read()
@@ -84,7 +119,13 @@ class Window(QMainWindow):
         with open(encrypted_file, 'w') as _file:
             yaml.dump(dict_t, _file)
     
-    def decrypting_data(self, encrypted_file_path: str, secret_key_path: str, symmetric_key_path: str,decrypted_file_path: str) -> None: 
+    def decrypting_data(
+        self,
+        encrypted_file_path: str,
+        secret_key_path: str,
+        symmetric_key_path: str,
+        decrypted_file_path: str
+        ) -> None: 
         """
         The function decrypt data for tasks
         encrypted_file_path - path to decrypt file 
@@ -99,7 +140,13 @@ class Window(QMainWindow):
         with open(private_pem, 'rb') as pem_in:
             private_bytes = pem_in.read()
         private_key = load_pem_private_key(private_bytes, password=None)
-        dsymmetric_key = private_key.decrypt(encrypted_symmetric_key, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))   
+        dsymmetric_key = private_key.decrypt(
+            encrypted_symmetric_key,
+            padding.OAEP(
+                mgf = padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None)
+                )   
         encrypted_file = encrypted_file_path + '\\secret_text.yaml'
         with open(encrypted_file) as _file:
             content_encrypted = yaml.safe_load(_file)
@@ -115,44 +162,68 @@ class Window(QMainWindow):
             _file.write(str(unpadded_dc_text))
 
     def  button_first_field_click(self):
-        """
-        The action when you click button near first field
-        """    
-        self.field_path_1 = QFileDialog.getExistingDirectory(self, "Выбрать папку", ".")
+        """ The action when you click button near first field"""    
+        self.field_path_1 = QFileDialog.getExistingDirectory(
+            self,
+            "Выбрать папку",
+            "."
+            )
         self.field_first.setText(self.field_path_1)
 
     def  button_second_field_click(self):
-        """
-        The action when you click button near second field
-        """    
-        self.field_path_2 = QFileDialog.getExistingDirectory(self, "Выбрать папку", ".")
+        """The action when you click button near second field"""    
+        self.field_path_2 = QFileDialog.getExistingDirectory(
+            self,
+            "Выбрать папку",
+            "."
+            )
         self.field_second.setText(self.field_path_2)
 
     def  button_third_field_click(self):
-        """
-        The action when you click button near third field
-        """    
-        self.field_path_3 = QFileDialog.getExistingDirectory(self, "Выбрать папку", ".")
+        """The action when you click button near third field"""    
+        self.field_path_3 = QFileDialog.getExistingDirectory(
+            self,
+            "Выбрать папку",
+            "."
+            )
         self.field_third.setText(self.field_path_3)
 
     def button_fourth_field_click(self):
-        """
-        The action when you click button near fourth field
-        """    
-        self.field_path_4 = QFileDialog.getExistingDirectory(self, "Выбрать папку", ".")
+        """The action when you click button near fourth field"""    
+        self.field_path_4 = QFileDialog.getExistingDirectory(
+            self,
+            "Выбрать папку",
+            "."
+            )
         self.field_fourth.setText(self.field_path_3)
     
     def button_OK_click(self):
         """
-        The action when you click button OK: hide a field, button, and show result tasks
+        The action when you click button OK: hide a 
+        field,
+        button and show result tasks
         """    
         try:
             if self.chose_task==1: 
-                self.key_generation_func(  self.field_path_1,   self.field_path_2 ,  self.field_path_3)
+                self.key_generation_func(
+                    self.field_path_1,
+                    self.field_path_2,
+                    self.field_path_3
+                    )
             elif self.chose_task==2: 
-                self.encrypt_data(  self.field_path_1,   self.field_path_2 ,  self.field_path_3, self.fielt_path_4)
+                self.encrypt_data(
+                    self.field_path_1,
+                    self.field_path_2,
+                    self.field_path_3,
+                    self.fielt_path_4
+                    )
             else:
-                self.decrypting_data(  self.field_path_1,   self.field_path_2 ,  self.field_path_3, self.fielt_path_4)               
+                self.decrypting_data(
+                    self.field_path_1,
+                    self.field_path_2,
+                    self.field_path_3,
+                    self.fielt_path_4
+                    )               
             self.button_first_field.hide()
             self.button_second_field.hide()
             self.button_third_field.hide()
@@ -168,7 +239,12 @@ class Window(QMainWindow):
             self.field_fourth.clear()
             QMessageBox.about(self, "Внимание", "Успешно")
             self.label_bob.clear()
-            self.label_bob.setText("My name is Bob and i your helper\nPlease,chose:\n1)GenKeys\n2)Encryption\n3)Decryption")
+            self.label_bob.setText(
+                """
+                My name is Bob and i your helper\nPlease,chose:\n1)GenKeys\n
+                2)Encryption\n3)Decryption
+                """
+                )
             self.label_bob.adjustSize()
             self.button_genkey.show()
             self.button_encryption.show()
@@ -258,7 +334,10 @@ class Window(QMainWindow):
         self.field_second = QtWidgets.QLineEdit(self)
         self.field_third = QtWidgets.QLineEdit(self)
         self.field_fourth = QtWidgets.QLineEdit(self)
-        self.field_path_1 = self.field_path_2 = self.field_path_3 = self.fielt_path_4 = os.getcwd()
+        self.field_path_1 = (
+            self.field_path_2
+            ) = self.field_path_3 = self.fielt_path_4 = os.getcwd()
+
         self.chose_task = 1    
         self.field_first.hide()
         self.field_second.hide()
@@ -269,7 +348,12 @@ class Window(QMainWindow):
         self.button_second_field.hide()
         self.button_third_field.hide()
         self.button_fourth_field.hide()   
-        self.label_bob.setText("Hello, my name is Bob and i your helper\nPlease,chose:\n1)GenKeys\n2)Encryption\n3)Decryption")
+        self.label_bob.setText(
+            """
+            Hello, my name is Bob and i your helper\nPlease,chose:\n1)GenKeys\n
+            2)Encryption\n3)Decryption
+            """
+            )
         self.button_genkey.setText("1)GenKeys")
         self.button_encryption.setText("2)Encryption")
         self.button_decryption.setText("2)Decryption")
@@ -278,10 +362,10 @@ class Window(QMainWindow):
         self.button_third_field.setText("Choose")
         self.button_fourth_field.setText("Choose")
         self.button_OK.setText("OK") 
-        self.field_first.setFixedSize(150,20)
-        self.field_second.setFixedSize(150,20)
-        self.field_third.setFixedSize(150,20)
-        self.field_fourth.setFixedSize(150,20)
+        self.field_first.setFixedSize(150, 20)
+        self.field_second.setFixedSize(150, 20)
+        self.field_third.setFixedSize(150, 20)
+        self.field_fourth.setFixedSize(150, 20)
         self.label_bob.setFont(QFont('Times', 10))
         self.label_bob.move(445, 58)
         self.button_genkey.move(445, 150) 
@@ -291,11 +375,11 @@ class Window(QMainWindow):
         self.field_second.move(445, 95) 
         self.field_third.move(445, 118) 
         self.field_fourth.move(445, 141) 
-        self.button_first_field.move(600,72)
-        self.button_second_field.move(600,95)
-        self.button_third_field.move(600,118)
-        self.button_fourth_field.move(600,141)       
-        self.button_OK.move(520,165)
+        self.button_first_field.move(600, 72)
+        self.button_second_field.move(600, 95)
+        self.button_third_field.move(600, 118)
+        self.button_fourth_field.move(600, 141)       
+        self.button_OK.move(520, 165)
         self.label_bob.adjustSize()
         self.button_genkey.adjustSize()
         self.button_encryption.adjustSize()
@@ -329,8 +413,8 @@ def application() -> None:
     app = QApplication(sys.argv)
     window = Window()
     window.setObjectName("MainWindow")
-    window.setMinimumSize(800,600)
-    window.setMaximumSize(800,600)
+    window.setMinimumSize(800, 600)
+    window.setMaximumSize(800, 600)
     window.setStyleSheet("#MainWindow{border-image:url(phon.png)}")
     window.show()
     sys.exit(app.exec_())
