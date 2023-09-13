@@ -69,30 +69,35 @@ class Library:
     def find_books_published_after(self, year: int) -> list:
         '''
         Возвращает список книг, выпущенных после указанного года
+        :param year:
         '''
         return [book for book in self.books if book.publication_year > year]
 
     def find_books_by_isbn(self, isbn: str) -> list:
         '''
         Возвращает список книг, по isbn
+        :param isbn:
         '''
         return [book for book in self.books if book.isbn == isbn]
 
     def find_books_by_genre(self, genre: str) -> list:
         '''
         Возвращает список книг, по жанру
+        :param genre:
         '''
         return [book for book in self.books if book.genre == genre]
 
     def find_books_by_pages(self, pages: str) -> list:
         '''
         Возвращает список книг, по страницам
+        :param pages:
         '''
         return [book for book in self.books if book.pages == pages]
 
     def find_books_by_title(self, title: str):
         '''
         Возвращает список книг, выпущенных после указанного года
+        :param title:
         '''
         return [book for book in self.books if book.title == title]
 
