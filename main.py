@@ -24,6 +24,7 @@ from cryptography.hazmat.primitives import (
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
 
+
 class Window(QMainWindow):
     """The universal class"""
     def key_generation_func(
