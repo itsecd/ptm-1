@@ -407,7 +407,6 @@ class Window(QMainWindow):
                 print(self.bit)
 
 
-        
 def application() -> None:
     """"Start aplication mainwindow"""
     app = QApplication(sys.argv)
