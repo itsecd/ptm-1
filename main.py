@@ -1,13 +1,15 @@
 import time
 import sys
+from PIL.Image import Image
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel
+from pandas import DataFrame
 
 
 class Book:
     """
     Класс, представляющий книгу
     """
-    def __init__(self, title, author, publication_year, isbn, genre, pages):
+    def __init__(self, title: str, author: str, publication_year: int, isbn: str, genre: str, pages: int) -> None:
         """
         Создает новую книгу
         :param title:
@@ -24,14 +26,14 @@ class Book:
         self.genre = genre
         self.pages = pages
 
-    def __str__(self):
+    def __str__(self) -> str:
         '''
         Возвращает строковое представление книги
         :return:
         '''
         return f"{self.title} by {self.author} ({self.publication_year})"
 
-    def get_summary(self):
+    def get_summary(self) -> str:
         '''
         Возвращает краткое описание книги
         :return:
@@ -112,14 +114,14 @@ class Universal_file_reading:
     """
     Класс, представляющий универсальное чтение файлов
     """
-    def __init__(self, filename):
+    def __init__(self, filename: str) -> None:
         """
         Создает новый файл
         :param filename:
         """
         self.filename = filename
 
-    def read_file(self):
+    def read_file(self) -> str:
         """
         Чтение файла
         :return:
@@ -127,7 +129,7 @@ class Universal_file_reading:
         with open(self.filename, 'r') as file:
             return file.read()
 
-    def read_lines(self):
+    def read_lines(self) -> list:
         """
         Чтение файла построчно
         :return:
@@ -135,7 +137,7 @@ class Universal_file_reading:
         with open(self.filename, 'r') as file:
             return file.readlines()
 
-    def read_json(self):
+    def read_json(self) -> dict:
         """
         Чтение JSON файла
         :return:
@@ -144,7 +146,7 @@ class Universal_file_reading:
         with open(self.filename, 'r') as file:
             return json.load(file)
 
-    def read_csv(self):
+    def read_csv(self) -> list:
         """
         Чтение CSV файла
         :return:
@@ -153,7 +155,7 @@ class Universal_file_reading:
         with open(self.filename, 'r') as file:
             return csv.reader(file)
 
-    def read_excel(self):
+    def read_excel(self) -> DataFrame:
         """
         Чтение Excel файла
         :return:
@@ -161,7 +163,7 @@ class Universal_file_reading:
         import pandas as pd
         return pd.read_excel(self.filename)
 
-    def read_sql(self):
+    def read_sql(self) -> DataFrame:
         '''
         Чтение SQL файла
         :return:
@@ -171,7 +173,7 @@ class Universal_file_reading:
         with sqlite3.connect(self.filename) as connection:
             return pd.read_sql_query("SELECT * FROM table", connection)
 
-    def read_xml(self):
+    def read_xml(self) -> list:
         '''
         Чтение XML файла
         :return:
@@ -181,7 +183,7 @@ class Universal_file_reading:
         root = tree.getroot()
         return root
 
-    def read_yaml(self):
+    def read_yaml(self) -> list:
         '''
         Чтение YAML файла
         :return:
@@ -190,7 +192,7 @@ class Universal_file_reading:
         with open(self.filename, 'r') as file:
             return yaml.load(file, Loader=yaml.FullLoader)
 
-    def read_pickle(self):
+    def read_pickle(self) -> list:
         """
         Чтение Pickle файла
         :return:
@@ -199,7 +201,7 @@ class Universal_file_reading:
         with open(self.filename, 'rb') as file:
             return pickle.load(file)
 
-    def read_word(self):
+    def read_word(self) -> list:
         """
         Чтение Word файла
         :return:
@@ -207,7 +209,7 @@ class Universal_file_reading:
         import docx
         return docx.Document(self.filename)
 
-    def read_image(self):
+    def read_image(self) -> Image:
         """
         Чтение изображения
         :return:
