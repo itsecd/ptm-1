@@ -1,5 +1,4 @@
 import time
-import pandas as pd
 import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel
 
@@ -71,6 +70,30 @@ class Library:
         '''
         return [book for book in self.books if book.publication_year > year]
 
+    def find_books_by_isbn(self, isbn: str) -> list:
+        '''
+        Возвращает список книг, по isbn
+        '''
+        return [book for book in self.books if book.isbn == isbn]
+
+    def find_books_by_genre(self, genre: str) -> list:
+        '''
+        Возвращает список книг, по жанру
+        '''
+        return [book for book in self.books if book.genre == genre]
+
+    def find_books_by_pages(self, pages: str) -> list:
+        '''
+        Возвращает список книг, по страницам
+        '''
+        return [book for book in self.books if book.pages == pages]
+
+    def find_books_by_title(self, title: str):
+        '''
+        Возвращает список книг, выпущенных после указанного года
+        '''
+        return [book for book in self.books if book.title == title]
+
     def get_total_pages(self) -> int:
         """
         Возвращает общее количество страниц в библиотеке
@@ -84,6 +107,113 @@ class Library:
         :return:
         """
         return list(set([book.genre for book in self.books]))
+
+class Universal_file_reading:
+    """
+    Класс, представляющий универсальное чтение файлов
+    """
+    def __init__(self, filename):
+        """
+        Создает новый файл
+        :param filename:
+        """
+        self.filename = filename
+
+    def read_file(self):
+        """
+        Чтение файла
+        :return:
+        """
+        with open(self.filename, 'r') as file:
+            return file.read()
+
+    def read_lines(self):
+        """
+        Чтение файла построчно
+        :return:
+        """
+        with open(self.filename, 'r') as file:
+            return file.readlines()
+
+    def read_json(self):
+        """
+        Чтение JSON файла
+        :return:
+        """
+        import json
+        with open(self.filename, 'r') as file:
+            return json.load(file)
+
+    def read_csv(self):
+        """
+        Чтение CSV файла
+        :return:
+        """
+        import csv
+        with open(self.filename, 'r') as file:
+            return csv.reader(file)
+
+    def read_excel(self):
+        """
+        Чтение Excel файла
+        :return:
+        """
+        import pandas as pd
+        return pd.read_excel(self.filename)
+
+    def read_sql(self):
+        '''
+        Чтение SQL файла
+        :return:
+        '''
+        import sqlite3
+        import pandas as pd
+        with sqlite3.connect(self.filename) as connection:
+            return pd.read_sql_query("SELECT * FROM table", connection)
+
+    def read_xml(self):
+        '''
+        Чтение XML файла
+        :return:
+        '''
+        import xml.etree.ElementTree as ET
+        tree = ET.parse(self.filename)
+        root = tree.getroot()
+        return root
+
+    def read_yaml(self):
+        '''
+        Чтение YAML файла
+        :return:
+        '''
+        import yaml
+        with open(self.filename, 'r') as file:
+            return yaml.load(file, Loader=yaml.FullLoader)
+
+    def read_pickle(self):
+        """
+        Чтение Pickle файла
+        :return:
+        """
+        import pickle
+        with open(self.filename, 'rb') as file:
+            return pickle.load(file)
+
+    def read_word(self):
+        """
+        Чтение Word файла
+        :return:
+        """
+        import docx
+        return docx.Document(self.filename)
+
+    def read_image(self):
+        """
+        Чтение изображения
+        :return:
+        """
+        from PIL import Image
+        return Image.open(self.filename)
 
 
 def create_sample_library() -> Library:
