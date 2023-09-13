@@ -1,21 +1,24 @@
-from PyQt5.QtCore import QRegExp, Qt
-from PyQt5.QtGui import QRegExpValidator, QFont, QPixmap
-from PyQt5 import QtWidgets, QtGui, QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit, QMessageBox, QLabel, QFileDialog, QInputDialog
 import sys
 import os
 import yaml
 import argparse
 
+from PyQt5.QtCore import QRegExp, Qt
+from PyQt5.QtGui import QRegExpValidator, QFont, QPixmap
+from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QLineEdit,
+    QMessageBox,
+    QLabel,
+    QFileDialog,
+    QInputDialog,
+)
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization, hashes,padding as padding2
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
-
-
-
-
-
 
 class Window(QMainWindow):
 
