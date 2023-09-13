@@ -21,105 +21,90 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
 
 class Window(QMainWindow):
+    """The universal class"""
     def key_generation_func(self,symmetric_key_path: str, public_key_path: str, secret_key_path: str) -> None:
-    # :param symmetric_key_path:  путь, по которому сериализовать зашифрованный симметричный ключ
-    # :param public_key_path: путь, по которому сериализовать открытый ключ
-    # :param secret_key_path: путь, по которому сериализовать закрытый ключ
-    # 1.1 генерация ключа симметричного алгоритма шифрования 
-    # 1.2 генерация пары ключей для асимметричного алгоритма шифрования
-    # 1.3a сериализация открытого ключа в файл  
-    # 1.3b сериализация закрытого ключа в файл
-    # 1.4a шифрование симметричного ключа открытым ключом при помощи RSA-OAEP
-    # 1.4b  сериализация ключа симмеричного алгоритма в файл  
-        symmetric_key = os.urandom(int(int(self.bit)/8))  # 1.1 генерация ключа симметричного алгоритма шифрования ----------------------- 16 должно меняться
+        """
+        The function generate a key for tasks
+        symmetric_key_path - path to  symmetric key
+        public_key_path - path to  public key
+        secret_key_path - path to  secret key
+        """
+        symmetric_key = os.urandom(int(int(self.bit)/8)) 
         keys = rsa.generate_private_key(
             public_exponent=65537,
             key_size=2048
-        ) # 1.2 генерация пары ключей для асимметричного алгоритма шифрования
+        )
         private_key = keys
         public_key = keys.public_key()
-         # 1.3 сериализация открытого ключа в файл
         public_pem = public_key_path + '\\publuc_key.pem'
         with open(public_pem, 'wb') as public_out:
             public_out.write(public_key.public_bytes(encoding=serialization.Encoding.PEM,
                                                      format=serialization.PublicFormat.SubjectPublicKeyInfo))
-        # 1.3 сериализация закрытого ключа в файл
         private_pem = secret_key_path + '\\private_key.pem'
         with open(private_pem, 'wb',) as private_out:
             private_out.write(private_key.private_bytes(encoding=serialization.Encoding.PEM,
                                                         format=serialization.PrivateFormat.TraditionalOpenSSL,
                                                         encryption_algorithm=serialization.NoEncryption()))
-        #1.4 шифрование симметричного ключа открытым ключом при помощи RSA-OAEP
         encrypted_symmetric_key = public_key.encrypt(symmetric_key,
                                                     padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
                                                                 algorithm=hashes.SHA256(),
                                                                 label=None))
-        #1.4  сериализация ключа симмеричного алгоритма в файл
         symmetric_file = symmetric_key_path + '\\sym_key.txt'
         with open(symmetric_file, 'wb') as key_file:
             key_file.write(encrypted_symmetric_key)          
 
-
     def encrypt_data(self,initial_file_path: str, secret_key_path: str, symmetric_key_path: str, encrypted_file_path: str) -> None:
-        # :param initial_file_path: путь к шифруемому текстовому файлу
-        # :param secret_key_path: путь к закрытому ключу ассиметричного алгоритма
-        # :param symmetric_key_path: путь к зашифрованному ключу симметричного алгоритма
-        # :param encrypted_file_path: путь, по которому сохранить зашифрованный текстовый файл
-        # десериализация ключа симметричного алгоритма
-        symmetric_file = symmetric_key_path + '\\sym_key.txt'
+        """
+        The function encrypt data for tasks
+        initial_file_path - path to file 
+        secret_key_path - path to secret key       
+        symmetric_key_path - path to symmetric key
+        encrypted_file_path - path to  encrypted file
+        """
+        symmetric_file =  symmetric_key_path + '\\sym_key.txt'
         with open(symmetric_file, mode='rb') as key_file:
             encrypted_symmetric_key = key_file.read()
-        # десериализация закрытого ключа
         private_pem = secret_key_path + '\\private_key.pem'
         with open(private_pem, 'rb') as pem_in:
             private_bytes = pem_in.read()
         private_key = load_pem_private_key(private_bytes, password=None)
-        # дешифрование симметричного ключа асимметричным алгоритмом
         d_symmetric_key = private_key.decrypt(encrypted_symmetric_key, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
-        # паддинг данных для работы блочного шифра (делаем длину сообщения кратной длине шифруемого блока --------------------- (64 бита))
         initial_file = initial_file_path + '\\text.txt'
         with open(initial_file, 'r') as _file:
             initial_content = _file.read()
         padder = padding2.ANSIX923(256).padder()
         text = bytes(initial_content, 'UTF-8')
         padded_text = padder.update(text) + padder.finalize()
-        # шифрование текста симметричным алгоритмом
-        # iv - random value for block mode initialization, must be the size of a block and new each time
         iv = os.urandom(int(int(self.bit)/8))
         cipher = Cipher(algorithms.AES(d_symmetric_key), modes.CBC(iv))
         encryptor = cipher.encryptor()
         c_text = encryptor.update(padded_text) + encryptor.finalize()
-        # зашифрованный текст хранится в виде словаря, где под ключом 'text' хранится сам зашифрованный текст,
-        # a 'iv' is a random value for block mode initialization, which is needed for text decoding
         dict_t = {'text': c_text, 'iv': iv}
         encrypted_file = encrypted_file_path + '\\secret_text.yaml'
         with open(encrypted_file, 'w') as _file:
             yaml.dump(dict_t, _file)
     
-
-    def decrypting_data(self, encrypted_file_path: str, secret_key_path: str, symmetric_key_path: str,decrypted_file_path: str) -> None:        
-        # :param encrypted_file_path: путь к зашифрованному текстовому файлу
-        # :param secret_key_path: путь к закрытому ключу ассиметричного алгоритма
-        # :param symmetric_key_path: путь к зашифрованному ключу симметричного алгоритма
-        # :param decrypted_file_path: путь, по которому сохранить расшифрованный текстовый файл
-        # десериализация ключа симметричного алгоритма
+    def decrypting_data(self, encrypted_file_path: str, secret_key_path: str, symmetric_key_path: str,decrypted_file_path: str) -> None: 
+        """
+        The function decrypt data for tasks
+        encrypted_file_path - path to decrypt file 
+        secret_key_path - path to secret key     
+        symmetric_key_path - path to symmetric key
+        decrypted_file_path - path to  decrypt file 
+        """       
         symmetric_file = symmetric_key_path + '\\sym_key.txt'
         with open(symmetric_file, mode='rb') as key_file:
             encrypted_symmetric_key = key_file.read()
-        # десериализация закрытого ключа
         private_pem = secret_key_path + '\\private_key.pem'
         with open(private_pem, 'rb') as pem_in:
             private_bytes = pem_in.read()
         private_key = load_pem_private_key(private_bytes, password=None)
-        # дешифрование симметричного ключа асимметричным алгоритмом
         dsymmetric_key = private_key.decrypt(encrypted_symmetric_key, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))   
-        # десериализация шифрованного файла
         encrypted_file = encrypted_file_path + '\\secret_text.yaml'
         with open(encrypted_file) as _file:
             content_encrypted = yaml.safe_load(_file)
         text_enc = content_encrypted["text"]
         iv_enc = content_encrypted["iv"]
-        # дешифрование и депаддинг текста симметричным алгоритмом
         cipher = Cipher(algorithms.AES(dsymmetric_key), modes.CBC(iv_enc))
         decryptor = cipher.decryptor()
         dc_text = decryptor.update(text_enc) + decryptor.finalize()
@@ -129,28 +114,38 @@ class Window(QMainWindow):
         with open(decrypted_file, 'w') as _file:
             _file.write(str(unpadded_dc_text))
 
-
     def  button_first_field_click(self):
+        """
+        The action when you click button near first field
+        """    
         self.field_path_1 = QFileDialog.getExistingDirectory(self, "Выбрать папку", ".")
         self.field_first.setText(self.field_path_1)
 
-
     def  button_second_field_click(self):
+        """
+        The action when you click button near second field
+        """    
         self.field_path_2 = QFileDialog.getExistingDirectory(self, "Выбрать папку", ".")
         self.field_second.setText(self.field_path_2)
 
-
     def  button_third_field_click(self):
+        """
+        The action when you click button near third field
+        """    
         self.field_path_3 = QFileDialog.getExistingDirectory(self, "Выбрать папку", ".")
         self.field_third.setText(self.field_path_3)
 
-
     def button_fourth_field_click(self):
+        """
+        The action when you click button near fourth field
+        """    
         self.field_path_4 = QFileDialog.getExistingDirectory(self, "Выбрать папку", ".")
         self.field_fourth.setText(self.field_path_3)
     
-
     def button_OK_click(self):
+        """
+        The action when you click button OK: hide a field, button, and show result tasks
+        """    
         try:
             if self.chose_task==1: 
                 self.key_generation_func(  self.field_path_1,   self.field_path_2 ,  self.field_path_3)
@@ -181,8 +176,8 @@ class Window(QMainWindow):
         except FileNotFoundError :
              QMessageBox.about(self, "Внимание", "Проверьте введённые данные")
 
-
     def button_genkey_click(self):
+        """The action when you click button genkey: open task 1"""    
         self.chose_task=1
         self.label_bob.clear()
         self.label_bob.setText("Task 1: Generation Keys")
@@ -202,6 +197,7 @@ class Window(QMainWindow):
         self.field_third.setPlaceholderText("secret_key_path") 
         
     def button_encryption_click(self):
+        """The action when you click button encryption: open task 2"""    
         self.chose_task=2
         self.label_bob.clear()
         self.label_bob.setText("Task 2: Encrypt data")
@@ -224,6 +220,7 @@ class Window(QMainWindow):
         self.field_fourth.setPlaceholderText("encrypted_file_path")
  
     def button_decryption_click(self):
+        """The action when you click  button decryption: open task 3"""    
         self.chose_task=3 
         self.label_bob.clear()
         self.label_bob.setText("Task 3: Decrypt data")
@@ -331,7 +328,7 @@ def application() -> None:
     window.setObjectName("MainWindow")
     window.setMinimumSize(800,600)
     window.setMaximumSize(800,600)
-    window.setStyleSheet("#MainWindow{border-image:url(phon.png)}")  # 3e753b
+    window.setStyleSheet("#MainWindow{border-image:url(phon.png)}")
     window.show()
     sys.exit(app.exec_())
 
