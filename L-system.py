@@ -1,8 +1,14 @@
 import turtle
 from random import randint
+from typing import Tuple
 
 
-def init_pythagoras_tree():
+def init_pythagoras_tree() -> Tuple[str, int, int, int]:
+	"""
+	The function returns start parameters for the pythagoras tree.
+
+	:return: pythagoras tree genome, length, width, iteration number.
+	"""
 	genome = '0'
 	width = 20
 	length = 1
@@ -10,7 +16,12 @@ def init_pythagoras_tree():
 	return genome, length, width, iter_number
 
 
-def init_branch1():
+def init_branch1() -> Tuple[str, int, float, int]:
+	"""
+	The function returns start parameters for certain branch.
+
+	:return: branch genome, length, angle, iteration number.
+	"""
 	genome = 'X'
 	length = 7
 	angle = 25
@@ -18,7 +29,12 @@ def init_branch1():
 	return genome, length, angle, iter_number
 
 
-def init_branch2():
+def init_branch2() -> Tuple[str, int, float, int]:
+	"""
+	The function returns start parameters for certain branch.
+
+	:return: branch genome, length, angle, iteration number.
+	"""
 	genome = 'F'
 	length = 4
 	angle = 25.7
@@ -26,7 +42,12 @@ def init_branch2():
 	return genome, length, angle, iter_number
 
 
-def init_branch3():
+def init_branch3() -> Tuple[str, int, float, int]:
+	"""
+	The function returns start parameters for certain branch.
+
+	:return: branch genome, length, angle, iteration number.
+	"""
 	genome = 'F'
 	length = 9
 	angle = 20
@@ -34,7 +55,12 @@ def init_branch3():
 	return genome, length, angle, iter_number
 
 
-def init_branch4():
+def init_branch4() -> Tuple[str, int, float, int]:
+	"""
+	The function returns start parameters for certain branch.
+
+	:return: branch genome, length, angle, iteration number.
+	"""
 	genome = 'F'
 	length = 9
 	angle = 22.5
@@ -42,7 +68,12 @@ def init_branch4():
 	return genome, length, angle, iter_number
 
 
-def init_branch5():
+def init_branch5() -> Tuple[str, int, float, int]:
+	"""
+	The function returns start parameters for certain branch.
+
+	:return: branch genome, length, angle, iteration number.
+	"""
 	genome = 'X'
 	length = 7
 	angle = 20
@@ -50,7 +81,12 @@ def init_branch5():
 	return genome, length, angle, iter_number
 
 
-def init_branch6():
+def init_branch6() -> Tuple[str, int, float, int]:
+	"""
+	The function returns start parameters for certain branch.
+
+	:return: branch genome, length, angle, iteration number.
+	"""
 	genome = 'X'
 	length = 7
 	angle = 25.7
@@ -58,16 +94,28 @@ def init_branch6():
 	return genome, length, angle, iter_number
 
 
-def init_tree():
+def init_deciduous_tree() -> Tuple[str, int, float, int, int]:
+	"""
+	The function returns start parameters for the deciduous tree.
+
+	:return: deciduous tree genome, length, angle, width, iteration number.
+	"""
 	genome = '222220'
 	angle = 14
 	length = 10
 	iter_number = 11
 	width = 16
-	return genome, length, angle, iter_number, width
+	return genome, length, angle, width, iter_number
 
 
-def pythagoras_tree_rules(prev_genome):
+def pythagoras_tree_rules(prev_genome: str) -> str:
+	"""
+	The function gets the previous pythagoras tree genome and returns the new pythagoras tree genome, which was gotten
+	by using some replacement conditions.
+
+	:param prev_genome: previous pythagoras tree genome.
+	:return: new pythagoras tree genome.
+	"""
 	new_genome = ''
 	for i in range(len(prev_genome)):
 		if prev_genome[i] == '0':
@@ -81,7 +129,14 @@ def pythagoras_tree_rules(prev_genome):
 	return new_genome
 
 
-def branch_rules1(prev_genome):
+def branch_rules1(prev_genome: str) -> str:
+	"""
+	The function gets the previous branch genome and returns the new branch genome, which was gotten by using some
+	replacement conditions.
+
+	:param prev_genome: previous branch genome.
+	:return: new branch genome.
+	"""
 	new_genome = ''
 	for i in range(len(prev_genome)):
 		if prev_genome[i] == 'X':
@@ -99,7 +154,14 @@ def branch_rules1(prev_genome):
 	return new_genome
 
 
-def branch_rules2(prev_genome):
+def branch_rules2(prev_genome: str) -> str:
+	"""
+	The function gets the previous branch genome and returns the new branch genome, which was gotten by using some
+	replacement conditions.
+
+	:param prev_genome: previous branch genome.
+	:return: new branch genome.
+	"""
 	new_genome = ''
 	for i in range(len(prev_genome)):
 		if prev_genome[i] == 'F':
@@ -115,7 +177,14 @@ def branch_rules2(prev_genome):
 	return new_genome
 
 
-def branch_rules3(prev_genome):
+def branch_rules3(prev_genome: str) -> str:
+	"""
+	The function gets the previous branch genome and returns the new branch genome, which was gotten by using some
+	replacement conditions.
+
+	:param prev_genome: previous branch genome.
+	:return: new branch genome.
+	"""
 	new_genome = ''
 	for i in range(len(prev_genome)):
 		if prev_genome[i] == 'F':
@@ -131,7 +200,14 @@ def branch_rules3(prev_genome):
 	return new_genome
 
 
-def branch_rules4(prev_genome):
+def branch_rules4(prev_genome: str) -> str:
+	"""
+	The function gets the previous branch genome and returns the new branch genome, which was gotten by using some
+	replacement conditions.
+
+	:param prev_genome: previous branch genome.
+	:return: new branch genome.
+	"""
 	new_genome = ''
 	for i in range(len(prev_genome)):
 		if prev_genome[i] == 'F':
@@ -147,7 +223,14 @@ def branch_rules4(prev_genome):
 	return new_genome
 
 
-def branch_rules5(prev_genome):
+def branch_rules5(prev_genome: str) -> str:
+	"""
+	The function gets the previous branch genome and returns the new branch genome, which was gotten by using some
+	replacement conditions.
+
+	:param prev_genome: previous branch genome.
+	:return: new branch genome.
+	"""
 	new_genome = ''
 	for i in range(len(prev_genome)):
 		if prev_genome[i] == 'X':
@@ -165,7 +248,14 @@ def branch_rules5(prev_genome):
 	return new_genome
 
 
-def branch_rules6(prev_genome):
+def branch_rules6(prev_genome: str) -> str:
+	"""
+	The function gets the previous branch genome and returns the new branch genome, which was gotten by using some
+	replacement conditions.
+
+	:param prev_genome: previous branch genome.
+	:return: new branch genome.
+	"""
 	new_genome = ''
 	for i in range(len(prev_genome)):
 		if prev_genome[i] == 'X':
@@ -183,7 +273,14 @@ def branch_rules6(prev_genome):
 	return new_genome
 
 
-def tree_rules(prev_genome):
+def tree_rules(prev_genome: str) -> str:
+	"""
+	The function gets the previous deciduous tree genome and returns the new deciduous tree genome, which was gotten
+	by using some replacement conditions.
+
+	:param prev_genome: previous deciduous tree genome.
+	:return: new deciduous tree genome.
+	"""
 	new_genome = ''
 	level = 0
 	for i in range(len(prev_genome)):
@@ -207,7 +304,15 @@ def tree_rules(prev_genome):
 	return new_genome
 
 
-def run_pythagoras_tree(genome, length, width):
+def draw_pythagoras_tree(genome: str, length: int, width: int) -> None:
+	"""
+	The function draw pythagoras tree by turtle using some start parameters.
+
+	:param genome: pythagoras tree genome.
+	:param length: start length of tree segment.
+	:param width: start width of tree segments.
+	:return: None.
+	"""
 	stack = []
 	for i in range(len(genome)):
 		turtle.width(width)
@@ -231,7 +336,15 @@ def run_pythagoras_tree(genome, length, width):
 			turtle.seth(t[2]-30)
 
 
-def run_branch(genome, length, angle):
+def draw_branch(genome: str, length: int, angle: float) -> None:
+	"""
+	The function draw branch by turtle using some start parameters.
+
+	:param genome: branch genome.
+	:param length: start length of branch segment.
+	:param angle: start angle between branch segments.
+	:return: None.
+	"""
 	stack = []
 	for i in range(len(genome)):
 		if genome[i] == 'F':
@@ -252,7 +365,16 @@ def run_branch(genome, length, angle):
 			turtle.right(angle)
 	
 
-def run_tree(genome, length, angle, width):
+def draw_tree(genome: str, length: int, angle: float, width: int) -> None:
+	"""
+	The function draw deciduous tree by turtle using some start parameters.
+
+	:param genome: deciduous tree genome.
+	:param length: start length of tree segment.
+	:param angle: start angle between tree segments.
+	:param width: start width of tree segments.
+	:return: None.
+	"""
 	stack = []
 	for i in range(len(genome)):
 		turtle.width(width)
@@ -301,7 +423,16 @@ def run_tree(genome, length, angle, width):
 				turtle.forward(length)
 
 
-def run_apple(genome, length, angle, width):
+def draw_apple_tree(genome: str, length: int, angle: float, width: int) -> None:
+	"""
+	The function draw apple tree by turtle using some start parameters.
+
+	:param genome: deciduous tree genome.
+	:param length: start length of tree segment.
+	:param angle: start angle between tree segments.
+	:param width: start width of tree segments.
+	:return: None.
+	"""
 	stack = []
 	for i in range(len(genome)):
 		turtle.width(width)
@@ -369,9 +500,8 @@ if __name__ == "__main__":
 	turtle.penup()
 	turtle.setpos(0, -250)
 	turtle.pendown()
-	turtle.width(1)
-	tree_genome, tree_length, tree_angle, tree_iter_number, tree_width = init_tree()
+	tree_genome, tree_length, tree_angle, tree_width, tree_iter_number = init_deciduous_tree()
 	for j in range(tree_iter_number):
 		tree_genome = tree_rules(tree_genome)
-	run_apple(tree_genome, tree_length, tree_angle, tree_width)
+	draw_apple_tree(tree_genome, tree_length, tree_angle, tree_width)
 	turtle.done()
