@@ -3,7 +3,15 @@ import requests
 import csv
 
 
-def max_year_checker(url):
+def check_max_year(url: str) -> int:
+    """Function that checks the maximum available year on the site
+
+    Args:
+        url (str): site url
+
+    Returns:
+        int: Maximum available year on the site
+    """
     flag = False
     year_counter = 2008
     while not flag:
@@ -18,7 +26,15 @@ def max_year_checker(url):
     return year_counter
 
 
-def max_month_checker(url):
+def check_max_month(url: str) -> int:
+    """Function that checks the maximum available month on the site
+
+    Args:
+        url (str): site url
+
+    Returns:
+        int: maximum available month on the site
+    """
     flag = False
     month_counter = 1
     while not flag:
@@ -33,34 +49,78 @@ def max_month_checker(url):
     return month_counter
 
 
-def url_month_change(url, months, flag):
+def url_month_change(url: str, month: int, flag: int) -> str:
+    """Function that changes the month in the url
+
+    Args:
+        url (str): site url
+        month (int): The month that need to change in the url
+        flag (int): Flag that responsible for how the url will change
+
+    Returns:
+        str: Changed url
+    """
     if flag == 1:
         url = url[0:39] + "/1/"
     elif flag == 2:
-        url = url[0:39] + "/" + str(months) + "/"
+        url = url[0:39] + "/" + str(month) + "/"
     return url
 
 
-def url_year_change(url, years):
+def url_year_change(url: str, years: int) -> str:
+    """Function that changes the year in the url
+
+    Args:
+        url (str): site url
+        years (int): The month that need to change in the url
+
+    Returns:
+        str: Changed url
+    """
     url = url.replace(str(years-1), str(years))
     return url
 
 
-def data_to_list(output, elements):
+def data_to_list(output: list[str], elements) -> list[str]:
+    """This function extracts data from BeautifulSoup and appends it to the output list.
+
+    Args:
+        output (list[str]): The list to which the extracted data will be appended
+        elements (): The ResultSet containing HTML elements.
+
+    Returns:
+        list[str]: The updated output list with extracted data.
+    """
     x = [0, 1, 2, 5, 6, 7, 10]
     for i in x:
         output.append(elements[i].text)
     return output
 
 
-def days_redact(output):
+def days_redact(output: list[str]) -> str:
+    """Function that checks if a number is less than 10, and if it is, it adds a leading 0 to the number
+
+    Args:
+        output (list[str]): List with data from site
+
+    Returns:
+        str: Changed number
+    """
     if int(output[0]) < 10:
         return "0" + output[0]
     else:
         return output[0]
 
 
-def months_redact(month):
+def months_redact(month: int) -> str:
+    """Function that checks if a number is less than 10, and if it is, it adds a leading 0 to the number
+
+    Args:
+        month (int): Month number
+
+    Returns:
+        str: Changed number
+    """
     if month < 10:
         return "0" + str(month)
     else:
@@ -69,12 +129,12 @@ def months_redact(month):
 
 url = "https://www.gismeteo.ru/diary/4618/2008/1/"
 year_counter = 2008
-current_year = max_year_checker(url)
+current_year = check_max_year(url)
 for years in range(year_counter, current_year + 1):
     url = url_year_change(url, years)
     max_month = 12
     if years == current_year:
-        max_month = max_month_checker(url)
+        max_month = check_max_month(url)
     for months in range(1, max_month + 1):
         is_month_last = False
         if months == max_month:
