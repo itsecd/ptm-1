@@ -9,6 +9,7 @@ setpos(0,-350)
 pendown()
 width(1)
 
+
 def InitTree():
 	width(16)
 	oak='222220'
@@ -17,56 +18,65 @@ def InitTree():
 	n=12
 	wid=16
 	return (oak,length,angle,n,wid)
-	
+
+
 def InitBranch1():
 	oak='X'
 	length=7
 	angle=25
 	n=6
 	return (oak,length,angle,n)
-    
+
+
 def InitBranch2():
 	oak='F'
 	length=4
 	angle=25.7
 	n=5
 	return (oak,length,angle,n)
-	
+
+
 def InitBranch3():
 	oak='F'
 	length=9
 	angle=20
 	n=5
 	return (oak,length,angle,n)
-	
+
+
 def InitBranch4():
 	oak='F'
 	length=9
 	angle=22.5
 	n=4
 	return (oak,length,angle,n)
-	
+
+
 def InitBranch5():
 	oak='X'
 	length=7
 	angle=20
 	n=6
 	return (oak,length,angle,n)
-	
+
+
+
 def InitBranch6():
 	oak='X'
 	length=7
 	angle=25.7
 	n=6
 	return (oak,length,angle,n)
-	
+
+
 def InitPythagorasTree():
 	oak='0'
 	wid=20
 	length=1
 	n=10
 	return (oak,length,wid,n)
-	
+
+
 def PythagorasTreeRules(s):
 	s1=''
 	for i in range(len(s)):
@@ -79,7 +89,8 @@ def PythagorasTreeRules(s):
 		elif s[i]==']':
 			s1=s1+']'
 	return(s1)
-	
+
+
 def RunPythagorasTree(s, length,wid):
 	stack=[]
 	for i in range(len(s)):
@@ -103,6 +114,7 @@ def RunPythagorasTree(s, length,wid):
 			pendown()
 			seth(t[2]-30)
 
+
 def BranchRules1(s):
 	s1=''
 	for i in range(len(s)):
@@ -119,7 +131,8 @@ def BranchRules1(s):
 		elif s[i]=='-':
 			s1=s1+'-'
 	return(s1)
-	
+
+
 def BranchRules2(s):
 	s1=''
 	for i in range(len(s)):
@@ -135,6 +148,7 @@ def BranchRules2(s):
 			s1=s1+'-'
 	return(s1)
 
+
 def BranchRules3(s):
 	s1=''
 	for i in range(len(s)):
@@ -149,7 +163,8 @@ def BranchRules3(s):
 		elif s[i]=='-':
 			s1=s1+'-'
 	return(s1)
-	
+
+
 def BranchRules4(s):
 	s1=''
 	for i in range(len(s)):
@@ -164,6 +179,7 @@ def BranchRules4(s):
 		elif s[i]=='-':
 			s1=s1+'-'
 	return(s1)
+
 
 def BranchRules5(s):
 	s1=''
@@ -182,6 +198,7 @@ def BranchRules5(s):
 			s1=s1+'-'
 	return(s1)
 
+
 def BranchRules6(s):
 	s1=''
 	for i in range(len(s)):
@@ -198,6 +215,7 @@ def BranchRules6(s):
 		elif s[i]=='-':
 			s1=s1+'-'
 	return(s1)
+
 
 def RunBrunch(s, length,angle):
 	stack=[]
@@ -218,6 +236,7 @@ def RunBrunch(s, length,angle):
 			left(angle)
 		elif s[i]=='+':
 			right(angle)
+
 
 def TreeRules(s):
 	s1=''
@@ -243,6 +262,7 @@ def TreeRules(s):
 			s1=s1+s[i]
 	return(s1)
 	
+
 def RunTree(s, length,angle,wid):
 	stack=[]
 	for i in range(len(s)):
@@ -290,6 +310,7 @@ def RunTree(s, length,angle,wid):
 		else:
 			if randint(0,10)>4:
 				forward(length)
+
 
 def RunApple(s, length,angle,wid):
 	stack=[]
