@@ -10,101 +10,226 @@ pendown()
 width(1)
 
 
-def init_tree():
-	width(16)
-	oak = '222220'
-	angle = 14
-	length = 10
-	n = 11
-	wid = 16
-	return oak, length, angle, n, wid
+def init_pythagoras_tree():
+	genome = '0'
+	width = 20
+	length = 1
+	iter_number = 10
+	return genome, length, width, iter_number
 
 
 def init_branch1():
-	oak = 'X'
+	genome = 'X'
 	length = 7
 	angle = 25
-	n = 6
-	return oak, length, angle, n
+	iter_number = 6
+	return genome, length, angle, iter_number
 
 
 def init_branch2():
-	oak = 'F'
+	genome = 'F'
 	length = 4
 	angle = 25.7
-	n = 5
-	return oak, length, angle, n
+	iter_number = 5
+	return genome, length, angle, iter_number
 
 
 def init_branch3():
-	oak = 'F'
+	genome = 'F'
 	length = 9
 	angle = 20
-	n = 5
-	return oak, length, angle, n
+	iter_number = 5
+	return genome, length, angle, iter_number
 
 
 def init_branch4():
-	oak = 'F'
+	genome = 'F'
 	length = 9
 	angle = 22.5
-	n = 4
-	return oak, length, angle, n
+	iter_number = 4
+	return genome, length, angle, iter_number
 
 
 def init_branch5():
-	oak = 'X'
+	genome = 'X'
 	length = 7
 	angle = 20
-	n = 6
-	return oak, length, angle, n
+	iter_number = 6
+	return genome, length, angle, iter_number
 
 
 def init_branch6():
-	oak = 'X'
+	genome = 'X'
 	length = 7
 	angle = 25.7
-	n = 6
-	return oak, length, angle, n
+	iter_number = 6
+	return genome, length, angle, iter_number
 
 
-def init_pythagoras_tree():
-	oak = '0'
-	wid = 20
-	length = 1
-	n = 10
-	return oak, length, wid, n
+def init_tree():
+	genome = '222220'
+	angle = 14
+	length = 10
+	iter_number = 11
+	width = 16
+	return genome, length, angle, iter_number, width
 
 
-def pythagoras_tree_rules(s):
-	s1 = ''
-	for i in range(len(s)):
-		if s[i] == '0':
-			s1 = s1 + '1[0]0'
-		elif s[i] == '1':
-			s1 = s1 + '11'
-		elif s[i] == '[':
-			s1 = s1 + '['
-		elif s[i] == ']':
-			s1 = s1 + ']'
-	return s1
+def pythagoras_tree_rules(prev_genome):
+	new_genome = ''
+	for i in range(len(prev_genome)):
+		if prev_genome[i] == '0':
+			new_genome = new_genome + '1[0]0'
+		elif prev_genome[i] == '1':
+			new_genome = new_genome + '11'
+		elif prev_genome[i] == '[':
+			new_genome = new_genome + '['
+		elif prev_genome[i] == ']':
+			new_genome = new_genome + ']'
+	return new_genome
 
 
-def run_pythagoras_tree(s, length, wid):
+def branch_rules1(prev_genome):
+	new_genome = ''
+	for i in range(len(prev_genome)):
+		if prev_genome[i] == 'X':
+			new_genome = new_genome + 'F-[[X]+X]+F[+FX]-X'
+		elif prev_genome[i] == 'F':
+			new_genome = new_genome + 'FF'
+		elif prev_genome[i] == '[':
+			new_genome = new_genome + '['
+		elif prev_genome[i] == ']':
+			new_genome = new_genome + ']'
+		elif prev_genome[i] == '+':
+			new_genome = new_genome + '+'
+		elif prev_genome[i] == '-':
+			new_genome = new_genome + '-'
+	return new_genome
+
+
+def branch_rules2(prev_genome):
+	new_genome = ''
+	for i in range(len(prev_genome)):
+		if prev_genome[i] == 'F':
+			new_genome = new_genome + 'F[+F]F[-F]F'
+		elif prev_genome[i] == '[':
+			new_genome = new_genome + '['
+		elif prev_genome[i] == ']':
+			new_genome = new_genome + ']'
+		elif prev_genome[i] == '+':
+			new_genome = new_genome + '+'
+		elif prev_genome[i] == '-':
+			new_genome = new_genome + '-'
+	return new_genome
+
+
+def branch_rules3(prev_genome):
+	new_genome = ''
+	for i in range(len(prev_genome)):
+		if prev_genome[i] == 'F':
+			new_genome = new_genome + 'F[+F]F[-F][F]'
+		elif prev_genome[i] == '[':
+			new_genome = new_genome + '['
+		elif prev_genome[i] == ']':
+			new_genome = new_genome + ']'
+		elif prev_genome[i] == '+':
+			new_genome = new_genome + '+'
+		elif prev_genome[i] == '-':
+			new_genome = new_genome + '-'
+	return new_genome
+
+
+def branch_rules4(prev_genome):
+	new_genome = ''
+	for i in range(len(prev_genome)):
+		if prev_genome[i] == 'F':
+			new_genome = new_genome + 'FF-[-F+F+F]+[+F-F-F]'
+		elif prev_genome[i] == '[':
+			new_genome = new_genome + '['
+		elif prev_genome[i] == ']':
+			new_genome = new_genome + ']'
+		elif prev_genome[i] == '+':
+			new_genome = new_genome + '+'
+		elif prev_genome[i] == '-':
+			new_genome = new_genome + '-'
+	return new_genome
+
+
+def branch_rules5(prev_genome):
+	new_genome = ''
+	for i in range(len(prev_genome)):
+		if prev_genome[i] == 'X':
+			new_genome = new_genome + 'F[+X]F[-X]+X'
+		elif prev_genome[i] == 'F':
+			new_genome = new_genome + 'FF'
+		elif prev_genome[i] == '[':
+			new_genome = new_genome + '['
+		elif prev_genome[i] == ']':
+			new_genome = new_genome + ']'
+		elif prev_genome[i] == '+':
+			new_genome = new_genome + '+'
+		elif prev_genome[i] == '-':
+			new_genome = new_genome + '-'
+	return new_genome
+
+
+def branch_rules6(prev_genome):
+	new_genome = ''
+	for i in range(len(prev_genome)):
+		if prev_genome[i] == 'X':
+			new_genome = new_genome + 'F[+X][-X]FX'
+		elif prev_genome[i] == 'F':
+			new_genome = new_genome + 'FF'
+		elif prev_genome[i] == '[':
+			new_genome = new_genome + '['
+		elif prev_genome[i] == ']':
+			new_genome = new_genome + ']'
+		elif prev_genome[i] == '+':
+			new_genome = new_genome + '+'
+		elif prev_genome[i] == '-':
+			new_genome = new_genome + '-'
+	return new_genome
+
+
+def tree_rules(prev_genome):
+	new_genome = ''
+	level = 0
+	for i in range(len(prev_genome)):
+		if prev_genome[i] == '0':
+			new_genome = new_genome + '1[-20]+20'
+		elif prev_genome[i] == '1':
+			new_genome = new_genome + '21'
+		elif prev_genome[i] == '[':
+			new_genome = new_genome + prev_genome[i]
+			level += 1
+		elif prev_genome[i] == ']':
+			new_genome = new_genome + prev_genome[i]
+			level -= 1
+		elif prev_genome[i] == '2':
+			if randint(0, 100) < 7 and level > 2:
+				new_genome = new_genome + '3[^30]'
+			else:
+				new_genome = new_genome + prev_genome[i]
+		else:
+			new_genome = new_genome + prev_genome[i]
+	return new_genome
+
+
+def run_pythagoras_tree(genome, length, wid):
 	stack = []
-	for i in range(len(s)):
+	for i in range(len(genome)):
 		width(wid)
-		if s[i] == '0':
+		if genome[i] == '0':
 			color('green')
 			forward(length+20)
 			color('black')
-		if s[i] == '1':
+		if genome[i] == '1':
 			forward(length)
-		if s[i] == '[':
+		if genome[i] == '[':
 			wid -= 2
 			stack.append(str(xcor()) + ' ' + str(ycor()) + ' ' + str(heading()) + ' ' + str(wid))
 			seth(heading() + 30)
-		if s[i] == ']':
+		if genome[i] == ']':
 			t = list(map(float, stack[-1].split()))
 			stack.pop(-1)
 			wid = t[3]
@@ -114,158 +239,32 @@ def run_pythagoras_tree(s, length, wid):
 			seth(t[2]-30)
 
 
-def branch_rules1(s):
-	s1=''
-	for i in range(len(s)):
-		if s[i] == 'X':
-			s1 = s1 + 'F-[[X]+X]+F[+FX]-X'
-		elif s[i] == 'F':
-			s1 = s1 + 'FF'
-		elif s[i] == '[':
-			s1 = s1 + '['
-		elif s[i] == ']':
-			s1 = s1 + ']'
-		elif s[i] == '+':
-			s1 = s1 + '+'
-		elif s[i] == '-':
-			s1 = s1 + '-'
-	return s1
-
-
-def branch_rules2(s):
-	s1 = ''
-	for i in range(len(s)):
-		if s[i] == 'F':
-			s1 = s1 + 'F[+F]F[-F]F'
-		elif s[i] == '[':
-			s1 = s1 + '['
-		elif s[i] == ']':
-			s1 = s1 + ']'
-		elif s[i] == '+':
-			s1 = s1 + '+'
-		elif s[i] == '-':
-			s1 = s1 + '-'
-	return s1
-
-
-def branch_rules3(s):
-	s1 = ''
-	for i in range(len(s)):
-		if s[i] == 'F':
-			s1 = s1 + 'F[+F]F[-F][F]'
-		elif s[i] == '[':
-			s1 = s1 + '['
-		elif s[i] == ']':
-			s1 = s1 + ']'
-		elif s[i] == '+':
-			s1 = s1 + '+'
-		elif s[i] == '-':
-			s1 = s1 + '-'
-	return s1
-
-
-def branch_rules4(s):
-	s1 = ''
-	for i in range(len(s)):
-		if s[i] == 'F':
-			s1 = s1 + 'FF-[-F+F+F]+[+F-F-F]'
-		elif s[i] == '[':
-			s1 = s1 + '['
-		elif s[i] == ']':
-			s1 = s1 + ']'
-		elif s[i] == '+':
-			s1 = s1 + '+'
-		elif s[i] == '-':
-			s1 = s1 + '-'
-	return s1
-
-
-def branch_rules5(s):
-	s1 = ''
-	for i in range(len(s)):
-		if s[i] == 'X':
-			s1 = s1 + 'F[+X]F[-X]+X'
-		elif s[i] == 'F':
-			s1 = s1 + 'FF'
-		elif s[i] == '[':
-			s1 = s1 + '['
-		elif s[i] == ']':
-			s1 = s1 + ']'
-		elif s[i] == '+':
-			s1 = s1 + '+'
-		elif s[i] == '-':
-			s1 = s1 + '-'
-	return s1
-
-
-def branch_rules6(s):
-	s1 = ''
-	for i in range(len(s)):
-		if s[i] == 'X':
-			s1 = s1 + 'F[+X][-X]FX'
-		elif s[i] == 'F':
-			s1 = s1 + 'FF'
-		elif s[i] == '[':
-			s1 = s1 + '['
-		elif s[i] == ']':
-			s1 = s1 + ']'
-		elif s[i] == '+':
-			s1 = s1 + '+'
-		elif s[i] == '-':
-			s1 = s1 + '-'
-	return s1
-
-
-def run_branch(s, length, angle):
+def run_branch(genome, length, angle):
 	stack = []
-	for i in range(len(s)):
-		if s[i] == 'F':
+	for i in range(len(genome)):
+		if genome[i] == 'F':
 			forward(length)
-		elif s[i] == '[':
+		elif genome[i] == '[':
 			stack.append(str(xcor()) + ' ' + str(ycor()) + ' ' + str(heading()))
 			seth(heading())
-		elif s[i] == ']':
+		elif genome[i] == ']':
 			t = list(map(float, stack[-1].split()))
 			stack.pop(-1)
 			penup()
 			setpos(t[0], t[1])
 			pendown()
 			seth(t[2])
-		elif s[i] == '-':
+		elif genome[i] == '-':
 			left(angle)
-		elif s[i] == '+':
+		elif genome[i] == '+':
 			right(angle)
-
-
-def tree_rules(s):
-	s1 = ''
-	level = 0
-	for i in range(len(s)):
-		if s[i] == '0':
-			s1 = s1 + '1[-20]+20'
-		elif s[i] == '1':
-			s1 = s1 + '21'
-		elif s[i] == '[':
-			s1 = s1 + s[i]
-			level += 1
-		elif s[i] == ']':
-			s1 = s1 + s[i]
-			level -= 1
-		elif s[i] == '2':
-			if randint(0, 100) < 7 and level > 2:
-				s1 = s1 + '3[^30]'
-			else:
-				s1 = s1 + s[i]
-		else:
-			s1 = s1 + s[i]
-	return s1
 	
 
-def run_tree(s, length, angle, wid):
+def run_tree(genome, length, angle, width):
 	stack = []
-	for i in range(len(s)):
-		width(wid)
-		if s[i] == '0':
+	for i in range(len(genome)):
+		width(width)
+		if genome[i] == '0':
 			q = pensize()
 			width(4)
 			r = randint(0, 10)
@@ -278,46 +277,46 @@ def run_tree(s, length, angle, wid):
 			forward(length-2)
 			width(q)
 			color('black')
-		elif s[i] == '^':
-			ug = randint(-30, 30)
-			if ug < 0:
-				left(ug - 25)
+		elif genome[i] == '^':
+			tmp_angle = randint(-30, 30)
+			if tmp_angle < 0:
+				left(tmp_angle - 25)
 			else:
-				left(ug + 25)
-		elif s[i] == '1':
+				left(tmp_angle + 25)
+		elif genome[i] == '1':
 			if randint(0, 10) > 4:
 				forward(length)
-		elif s[i] == '2':
+		elif genome[i] == '2':
 			if randint(0, 10) > 4:
 				forward(length)
-		elif s[i] == '[':
-			wid *= 0.75
-			stack.append(str(xcor()) + ' ' + str(ycor()) + ' ' + str(heading()) + ' ' + str(wid))
-		elif s[i] == ']':
+		elif genome[i] == '[':
+			width *= 0.75
+			stack.append(str(xcor()) + ' ' + str(ycor()) + ' ' + str(heading()) + ' ' + str(width))
+		elif genome[i] == ']':
 			t = list(map(float, stack[-1].split()))
 			stack.pop(-1)
 			penup()
 			setpos(t[0], t[1])
 			pendown()
 			seth(t[2])
-			wid = t[3]
-		elif s[i] == '+':
+			width = t[3]
+		elif genome[i] == '+':
 			right(angle+randint(-13, 13))
-		elif s[i] == '-':
+		elif genome[i] == '-':
 			left(angle+randint(-13, 13))
 		else:
 			if randint(0, 10) > 4:
 				forward(length)
 
 
-def run_apple(s, length, angle, wid):
+def run_apple(genome, length, angle, width):
 	stack = []
-	for i in range(len(s)):
-		width(wid)
-		if s[i] == '0':
+	for i in range(len(genome)):
+		width(width)
+		if genome[i] == '0':
 			q = pensize()
 			width(4)
-			r = randint(0,10)
+			r = randint(0, 10)
 			if r < 3:
 				pencolor('#009900')
 			elif r > 6:
@@ -338,32 +337,32 @@ def run_apple(s, length, angle, wid):
 				forward(length-2)
 			width(q)
 			color('black')
-		elif s[i] == '^':
-			ug = randint(-30, 30)
-			if ug < 0:
-				left(ug - 25)
+		elif genome[i] == '^':
+			tmp_angle = randint(-30, 30)
+			if tmp_angle < 0:
+				left(tmp_angle - 25)
 			else:
-				left(ug + 25)
-		elif s[i] == '1':
+				left(tmp_angle + 25)
+		elif genome[i] == '1':
 			if randint(0, 10) > 4:
 				forward(length)
-		elif s[i] == '2':
+		elif genome[i] == '2':
 			if randint(0, 10) > 4:
 				forward(length)
-		elif s[i] == '[':
-			wid *= 0.75
-			stack.append(str(xcor()) + ' ' + str(ycor()) + ' ' + str(heading()) + ' ' + str(wid))
-		elif s[i] == ']':
+		elif genome[i] == '[':
+			width *= 0.75
+			stack.append(str(xcor()) + ' ' + str(ycor()) + ' ' + str(heading()) + ' ' + str(width))
+		elif genome[i] == ']':
 			t = list(map(float, stack[-1].split()))
 			stack.pop(-1)
 			penup()
 			setpos(t[0], t[1])
 			pendown()
 			seth(t[2])
-			wid = t[3]
-		elif s[i] == '+':
+			width = t[3]
+		elif genome[i] == '+':
 			right(angle+randint(-13, 13))
-		elif s[i] == '-':
+		elif genome[i] == '-':
 			left(angle+randint(-13, 13))
 		else:
 			if randint(0, 10) > 4:
@@ -371,9 +370,9 @@ def run_apple(s, length, angle, wid):
 
 
 if __name__ == "__main__":
-	oak, length, angle, n, wid = init_tree()
-	for i in range(n):
-		oak = tree_rules(oak)
-	run_apple(oak, length, angle, wid)
+	tree_genome, tree_length, tree_angle, tree_iter_number, tree_width = init_tree()
+	for j in range(tree_iter_number):
+		tree_genome = tree_rules(tree_genome)
+	run_apple(tree_genome, tree_length, tree_angle, tree_width)
 	update()
 	mainloop()
