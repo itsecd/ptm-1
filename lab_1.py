@@ -4,14 +4,14 @@ import csv
 
 
 def max_year_checker(url):
-    flag = 0
+    flag = False
     year_counter = 2008
 
-    while (flag == 0):
+    while not flag:
         html_text = requests.get(url, headers={"User-Agent": "agent"}).text
         data = BeautifulSoup(html_text, "lxml")
         if data.find("span", class_="grey error-span"):
-            flag = 1
+            flag = True
             year_counter -= 1
         else:
             year_counter += 1
@@ -21,14 +21,14 @@ def max_year_checker(url):
 
 
 def max_month_checker(url):
-    flag = 0
+    flag = False
     month_counter = 1
 
-    while (flag == 0):
+    while not flag:
         html_text = requests.get(url, headers={"User-Agent": "agent"}).text
         data = BeautifulSoup(html_text, "lxml")
         if data.find("span", class_="grey error-span"):
-            flag = 1
+            flag = True
             month_counter -= 1
         else:
             month_counter += 1
@@ -58,7 +58,7 @@ def data_to_list(output, elements):
 
 
 def days_redact(output):
-    if (int(output[0]) < 10):
+    if int(output[0]) < 10:
         return "0" + output[0]
 
     else:
@@ -66,7 +66,7 @@ def days_redact(output):
 
 
 def months_redact(month):
-    if (month < 10):
+    if month < 10:
         return "0" + str(month)
 
     else:
@@ -80,15 +80,15 @@ current_year = max_year_checker(url)
 for years in range(year_counter, current_year + 1):
     url = url_year_change(url, years)
     max_month = 12
-    if (years == current_year):
+    if years == current_year:
         max_month = max_month_checker(url)
 
     for months in range(1, max_month + 1):
         is_month_last = False
-        if (months == max_month):
+        if months == max_month:
             url = url_month_change(url, months, 2)
             is_month_last = True
-        elif (months < max_month):
+        elif months < max_month:
             url = url_month_change(url, months, 2)
 
         html_text = requests.get(url, headers={"User-Agent": "Ivan"}).text
