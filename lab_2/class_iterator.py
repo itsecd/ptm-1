@@ -1,5 +1,4 @@
 import csv
-import datetime
 import os
 
 
@@ -7,14 +6,13 @@ class DateIterator:
     def __init__(self):
         self.counter = 0
         self.file_name = "result.csv"
+        
     def __next__(self) -> tuple:
         if os.path.exists(self.file_name):
             with open(self.file_name, "r", encoding="utf-8") as csvfile:
                 reader_object = list(csv.reader(csvfile, delimiter=","))
-
                 if self.counter == len(reader_object):
                     raise StopIteration
-
                 elif self.counter < len(reader_object):
                     self.counter += 1
                     output = (reader_object[self.counter - 1][0], reader_object[self.counter - 1][1], reader_object[self.counter - 1][2],
