@@ -164,6 +164,7 @@ def data_to_weeks(file_name: str) -> None:
     else:
         raise FileNotFoundError
 
+
 if __name__ == "__main__":
     try:
         file_name = "result.csv"
