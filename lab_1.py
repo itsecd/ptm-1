@@ -6,7 +6,6 @@ import csv
 def max_year_checker(url):
     flag = False
     year_counter = 2008
-
     while not flag:
         html_text = requests.get(url, headers={"User-Agent": "agent"}).text
         data = BeautifulSoup(html_text, "lxml")
@@ -16,14 +15,12 @@ def max_year_checker(url):
         else:
             year_counter += 1
             url = url.replace(str(year_counter - 1), str(year_counter))
-
     return year_counter
 
 
 def max_month_checker(url):
     flag = False
     month_counter = 1
-
     while not flag:
         html_text = requests.get(url, headers={"User-Agent": "agent"}).text
         data = BeautifulSoup(html_text, "lxml")
@@ -33,7 +30,6 @@ def max_month_checker(url):
         else:
             month_counter += 1
             url = url[0:39] + "/" + str(month_counter) + "/"
-
     return month_counter
 
 
@@ -60,7 +56,6 @@ def data_to_list(output, elements):
 def days_redact(output):
     if int(output[0]) < 10:
         return "0" + output[0]
-
     else:
         return output[0]
 
@@ -68,7 +63,6 @@ def days_redact(output):
 def months_redact(month):
     if month < 10:
         return "0" + str(month)
-
     else:
         return str(month)
 
@@ -76,13 +70,11 @@ def months_redact(month):
 url = "https://www.gismeteo.ru/diary/4618/2008/1/"
 year_counter = 2008
 current_year = max_year_checker(url)
-
 for years in range(year_counter, current_year + 1):
     url = url_year_change(url, years)
     max_month = 12
     if years == current_year:
         max_month = max_month_checker(url)
-
     for months in range(1, max_month + 1):
         is_month_last = False
         if months == max_month:
@@ -90,11 +82,9 @@ for years in range(year_counter, current_year + 1):
             is_month_last = True
         elif months < max_month:
             url = url_month_change(url, months, 2)
-
         html_text = requests.get(url, headers={"User-Agent": "Ivan"}).text
         soup = BeautifulSoup(html_text, "lxml")
         lines = soup.find_all("tr", align="center")
-
         for i in range(len(lines)):
             elements = lines[i].find_all("td")
             output = []
