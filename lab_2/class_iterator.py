@@ -126,21 +126,4 @@ class DateIteratorFromYears:
             self.counter += 1
             output = (self.data[self.counter - 1][0], self.data[self.counter - 1][1], self.data[self.counter - 1][2],
                         self.data[self.counter - 1][3], self.data[self.counter - 1][4], self.data[self.counter - 1][5], self.data[self.counter - 1][6])
-            return output
-
-
-# obj = DateIterator()
-# while True:
-#     print(next(obj))
-
-# obj = DateIteratorFromWeeks()
-# while True:
-#     print(next(obj))
-
-# obj = DateIteratorFromYears()
-# while True:
-#     print(next(obj))
-
-# obj = DateIteratorFromXY()
-# while True:
-#     print(next(obj))
+            return output        
