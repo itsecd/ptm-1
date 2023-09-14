@@ -5,22 +5,22 @@ color('black')
 tracer(0)
 seth(90)
 penup()
-setpos(0,-350)
+setpos(0,-250)
 pendown()
 width(1)
 
 
-def InitTree():
+def init_tree():
 	width(16)
 	oak='222220'
 	angle=14
 	length=10
-	n=12
+	n=11
 	wid=16
 	return (oak,length,angle,n,wid)
 
 
-def InitBranch1():
+def init_branch1():
 	oak='X'
 	length=7
 	angle=25
@@ -28,7 +28,7 @@ def InitBranch1():
 	return (oak,length,angle,n)
 
 
-def InitBranch2():
+def init_branch2():
 	oak='F'
 	length=4
 	angle=25.7
@@ -36,7 +36,7 @@ def InitBranch2():
 	return (oak,length,angle,n)
 
 
-def InitBranch3():
+def init_branch3():
 	oak='F'
 	length=9
 	angle=20
@@ -44,7 +44,7 @@ def InitBranch3():
 	return (oak,length,angle,n)
 
 
-def InitBranch4():
+def init_branch4():
 	oak='F'
 	length=9
 	angle=22.5
@@ -60,8 +60,7 @@ def InitBranch5():
 	return (oak,length,angle,n)
 
 
-
-def InitBranch6():
+def init_branch6():
 	oak='X'
 	length=7
 	angle=25.7
@@ -69,7 +68,7 @@ def InitBranch6():
 	return (oak,length,angle,n)
 
 
-def InitPythagorasTree():
+def init_pythagoras_tree():
 	oak='0'
 	wid=20
 	length=1
@@ -77,7 +76,7 @@ def InitPythagorasTree():
 	return (oak,length,wid,n)
 
 
-def PythagorasTreeRules(s):
+def pythagoras_tree_rules(s):
 	s1=''
 	for i in range(len(s)):
 		if s[i]=='0':
@@ -91,7 +90,7 @@ def PythagorasTreeRules(s):
 	return(s1)
 
 
-def RunPythagorasTree(s, length,wid):
+def run_pythagoras_tree(s, length,wid):
 	stack=[]
 	for i in range(len(s)):
 		width(wid)
@@ -115,7 +114,7 @@ def RunPythagorasTree(s, length,wid):
 			seth(t[2]-30)
 
 
-def BranchRules1(s):
+def branch_rules1(s):
 	s1=''
 	for i in range(len(s)):
 		if s[i]=='X':
@@ -133,7 +132,7 @@ def BranchRules1(s):
 	return(s1)
 
 
-def BranchRules2(s):
+def branch_rules2(s):
 	s1=''
 	for i in range(len(s)):
 		if s[i]=='F':
@@ -149,7 +148,7 @@ def BranchRules2(s):
 	return(s1)
 
 
-def BranchRules3(s):
+def branch_rules3(s):
 	s1=''
 	for i in range(len(s)):
 		if s[i]=='F':
@@ -165,7 +164,7 @@ def BranchRules3(s):
 	return(s1)
 
 
-def BranchRules4(s):
+def branch_rules4(s):
 	s1=''
 	for i in range(len(s)):
 		if s[i]=='F':
@@ -181,7 +180,7 @@ def BranchRules4(s):
 	return(s1)
 
 
-def BranchRules5(s):
+def branch_rules5(s):
 	s1=''
 	for i in range(len(s)):
 		if s[i]=='X':
@@ -199,7 +198,7 @@ def BranchRules5(s):
 	return(s1)
 
 
-def BranchRules6(s):
+def branch_rules6(s):
 	s1=''
 	for i in range(len(s)):
 		if s[i]=='X':
@@ -217,7 +216,7 @@ def BranchRules6(s):
 	return(s1)
 
 
-def RunBrunch(s, length,angle):
+def run_branch(s, length,angle):
 	stack=[]
 	for i in range(len(s)):
 		if s[i]=='F':
@@ -238,7 +237,7 @@ def RunBrunch(s, length,angle):
 			right(angle)
 
 
-def TreeRules(s):
+def tree_rules(s):
 	s1=''
 	level=0
 	for i in range(len(s)):
@@ -263,7 +262,7 @@ def TreeRules(s):
 	return(s1)
 	
 
-def RunTree(s, length,angle,wid):
+def run_tree(s, length,angle,wid):
 	stack=[]
 	for i in range(len(s)):
 		width(wid)
@@ -312,7 +311,7 @@ def RunTree(s, length,angle,wid):
 				forward(length)
 
 
-def RunApple(s, length,angle,wid):
+def run_apple(s, length,angle,wid):
 	stack=[]
 	for i in range(len(s)):
 		width(wid)
@@ -373,9 +372,9 @@ def RunApple(s, length,angle,wid):
 
 
 if __name__ == "__main__" :
-	oak,length,angle,n,wid= InitTree()
+	oak,length,angle,n,wid= init_tree()
 	for i in range(n):
-		oak=TreeRules(oak)
-	RunApple(oak,length,angle,wid)
+		oak=tree_rules(oak)
+	run_apple(oak,length,angle,wid)
 	update()
 	mainloop()
