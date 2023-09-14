@@ -114,7 +114,7 @@ def week_border(data: list[list[str]], index) -> list[str]:
         for i in range(1, 7):
             week.append(str(date + datetime.timedelta(days=i)))
 
-        return (week)
+        return week
 
     elif weekday != 7 and weekday != 1:
         for i in range(weekday - 1, 0, -1):
@@ -125,7 +125,7 @@ def week_border(data: list[list[str]], index) -> list[str]:
         for i in range(1, 8 - weekday):
             week.append(str(date + datetime.timedelta(days=i)))
 
-        return (week)
+        return week
 
     elif weekday == 7:
 
@@ -134,7 +134,7 @@ def week_border(data: list[list[str]], index) -> list[str]:
 
         week.append(str(date))
 
-        return (week)
+        return week
 
 
 def weeks_writer(data: list[list[str]]) -> NoReturn:

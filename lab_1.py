@@ -59,18 +59,18 @@ def data_to_list(output, elements):
 
 def days_redact(output):
     if (int(output[0]) < 10):
-        return ("0" + output[0])
+        return "0" + output[0]
 
     else:
-        return (output[0])
+        return output[0]
 
 
 def months_redact(month):
     if (month < 10):
-        return ("0" + str(month))
+        return "0" + str(month)
 
     else:
-        return (str(month))
+        return str(month)
 
 
 url = "https://www.gismeteo.ru/diary/4618/2008/1/"
