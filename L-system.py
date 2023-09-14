@@ -2,7 +2,6 @@ from turtle import *
 from random import randint
 hideturtle()
 color('black')
-#tracer(100,0.01)
 tracer(0)
 seth(90)
 penup()
@@ -13,18 +12,18 @@ width(1)
 def InitTree():
 	width(16)
 	oak='222220'
-	angle=14 #20
+	angle=14
 	length=10
-	n=12 #11
+	n=12
 	wid=16
 	return (oak,length,angle,n,wid)
 	
 def InitBranch1():
-    oak='X'
-    length=7
-    angle=25
-    n=6
-    return (oak,length,angle,n)
+	oak='X'
+	length=7
+	angle=25
+	n=6
+	return (oak,length,angle,n)
     
 def InitBranch2():
 	oak='F'
@@ -351,9 +350,11 @@ def RunApple(s, length,angle,wid):
 			if randint(0,10)>4:
 				forward(length)
 
-oak,length,angle,n,wid= InitTree()
-for i in range(n):
-	oak=TreeRules(oak)
-RunApple(oak,length,angle,wid)
-update()
-mainloop()
+
+if __name__ == "__main__" :
+	oak,length,angle,n,wid= InitTree()
+	for i in range(n):
+		oak=TreeRules(oak)
+	RunApple(oak,length,angle,wid)
+	update()
+	mainloop()
