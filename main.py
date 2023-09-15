@@ -16,7 +16,7 @@ import codecs
 
 class Example(QWidget):
 
-    def __init__(self):
+    def __init__(self) -> None:
         '''class constructor'''
         super().__init__()
         self.__iterator1 = Iterator1("dataset", "good")
@@ -25,7 +25,7 @@ class Example(QWidget):
         self.__path = ""
         self.initUI()
 
-    def initUI(self):
+    def initUI(self) -> None:
         '''the method that sets the main parameters of the window'''
         self.setGeometry(300, 300, 600, 600)
         self.setWindowTitle('Laboratory Work №2 on application programming')

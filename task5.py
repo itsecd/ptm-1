@@ -12,14 +12,14 @@ class Iterator1:
         incremented by one, that is, it moves to the next element
     """
 
-    def __init__(self, name_folder: str, path_file: str):
+    def __init__(self, name_folder: str, path_file: str) -> None:
         self.count = 0
         self.files = os.listdir(os.path.join(name_folder, path_file))
         self.folder = name_folder
         self.limit = len(self.files)
         self.path = path_file
 
-    def __next__(self):
+    def __next__(self) -> str:
         if self.count < self.limit:
             obj = self.files[self.count]
             self.count += 1
@@ -39,7 +39,7 @@ class Iterator2:
         that is, it moves to the next element
     """
 
-    def __init__(self, class_n: str,  path_file: str):
+    def __init__(self, class_n: str,  path_file: str) -> None:
         self.files = os.listdir(path_file)
         for elem in self.files:
             if not class_n in elem:
@@ -48,10 +48,10 @@ class Iterator2:
         self.count = 0
         self.path = path_file
 
-    def __iter__(self):
+    def __iter__(self) -> iter:
         return self
 
-    def __next__(self):
+    def __next__(self) -> str:
         if self.count < self.limit:
             obj = self.files[self.count]
             self.count += 1
@@ -70,7 +70,7 @@ class IteratorTask3:
         it moves to the next element
     """
 
-    def __init__(self, class_name: str, path: str, annotation_n: str):
+    def __init__(self, class_name: str, path: str, annotation_n: str) -> None:
         self.files = []
         with open(os.path.join(path, annotation_n), encoding='UTF-16') as f:
             reader = csv.reader(f, delimiter=';')
@@ -82,10 +82,10 @@ class IteratorTask3:
         self.count = 0
         self.path = path
 
-    def __iter__(self):
+    def __iter__(self) -> iter:
         return self
 
-    def __next__(self):
+    def __next__(self) -> None:
         if self.count < self.limit:
             obj = self.files[self.count]
             self.count += 1
