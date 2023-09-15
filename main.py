@@ -15,11 +15,11 @@ import yaml
 
 
 class Book:
-    """
+    '''
     Класс, представляющий книгу
-    """
+    '''
     def __init__(self, title: str, author: str, publication_year: int, isbn: str, genre: str, pages: int) -> None:
-        """
+        '''
         Создает новую книгу
         :param title: название книги
         :param author: автор книги
@@ -28,7 +28,7 @@ class Book:
         :param genre: жанр
         :param pages: количество страниц
         :return: None
-        """
+        '''
         self.title = title
         self.author = author
         self.publication_year = publication_year
@@ -51,21 +51,21 @@ class Book:
         return f"Title: {self.title}\nAuthor: {self.author}\nYear: {self.publication_year}"
 
 class Library:
-    """
+    '''
     Класс, представляющий библиотеку
-    """
+    '''
     def __init__(self) -> None:
-        """
+        '''
         Создает новую библиотеку
-        """
+        '''
         self.books = []
 
     def add_book(self, book: Book) -> None:
-        """
+        '''
         Добавляет книгу в библиотеку
         :param book: книга
         :return: None
-        """
+        '''
         self.books.append(book)
 
     def find_books_by_author(self, author: str) -> list:
@@ -117,67 +117,67 @@ class Library:
         return [book for book in self.books if book.title == title]
 
     def get_total_pages(self) -> int:
-        """
+        '''
         Возвращает общее количество страниц в библиотеке
         :return: int
-        """
+        '''
         return sum([book.pages for book in self.books])
 
     def get_genres(self) -> list:
-        """
+        '''
         Возвращает список жанров
         :return: list
-        """
+        '''
         return list(set([book.genre for book in self.books]))
 
-class Universal_file_reading:
-    """
+class UniversalFileRead:
+    '''
     Класс, представляющий универсальное чтение файлов
-    """
+    '''
     def __init__(self, filename: str) -> None:
-        """
+        '''
         Создает новый файл
         :param filename: наименование файла
-        """
+        '''
         self.filename = filename
 
     def read_file(self) -> str:
-        """
+        '''
         Чтение файла
         :return: str
-        """
+        '''
         with open(self.filename, 'r') as file:
             return file.read()
 
     def read_lines(self) -> list:
-        """
+        '''
         Чтение файла построчно
         :return: list
-        """
+        '''
         with open(self.filename, 'r') as file:
             return file.readlines()
 
     def read_json(self) -> dict:
-        """
+        '''
         Чтение JSON файла
         :return: dict
-        """
+        '''
         with open(self.filename, 'r') as file:
             return json.load(file)
 
     def read_csv(self) -> list:
-        """
+        '''
         Чтение CSV файла
         :return: list
-        """
+        '''
         with open(self.filename, 'r') as file:
             return csv.reader(file)
 
     def read_excel(self) -> DataFrame:
-        """
+        '''
         Чтение Excel файла
         :return: DataFrame
-        """
+        '''
         return pd.read_excel(self.filename)
 
     def read_sql(self) -> DataFrame:
@@ -206,33 +206,33 @@ class Universal_file_reading:
             return yaml.load(file, Loader=yaml.FullLoader)
 
     def read_pickle(self) -> list:
-        """
+        '''
         Чтение Pickle файла
         :return: list
-        """
+        '''
         with open(self.filename, 'rb') as file:
             return pickle.load(file)
 
     def read_word(self) -> list:
-        """
+        '''
         Чтение Word файла
         :return: list
-        """
+        '''
         return docx.Document(self.filename)
 
     def read_image(self) -> Image:
-        """
+        '''
         Чтение изображения
         :return: Image
-        """
+        '''
         return Image.open(self.filename)
 
 
 def create_sample_library() -> Library:
-    """
+    '''
     Создает пример библиотеки
     :return: Library
-    """
+    '''
     library = Library()
     book1 = Book(
         "THE BOOK 1",
@@ -286,10 +286,10 @@ def create_sample_library() -> Library:
 
 
 def main() -> None:
-    """
+    '''
     Главная функция программы
     :return: None
-    """
+    '''
     app = QApplication(sys.argv)
     window = QWidget()
     window.setWindowTitle('Библиотека 2.0')
