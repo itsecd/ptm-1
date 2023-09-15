@@ -13,13 +13,13 @@ def check_max_year(url: str) -> int:
     Returns:
         int: Maximum available year on the site
     """
-    flag = False
+    is_year_last = False
     year_counter = 2008
-    while not flag:
+    while not is_year_last:
         html_text = requests.get(url, headers={"User-Agent": "agent"}).text
         data = BeautifulSoup(html_text, "lxml")
         if data.find("span", class_="grey error-span"):
-            flag = True
+            is_year_last = True
             year_counter -= 1
         else:
             year_counter += 1
@@ -36,13 +36,13 @@ def check_max_month(url: str) -> int:
     Returns:
         int: maximum available month on the site
     """
-    flag = False
+    is_month_last = False
     month_counter = 1
-    while not flag:
+    while not is_month_last:
         html_text = requests.get(url, headers={"User-Agent": "agent"}).text
         data = BeautifulSoup(html_text, "lxml")
         if data.find("span", class_="grey error-span"):
-            flag = True
+            is_month_last = True
             month_counter -= 1
         else:
             month_counter += 1
@@ -50,20 +50,20 @@ def check_max_month(url: str) -> int:
     return month_counter
 
 
-def url_month_change(url: str, month: int, flag: int) -> str:
+def url_month_change(url: str, month: int, change_type: int) -> str:
     """Function that changes the month in the url
 
     Args:
         url (str): site url
         month (int): The month that need to change in the url
-        flag (int): Flag that responsible for how the url will change
+        change_type (int): Flag that responsible for how the url will change
 
     Returns:
         str: Changed url
     """
-    if flag == 1:
+    if change_type == 1:
         url = url[0:39] + "/1/"
-    elif flag == 2:
+    elif change_type == 2:
         url = url[0:39] + "/" + str(month) + "/"
     return url
 
@@ -154,5 +154,5 @@ for years in range(year_counter, current_year + 1):
                 writer = csv.writer(csvfile, lineterminator="\n")
                 writer.writerow((str(years) + "-" + months_redact(months) + "-" + days_redact(
                     output), output[1], output[2], output[3], output[4], output[5], output[6]))
-        if is_month_last == True:
+        if is_month_last:
             url = url_month_change(url, months, 1)         
