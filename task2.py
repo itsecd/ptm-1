@@ -13,6 +13,7 @@ def create_dir(dir_name: str) -> None:
         name = os.path.join(dir_name, "dataset")
         os.mkdir(name)
 
+
 def copy_dir2(good_name: str, bad_name: str, dir_name: str, annotation_name: str) -> None:
     """
     the function copies the dataset to a 
@@ -35,7 +36,7 @@ def copy_dir2(good_name: str, bad_name: str, dir_name: str, annotation_name: str
             new_file = os.path.join(
                 dir_name, "dataset", f"{file_dataset}_{elem}")
             shutil.copy(old_file, new_file)
-            with open(os.path.join(dir_name, annotation_name), 
+            with open(os.path.join(dir_name, annotation_name),
                       mode="a", encoding="UTF-16", newline='') as f:
                 writer = csv.writer(f, delimiter=';')
                 abspath_f = os.path.join(os.path.abspath(
