@@ -4,7 +4,7 @@ from typing import Optional
 
 
 def create_csv(name: str, path: str) -> None:
-    '''It function collect all filenames in dir and create csv file with abs path relative path and class name in cols'''
+    """It function collect all filenames in dir and create csv file with abs path relative path and class name in cols"""
     dir = os.path.join(path, name)
     names = os.listdir(dir)
     with open(os.path.join(dir, f"{name}_annotation.csv"), 'w') as file_csv:
@@ -17,7 +17,7 @@ def create_csv(name: str, path: str) -> None:
 
 
 def iterator1(name: str) -> str:
-    '''Just interater for direcrory'''
+    """Just interater for direcrory"""
     names = os.listdir(os.path.join("dataset", name))
     for i in names:
         if not ".jpg" in i:
@@ -29,7 +29,7 @@ def iterator1(name: str) -> str:
 
 class Iterator1_img:
     def __init__(self, name: str, path: str):
-        '''constructor'''
+        """constructor"""
         self.path = ""
         self.name = ""
         self.names = []
@@ -38,7 +38,7 @@ class Iterator1_img:
         self.init(name, path)
 
     def __next__(self) -> Optional[str]:
-        '''next operator'''
+        """next operator"""
         if self.counter < self.limit:
             self.counter += 1
             return self.names[self.counter - 1]
@@ -46,7 +46,7 @@ class Iterator1_img:
             raise StopIteration
 
     def init(self, name: str, path: str):
-        '''function for constructor'''
+        """function for constructor"""
         if not "dataset" in path:
             raise ("error")
         self.path = path
@@ -57,18 +57,18 @@ class Iterator1_img:
         self.counter = 0
 
     def clear(self) -> None:
-        '''set coutner to zero = iteration will start again'''
+        """set coutner to zero = iteration will start again"""
         self.counter = 0
 
     def set_name(self, name: str) -> None:
-        '''set class name'''
+        """set class name"""
         self.init(name, self.path)
 
     def set_path(self, path: str) -> None:
-        '''set path to dataset'''
+        """set path to dataset"""
         self.init(self.name, path)
 
 
 def run_1(name: str) -> None:
-    '''this function just run primary create_csv'''
+    """this function just run primary create_csv"""
     create_csv(name)

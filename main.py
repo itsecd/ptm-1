@@ -14,7 +14,7 @@ from task3 import create_dir_copy_randNames, create_dir_copy_randNames_both
 
 class Example(QWidget):
     def __init__(self) -> None:
-        '''Constructor'''
+        """Constructor"""
         super().__init__()
         self.__main_btn = QPushButton("Choose dataset dir", self)
         self.__main_btn.clicked.connect(self.__inputPath)
@@ -26,7 +26,7 @@ class Example(QWidget):
         self.initUI()
 
     def initUI(self) -> None:
-        '''support constructor function'''
+        """support constructor function"""
         self.setWindowTitle('Lab3')
         self.setWindowIcon(QIcon('6112_Logo_git_prefinal.jpg'))
         layout = QVBoxLayout()
@@ -44,7 +44,7 @@ class Example(QWidget):
         self.show()
 
     def __generalTab(self) -> QWidget:
-        '''main window with hello-words and descripition what's going on'''
+        """main window with hello-words and descripition what's going on"""
         custom_font = QFont()
         custom_font.setPixelSize(40)
         general_tab = QWidget()
@@ -63,7 +63,7 @@ class Example(QWidget):
         return general_tab
 
     def __show_image_tab(self) -> QWidget:
-        '''image tab where user choose directory and see the img via _next_'''
+        """image tab where user choose directory and see the img via _next_"""
         general_tab = QWidget()
         layout = QVBoxLayout()
         layout_button = QHBoxLayout()
@@ -81,7 +81,7 @@ class Example(QWidget):
         return general_tab
 
     def __tasks_tab(self) -> QWidget:
-        '''function generates tab with all buttons of prev lab'''
+        """function generates tab with all buttons of prev lab"""
         general_tab = QWidget()
         layout = QVBoxLayout()
         layout = QVBoxLayout()
@@ -117,7 +117,7 @@ class Example(QWidget):
         return general_tab
 
     def __on_clicked(self) -> None:
-        '''change class name'''
+        """change class name"""
         radio_button = self.sender()
         if radio_button.isChecked():
             print("Class is %s" % (radio_button.name))
@@ -125,7 +125,7 @@ class Example(QWidget):
             self.__name = radio_button.name
 
     def __inputPath(self) -> None:
-        '''service function'''
+        """service function"""
         print("input path")
         tmp = QFileDialog.getExistingDirectory(self, 'Select Folder')
         if not "dataset" in tmp:
@@ -138,7 +138,7 @@ class Example(QWidget):
             print("new dir is ", self.__path)
 
     def __clear_button(self) -> None:
-        '''toggle clear and start iteration again'''
+        """toggle clear and start iteration again"""
         print("clear")
         self.__pixmap = QPixmap(".jpg")
         self.__lable.setPixmap(self.__pixmap)
@@ -146,7 +146,7 @@ class Example(QWidget):
         self.resize(300, 300)
 
     def __next_button(self) -> None:
-        '''toggle next and operate with exception'''
+        """toggle next and operate with exception"""
         try:
             tmp = os.path.join(os.path.join(self.__iterator.path,
                                             self.__iterator.name), self.__iterator.__next__())
@@ -165,24 +165,24 @@ class Example(QWidget):
             print("Error")
 
     def __task1(self) -> None:
-        '''function for task1'''
+        """function for task1"""
         print("done task1!")
         create_csv(self.__name, self.__path)
 
     def __task2(self) -> None:
-        '''function for task2'''
+        """function for task2"""
         print("done task2!")
         copy_dataset(self.__name, self.__path, QFileDialog.getExistingDirectory(
             self, 'Select Folder'))
 
     def __task3Single(self) -> None:
-        '''function for task3 for single class'''
+        """function for task3 for single class"""
         print("done task3 single!")
         create_dir_copy_randNames(
             self.__name, self.__path, QFileDialog.getExistingDirectory(self, 'Select Folder'))
 
     def __task3Both(self) -> None:
-        '''function for task3 for both classes'''
+        """function for task3 for both classes"""
         print("done task3 both!")
         create_dir_copy_randNames_both(
             'zebra', 'bay horse', self.__path, QFileDialog.getExistingDirectory(self, 'Select Folder'))

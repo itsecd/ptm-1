@@ -6,9 +6,9 @@ import csv
 
 
 def create_dir_copy_randNames(class_name: str, path: str, dst: str) -> None:
-    '''Create array with rand num in 0 to 10000 length of names in source dir 
+    """Create array with rand num in 0 to 10000 length of names in source dir 
     and copy with that names to dst dir;
-    and create descriprion .csv file like in task 1'''
+    and create descriprion .csv file like in task 1"""
 
     dir = os.path.join(path, class_name)
     names = os.listdir(dir)
@@ -32,9 +32,9 @@ def create_dir_copy_randNames(class_name: str, path: str, dst: str) -> None:
 
 
 def create_dir_copy_randNames_both(class_name1: str, class_name2: str, path: str, dst: str) -> None:
-    '''Create array with rand num in 0 to 10000 length of names in source dir 
+    """Create array with rand num in 0 to 10000 length of names in source dir 
     and copy with that names to dst dir;
-    and create descriprion .csv file like in task 1'''
+    and create descriprion .csv file like in task 1"""
 
     dir = os.path.join(path, class_name1)
     names1 = os.listdir(dir)
@@ -71,16 +71,16 @@ def create_dir_copy_randNames_both(class_name1: str, class_name2: str, path: str
 
 
 def create_dir(path: str) -> str:
-    '''this function create 'dataset' directory
+    """this function create 'dataset' directory
      in path gived by user
-     and return path of new_dataset dir'''
+     and return path of new_dataset dir"""
     if not os.path.isdir(os.path.join(path, 'dataset')):
         os.mkdir(os.path.join(path, 'dataset'))
     return os.path.join(path, 'dataset')
 
 
 def iterator3(class_name: str, path: str) -> str:
-    '''Just interater for direcrory'''
+    """Just interater for direcrory"""
     tmp1 = []
     with open(os.path.join(path, 'annotation.csv')) as file:
         reader = csv.reader(file, delimiter=';', quotechar=';',
@@ -97,6 +97,7 @@ def iterator3(class_name: str, path: str) -> str:
 
 class Iterator3_img:
     def __init__(self, path: str, class_name: str):
+        """init function"""
         self.tmp1 = []
         with open(os.path.join(path, 'annotation.csv')) as file:
             reader = csv.reader(file, delimiter=';', quotechar=';',
@@ -109,6 +110,7 @@ class Iterator3_img:
         self.counter = 0
 
     def __next__(self):
+        """next operator"""
         if self.counter < self.limit:
             self.counter += 1
             return self.tmp1[self.counter - 1]
@@ -117,6 +119,7 @@ class Iterator3_img:
 
 
 def run_3(class_name: str, dst: str, class_name1="test1", class_name2="test2") -> None:
+    """function for launching func"""
     print(3)
     tmp = create_dir(dst)
     create_dir_copy_randNames(class_name, tmp)
