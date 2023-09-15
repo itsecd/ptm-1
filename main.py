@@ -35,7 +35,7 @@ class Example(QWidget):
         tabs.addTab(self.__generalTab(), "general")
         tabs.addTab(self.__show_image_tab(), "show image")
         tabs.addTab(self.__tasks_tab(), "tasksTab")
-        self.__iterator.setPath(self.__path)
+        self.__iterator.set_path(self.__path)
         layout.addWidget(tabs)
         self.setGeometry(300, 300, 350, 300)
         qr = self.frameGeometry()
@@ -121,7 +121,7 @@ class Example(QWidget):
         radio_button = self.sender()
         if radio_button.isChecked():
             print("Class is %s" % (radio_button.name))
-            self.__iterator.setName(radio_button.name)
+            self.__iterator.set_name(radio_button.name)
             self.__name = radio_button.name
 
     def __inputPath(self) -> None:

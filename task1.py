@@ -60,11 +60,11 @@ class Iterator1_img:
         '''set coutner to zero = iteration will start again'''
         self.counter = 0
 
-    def setName(self, name: str) -> None:
+    def set_name(self, name: str) -> None:
         '''set class name'''
         self.init(name, self.path)
 
-    def setPath(self, path: str) -> None:
+    def set_path(self, path: str) -> None:
         '''set path to dataset'''
         self.init(self.name, path)
 

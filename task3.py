@@ -82,14 +82,14 @@ def create_dir(path: str) -> str:
 def iterator3(class_name: str, path: str) -> str:
     '''Just interater for direcrory'''
     tmp1 = []
-    with open(os.path.join(path, 'annotation.csv')) as File:
-        reader = csv.reader(File, delimiter=';', quotechar=';',
+    with open(os.path.join(path, 'annotation.csv')) as file:
+        reader = csv.reader(file, delimiter=';', quotechar=';',
                             quoting=csv.QUOTE_MINIMAL)
         for it in reader:
             if (it[2] == class_name):
                 tmp1.append(os.path.basename(it[1]))
         print(tmp1)
-    File.close
+    file.close
     for i in range(len(tmp1)):
         yield tmp1[i]
     return None
@@ -98,13 +98,13 @@ def iterator3(class_name: str, path: str) -> str:
 class Iterator3_img:
     def __init__(self, path: str, class_name: str):
         self.tmp1 = []
-        with open(os.path.join(path, 'annotation.csv')) as File:
-            reader = csv.reader(File, delimiter=';', quotechar=';',
+        with open(os.path.join(path, 'annotation.csv')) as file:
+            reader = csv.reader(file, delimiter=';', quotechar=';',
                                 quoting=csv.QUOTE_MINIMAL)
             for it in reader:
                 if (it[2] == class_name):
                     self.tmp1.append(os.path.basename(it[1]))
-        File.close
+        file.close
         self.limit = len(self.tmp1)
         self.counter = 0
 
