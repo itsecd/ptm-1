@@ -14,7 +14,7 @@ def create_dir(dir_name: str) -> None:
         os.mkdir(name)
 
 
-def copy_dir3(good_name, bad_name, dir_name, annotation_name) -> None:
+def copy_dir3(good_name: str, bad_name: str, dir_name: str, annotation_name: str) -> None:
     """
     the function copies the dataset to a 
     new directory with a random file name by means of creating this directory 
