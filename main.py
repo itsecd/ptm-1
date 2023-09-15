@@ -1,9 +1,9 @@
 import sys
 import os
 
-from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QPushButton,
-                             QTextEdit, QGridLayout, QApplication, QHBoxLayout,
-                             QRadioButton, QFileDialog, qApp, QDesktopWidget, QMessageBox, QTabWidget, QVBoxLayout, QMainWindow)
+from PyQt5.QtWidgets import (QWidget, QLabel, QPushButton,
+                             QApplication, QHBoxLayout,
+                             QRadioButton, QFileDialog, QDesktopWidget, QMessageBox, QTabWidget, QVBoxLayout)
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 
 
