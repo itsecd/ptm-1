@@ -17,9 +17,12 @@ import codecs
 
 
 class Example(QWidget):
+    """
+    class Example displays the app window for completing the task
+    """
 
     def __init__(self) -> None:
-        '''class constructor'''
+        """class constructor"""
         super().__init__()
         self.__iterator1 = Iterator1("dataset", "good")
         self.__iterator2 = Iterator1("dataset", "bad")
@@ -28,7 +31,7 @@ class Example(QWidget):
         self.initUI()
 
     def initUI(self) -> None:
-        '''the method that sets the main parameters of the window'''
+        """the method that sets the main parameters of the window"""
         self.setGeometry(300, 300, 600, 600)
         self.setWindowTitle('Laboratory Work №2 on application programming')
         self.setWindowIcon(QIcon('icon.jpg'))
@@ -43,7 +46,7 @@ class Example(QWidget):
         self.show()
 
     def __good(self) -> None:
-        '''the method of displaying a good review on the screen'''
+        """the method of displaying a good review on the screen"""
         if 'dataset' not in self.__path:
             error = QMessageBox()
             error.setWindowTitle("Error")
@@ -64,7 +67,7 @@ class Example(QWidget):
             print("error when tried to open file")
 
     def __bad(self) -> None:
-        '''the method of displaying a bad review on the screen'''
+        """the method of displaying a bad review on the screen"""
         if 'dataset' not in self.__path:
             error = QMessageBox()
             error.setWindowTitle("Error")
@@ -85,7 +88,7 @@ class Example(QWidget):
             print("error when tried to open file")
 
     def __tasks(self) -> QWidget:
-        '''method for working with dataset by tasks'''
+        """method for working with dataset by tasks"""
         tasks_tab = QWidget()
         layout = QHBoxLayout()
         self.__button = QPushButton("Select a directory", self)
@@ -105,8 +108,8 @@ class Example(QWidget):
         return tasks_tab
 
     def __show_review(self) -> QWidget:
-        '''method for implementing the transition to the
-        following instances of classes'''
+        """method for implementing the transition to the
+        following instances of classes"""
         show_review = QWidget()
         layout = QHBoxLayout()
         layout_button = QVBoxLayout()
@@ -126,7 +129,7 @@ class Example(QWidget):
         return show_review
 
     def __task1(self) -> None:
-        '''method for working on task1'''
+        """method for working on task1"""
         if 'dataset' not in self.__path:
             error = QMessageBox()
             error.setWindowTitle("Error")
@@ -138,7 +141,7 @@ class Example(QWidget):
             self, 'Select Folder'), "annotation1")
 
     def __task2(self) -> None:
-        '''method for working on task2'''
+        """method for working on task2"""
         if 'dataset' not in self.__path:
             error = QMessageBox()
             error.setWindowTitle("Error")
@@ -150,7 +153,7 @@ class Example(QWidget):
             self, 'Select Folder'), "annotation2")
 
     def __task3(self) -> None:
-        '''method for working on task3'''
+        """method for working on task3"""
         if 'dataset' not in self.__path:
             error = QMessageBox()
             error.setWindowTitle("Error")
@@ -162,7 +165,7 @@ class Example(QWidget):
             self, 'Select Folder'), "annotation3")
 
     def insert_dir(self) -> None:
-        '''method for selecting the main folder'''
+        """method for selecting the main folder"""
         flag = True
         while flag:
             self.__folderpath = QFileDialog.getExistingDirectory(self)
