@@ -4,7 +4,8 @@ from typing import Optional
 
 
 def create_csv(name: str, path: str) -> None:
-    """It function collect all filenames in dir and create csv file with abs path relative path and class name in cols"""
+    """It function collect all filenames in dir and create csv
+      file with abs path relative path and class name in cols"""
     dir = os.path.join(path, name)
     names = os.listdir(dir)
     with open(os.path.join(dir, f"{name}_annotation.csv"), 'w') as file_csv:

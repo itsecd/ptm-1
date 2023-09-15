@@ -53,7 +53,10 @@ class Example(QWidget):
         line1 = QLabel("Hello there!")
         line1.setFont(custom_font)
         custom_font.setPixelSize(15)
-        line2 = QLabel("At showImageTab you can view dataset's imgs\nAt tasksTab You can:\n - task1: create CSV file for dataset's classes\n - task2: copy dataset to new directory\n - task3: copy dataset with new names")
+        line2 = QLabel("""At showImageTab you can view dataset's imgs
+                       \nAt tasksTab You can:\n - task1: create CSV file for dataset's classes
+                       \n - task2: copy dataset to new directory
+                       \n - task3: copy dataset with new names""")
         line2.setFont(custom_font)
         text.addWidget(line1)
         text.addWidget(line2)
