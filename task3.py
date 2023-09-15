@@ -5,7 +5,8 @@ from random import randint
 
 
 def create_dir(dir_name: str) -> None:
-    """The function of creating a new directory with the specified name dir_name"""
+    """The function of creating a new directory
+    with the specified name dir_name"""
     name_dir_folder = os.path.join(dir_name, "dataset")
     if not os.path.isdir(dir_name):
         os.mkdir(dir_name)
@@ -14,7 +15,8 @@ def create_dir(dir_name: str) -> None:
         os.mkdir(name)
 
 
-def copy_dir3(good_name: str, bad_name: str, dir_name: str, annotation_name: str) -> None:
+def copy_dir3(good_name: str, bad_name: str, dir_name: str,
+              annotation_name: str) -> None:
     """
     the function copies the dataset to a 
     new directory with a random file name by means of creating this directory 

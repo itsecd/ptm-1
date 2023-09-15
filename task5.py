@@ -63,11 +63,11 @@ class IteratorTask3:
     """
     class Iterator3:
         methods:
-        __init__ : reads elements from a csv file and writes them to a list; 
-        initialize fields class
+        __init__ : reads elements from a csv file and writes them to
+        a list; initialize fields class
         __iter__ : return iterator
-        __next__ : return object and the counter is incremented by one, that is, 
-        it moves to the next element
+        __next__ : return object and the counter is incremented by one,
+        that is, it moves to the next element
     """
 
     def __init__(self, class_name: str, path: str, annotation_n: str) -> None:
