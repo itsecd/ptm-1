@@ -58,7 +58,7 @@ class Iterator2_img:
             raise StopIteration
 
 
-def run_2(new_path_dir, name_class):
+def run_2(new_path_dir: str, name_class: str):
     """main function, that toggle all realWorking functions"""
     new_dataset_path = create_dir(new_path_dir)
     copy_dataset(name_class, new_dataset_path)

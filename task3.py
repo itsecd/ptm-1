@@ -118,7 +118,7 @@ class Iterator3_img:
             raise StopIteration
 
 
-def run_3(class_name: str, dst: str, class_name1="test1", class_name2="test2") -> None:
+def run_3(class_name: str, dst: str) -> None:
     """function for launching func"""
     print(3)
     tmp = create_dir(dst)
