@@ -1,7 +1,3 @@
-import telebot as tb
-import os, requests
-import random
-import time
 from aiogram.utils import executor
 from aiogram import Bot, Dispatcher, types
 from aiogram.types.message import ContentType
