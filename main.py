@@ -10,6 +10,8 @@ from task2 import copy_dir2
 from task3 import copy_dir3
 from task5 import Iterator1
 import codecs
+
+
 class Example(QWidget):
 
     def __init__(self):
