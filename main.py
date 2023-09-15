@@ -1,6 +1,5 @@
 import sys
 import os
-# from typing import Self
 
 from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QPushButton,
                              QTextEdit, QGridLayout, QApplication, QHBoxLayout,
@@ -20,20 +19,14 @@ class Example(QWidget):
         self.__mainBtn = QPushButton("Choose dataset dir", self)
         self.__mainBtn.clicked.connect(self.__inputPath)
         self.__iterator = Iterator1_img("test", "dataset")
-        # self.pixmap = QPixmap('blueLobster.jpg')
         self.__pixmap = QPixmap('.jpg')
         self.__lable = QLabel(self)
         self.__name = "test"
         self.__path = "dataset"
         self.initUI()
 
-    # def __iter__(self) -> Self:
-    #     '''something'''
-    #     return self
-
     def initUI(self) -> None:
         '''support constructor function'''
-
         self.setWindowTitle('Lab3')
         self.setWindowIcon(QIcon('6112_Logo_git_prefinal.jpg'))
         layout = QVBoxLayout()
@@ -44,15 +37,12 @@ class Example(QWidget):
         tabs.addTab(self.__tasksTab(), "tasksTab")
         self.__iterator.setPath(self.__path)
         layout.addWidget(tabs)
-
         self.setGeometry(300, 300, 350, 300)
         qr = self.frameGeometry()
         cp = QDesktopWidget().availableGeometry().center()
         qr.moveCenter(cp)
-
         self.show()
 
-    # Main window with hello-words and descripition what's going on
     def __generalTab(self) -> QWidget:
         '''main window with hello-words and descripition what's going on'''
         custom_font = QFont()
@@ -62,7 +52,6 @@ class Example(QWidget):
         text = QVBoxLayout()
         line1 = QLabel("Hello there!")
         line1.setFont(custom_font)
-        
         custom_font.setPixelSize(15)
         line2 = QLabel("At showImageTab you can view dataset's imgs\nAt tasksTab You can:\n - task1: create CSV file for dataset's classes\n - task2: copy dataset to new directory\n - task3: copy dataset with new names")
         line2.setFont(custom_font)
@@ -70,16 +59,13 @@ class Example(QWidget):
         text.addWidget(line2)
         layout.addLayout(text)
         layout.addWidget(self.__mainBtn)
-
         generalTab.setLayout(layout)
         return generalTab
 
-    # image tab where user choose directory and see the img via _next_
     def __showImageTab(self) -> QWidget:
         '''image tab where user choose directory and see the img via _next_'''
         generalTab = QWidget()
         layout = QVBoxLayout()
-
         layoutButton = QHBoxLayout()
         clearBtn = QPushButton("clear")
         clearBtn.clicked.connect(self.__clearButton)
@@ -87,12 +73,9 @@ class Example(QWidget):
         nextBtn.clicked.connect(self.__nextButton)
         layoutButton.addWidget(clearBtn)
         layoutButton.addWidget(nextBtn)
-
         self.__lable.setPixmap(self.__pixmap)
         layout.addWidget(self.__lable)
         self.resize(self.__pixmap.width(), self.__pixmap.height())
-
-        # layout.addLayout(layoutRadioButton)
         layout.addLayout(layoutButton)
         generalTab.setLayout(layout)
         return generalTab
@@ -101,43 +84,35 @@ class Example(QWidget):
         '''function generates tab with all buttons of prev lab'''
         generalTab = QWidget()
         layout = QVBoxLayout()
-        
         layout = QVBoxLayout()
         task1 = QPushButton('task1')
         task1.clicked.connect(self.__task1)
         layout.addWidget(task1)
-
         task2 = QPushButton('task2')
         task2.clicked.connect(self.__task2)
         layout.addWidget(task2)
-
         task3Single = QPushButton('task3Single')
         task3Single.clicked.connect(self.__task3Single)
         task3Both = QPushButton('task3Both')
         task3Both.clicked.connect(self.__task3Both)
         layout.addWidget(task3Single)
-        layout.addWidget(task3Both) 
+        layout.addWidget(task3Both)
         layout.addSpacing(100)
-
         layoutRadioButton = QHBoxLayout()
         radiobutton = QRadioButton("zebra")
         radiobutton.name = "zebra"
         radiobutton.toggled.connect(self.__onClicked)
         layoutRadioButton.addWidget(radiobutton)
-
         radiobutton = QRadioButton("bay horse")
         radiobutton.name = "bay horse"
         radiobutton.toggled.connect(self.__onClicked)
         layoutRadioButton.addWidget(radiobutton)
         radiobutton = QRadioButton("test")
-
         radiobutton.name = "test"
         radiobutton.setChecked(True)
         radiobutton.toggled.connect(self.__onClicked)
-
         layoutRadioButton.addWidget(radiobutton)
         layout.addLayout(layoutRadioButton)
-        
         generalTab.setLayout(layout)
         return generalTab
 
@@ -159,7 +134,7 @@ class Example(QWidget):
                 self, "Wrong dir", "please choose dir with dataset", QMessageBox.Ok)
         else:
             print("prev dir is ", self.__path)
-            self.__path = tmp 
+            self.__path = tmp
             print("new dir is ", self.__path)
 
     def __clearButton(self) -> None:
@@ -214,7 +189,6 @@ class Example(QWidget):
 
 
 if __name__ == '__main__':
-
     app = QApplication(sys.argv)
     ex = Example()
     sys.exit(app.exec_())
