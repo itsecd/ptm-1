@@ -1,12 +1,11 @@
 import telebot as tb
-from aiogram.utils import executor
-from telebot import types
 import os, requests
 import random
 import time
-
+from aiogram.utils import executor
 from aiogram import Bot, Dispatcher, types
 from aiogram.types.message import ContentType
+from telebot import types
 
 # bot API token
 TOKEN = "5550601778:AAEcLnx-UCf4sjlMyJOA-7L3-aAulTNQlWo"
