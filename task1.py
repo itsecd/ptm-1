@@ -1,5 +1,5 @@
 import os
-# from typing import Self
+
 from typing import Optional
 
 
@@ -7,26 +7,11 @@ def create_csv(name: str, path: str) -> None:
     '''It function collect all filenames in dir and create csv file with abs path relative path and class name in cols'''
     dir = os.path.join(path, name)
     names = os.listdir(dir)
-    # print(names)
-    # print(dir)
     with open(os.path.join(dir, f"{name}_annotation.csv"), 'w') as file_csv:
-        # writer = csv.writer(file_csv)
         names = list(filter(lambda tmp: ".jpg" in tmp, names))
-        # for i in names:
-        #     if not ".jpg" in i:
-        #         names.remove(i)
         for i in names:
-            # writer.writerow(str(os.path.abspath(i) + "," + os.path.join(path, i) + "," + path_dir))
-            file_csv.write(os.path.join(os.getcwd(),os.path.join(dir, i)) + "," +
+            file_csv.write(os.path.join(os.getcwd(), os.path.join(dir, i)) + "," +
                            os.path.join(dir, i) + "," + name)
-            # file_csv.write(os.path.abspath(i) + "," +
-            #                os.path.join(dir, i) + "," + name)
-
-            # print(os.path.join(os.path.join(os.getcwd, dir), i))
-            # print(os.path.join(os.getcwd(),os.path.join(dir, i)))
-            # print(os.getcwd())
-            # print(dir)
-            # print(i)
             file_csv.write("\n")
     file_csv.close
 
@@ -52,9 +37,6 @@ class Iterator1_img:
         self.counter = 0
         self.init(name, path)
 
-    # def __iter__(self) -> Self:
-    #     return self
-
     def __next__(self) -> Optional[str]:
         '''next operator'''
         if self.counter < self.limit:
@@ -73,9 +55,6 @@ class Iterator1_img:
         self.names = os.listdir(os.path.join(self.path, self.name))
 
         self.names = list(filter(lambda tmp: ".jpg" in tmp, self.names))
-        # for i in self.names:
-        #     if not ".jpg" in i:
-        #         self.names.remove(i)
         self.limit = len(self.names)
         self.counter = 0
 
