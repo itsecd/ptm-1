@@ -59,7 +59,7 @@ class Iterator2:
         raise StopIteration
 
 
-class IteratorTask3:
+class Iterator3:
     """
     class Iterator3:
         methods:

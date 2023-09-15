@@ -34,14 +34,14 @@ def copy_dir3(good_name: str, bad_name: str, dir_name: str,
         path_p = os.path.join("dataset", file_dataset)
         class_name = os.listdir(path_p)
         for elem in class_name:
-            flag = True
+            is_check_list = True
             number = randint(0, 10000)
-            while flag:
+            while is_check_list:
                 if number in list_tmp:
                     number = randint(0, 10000)
                 else:
                     list_tmp.append(number)
-                    flag = False
+                    is_check_list = False
             old_file = os.path.join(path_p, elem)
             new_file = os.path.join(
                 dir_name, "dataset", f"{number}.txt")

@@ -3,10 +3,10 @@ import os
 
 
 def create_csv1(name_class_good: str, name_class_bad: str,
-                name_folder: str, name_annatation: str) -> None:
+                name_folder: str, name_annotation: str) -> None:
     """The function of creating a csv file with 3 parameters: absolute path,
     relative path, class name"""
-    with open(os.path.join(name_folder, name_annatation), mode="w",
+    with open(os.path.join(name_folder, name_annotation), mode="w",
               encoding="UTF-16", newline='') as f:
         writer = csv.writer(f, delimiter=';')
         name_good = os.path.join("dataset", name_class_good)

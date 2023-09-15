@@ -1,6 +1,6 @@
-import sys
+import codecs
 import os
-
+import sys
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel,
@@ -8,12 +8,10 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel,
                              QVBoxLayout, QTabWidget, QHBoxLayout)
 from PyQt5.QtGui import QIcon, QFont
 
-
 from task1 import create_csv1
 from task2 import copy_dir2
 from task3 import copy_dir3
 from task5 import Iterator1
-import codecs
 
 
 class Example(QWidget):
@@ -166,8 +164,8 @@ class Example(QWidget):
 
     def insert_dir(self) -> None:
         """method for selecting the main folder"""
-        flag = True
-        while flag:
+        is_select_folder = True
+        while is_select_folder:
             self.__folderpath = QFileDialog.getExistingDirectory(self)
             if "dataset" not in self.__folderpath:
                 error = QMessageBox()
@@ -175,7 +173,7 @@ class Example(QWidget):
                 error.setText("error when selecting a folder")
                 error.exec_()
             else:
-                flag = False
+                is_select_folder = False
                 self.__path = "dataset"
 
 
