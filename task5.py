@@ -31,7 +31,8 @@ class Iterator2:
     """
     class Iterator2:
         methods:
-        __init__ : initializing fields class and check: if the element doesn`t contain the name 
+        __init__ : initializing fields class and check: if the element doesn`t
+        contain the name 
         of the class, then it is deleted
         __iter__ : return iterator
         __next__ : return object and the counter is incremented by one,

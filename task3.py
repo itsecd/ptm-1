@@ -44,7 +44,8 @@ def copy_dir3(good_name, bad_name, dir_name, annotation_name) -> None:
             new_file = os.path.join(
                 dir_name, "dataset", f"{number}.txt")
             shutil.copy(old_file, new_file)
-            with open(os.path.join(dir_name, annotation_name), mode="a", encoding="UTF-16", newline='') as f:
+            with open(os.path.join(dir_name, annotation_name), mode="a",
+                      encoding="UTF-16", newline='') as f:
                 writer = csv.writer(f, delimiter=';')
                 result_file = os.path.join("dataset", f"{number}.txt")
                 abspath_f = os.path.join(

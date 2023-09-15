@@ -4,7 +4,8 @@ import shutil
 
 
 def create_dir(dir_name: str) -> None:
-    """The function of creating a new directory with the specified name dir_name"""
+    """The function of creating a new directory with the
+    specified name dir_name"""
     name_dir_folder = os.path.join(dir_name, "dataset")
     if not os.path.isdir(dir_name):
         os.mkdir(dir_name)
@@ -15,7 +16,9 @@ def create_dir(dir_name: str) -> None:
 def copy_dir2(good_name: str, bad_name: str, dir_name: str, annotation_name: str) -> None:
     """
     the function copies the dataset to a 
-    new directory with changes in the file name (number.txt->classname_number.txt) by means of creating this directory using the dir_create function and writes the absolute path, 
+    new directory with changes in the file name (number.txt->classname_number.txt)
+    by means of creating this directory using the dir_create 
+    function and writes the absolute path, 
     relative path and class name to a new csv file to be able 
     to define the instance class
     """
@@ -32,7 +35,8 @@ def copy_dir2(good_name: str, bad_name: str, dir_name: str, annotation_name: str
             new_file = os.path.join(
                 dir_name, "dataset", f"{file_dataset}_{elem}")
             shutil.copy(old_file, new_file)
-            with open(os.path.join(dir_name, annotation_name), mode="a", encoding="UTF-16", newline='') as f:
+            with open(os.path.join(dir_name, annotation_name), 
+                      mode="a", encoding="UTF-16", newline='') as f:
                 writer = csv.writer(f, delimiter=';')
                 abspath_f = os.path.join(os.path.abspath(
                     dir_name), f"{file_dataset}_{elem}")

@@ -1,7 +1,9 @@
 import sys
 import os
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QFileDialog, QMessageBox, QPushButton, QVBoxLayout, QTabWidget, QHBoxLayout
+from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QLabel,
+                             QFileDialog, QMessageBox, QPushButton,
+                             QVBoxLayout, QTabWidget, QHBoxLayout)
 from PyQt5.QtGui import QIcon, QFont
 
 
@@ -49,7 +51,8 @@ class Example(QWidget):
         try:
             self.__iterator1.path = "good"
             new = os.path.join(os.path.join(
-                self.__iterator1.folder, self.__iterator1.path), self.__iterator1.__next__())
+                self.__iterator1.folder, self.__iterator1.path),
+                self.__iterator1.__next__())
             print(new)
             f = codecs.open(new, 'r', 'utf-8')
             self.__review = f.read()
@@ -69,7 +72,8 @@ class Example(QWidget):
         try:
             self.__iterator2.path = "bad"
             new = os.path.join(os.path.join(
-                self.__iterator2.folder, self.__iterator2.path), self.__iterator2.__next__())
+                self.__iterator2.folder, self.__iterator2.path),
+                self.__iterator2.__next__())
             print(new)
             f = codecs.open(new, 'r', 'utf-8')
             self.__review = f.read()
@@ -99,7 +103,8 @@ class Example(QWidget):
         return tasks_tab
 
     def __show_review(self) -> QWidget:
-        '''method for implementing the transition to the following instances of classes'''
+        '''method for implementing the transition to the
+        following instances of classes'''
         show_review = QWidget()
         layout = QHBoxLayout()
         layout_button = QVBoxLayout()
