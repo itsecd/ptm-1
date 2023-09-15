@@ -14,10 +14,12 @@ def create_dir(dir_name: str) -> None:
         os.mkdir(name)
 
 
-def copy_dir2(good_name: str, bad_name: str, dir_name: str, annotation_name: str) -> None:
+def copy_dir2(good_name: str, bad_name: str, dir_name: str,
+              annotation_name: str) -> None:
     """
     the function copies the dataset to a 
-    new directory with changes in the file name (number.txt->classname_number.txt)
+    new directory with changes in the file name
+    (number.txt->classname_number.txt)
     by means of creating this directory using the dir_create 
     function and writes the absolute path, 
     relative path and class name to a new csv file to be able 
