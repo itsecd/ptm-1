@@ -1,6 +1,7 @@
-from bs4 import BeautifulSoup
-import requests
 import csv
+
+import requests
+from bs4 import BeautifulSoup
 
 
 def check_max_year(url: str) -> int:
