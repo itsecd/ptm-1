@@ -77,9 +77,9 @@ def name_for_file(first_part: str, second_part: str) -> str:
     Returns:
         str: Name in special format
     """
-    f_p = first_part.replace("-", "") + "_"
-    s_p = second_part.replace("-", "") + ".csv"
-    return os.path.join("data_to_weeks_output", f_p + s_p)
+    modified_first_part = first_part.replace("-", "") + "_"
+    modified_second_part = second_part.replace("-", "") + ".csv"
+    return os.path.join("data_to_weeks_output", modified_first_part + modified_second_part)
 
 
 def week_border(data: list[list[str]], index) -> list[str]:
