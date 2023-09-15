@@ -3,56 +3,51 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.types.message import ContentType
 from telebot import types
 
-# bot API token
 TOKEN = "5550601778:AAEcLnx-UCf4sjlMyJOA-7L3-aAulTNQlWo"
 
-# API token for payment of telegram
 TOKEN_PAY = "1877036958:TEST:5995ac386bfd73a83b8f5fb2000e335213a0d345"
 
 VAL = "RUB"
 THIS_GROUP = ""
 
-# type pay
 PRICE_LITE = types.LabeledPrice(label='BOX1', amount=72500)
 PRICE_PRO = types.LabeledPrice(label='BOX2', amount=120000)
 
-# photo
 KROSS1 = 'https://ae04.alicdn.com/kf/H9c79f950267c4f3497b6510042f98d8az/-.jpg'
 
 PRO_PHOTO = 'https://drive.google.com/file/d/1GpAOLZ5XCVqqh4o_Hb_Mt0hYBnHnXIkH/view?usp=share_link'
 
-# add token our bot
 bot = Bot(TOKEN)
 dp = Dispatcher(bot)
 
 
-# start menu of bot
 
-@dp.message_handler(commands=['start'])  # command /start
-async def start(message):
+@dp.message_handler(commands=['start'])
+async def start(message) -> None:
     """
-        function is start bot
+        Функция начала работы бота
+        :message: - объект сообщения
     """
 
-    # create panel buttons
     panel = types.ReplyKeyboardMarkup(resize_keyboard=True)
 
-    # create main buttons
     btn_1 = types.KeyboardButton('💳Оплатить покупку (online) (1с)')
     btn_2 = types.KeyboardButton('💵Оплатить покупку (через представителя) (24ч)')
     btn_3 = types.KeyboardButton('⁉️Информация')
 
-    # added buttons in panel
     panel.add(btn_1, btn_2, btn_3)
 
-    # send message from bot
     await bot.send_message(message.chat.id,
                            '📌Приветствую!\nЯ бот 💳BoxPay и я помогу оплатить любые покупки в интернете! Перейди в раздел ⁉️Информация если тебе что то не понятно по оплате покупок!',
                            reply_markup=panel)
 
 
 @dp.message_handler(content_types=["text"])
-async def text(message):
+async def text(message) -> None:
+    """
+        Функция обрабатывает текст отправленный пользователем (отслеживание события нажатия на кнопку)
+        :message: - объект сообщения
+    """
     chat_id = message.chat.id
     if message.text == '⁉️Информация':
         panel = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -104,7 +99,12 @@ async def text(message):
 
 
 @dp.callback_query_handler(lambda c: c.data)
-async def answer(call: types.CallbackQuery):
+async def answer(call: types.CallbackQuery) -> None:
+    """
+        Функция обрабатывает кнопку нажатую пользователем через callback
+        dp.callback_query_handler() - декоратор
+        :call: - обработчик callback
+    """
     global VAL
     global THIS_GROUP
     if call.data == '1':
@@ -329,15 +329,21 @@ async def answer(call: types.CallbackQuery):
                                    start_parameter="one-month-subscription",
                                    payload="test-invoice-payload", reply_markup=keyboard)
 
-# pre checkout  (must be answered in 10 seconds)
 @dp.pre_checkout_query_handler(lambda query: True)
-async def pre_checkout_query(pre_checkout_q: types.PreCheckoutQuery):
+async def pre_checkout_query(pre_checkout_q: types.PreCheckoutQuery) -> None:
+    """
+        Функия обработки запроса на checkid
+        :pre_checkout_q: - объект запроса
+    """
     await bot.answer_pre_checkout_query(pre_checkout_q.id, ok=True)
 
 
-# successful payment
 @dp.message_handler(content_types=ContentType.SUCCESSFUL_PAYMENT)
-async def successful_payment(message: types.Message):
+async def successful_payment(message: types.Message) -> None:
+    """
+        Функция удачной оплаты
+        :message: - объект сообщения
+    """
     global THIS_GROUP
     print("SUCCESSFUL PAYMENT:")
     payment_info = message.successful_payment.to_python()
