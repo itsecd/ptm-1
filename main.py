@@ -1,17 +1,16 @@
 import time
 import sys
-from PIL.Image import Image
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel
-from pandas import DataFrame
 import json
 import csv
 import sqlite3
 import pandas as pd
-from PIL import Image
 import xml.etree.ElementTree as ET
 import docx
 import pickle
 import yaml
+from PIL import Image
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel
+from pandas import DataFrame
 
 
 class Book:
