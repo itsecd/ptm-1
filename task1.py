@@ -51,9 +51,7 @@ class Iterator1_img:
             raise ("error")
         self.path = path
         self.name = name
-
         self.names = os.listdir(os.path.join(self.path, self.name))
-
         self.names = list(filter(lambda tmp: ".jpg" in tmp, self.names))
         self.limit = len(self.names)
         self.counter = 0
