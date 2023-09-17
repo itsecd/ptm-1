@@ -21,7 +21,8 @@ class Iterator:
         else:
             raise StopIteration
 
-def run_5(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
+def run_5(path_to_csv: str=os.path.join("C:/", "PYTHON",
+                                         "PTM-1", "File_folder")) -> None:
     """
     The main function of the script.
 

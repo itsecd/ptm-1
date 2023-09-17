@@ -14,7 +14,8 @@ def check_file(path_sc2: str) -> None:
         os.mkdir(path_sc2)
 
 
-def write_file(date_1: str, date_2: str, list_years: list, path_to_csv: str) -> None:
+def write_file(date_1: str, date_2: str, list_years: list,
+                path_to_csv: str) -> None:
     """
     The function that creates a csv and writes data from list_years.
 
@@ -32,7 +33,8 @@ def write_file(date_1: str, date_2: str, list_years: list, path_to_csv: str) -> 
             writer.writerow(list_years[i])
 
 
-def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
+def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON",
+                                         "PTM-1", "File_folder")) -> None:
     """
     The main function of the script.
 
@@ -49,14 +51,16 @@ def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")
     check_file(path_sc2)
     set1 = set()
     list1_years = []
-    with open(path_to_csv + '/dataset.csv', 'r',  encoding='utf-8') as csvfile:
+    with open(path_to_csv + '/dataset.csv', 'r',
+                encoding='utf-8') as csvfile:
         file_reader = csv.reader(csvfile)
         for row in file_reader:
             set1.add(row[0][:4])
     set1 = sorted(list(set1), reverse=True)
     n = len(set1)
 
-    with open(path_to_csv + '/dataset.csv', 'r', encoding='utf-8') as csvfile:
+    with open(path_to_csv + '/dataset.csv', 'r',
+               encoding='utf-8') as csvfile:
         file_reader = list(csv.reader(csvfile))
         for i in range(n):
             for j in range(len(file_reader)):

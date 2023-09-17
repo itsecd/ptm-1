@@ -50,8 +50,8 @@ def sort_file(week: list, path_to_csv: str) -> None:
     """
     date_1 = week[0][0][8:10]
     date_2 = week[-1][0][8:10]
-    name_file = path_to_csv + '/scrnipt_3/' + str(week[0][0][:4]) + "_" + str(
-        week[0][0][5:7]) + "_" + date_1 + "_" + date_2 + ".csv"
+    name_file = path_to_csv + '/scrnipt_3/' + str(week[0][0][:4]) + \
+        "_" + str(week[0][0][5:7]) + "_" + date_1 + "_" + date_2 + ".csv"
     print(name_file)
     with open(name_file, 'w', newline='', encoding='utf-8') as file_scr3:
         writer = csv.writer(file_scr3)
@@ -59,7 +59,8 @@ def sort_file(week: list, path_to_csv: str) -> None:
             writer.writerow(week[i])
 
 
-def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
+def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON",
+                                         "PTM-1", "File_folder")) -> None:
     """
     The main function of the script.
 
@@ -73,13 +74,15 @@ def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")
     path_sc3 = "File_folder/scrnipt_3"
     check_file(path_sc3)
     set1 = set()
-    with open(path_to_csv + '/dataset.csv', 'r', newline='', encoding='utf-8') as csvfile:
+    with open(path_to_csv + '/dataset.csv', 'r', newline='',
+               encoding='utf-8') as csvfile:
         file_reader = csv.reader(csvfile)
         for row in file_reader:
             set1.add(row[0][:4])
     set1 = sorted(list(set1), reverse=True)
 
-    with open(path_to_csv + '/dataset.csv', 'r', newline='', encoding='utf-8') as csvfile:
+    with open(path_to_csv + '/dataset.csv', 'r', newline='',
+               encoding='utf-8') as csvfile:
         file_reader = list(csv.reader(csvfile))
         all_data = []
         month, year = 9, 2022
