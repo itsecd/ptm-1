@@ -2,6 +2,7 @@ import shutil
 import os
 import csv
 
+
 def create_dir(dir_name: str) -> str:
     '''This function create dir where we must copy our dataset'''
     if not os.path.isdir(dir_name):
@@ -22,6 +23,7 @@ def create_copy_dataset(dataset_path: str, dir_copy: str, annotation_name: str):
             for file_name in files_list:
                 file_writer.writerow(
                     [f"{dataset_item}_{file_name}", dataset_item])
+
 
 def run2(dir_copy: str, annotation_name: str):
     ''' This function call previous to run it in main'''

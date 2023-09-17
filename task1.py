@@ -1,6 +1,7 @@
 import os
 import csv
 
+
 def create_csv_annotation(class_name: str , annotation_name: str) :
     '''This function create csv annotation with 3 parameters: absolute path to file, relative path and file's class name'''
     path_to_class = os.path.join('dataset', class_name)
@@ -10,6 +11,7 @@ def create_csv_annotation(class_name: str , annotation_name: str) :
         for name in class_names:
             file_writer.writerow(
                 [os.path.abspath(name) , os.path.join(path_to_class , name), class_name])
+
 
 def run1(class_name: str, annotation_name: str) :
     ''' This function call previous to run it in main'''

@@ -6,10 +6,12 @@ import csv
 
 from task2 import create_dir
 
+
 def get_element(class_name: str) -> generator:
     '''This function return us list of names in dataset class'''
     for file_name in os.listdir(os.path.join("dataset", class_name)):
         yield file_name
+
 
 def create_randomname_file(annotation_name: str, dir_copy: str, dataset_path: str):
     '''This function create the copy of dataset in another directory with names which are random numbers 
@@ -28,6 +30,7 @@ def create_randomname_file(annotation_name: str, dir_copy: str, dataset_path: st
                 file_writer.writerow(
                     [f"{file_number[counter]}.jpg", dataset_class])
             counter += 1
+
 
 def run3(annotation_name: str, dir_copy: str):
     ''' This function call previous to run it in main'''

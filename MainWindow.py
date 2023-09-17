@@ -9,7 +9,6 @@ from task3 import create_randomname_file
 from task5 import iterator_task1
 
 
-# C:\Users\Leon\OneDrive\Рабочий стол\pythonlab3\dataset
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow: QtWidgets.QMainWindow):
         '''This function was created automatically by qtdesigner.
