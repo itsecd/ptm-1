@@ -2,8 +2,9 @@ from email import generator
 import random
 import os
 import shutil
-from task2 import create_dir
 import csv
+
+from task2 import create_dir
 
 def get_element(class_name: str) -> generator:
     '''This function return us list of names in dataset class'''

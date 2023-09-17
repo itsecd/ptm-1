@@ -1,10 +1,12 @@
+import os
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
+
 from task1 import create_csv_annotation
 from task2 import create_copy_dataset
 from task3 import create_randomname_file
 from task5 import iterator_task1
-import os
 
 
 # C:\Users\Leon\OneDrive\Рабочий стол\pythonlab3\dataset
