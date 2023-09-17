@@ -41,7 +41,7 @@ def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")
     Files are named by the first and last date they contain.
     (if the file contains data from the first of January 2001 to December 31, 2001, 
     then the file is called 20010101_20011231.csv)
-    
+
     :param path_to_csv: the path to the file folder.
     :return: None.
     """
@@ -68,4 +68,3 @@ def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")
             list1_years = []
 
     print("\nscript_2 has finished working\n")
-    

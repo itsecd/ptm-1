@@ -16,7 +16,7 @@ def check_file(path_sc3: str) -> None:
 def sort_week(all_date: list, path_to_csv: str) -> None:
     """
     The function that takes data and sorts it by week
-    
+
     :param all_data: list with all dates.
     :param path_to_csv: folder path.
     :return: None.
@@ -66,7 +66,7 @@ def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")
     Write a script that will split the original csv file into N files, 
     where each individual file will correspond to one week. 
     Files are named by the first and last date they contain.
-    
+
     :param path_to_csv: the path to the file folder
     :return: None
     """

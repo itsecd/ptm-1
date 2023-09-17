@@ -56,7 +56,7 @@ def search_scrnipt_1(date: datetime.date,  path_to_csv: str) -> None:
         file_reader = list(csv.reader(csvfile))
         for i in range(len(file_reader)):
             if (file_reader[i][0] == str(
-                    date)):  # ищем в фале Х запоминаем номер строки, выводим данные по номеру строки в фале Y
+                    date)):
                 tmp = i
                 break
         else:
@@ -77,7 +77,7 @@ def search_scrnipt_2(date: datetime.date, path_to_csv: str) -> None:
     ways = os.listdir(path_to_csv+"/scrnipt_2")
     date = str(date)
     for i in range(len(ways)):
-        if (ways[i][:4] == date[:4]):  # Ищем файл у которого аткой же год
+        if (ways[i][:4] == date[:4]):
             with open(path_to_csv + "/scrnipt_2/" + ways[i], 'r', encoding='utf-8') as csvfile:
                 file_reader = csv.reader(csvfile)
                 for row in file_reader:
@@ -126,7 +126,7 @@ def run_4(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")
     that accepts a date as input (datetime type) and returns data for this date (from a file) or 
     None if there is no data for this date. The function should be presented in four versions, depending on
     the type of input files from which the data will be read (paragraphs 0-3). 
-    
+
     :param path_to_csv: the path to the file folder
     :return: None
     """
