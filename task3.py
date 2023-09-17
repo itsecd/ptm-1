@@ -8,14 +8,14 @@ from task2 import create_dir
 
 
 def get_element(class_name: str) -> generator:
-    '''This function return us list of names in dataset class'''
+    """This function return us list of names in dataset class"""
     for file_name in os.listdir(os.path.join("dataset", class_name)):
         yield file_name
 
 
 def create_randomname_file(annotation_name: str, dir_copy: str, dataset_path: str) -> None:
-    '''This function create the copy of dataset in another directory with names which are random numbers 
-    and create csv file with 2 parameters: file name(random number) and class of that file'''
+    """This function create the copy of dataset in another directory with names which are random numbers 
+    and create csv file with 2 parameters: file name(random number) and class of that file"""
     file_number = list(range(10001))
     random.shuffle(file_number)
     counter = 1
@@ -33,5 +33,5 @@ def create_randomname_file(annotation_name: str, dir_copy: str, dataset_path: st
 
 
 def run3(annotation_name: str, dir_copy: str) -> None:
-    ''' This function call previous to run it in main'''
+    """ This function call previous to run it in main"""
     create_randomname_file(annotation_name, dir_copy)

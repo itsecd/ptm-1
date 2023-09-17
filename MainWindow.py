@@ -11,8 +11,8 @@ from task5 import IteratorTask1
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow: QtWidgets.QMainWindow) -> None:
-        '''This function was created automatically by qtdesigner.
-        Fields are being initialized here'''
+        """This function was created automatically by qtdesigner.
+        Fields are being initialized here"""
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(480, 640)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -180,6 +180,8 @@ class Ui_MainWindow(object):
         self.add_functions()
 
     def retranslateUi(self, MainWindow: QtWidgets.QMainWindow) -> None:
+        """This function gives names to elements of buttons, labels etc,
+        which was created in setupUI function"""
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "DATASET Creator"))
@@ -196,6 +198,7 @@ class Ui_MainWindow(object):
         self.Task3.setText(_translate("MainWindow", "Task3"))
 
     def add_functions(self) -> None:
+        """This function adds an event handler."""
         self.CreateAnnotation.clicked.connect(self.create_annotation)
         self.NextRose.clicked.connect(self.next_rose)
         self.NextTulip.clicked.connect(self.next_tulip)
@@ -204,6 +207,9 @@ class Ui_MainWindow(object):
         self.Task3.clicked.connect(self.task3_exec)
 
     def next_rose(self) -> None:
+        """This function is Iterator.
+        It displays the next image of rose on the screen untill the end.
+        After that it begins with start."""
         if self.__iterator_rose.path == "":
             path = self.PathToDataset.text()
             if os.path.isdir(path):
@@ -223,6 +229,9 @@ class Ui_MainWindow(object):
                 self.__iterator_rose.clear()
 
     def next_tulip(self) -> None:
+        """This function is Iterator.
+        It displays the next image of tulip on the screen untill the end.
+        After that it begins with start."""
         if self.__iterator_tulip.path == "":
             path = self.PathToDataset.text()
             if os.path.isdir(path):
@@ -242,6 +251,7 @@ class Ui_MainWindow(object):
                 self.__iterator_tulip.clear()
 
     def create_annotation(self) -> None:
+        """This function creates csv file with abs path of class of dataset."""
         path_to_dataset = self.PathToDataset.text()
         if os.path.isdir(path_to_dataset):
             try:
@@ -254,6 +264,7 @@ class Ui_MainWindow(object):
             self.ErrorMessage()
 
     def ErrorMessage(self) -> None:
+        """This function displays error message that dir does not exist."""
         error = QMessageBox()
         error.setWindowTitle("Error")
         error.setText(
@@ -263,6 +274,7 @@ class Ui_MainWindow(object):
         error.exec_()
 
     def ErrorMessage2(self) -> None:
+        """This function displays error message that dir does not contain."""
         error = QMessageBox()
         error.setWindowTitle("Error")
         error.setText(
@@ -272,6 +284,7 @@ class Ui_MainWindow(object):
         error.exec_()
 
     def ErrorMessage3(self) -> None:
+        """This function displays error message that pictures are over."""
         error = QMessageBox()
         error.setWindowTitle("Error")
         error.setText("Pictures are over.\nThey will start anew.")
@@ -280,6 +293,7 @@ class Ui_MainWindow(object):
         error.exec_()
 
     def task1_exec(self) -> None:
+        """This function execute task 1 form second lab."""
         path = self.PathToDirOfDataset.text()
         if os.path.isdir(path):
             try:
@@ -291,6 +305,7 @@ class Ui_MainWindow(object):
             self.ErrorMessage()
 
     def task2_exec(self) -> None:
+        """This function execute task 2 form second lab."""
         path = self.PathToDirOfDataset.text()
         if os.path.isdir(path):
             try:
@@ -302,6 +317,7 @@ class Ui_MainWindow(object):
             self.ErrorMessage()
 
     def task3_exec(self) -> None:
+        """This function execute task 3 form second lab."""
         path = self.PathToDirOfDataset.text()
         if os.path.isdir(path):
             try:
