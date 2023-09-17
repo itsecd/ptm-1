@@ -17,7 +17,8 @@ def check_file(path_fol: str, path_sc1: str) -> None:
         os.mkdir(path_sc1)
 
 
-def run_1(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
+def run_1(path_to_csv: str=os.path.join("C:/", "PYTHON",
+                                         "PTM-1", "File_folder")) -> None:
     """
     The main function of the script.
 

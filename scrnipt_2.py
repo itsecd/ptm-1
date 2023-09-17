@@ -64,7 +64,8 @@ def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON",
         file_reader = list(csv.reader(csvfile))
         for i in range(n):
             for j in range(len(file_reader)):
-                if (file_reader[j][0][:4] == set1[i]): list1_years.append(file_reader[j])
+                if (file_reader[j][0][:4] == set1[i]): 
+                    list1_years.append(file_reader[j])
             print(list1_years[0][0])
             date_1 = str(re.sub(r'[-]', '', list1_years[0][0]))
             date_2 = str(re.sub(r'[-]', '', list1_years[-1][0]))

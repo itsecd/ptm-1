@@ -4,7 +4,8 @@ import os
 
 def check_file(path_sc3: str) -> None:
     """
-    The function accepts a file, if there is no file, it creates it.
+    The function accepts a file, if there is no file, 
+    it creates it.
 
     :param path_sc3: file.
     :return: None.
