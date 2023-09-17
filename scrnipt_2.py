@@ -8,21 +8,39 @@ import re
 # (если файл содержит данные с первого января 2001 по 31 декабря 2001, то файл назвать 20010101_20011231.csv)
 
 def check_file(path_sc2: str) -> None:
-    '''Принимает имя пути, если файла нет создает'''
+    """
+    The function accepts a file, if there is no file, it creates it.
+
+    :param path_sc2: file.
+    :return: None.
+    """
     if not os.path.isdir(path_sc2):
         os.mkdir(path_sc2)
 
-def write_file(date_1: str, date_2: str, list1_years: list, path_to_csv: str) -> None:
-    '''Принимает имя пути, записывает в список'''
+def write_file(date_1: str, date_2: str, list_years: list, path_to_csv: str) -> None:
+    """
+    The function that creates a csv and writes data from list_years.
+
+    :param date_1: start date.
+    :param date_2: end date.
+    :param list_years: list with dates.
+    :param path_to_csv: folder path.
+    :return: None.
+    """
     name_file = path_to_csv + '/scrnipt_2/' + date_1 + "_" + date_2 + ".csv"
     print("create file: ", name_file)
     with open(name_file, 'w', newline='', encoding='utf-8') as namefile:
         writer = csv.writer(namefile)
-        for i in range(len(list1_years)):
-            writer.writerow(list1_years[i])
+        for i in range(len(list_years)):
+            writer.writerow(list_years[i])
 
 def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
-    '''Основная функция работы скрипта'''
+    """
+    The main function of the script.
+    
+    :param path_to_csv: the path to the file folder.
+    :return: None.
+    """
     path_sc2 = path_to_csv + "/scrnipt_2"
     check_file(path_sc2)
     set1 = set()

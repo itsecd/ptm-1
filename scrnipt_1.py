@@ -2,12 +2,26 @@ import csv
 import os
 
 def check_file(path_fol: str, path_sc1: str) -> None:
-    '''Принимает имя пути, если файла нет создает''' 
-    if not os.path.isdir(path_fol): os.mkdir(path_fol) 
-    if not os.path.isdir(path_sc1): os.mkdir(path_sc1)
+    """
+    The function accepts a folder and a file, if there is no folder, 
+    it creates it, if there is no file, it creates it.
+
+    :param path_fol: folder.
+    :param path_sc1: file.
+    :return: None.
+    """
+    if not os.path.isdir(path_fol):
+        os.mkdir(path_fol)
+    if not os.path.isdir(path_sc1):
+        os.mkdir(path_sc1)
 
 def run_1(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
-    '''Основная функция работы скрипта''' 
+    """
+    The main function of the script.
+    
+    :param path_to_csv: the path to the file folder.
+    :return: None.
+    """
     path_fol, path_sc1 = "File_folder", "File_folder/scrnipt_1" 
     check_file(path_fol, path_sc1) 
     list1 = [] 

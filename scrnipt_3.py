@@ -6,32 +6,49 @@ import os
 # Файлы называются по первой и последней дате, которую они содержат.
 
 def check_file(path_sc3: str) -> None:
-    '''Принимает имя пути, если файла нет создает'''
+    """
+    The function accepts a file, if there is no file, it creates it.
+
+    :param path_sc3: file.
+    :return: None.
+    """
     if not os.path.isdir(path_sc3):
         os.mkdir(path_sc3)
 
-def sort_week(all_data: list, path_to_csv: str) -> None:
-    '''Принимает данные, сортирует по неделям'''
-    day = len(all_data)
+def sort_week(all_date: list, path_to_csv: str) -> None:
+    """
+    The function that takes data and sorts it by week
+    
+    :param all_data: list with all dates.
+    :param path_to_csv: folder path.
+    :return: None.
+    """
+    day = len(all_date)
     week = []
     count = 0
     while (day != 0):
         if (day >= 7):
             for i in range(7):
-                week.append(all_data[count])
+                week.append(all_date[count])
                 count += 1
             sort_file(week, path_to_csv)
             day -= 7
         elif (day < 7):
             for i in range(day):
-                week.append(all_data[count])
+                week.append(all_date[count])
                 count += 1
             sort_file(week, path_to_csv)
             day = 0
         week = []
 
 def sort_file(week: list, path_to_csv: str) -> None:
-    '''Принимает недели, сортирует по файлам'''
+    """
+    The function that takes weeks and sorts them by files.
+
+    :param week: list with weeks.
+    :param path_to_csv: folder path.
+    :return: None.
+    """
     date_1 = week[0][0][8:10]
     date_2 = week[-1][0][8:10]
     name_file = path_to_csv + '/scrnipt_3/' + str(week[0][0][:4]) + "_" + str(
@@ -43,7 +60,12 @@ def sort_file(week: list, path_to_csv: str) -> None:
             writer.writerow(week[i])
 
 def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
-    '''Основная функция работы скрипта'''
+    """
+    The main function of the script.
+    
+    :param path_to_csv: the path to the file folder
+    :return: None
+    """
     path_sc3 = "File_folder/scrnipt_3"
     check_file(path_sc3)
     set1 = set()
