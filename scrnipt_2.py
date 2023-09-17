@@ -49,27 +49,27 @@ def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON",
     """
     path_sc2 = path_to_csv + "/scrnipt_2"
     check_file(path_sc2)
-    set1 = set()
-    list1_years = []
+    set_tmp = set()
+    list_years = []
     with open(path_to_csv + '/dataset.csv', 'r',
                 encoding='utf-8') as csvfile:
         file_reader = csv.reader(csvfile)
         for row in file_reader:
-            set1.add(row[0][:4])
-    set1 = sorted(list(set1), reverse=True)
-    n = len(set1)
+            set_tmp.add(row[0][:4])
+    set_tmp = sorted(list(set_tmp), reverse=True)
+    n = len(set_tmp)
 
     with open(path_to_csv + '/dataset.csv', 'r',
                encoding='utf-8') as csvfile:
         file_reader = list(csv.reader(csvfile))
         for i in range(n):
             for j in range(len(file_reader)):
-                if (file_reader[j][0][:4] == set1[i]): 
-                    list1_years.append(file_reader[j])
-            print(list1_years[0][0])
-            date_1 = str(re.sub(r'[-]', '', list1_years[0][0]))
-            date_2 = str(re.sub(r'[-]', '', list1_years[-1][0]))
-            write_file(date_1, date_2, list1_years, path_to_csv)
-            list1_years = []
+                if (file_reader[j][0][:4] == set_tmp[i]): 
+                    list_years.append(file_reader[j])
+            print(list_years[0][0])
+            date_1 = str(re.sub(r'[-]', '', list_years[0][0]))
+            date_2 = str(re.sub(r'[-]', '', list_years[-1][0]))
+            write_file(date_1, date_2, list_years, path_to_csv)
+            list_years = []
 
     print("\nscript_2 has finished working\n")

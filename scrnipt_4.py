@@ -108,17 +108,17 @@ def search_scrnipt_3(date: datetime.date, path_to_csv: str) -> None:
     :return: None
     """
     ways = os.listdir(path_to_csv+"/scrnipt_3")
-    list1 = []
+    list_tmp = []
     date = str(date)
     date = re.sub(r'[-]', '_', date)
     for i in range(len(ways)):  
         if (ways[i][:7] == date[:7]):
-            list1.append(ways[i])
-    if (list1 == None): return None
-    for i in range(len(list1)):
-        if (int(list1[i][11:13]) >= int(date[8:10]) >= int(
-                list1[i][8:10])):  
-            with open(path_to_csv + "/scrnipt_3/" + list1[i], 'r', 
+            list_tmp.append(ways[i])
+    if (list_tmp == None): return None
+    for i in range(len(list_tmp)):
+        if (int(list_tmp[i][11:13]) >= int(date[8:10]) >= int(
+                list_tmp[i][8:10])):  
+            with open(path_to_csv + "/scrnipt_3/" + list_tmp[i], 'r', 
                       encoding='utf-8') as csvfile:
                 file_reader = csv.reader(csvfile)
                 date = re.sub(r'[_]', '-', date)

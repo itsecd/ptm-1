@@ -74,13 +74,13 @@ def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON",
     """
     path_sc3 = "File_folder/scrnipt_3"
     check_file(path_sc3)
-    set1 = set()
+    set_tmp = set()
     with open(path_to_csv + '/dataset.csv', 'r', newline='',
                encoding='utf-8') as csvfile:
         file_reader = csv.reader(csvfile)
         for row in file_reader:
-            set1.add(row[0][:4])
-    set1 = sorted(list(set1), reverse=True)
+            set_tmp.add(row[0][:4])
+    set_tmp = sorted(list(set_tmp), reverse=True)
 
     with open(path_to_csv + '/dataset.csv', 'r', newline='',
                encoding='utf-8') as csvfile:

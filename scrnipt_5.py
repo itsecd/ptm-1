@@ -30,7 +30,7 @@ def run_5(path_to_csv: str=os.path.join("C:/", "PYTHON",
     :return: None
     """
     file_name = path_to_csv + "/scrnipt_2/20220901_20220130.csv"
-    s_iter1 = Iterator(file_name)
-    for val in s_iter1:
+    iter = Iterator(file_name)
+    for val in iter:
         print(val, end="")
     print("\nscript_5 has finished working\n")
