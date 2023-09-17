@@ -13,6 +13,7 @@ def check_file(path_sc2: str) -> None:
     if not os.path.isdir(path_sc2):
         os.mkdir(path_sc2)
 
+
 def write_file(date_1: str, date_2: str, list_years: list, path_to_csv: str) -> None:
     """
     The function that creates a csv and writes data from list_years.
@@ -29,6 +30,7 @@ def write_file(date_1: str, date_2: str, list_years: list, path_to_csv: str) -> 
         writer = csv.writer(namefile)
         for i in range(len(list_years)):
             writer.writerow(list_years[i])
+
 
 def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
     """

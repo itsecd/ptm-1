@@ -2,10 +2,6 @@ import csv
 import os
 
 
-"""Write a script that will split the original csv file into N files, 
-   where each individual file will correspond to one week. 
-   Files are named by the first and last date they contain."""
-
 def check_file(path_sc3: str) -> None:
     """
     The function accepts a file, if there is no file, it creates it.
@@ -15,6 +11,7 @@ def check_file(path_sc3: str) -> None:
     """
     if not os.path.isdir(path_sc3):
         os.mkdir(path_sc3)
+
 
 def sort_week(all_date: list, path_to_csv: str) -> None:
     """
@@ -42,6 +39,7 @@ def sort_week(all_date: list, path_to_csv: str) -> None:
             day = 0
         week = []
 
+
 def sort_file(week: list, path_to_csv: str) -> None:
     """
     The function that takes weeks and sorts them by files.
@@ -59,6 +57,7 @@ def sort_file(week: list, path_to_csv: str) -> None:
         writer = csv.writer(file_scr3)
         for i in range(len(week)):
             writer.writerow(week[i])
+
 
 def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
     """
@@ -79,7 +78,6 @@ def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")
         for row in file_reader:
             set1.add(row[0][:4])
     set1 = sorted(list(set1), reverse=True)
-    n = len(set1)
 
     with open(path_to_csv + '/dataset.csv', 'r', newline='', encoding='utf-8') as csvfile:
         file_reader = list(csv.reader(csvfile))

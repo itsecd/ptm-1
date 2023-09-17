@@ -5,11 +5,6 @@ import datetime
 from typing import List, Optional
 
 
-# Написать скрипт, содержащий функцию, 
-# принимающую на вход дату (тип datetime) и возвращающий данные для этой даты (из файла) или 
-# None если данных для этой даты нет. Функция должна быть представлена в четырёх версиях в зависимости от 
-# типа входных файлов, из которых будут прочитаны данные (пункты 0–3). 
-
 def next(path_to_csv: str, count: int) -> Optional[List[str]]:
     """
     the next function takes count and outputs dates.
@@ -30,6 +25,7 @@ def next(path_to_csv: str, count: int) -> Optional[List[str]]:
         else:
             return file_reader[count]
 
+
 def search_dataset(date: datetime.date,  path_to_csv: str) -> None:
     """
     the function accepts data, searches for it in the file of the corresponding script
@@ -46,6 +42,7 @@ def search_dataset(date: datetime.date,  path_to_csv: str) -> None:
                 break
         else:
             return None
+
 
 def search_scrnipt_1(date: datetime.date,  path_to_csv: str) -> None:
     """
@@ -68,6 +65,7 @@ def search_scrnipt_1(date: datetime.date,  path_to_csv: str) -> None:
         file_reader = list(csv.reader(csvfile))
         print(*file_reader[tmp])
 
+
 def search_scrnipt_2(date: datetime.date, path_to_csv: str) -> None:
     """
     the function accepts data, searches for it in the file of the corresponding script
@@ -88,6 +86,7 @@ def search_scrnipt_2(date: datetime.date, path_to_csv: str) -> None:
                         break
     else:
         return None
+
 
 def search_scrnipt_3(date: datetime.date, path_to_csv: str) -> None:
     """
@@ -117,6 +116,7 @@ def search_scrnipt_3(date: datetime.date, path_to_csv: str) -> None:
                         break
     else:
         return None
+
 
 def run_4(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
     """
