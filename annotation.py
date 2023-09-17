@@ -1,6 +1,7 @@
 import os
 import csv
 
+
 class Annotation:
 
     def __init__(self,file_name: str) -> None:

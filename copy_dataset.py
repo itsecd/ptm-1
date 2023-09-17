@@ -23,6 +23,7 @@ def random_copy(path_main: str, path: str, ann) -> None:
             os.rename(os.path.join(path,fname),os.path.join(path, fname2))
             ann.add_line(path,fname2,subfolder)
 
+
 def copy_and_annotation(path_main: str, path: str, ann) -> None:
     """Copying dataset to another directory (dataset/class_0000.jpg) and creating an annotation"""
     if not os.path.isdir(path):
@@ -45,4 +46,3 @@ if __name__ == "__main__":
     A = Annotation("task2_csv.csv")
     copy_and_annotation(path_main,path,A)
     random_copy(path_main,path,A)
-

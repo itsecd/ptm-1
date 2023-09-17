@@ -11,8 +11,8 @@ from copy_dataset import copy_and_annotation, random_copy
 from creat_ann import creat_annotation
 
 
-
 class MainWindow(QMainWindow):
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.initUI()
@@ -25,7 +25,6 @@ class MainWindow(QMainWindow):
         A = Annotation("tmp.cvs")
         creat_annotation(self.folder_path, A)
         iter_ann = AnnIt(A)
-
         src = QLabel(f'Исходный датасет:\n{self.folder_path}', self)
         src.setStyleSheet("color : #800000")
         src.setFixedSize(QSize(250, 50))
@@ -55,7 +54,6 @@ class MainWindow(QMainWindow):
         self.image.setStyleSheet("color : #800000")
         self.image.resize(400,300)
         self.image.move(280,60)
-
         self.show()
 
     def add_button(self, name: str, size_x: int, size_y: int, pos_x: int, pos_y: int):
@@ -111,11 +109,9 @@ class MainWindow(QMainWindow):
         """Overriding method to delete temporary file"""
         os.remove("tmp.cvs")
         event.accept()
-        
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()
     app.exec()
-
-    

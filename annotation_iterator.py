@@ -1,6 +1,7 @@
 from annotation import Annotation
 from creat_ann import creat_annotation
 
+
 class AnnotationIterator:
 
     def __init__(self, a):
