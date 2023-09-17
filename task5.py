@@ -5,7 +5,7 @@ from typing import Optional
 
 
 class IteratorTask1:
-    def __init__(self) :  
+    def __init__(self) -> None:  
         self.__file_names = []
         self.__counter = 0
         self.__limit = 0
@@ -18,16 +18,16 @@ class IteratorTask1:
         else:
             raise StopIteration
 
-    def clear(self) :
+    def clear(self) -> None:
         self.__counter = 0
 
-    def file_names_init(self) :
+    def file_names_init(self) -> None:
         self.__file_names = os.listdir(self.__path)
 
-    def path_init(self, path: str) :
+    def path_init(self, path: str) -> None:
         self.__path = path
 
-    def limit_init(self):
+    def limit_init(self) -> None:
         self.__limit=len(self.__file_names)
 
     @property
@@ -36,7 +36,7 @@ class IteratorTask1:
 
 
 class IteratorTask2:
-    def __init__(self, class_name: str,  path: str):
+    def __init__(self, class_name: str,  path: str) -> None:
         self.file_names = os.listdir(os.path.join(path))
         for name in self.file_names:
             if not class_name in name:
@@ -54,7 +54,7 @@ class IteratorTask2:
 
 
 class IteratorTask3:
-    def __init__(self, class_name: str,  path: str, annotation_name: str):
+    def __init__(self, class_name: str,  path: str, annotation_name: str) -> None:
         self.file_names = list()
         with open(os.path.join(path, annotation_name), encoding='UTF-16') as file:
             reader = csv.reader(file, delimiter=',')

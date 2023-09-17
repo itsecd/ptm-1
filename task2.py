@@ -10,7 +10,7 @@ def create_dir(dir_name: str) -> str:
     return dir_name
 
 
-def create_copy_dataset(dataset_path: str, dir_copy: str, annotation_name: str):
+def create_copy_dataset(dataset_path: str, dir_copy: str, annotation_name: str) -> None:
     '''This function copy our dataset in another directory and create csv file with 2 parameters: filename and file's class name'''
     create_dir(dir_copy)
     for dataset_item in os.listdir(dataset_path):
@@ -25,6 +25,6 @@ def create_copy_dataset(dataset_path: str, dir_copy: str, annotation_name: str):
                     [f"{dataset_item}_{file_name}", dataset_item])
 
 
-def run2(dir_copy: str, annotation_name: str):
+def run2(dir_copy: str, annotation_name: str) -> None:
     ''' This function call previous to run it in main'''
     create_copy_dataset(dir_copy, annotation_name)

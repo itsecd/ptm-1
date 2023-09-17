@@ -10,7 +10,7 @@ from task5 import IteratorTask1
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow: QtWidgets.QMainWindow):
+    def setupUi(self, MainWindow: QtWidgets.QMainWindow) -> None:
         '''This function was created automatically by qtdesigner.
         Fields are being initialized here'''
         MainWindow.setObjectName("MainWindow")
@@ -179,7 +179,7 @@ class Ui_MainWindow(object):
         self.__iterator_tulip = IteratorTask1()
         self.add_functions()
 
-    def retranslateUi(self, MainWindow: QtWidgets.QMainWindow):
+    def retranslateUi(self, MainWindow: QtWidgets.QMainWindow) -> None:
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "DATASET Creator"))
@@ -195,7 +195,7 @@ class Ui_MainWindow(object):
         self.Task2.setText(_translate("MainWindow", "Task2"))
         self.Task3.setText(_translate("MainWindow", "Task3"))
 
-    def add_functions(self):
+    def add_functions(self) -> None:
         self.CreateAnnotation.clicked.connect(self.create_annotation)
         self.NextRose.clicked.connect(self.next_rose)
         self.NextTulip.clicked.connect(self.next_tulip)
@@ -203,7 +203,7 @@ class Ui_MainWindow(object):
         self.Task2.clicked.connect(self.task2_exec)
         self.Task3.clicked.connect(self.task3_exec)
 
-    def next_rose(self):
+    def next_rose(self) -> None:
         if self.__iterator_rose.path == "":
             path = self.PathToDataset.text()
             if os.path.isdir(path):
@@ -222,7 +222,7 @@ class Ui_MainWindow(object):
                 self.ErrorMessage3()
                 self.__iterator_rose.clear()
 
-    def next_tulip(self):
+    def next_tulip(self) -> None:
         if self.__iterator_tulip.path == "":
             path = self.PathToDataset.text()
             if os.path.isdir(path):
@@ -241,7 +241,7 @@ class Ui_MainWindow(object):
                 self.ErrorMessage3()
                 self.__iterator_tulip.clear()
 
-    def create_annotation(self):
+    def create_annotation(self) -> None:
         path_to_dataset = self.PathToDataset.text()
         if os.path.isdir(path_to_dataset):
             try:
@@ -253,7 +253,7 @@ class Ui_MainWindow(object):
         else:
             self.ErrorMessage()
 
-    def ErrorMessage(self):
+    def ErrorMessage(self) -> None:
         error = QMessageBox()
         error.setWindowTitle("Error")
         error.setText(
@@ -262,7 +262,7 @@ class Ui_MainWindow(object):
         error.setStandardButtons(QMessageBox.Ok)
         error.exec_()
 
-    def ErrorMessage2(self):
+    def ErrorMessage2(self) -> None:
         error = QMessageBox()
         error.setWindowTitle("Error")
         error.setText(
@@ -271,7 +271,7 @@ class Ui_MainWindow(object):
         error.setStandardButtons(QMessageBox.Ok)
         error.exec_()
 
-    def ErrorMessage3(self):
+    def ErrorMessage3(self) -> None:
         error = QMessageBox()
         error.setWindowTitle("Error")
         error.setText("Pictures are over.\nThey will start anew.")
@@ -279,7 +279,7 @@ class Ui_MainWindow(object):
         error.setStandardButtons(QMessageBox.Ok)
         error.exec_()
 
-    def task1_exec(self):
+    def task1_exec(self) -> None:
         path = self.PathToDirOfDataset.text()
         if os.path.isdir(path):
             try:
@@ -290,7 +290,7 @@ class Ui_MainWindow(object):
         else:
             self.ErrorMessage()
 
-    def task2_exec(self):
+    def task2_exec(self) -> None:
         path = self.PathToDirOfDataset.text()
         if os.path.isdir(path):
             try:
@@ -301,7 +301,7 @@ class Ui_MainWindow(object):
         else:
             self.ErrorMessage()
 
-    def task3_exec(self):
+    def task3_exec(self) -> None:
         path = self.PathToDirOfDataset.text()
         if os.path.isdir(path):
             try:
