@@ -7,12 +7,12 @@ import re
 # Файлы называются по первой и последней дате, которую они содержат.
 # (если файл содержит данные с первого января 2001 по 31 декабря 2001, то файл назвать 20010101_20011231.csv)
 
-def make_dir(path_sc2):
+def make_dir(path_sc2: str) -> None:
     '''Принимает имя пути, если файла нет создает'''
     if not os.path.isdir(path_sc2):
         os.mkdir(path_sc2)
 
-def file(date_1, date_2, list1_years, path_to_csv):
+def file(date_1: str, date_2: str, list1_years: list, path_to_csv: str) -> None:
     '''Принимает имя пути, записывает в список'''
     name_file = path_to_csv + '/scrnipt_2/' + date_1 + "_" + date_2 + ".csv"
     print("create file: ", name_file)
@@ -21,7 +21,7 @@ def file(date_1, date_2, list1_years, path_to_csv):
         for i in range(len(list1_years)):
             writer.writerow(list1_years[i])
 
-def run_2(path_to_csv):
+def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON", "PythonLab2", "File_folder")) -> None:
     '''Основная функция работы скрипта'''
     path_sc2 = path_to_csv + "/scrnipt_2"
     make_dir(path_sc2)

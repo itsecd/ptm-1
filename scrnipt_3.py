@@ -5,12 +5,12 @@ import os
 # где каждый отдельный файл будет соответствовать одной неделе. 
 # Файлы называются по первой и последней дате, которую они содержат.
 
-def dir(path_sc3):
+def dir(path_sc3: str) -> None:
     '''Принимает имя пути, если файла нет создает'''
     if not os.path.isdir(path_sc3):
         os.mkdir(path_sc3)
 
-def week(all_data, path_to_csv):
+def week(all_data: list, path_to_csv: str) -> None:
     '''Принимает данные, сортирует по неделям'''
     day = len(all_data)
     week = []
@@ -30,7 +30,7 @@ def week(all_data, path_to_csv):
             day = 0
         week = []
 
-def file(week, path_to_csv):
+def file(week: list, path_to_csv: str) -> None:
     '''Принимает недели, сортирует по файлам'''
     date_1 = week[0][0][8:10]
     date_2 = week[-1][0][8:10]
@@ -42,7 +42,7 @@ def file(week, path_to_csv):
         for i in range(len(week)):
             writer.writerow(week[i])
 
-def run_3(path_to_csv):
+def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON", "PythonLab2", "File_folder")) -> None:
     '''Основная функция работы скрипта'''
     path_sc3 = "File_folder/scrnipt_3"
     dir(path_sc3)

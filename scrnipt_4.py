@@ -14,7 +14,7 @@ from typing import List, Optional
 # а при каждом следующем вызове данные для следующей по порядку даты. Если попадается дата, для которой данные отсутствуют, 
 # то она игнориуруется и возвращаются данные для следующей валидной даты.
 
-def next(path_to_csv, count):
+def next(path_to_csv: str, count: int) -> Optional[List[str]]:
     '''функция next, принимает count, выводит значение по индексу'''
     with open(path_to_csv+'/dataset.csv', 'r', encoding='utf-8') as csvfile:
         file_reader = list(csv.reader(csvfile))
@@ -24,7 +24,7 @@ def next(path_to_csv, count):
             return file_reader[count]
             #print(*file_reader[count])
 
-def work_0(date,  path_to_csv):
+def work_0(date: datetime.date,  path_to_csv: str) -> None:
     "принимает данные, ищет их в файле соответствующего скрипта"
     with open(path_to_csv+"/dataset.csv", mode='r', encoding='utf-8') as csvfile:
         file_reader = csv.reader(csvfile) 
@@ -35,7 +35,7 @@ def work_0(date,  path_to_csv):
         else:
             return None
 
-def work_1(date,  path_to_csv):
+def work_1(date: datetime.date,  path_to_csv: str) -> None:
     "принимает данные, ищет их в файле соответствующего скрипта"
     with open(path_to_csv +'/scrnipt_1/X.csv', 'r', encoding='utf-8') as csvfile:
         file_reader = list(csv.reader(csvfile))
@@ -50,7 +50,7 @@ def work_1(date,  path_to_csv):
         file_reader = list(csv.reader(csvfile))
         print(*file_reader[tmp])
 
-def work_2(date, path_to_csv):
+def work_2(date: datetime.date, path_to_csv: str) -> None:
     "принимает данные, ищет их в файле соответствующего скрипта"
     ways = os.listdir(path_to_csv+"/scrnipt_2")
     date = str(date)
@@ -65,7 +65,7 @@ def work_2(date, path_to_csv):
     else:
         return None
 
-def work_3(date, path_to_csv):
+def work_3(date: datetime.date, path_to_csv: str) -> None:
     "принимает данные, ищет их в файле соответствующего скрипта"
     ways = os.listdir(path_to_csv+"/scrnipt_3")
     list1 = []
