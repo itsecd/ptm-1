@@ -5,7 +5,7 @@ import random
 from annotation import Annotation
 
 
-def random_copy(path_main: str, path: str, ann) -> None:
+def random_copy(path_main: str, path: str, annotation) -> None:
     """Copying dataset to another directory (dataset/номер.jpg) and creating an annotation"""
     if not os.path.isdir(path):
         try:
@@ -21,10 +21,10 @@ def random_copy(path_main: str, path: str, ann) -> None:
             while os.path.isdir(os.path.join(path, fname2)):
                 fname2 = f"{random.randint(0, 10000)}.jpg"
             os.rename(os.path.join(path,fname),os.path.join(path, fname2))
-            ann.add_line(path,fname2,subfolder)
+            annotation.add_line(path,fname2,subfolder)
 
 
-def copy_and_annotation(path_main: str, path: str, ann) -> None:
+def copy_and_annotation(path_main: str, path: str, annotation) -> None:
     """Copying dataset to another directory (dataset/class_0000.jpg) and creating an annotation"""
     if not os.path.isdir(path):
         try:
@@ -37,12 +37,12 @@ def copy_and_annotation(path_main: str, path: str, ann) -> None:
         for fname in files:
             shutil.copy(os.path.join(path_main,subfolder,fname),path)
             os.rename(os.path.join(path,fname),os.path.join(path, f"{subfolder}_{fname}"))
-            ann.add_line(path, f"{subfolder}_{fname}", subfolder)
+            annotation.add_line(path, f"{subfolder}_{fname}", subfolder)
 
 
 if __name__ == "__main__":
     path_main = 'C:/Users/user/Desktop/dataset_copy' 
     path = 'C:/Users/user/Desktop/dataset1'
-    A = Annotation("task2_csv.csv")
-    copy_and_annotation(path_main,path,A)
-    random_copy(path_main,path,A)
+    annotation_main = Annotation("task2_csv.csv")
+    copy_and_annotation(path_main,path,annotation_main)
+    random_copy(path_main,path,annotation_main)

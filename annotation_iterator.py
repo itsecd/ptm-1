@@ -4,8 +4,8 @@ from creat_ann import creat_annotation
 
 class AnnotationIterator:
 
-    def __init__(self, a):
-        self.ann = a
+    def __init__(self, annotation):
+        self.ann = annotation
         self.counter = 0
 
     def __next__(self, label)-> str:

@@ -22,9 +22,9 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color : #FFDEAD")
         self.setMinimumSize(800,400)
         self.folder_path = QFileDialog.getExistingDirectory(self, 'Выберите папку исходного датасета')
-        A = Annotation("tmp.cvs")
-        creat_annotation(self.folder_path, A)
-        iter_ann = AnnIt(A)
+        annotation = Annotation("tmp.cvs")
+        creat_annotation(self.folder_path, annotation)
+        iter_ann = AnnIt(annotation)
         src = QLabel(f'Исходный датасет:\n{self.folder_path}', self)
         src.setStyleSheet("color : #800000")
         src.setFixedSize(QSize(250, 50))
@@ -63,13 +63,13 @@ class MainWindow(QMainWindow):
         button.move(pos_x, pos_y)
         return button
 
-    def create_ann(self) -> None:
+    def create_annotation_main(self) -> None:
         """Creat annotation of the dataset with chosen name"""
         text, ok = QInputDialog.getText(self, 'Ввод',
             'Введите название файла-аннотации:')
         if ok:
-            A = Annotation( f"{str(text)}.cvs")
-            creat_annotation(self.folder_path, A)
+            annotation = Annotation( f"{str(text)}.cvs")
+            creat_annotation(self.folder_path, annotation)
 
     def dataset_copy(self)-> None:
         """Copying dataset (dataset/class_0000.jpg) and creating an annotation"""
@@ -78,8 +78,8 @@ class MainWindow(QMainWindow):
             return
         text, ok = QInputDialog.getText(self, 'Ввод', 'Введите название файла-аннотации:')
         if ok:
-            A = Annotation( f"{str(text)}.cvs")
-            copy_and_annotation(self.folder_path, path_copy, A)
+            annotation = Annotation( f"{str(text)}.cvs")
+            copy_and_annotation(self.folder_path, path_copy, annotation)
 
     def dataset_random(self)-> None:
         """Copying dataset (dataset/номер.jpg) and creating an annotation"""
@@ -89,8 +89,8 @@ class MainWindow(QMainWindow):
         text, ok = QInputDialog.getText(self, 'Ввод',
             'Введите название файла-аннотации:')
         if ok:
-            A = Annotation( f"{str(text)}.cvs")
-            random_copy(self.folder_path, path_copy, A)
+            annotation = Annotation( f"{str(text)}.cvs")
+            random_copy(self.folder_path, path_copy, annotation)
 
     def next(self, label: str, iter: AnnIt):
         """Shows following picture"""
@@ -102,7 +102,7 @@ class MainWindow(QMainWindow):
             self.adjustSize()
         except StopIteration:
             self.image.setText(f"Изображения {label} закончились.")
-        except OSError as err:
+        except OSError:
             print("error")
         
     def closeEvent(self, event):
