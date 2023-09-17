@@ -1,6 +1,7 @@
 import csv 
 import os
 
+
 def check_file(path_fol: str, path_sc1: str) -> None:
     """
     The function accepts a folder and a file, if there is no folder, 
