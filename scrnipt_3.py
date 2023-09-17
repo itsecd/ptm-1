@@ -2,9 +2,9 @@ import csv
 import os
 
 
-# Написать скрипт, который разобъёт исходный csv файл на N файлов, 
-# где каждый отдельный файл будет соответствовать одной неделе. 
-# Файлы называются по первой и последней дате, которую они содержат.
+"""Write a script that will split the original csv file into N files, 
+   where each individual file will correspond to one week. 
+   Files are named by the first and last date they contain."""
 
 def check_file(path_sc3: str) -> None:
     """
@@ -63,6 +63,10 @@ def sort_file(week: list, path_to_csv: str) -> None:
 def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
     """
     The main function of the script.
+
+    Write a script that will split the original csv file into N files, 
+    where each individual file will correspond to one week. 
+    Files are named by the first and last date they contain.
     
     :param path_to_csv: the path to the file folder
     :return: None

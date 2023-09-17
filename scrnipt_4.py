@@ -9,15 +9,15 @@ from typing import List, Optional
 # принимающую на вход дату (тип datetime) и возвращающий данные для этой даты (из файла) или 
 # None если данных для этой даты нет. Функция должна быть представлена в четырёх версиях в зависимости от 
 # типа входных файлов, из которых будут прочитаны данные (пункты 0–3). 
-# 
-# Написать функцию next(), 
-# которая будет при первом вызове возвращать данные для самой ранней возможной даты (возвращается кортеж (дата, данные)), 
-# а при каждом следующем вызове данные для следующей по порядку даты. Если попадается дата, для которой данные отсутствуют, 
-# то она игнориуруется и возвращаются данные для следующей валидной даты.
 
 def next(path_to_csv: str, count: int) -> Optional[List[str]]:
     """
     the next function takes count and outputs dates.
+
+    the next() function, 
+    which will return data for the earliest possible date on the first call (the tuple (date, data) is returned), 
+    and at each next call, the data for the next date in order. If there is a date for which there is no data, 
+    then it is ignored and data is returned for the next valid date.
 
     :param count: number of dates.
     :param path_to_csv: the path to the file folder
@@ -121,6 +121,11 @@ def search_scrnipt_3(date: datetime.date, path_to_csv: str) -> None:
 def run_4(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
     """
     The main function of the script.
+
+    a script containing a function
+    that accepts a date as input (datetime type) and returns data for this date (from a file) or 
+    None if there is no data for this date. The function should be presented in four versions, depending on
+    the type of input files from which the data will be read (paragraphs 0-3). 
     
     :param path_to_csv: the path to the file folder
     :return: None

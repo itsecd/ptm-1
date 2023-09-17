@@ -3,11 +3,6 @@ import os
 import re
 
 
-# Написать скрипт, который разобъёт исходный csv файл на N файлов,
-# где каждый отдельный файл будет соответствовать одному году.
-# Файлы называются по первой и последней дате, которую они содержат.
-# (если файл содержит данные с первого января 2001 по 31 декабря 2001, то файл назвать 20010101_20011231.csv)
-
 def check_file(path_sc2: str) -> None:
     """
     The function accepts a file, if there is no file, it creates it.
@@ -38,6 +33,12 @@ def write_file(date_1: str, date_2: str, list_years: list, path_to_csv: str) -> 
 def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
     """
     The main function of the script.
+
+    Write a script that will split the original csv file into N files,
+    where each individual file will correspond to one year.
+    Files are named by the first and last date they contain.
+    (if the file contains data from the first of January 2001 to December 31, 2001, 
+    then the file is called 20010101_20011231.csv)
     
     :param path_to_csv: the path to the file folder.
     :return: None.
