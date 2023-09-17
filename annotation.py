@@ -1,15 +1,15 @@
-import os
 import csv
+import os
 
 
 class Annotation:
 
-    def __init__(self,file_name: str) -> None:
+    def __init__(self, file_name: str) -> None:
         self.number_lines = 0
         self.viewed_files = 1
         self.file_name = file_name
 
-    def add_line(self, path: str, fname: str, label: str)->None: 
+    def add_line(self, path: str, fname: str, label: str) -> None: 
         """Addind a line to an annotation"""
         with open(self.file_name, "a", encoding="utf-8", newline="") as fh:
             writer = csv.writer(fh, quoting=csv.QUOTE_ALL)
@@ -26,11 +26,11 @@ class Annotation:
             count = 0
             for row in file_reader:
                 if count < self.viewed_files:
-                    count+=1
+                    count += 1
                 elif self.viewed_files < self.number_lines:
-                    self.viewed_files+=1
+                    self.viewed_files += 1
                     if row[2] == label:
                         return row[0]
                     else: 
-                        count+=1       
+                        count += 1       
         return None

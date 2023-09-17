@@ -5,8 +5,8 @@ from PyQt6 import QtGui
 from PyQt6.QtCore import QSize
 from PyQt6.QtWidgets import (QPushButton, QInputDialog, QApplication, QMainWindow, QFileDialog, QLabel)
 
-from annotation_iterator import AnnotationIterator as AnnIt
 from annotation import Annotation 
+from annotation_iterator import AnnotationIterator as AnnIt
 from copy_dataset import copy_and_annotation, random_copy 
 from creat_ann import creat_annotation
 
@@ -17,10 +17,10 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.initUI()
 
-    def initUI(self)->None:
+    def initUI(self) -> None:
         self.setWindowTitle("Work with dataset")
         self.setStyleSheet("background-color : #FFDEAD")
-        self.setMinimumSize(800,400)
+        self.setMinimumSize(800, 400)
         self.folder_path = QFileDialog.getExistingDirectory(self, 'Выберите папку исходного датасета')
         annotation = Annotation("tmp.cvs")
         creat_annotation(self.folder_path, annotation)
@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
         src = QLabel(f'Исходный датасет:\n{self.folder_path}', self)
         src.setStyleSheet("color : #800000")
         src.setFixedSize(QSize(250, 50))
-        src.move(5,0)
+        src.move(5, 0)
         
         button_create_annotation = self.add_button("Сформировать аннотацию", 250, 50, 5, 50)
         button_create_annotation.clicked.connect(self.create_annotation)
@@ -50,10 +50,10 @@ class MainWindow(QMainWindow):
         next_horse_button.clicked.connect(lambda label="bay horse", iter=iter_ann:self.next_image("bay horse", iter_ann))
         next_horse_button.setStyleSheet("background-color : #D8BFD8")
         
-        self.image = QLabel('Нажмите кнопку "Следующая лошадь" или "Следующая зебра".',self)
+        self.image = QLabel('Нажмите кнопку "Следующая лошадь" или "Следующая зебра".', self)
         self.image.setStyleSheet("color : #800000")
-        self.image.resize(400,300)
-        self.image.move(280,60)
+        self.image.resize(400, 300)
+        self.image.move(280, 60)
         self.show()
 
     def add_button(self, name: str, size_x: int, size_y: int, pos_x: int, pos_y: int) -> QPushButton:
@@ -71,7 +71,7 @@ class MainWindow(QMainWindow):
             annotation = Annotation( f"{str(text)}.cvs")
             creat_annotation(self.folder_path, annotation)
 
-    def dataset_copy(self)-> None:
+    def dataset_copy(self) -> None:
         """Copying dataset (dataset/class_0000.jpg) and creating an annotation"""
         path_copy = QFileDialog.getExistingDirectory(self, 'Введите путь к папке, в которую будет скопирован датасет')
         if not path_copy:
@@ -81,7 +81,7 @@ class MainWindow(QMainWindow):
             annotation = Annotation( f"{str(text)}.cvs")
             copy_and_annotation(self.folder_path, path_copy, annotation)
 
-    def dataset_random(self)-> None:
+    def dataset_random(self) -> None:
         """Copying dataset (dataset/номер.jpg) and creating an annotation"""
         path_copy = QFileDialog.getExistingDirectory(self, 'Введите путь к папке, в которую будет скопирован датасет')
         if not path_copy:
@@ -92,7 +92,7 @@ class MainWindow(QMainWindow):
             annotation = Annotation( f"{str(text)}.cvs")
             random_copy(self.folder_path, path_copy, annotation)
 
-    def next_image(self, label: str, iter: AnnIt)->None:
+    def next_image(self, label: str, iter: AnnIt) -> None:
         """Shows following picture"""
         try:
             imagePath = iter.__next__(label)
