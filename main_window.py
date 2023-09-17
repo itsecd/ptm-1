@@ -1,13 +1,16 @@
+import os 
+import sys
+
+from PyQt6 import QtGui
+from PyQt6.QtCore import QSize
+from PyQt6.QtWidgets import (QPushButton, QInputDialog, QApplication, QMainWindow, QFileDialog, QLabel)
+
 from annotation_iterator import AnnotationIterator as AnnIt
 from annotation import Annotation 
-from copy_dataset import copy_and_annotation as copy_and_ann
-from copy_dataset import random_copy 
-from creat_ann import creat_annotation as creat_ann
-import sys
-import os
-from PyQt6.QtWidgets import (QPushButton, QInputDialog, QApplication, QMainWindow, QFileDialog, QLabel)
-from PyQt6.QtCore import QSize
-from PyQt6 import QtGui
+from copy_dataset import copy_and_annotation, random_copy 
+from creat_ann import creat_annotation
+
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -20,7 +23,7 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(800,400)
         self.folder_path = QFileDialog.getExistingDirectory(self, 'Выберите папку исходного датасета')
         A = Annotation("tmp.cvs")
-        creat_ann(self.folder_path, A)
+        creat_annotation(self.folder_path, A)
         iter_ann = AnnIt(A)
 
         src = QLabel(f'Исходный датасет:\n{self.folder_path}', self)
@@ -68,7 +71,7 @@ class MainWindow(QMainWindow):
             'Введите название файла-аннотации:')
         if ok:
             A = Annotation( f"{str(text)}.cvs")
-            creat_ann(self.folder_path, A)
+            creat_annotation(self.folder_path, A)
 
     def dataset_copy(self)-> None:
         """Copying dataset (dataset/class_0000.jpg) and creating an annotation"""
@@ -78,7 +81,7 @@ class MainWindow(QMainWindow):
         text, ok = QInputDialog.getText(self, 'Ввод', 'Введите название файла-аннотации:')
         if ok:
             A = Annotation( f"{str(text)}.cvs")
-            copy_and_ann(self.folder_path, path_copy, A)
+            copy_and_annotation(self.folder_path, path_copy, A)
 
     def dataset_random(self)-> None:
         """Copying dataset (dataset/номер.jpg) and creating an annotation"""

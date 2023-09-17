@@ -1,5 +1,6 @@
-from annotation import Annotation
 import os
+
+from annotation import Annotation
 
 def creat_annotation(path: str, ann):
     """Creating an annotation for main dataset"""

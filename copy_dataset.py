@@ -1,7 +1,8 @@
-from annotation import Annotation
 import os
 import shutil
 import random 
+
+from annotation import Annotation
 
 
 def random_copy(path_main: str, path: str, ann) -> None:

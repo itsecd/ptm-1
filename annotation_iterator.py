@@ -1,5 +1,5 @@
 from annotation import Annotation
-from creat_ann import creat_annotation as cr_ann
+from creat_ann import creat_annotation
 
 class AnnotationIterator:
 
@@ -20,5 +20,5 @@ class AnnotationIterator:
 if __name__ == "__main__":
     path_main = 'C:/Users/user/Desktop/dataset_copy' 
     A = Annotation("task1_csv.csv")
-    cr_ann(path_main, A)
+    creat_annotation(path_main, A)
     iter = AnnotationIterator(A)           
