@@ -5,7 +5,7 @@ import random
 from annotation import Annotation
 
 
-def random_copy(path_main: str, path: str, annotation) -> None:
+def random_copy(path_main: str, path: str, annotation: Annotation) -> None:
     """Copying dataset to another directory (dataset/номер.jpg) and creating an annotation"""
     if not os.path.isdir(path):
         try:
@@ -24,7 +24,7 @@ def random_copy(path_main: str, path: str, annotation) -> None:
             annotation.add_line(path,fname2,subfolder)
 
 
-def copy_and_annotation(path_main: str, path: str, annotation) -> None:
+def copy_and_annotation(path_main: str, path: str, annotation: Annotation) -> None:
     """Copying dataset to another directory (dataset/class_0000.jpg) and creating an annotation"""
     if not os.path.isdir(path):
         try:

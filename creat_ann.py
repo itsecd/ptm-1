@@ -3,7 +3,7 @@ import os
 from annotation import Annotation
 
 
-def creat_annotation(path: str, annotation):
+def creat_annotation(path: str, annotation: Annotation) -> None:
     """Creating an annotation for main dataset"""
     folders = []
     i=0

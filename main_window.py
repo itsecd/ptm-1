@@ -13,11 +13,11 @@ from creat_ann import creat_annotation
 
 class MainWindow(QMainWindow):
 
-    def __init__(self):
+    def __init__(self) -> None:
         super(MainWindow, self).__init__()
         self.initUI()
 
-    def initUI(self):
+    def initUI(self)->None:
         self.setWindowTitle("Work with dataset")
         self.setStyleSheet("background-color : #FFDEAD")
         self.setMinimumSize(800,400)
@@ -56,7 +56,7 @@ class MainWindow(QMainWindow):
         self.image.move(280,60)
         self.show()
 
-    def add_button(self, name: str, size_x: int, size_y: int, pos_x: int, pos_y: int):
+    def add_button(self, name: str, size_x: int, size_y: int, pos_x: int, pos_y: int) -> QPushButton:
         """Add button with a fixed size and position"""
         button = QPushButton(name, self)
         button.setFixedSize(QSize(size_x, size_y))
@@ -92,7 +92,7 @@ class MainWindow(QMainWindow):
             annotation = Annotation( f"{str(text)}.cvs")
             random_copy(self.folder_path, path_copy, annotation)
 
-    def next(self, label: str, iter: AnnIt):
+    def next_image(self, label: str, iter: AnnIt)->None:
         """Shows following picture"""
         try:
             imagePath = iter.__next__(label)
@@ -104,8 +104,8 @@ class MainWindow(QMainWindow):
             self.image.setText(f"Изображения {label} закончились.")
         except OSError:
             print("error")
-        
-    def closeEvent(self, event):
+
+    def closeEvent(self, event) -> None:
         """Overriding method to delete temporary file"""
         os.remove("tmp.cvs")
         event.accept()

@@ -9,7 +9,7 @@ class Annotation:
         self.viewed_files = 1
         self.file_name = file_name
 
-    def add_line(self, path: str, fname: str, label: str): 
+    def add_line(self, path: str, fname: str, label: str)->None: 
         """Addind a line to an annotation"""
         with open(self.file_name, "a", encoding="utf-8", newline="") as fh:
             writer = csv.writer(fh, quoting=csv.QUOTE_ALL)
