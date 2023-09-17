@@ -5,12 +5,12 @@ import os
 # где каждый отдельный файл будет соответствовать одной неделе. 
 # Файлы называются по первой и последней дате, которую они содержат.
 
-def dir(path_sc3: str) -> None:
+def check_file(path_sc3: str) -> None:
     '''Принимает имя пути, если файла нет создает'''
     if not os.path.isdir(path_sc3):
         os.mkdir(path_sc3)
 
-def week(all_data: list, path_to_csv: str) -> None:
+def sort_week(all_data: list, path_to_csv: str) -> None:
     '''Принимает данные, сортирует по неделям'''
     day = len(all_data)
     week = []
@@ -20,17 +20,17 @@ def week(all_data: list, path_to_csv: str) -> None:
             for i in range(7):
                 week.append(all_data[count])
                 count += 1
-            file(week, path_to_csv)
+            sort_file(week, path_to_csv)
             day -= 7
         elif (day < 7):
             for i in range(day):
                 week.append(all_data[count])
                 count += 1
-            file(week, path_to_csv)
+            sort_file(week, path_to_csv)
             day = 0
         week = []
 
-def file(week: list, path_to_csv: str) -> None:
+def sort_file(week: list, path_to_csv: str) -> None:
     '''Принимает недели, сортирует по файлам'''
     date_1 = week[0][0][8:10]
     date_2 = week[-1][0][8:10]
@@ -42,10 +42,10 @@ def file(week: list, path_to_csv: str) -> None:
         for i in range(len(week)):
             writer.writerow(week[i])
 
-def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON", "PythonLab2", "File_folder")) -> None:
+def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
     '''Основная функция работы скрипта'''
     path_sc3 = "File_folder/scrnipt_3"
-    dir(path_sc3)
+    check_file(path_sc3)
     set1 = set()
     with open(path_to_csv + '/dataset.csv', 'r', newline='', encoding='utf-8') as csvfile:
         file_reader = csv.reader(csvfile)
@@ -70,7 +70,7 @@ def run_3(path_to_csv: str=os.path.join("C:/", "PYTHON", "PythonLab2", "File_fol
                     month -= 1
                     if (month == 1):
                         pass
-                    week(all_data, path_to_csv)
+                    sort_week(all_data, path_to_csv)
                     all_data = []
                     all_data.append(row)
 

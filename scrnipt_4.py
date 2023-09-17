@@ -24,7 +24,7 @@ def next(path_to_csv: str, count: int) -> Optional[List[str]]:
             return file_reader[count]
             #print(*file_reader[count])
 
-def work_0(date: datetime.date,  path_to_csv: str) -> None:
+def search_dataset(date: datetime.date,  path_to_csv: str) -> None:
     "принимает данные, ищет их в файле соответствующего скрипта"
     with open(path_to_csv+"/dataset.csv", mode='r', encoding='utf-8') as csvfile:
         file_reader = csv.reader(csvfile) 
@@ -35,7 +35,7 @@ def work_0(date: datetime.date,  path_to_csv: str) -> None:
         else:
             return None
 
-def work_1(date: datetime.date,  path_to_csv: str) -> None:
+def search_scrnipt_1(date: datetime.date,  path_to_csv: str) -> None:
     "принимает данные, ищет их в файле соответствующего скрипта"
     with open(path_to_csv +'/scrnipt_1/X.csv', 'r', encoding='utf-8') as csvfile:
         file_reader = list(csv.reader(csvfile))
@@ -50,7 +50,7 @@ def work_1(date: datetime.date,  path_to_csv: str) -> None:
         file_reader = list(csv.reader(csvfile))
         print(*file_reader[tmp])
 
-def work_2(date: datetime.date, path_to_csv: str) -> None:
+def search_scrnipt_2(date: datetime.date, path_to_csv: str) -> None:
     "принимает данные, ищет их в файле соответствующего скрипта"
     ways = os.listdir(path_to_csv+"/scrnipt_2")
     date = str(date)
@@ -65,7 +65,7 @@ def work_2(date: datetime.date, path_to_csv: str) -> None:
     else:
         return None
 
-def work_3(date: datetime.date, path_to_csv: str) -> None:
+def search_scrnipt_3(date: datetime.date, path_to_csv: str) -> None:
     "принимает данные, ищет их в файле соответствующего скрипта"
     ways = os.listdir(path_to_csv+"/scrnipt_3")
     list1 = []
@@ -88,13 +88,13 @@ def work_3(date: datetime.date, path_to_csv: str) -> None:
     else:
         return None
 
-def run_4(path_to_csv: str=os.path.join("C:/", "PYTHON", "PythonLab2", "File_folder")) -> None:
+def run_4(path_to_csv: str=os.path.join("C:/", "PYTHON", "PTM-1", "File_folder")) -> None:
     '''Основная функция работы скрипта'''
     date = datetime.date(2022, 9, 7)
-    work_0(date, path_to_csv)
-    work_1(date, path_to_csv)
-    work_2(date, path_to_csv)
-    work_3(date, path_to_csv)
+    search_dataset(date, path_to_csv)
+    search_scrnipt_1(date, path_to_csv)
+    search_scrnipt_2(date, path_to_csv)
+    search_scrnipt_3(date, path_to_csv)
 
     with open(path_to_csv+'/dataset.csv', 'r', encoding='utf-8') as csvfile:
         count = 0
