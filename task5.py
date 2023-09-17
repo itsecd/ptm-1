@@ -4,7 +4,7 @@ import os
 from typing import Optional
 
 
-class iterator_task1:
+class IteratorTask1:
     def __init__(self) :  
         self.__file_names = []
         self.__counter = 0
@@ -35,7 +35,7 @@ class iterator_task1:
         return self.__path
 
 
-class iterator_task2:
+class IteratorTask2:
     def __init__(self, class_name: str,  path: str):
         self.file_names = os.listdir(os.path.join(path))
         for name in self.file_names:
@@ -53,7 +53,7 @@ class iterator_task2:
             raise StopIteration
 
 
-class iterator_task3:
+class IteratorTask3:
     def __init__(self, class_name: str,  path: str, annotation_name: str):
         self.file_names = list()
         with open(os.path.join(path, annotation_name), encoding='UTF-16') as file:

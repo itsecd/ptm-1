@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QMessageBox
 from task1 import create_csv_annotation
 from task2 import create_copy_dataset
 from task3 import create_randomname_file
-from task5 import iterator_task1
+from task5 import IteratorTask1
 
 
 class Ui_MainWindow(object):
@@ -175,8 +175,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.__iterator_rose = iterator_task1()
-        self.__iterator_tulip = iterator_task1()
+        self.__iterator_rose = IteratorTask1()
+        self.__iterator_tulip = IteratorTask1()
         self.add_functions()
 
     def retranslateUi(self, MainWindow: QtWidgets.QMainWindow):
