@@ -9,6 +9,12 @@ from cryptography.hazmat.primitives.ciphers import algorithms, Cipher, modes
 
 
 def swap(val_1, val_2):
+    """
+    функция печатает 2 значения, затем меняет их местами и снова печатает
+    :param val_1: первое число
+    :param val_2: второе число
+    :return: ничего
+    """
     print('var_1:', val_1, 'var_2:', val_2)
     tmp_val = val_1
     val_1 = val_2
@@ -17,6 +23,13 @@ def swap(val_1, val_2):
 
 
 def all_permutations(val_1, val_2, val_3):
+    """
+    функция находит все перестановки трёх чисел
+    :param val_1: первое число
+    :param val_2: второе число
+    :param val_3: третье число
+    :return: ничего
+    """
     arr = list()
     arr.append(val_1)
     arr.append(val_2)
@@ -24,11 +37,17 @@ def all_permutations(val_1, val_2, val_3):
     for i in range(0, 3):
         for j in range(0, 3):
             for k in range(0, 3):
-                if (i != j & j != k & k != i):
+                if i != j & j != k & k != i:
                     print(arr[i], arr[j], arr[k])
 
 
 def encrypt(text_bytes, key_bytes):
+    """
+    функция шифрует текст с помощью ключа
+    :param text_bytes: текст
+    :param key_bytes: ключ
+    :return: зашифрованный текст
+    """
     padder = padding.ANSIX923(128).padder()
     padded_text = padder.update(text_bytes) + padder.finalize()
     iv = os.urandom(16)
@@ -39,6 +58,12 @@ def encrypt(text_bytes, key_bytes):
 
 
 def decrypt(encrypted_text, key_bytes):
+    """
+    функция шифрует зашифрованный текст с помощью ключа
+    :param encrypted_text: зашифрованный текст
+    :param key_bytes: ключ
+    :return: расшифрованный текст
+    """
     encrypted_text, iv = encrypted_text[16:], encrypted_text[:16]
     cipher = Cipher(algorithms.AES(key_bytes), mode=modes.CBC(iv))
     decryptor = cipher.decryptor()
@@ -49,6 +74,11 @@ def decrypt(encrypted_text, key_bytes):
 
 
 def count_unique_words(filename):
+    """
+    функция читает файл и находит кол-во уникальных слов
+    :param filename: имя файла
+    :return: кол-во уникальных слов
+    """
     try:
         with open(filename, 'r', encoding='utf-8') as file:
             text = file.read().lower()
@@ -71,6 +101,13 @@ def count_unique_words(filename):
 
 
 def caesar_cipher(alf, alf_cipher, text):
+    """
+    функция реализует шифра цезаря
+    :param alf: текущий алфавит текста
+    :param alf_cipher: желаемый алфавит
+    :param text: текст
+    :return: текст с изменённым алфавитом
+    """
     encoded_text = ""
     text = text.lower()
     for symbol in text:
@@ -85,6 +122,11 @@ def caesar_cipher(alf, alf_cipher, text):
 
 
 def factorial(val):
+    """
+    функция находит факториал
+    :param val: число
+    :return: факториал числа
+    """
     if val == 0:
         return 1
     else:
@@ -95,6 +137,11 @@ def factorial(val):
 
 
 def bubble_sort(arr):
+    """
+    функция реализует сортировку пузырьком
+    :param arr: массив
+    :return: ничего
+    """
     n = len(arr)
     for i in range(n):
         swapped = False
@@ -107,6 +154,11 @@ def bubble_sort(arr):
 
 
 def insertion_sort(arr):
+    """
+    функция реализует сортировку вставками
+    :param arr: массив
+    :return: ничего
+    """
     for i in range(1, len(arr)):
         key = arr[i]
         j = i - 1
@@ -117,6 +169,11 @@ def insertion_sort(arr):
 
 
 def selection_sort(arr):
+    """
+    функция реализует сортировку выбором
+    :param arr: массив
+    :return: ничего
+    """
     for i in range(len(arr)):
         min_idx = i
         for j in range(i + 1, len(arr)):
@@ -126,6 +183,11 @@ def selection_sort(arr):
 
 
 def merge_sort(arr):
+    """
+    функция реализует сортировку слиянием
+    :param arr: массив
+    :return: ничего
+    """
     if len(arr) > 1:
         mid = len(arr) // 2
         left_half = arr[:mid]
@@ -152,6 +214,11 @@ def merge_sort(arr):
 
 
 def quick_sort(arr):
+    """
+    функция реализует быструю сортировку
+    :param arr: массив
+    :return: ничего
+    """
     if len(arr) <= 1:
         return arr
     pivot = arr[len(arr) // 2]
@@ -165,6 +232,11 @@ memo = {}
 
 
 def fibonacci(n):
+    """
+    функция вычисляет n-ое число фибоначчи
+    :param n: номер числа
+    :return: n-ое число фибоначчи
+    """
     if n in memo:
         return memo[n]
     if n == 0:
@@ -178,6 +250,11 @@ def fibonacci(n):
 
 
 def draw_pyramid(rows):
+    """
+    функция рисует пирамиду
+    :param rows: кол-во строк
+    :return: ничего
+    """
     for i in range(1, rows + 1):
         for j in range(rows - i):
             print(" ", end="")
@@ -189,6 +266,11 @@ def draw_pyramid(rows):
 
 
 def draw_circle(radius):
+    """
+    функция рисует круг
+    :param radius: радиус
+    :return: ничего
+    """
     for i in range(-radius, radius + 1):
         for j in range(-radius, radius + 1):
             if math.sqrt(i ** 2 + j ** 2) <= radius + 0.5:
@@ -199,6 +281,11 @@ def draw_circle(radius):
 
 
 def draw_christmas_tree(height):
+    """
+    функция рисует ёлку
+    :param height: высота
+    :return: ничего
+    """
     for i in range(height):
         print(" " * (height - i - 1) + "*" * (2 * i + 1))
     trunk_height = height // 3
@@ -208,6 +295,11 @@ def draw_christmas_tree(height):
 
 
 def draw_square(side_length):
+    """
+    функция рисует квадрат
+    :param side_length: длина стороны
+    :return: ничего
+    """
     if side_length < 2:
         print("Слишком маленькая сторона для квадрата.")
         return
@@ -216,6 +308,11 @@ def draw_square(side_length):
 
 
 def write_string_to_csv(data_string, file_name="res_file.csv") -> None:
+    """
+        функция дописывает в конец csv файла строку data_string
+        data_string - строка, которую записываем
+        file_name - название файла, в который записываем
+    """
     try:
         with open(file_name, 'a', newline='') as file_name:
             writer = csv.writer(file_name)
@@ -225,6 +322,12 @@ def write_string_to_csv(data_string, file_name="res_file.csv") -> None:
 
 
 def get_curency_course(curency='USD', start_url_string='https://www.cbr-xml-daily.ru/daily_json.js'):
+    """
+    функция получает курс заданной валюты на момент конкретной даты
+    и записывает в файл до тех пор, пока не дойдёт до последней возможной даты
+    curency - валюта, для которой получаем курс
+    start_url_string - стартовая ссылка, с которой начинаем парсить
+    """
     response = requests.get(start_url_string)
     url_text = json.loads(response.text)
     while True:
@@ -242,6 +345,11 @@ def get_curency_course(curency='USD', start_url_string='https://www.cbr-xml-dail
 
 
 def is_prime(n):
+    """
+    функция определяет является ли число простым
+    :param n: число
+    :return: bool является ли число простым
+    """
     if n <= 1:
         return False
     if n <= 3:
@@ -257,6 +365,12 @@ def is_prime(n):
 
 
 def find_primes_in_range(start, end):
+    """
+    функция находит все простые числа в диапазоне от start до end
+    :param start: начало диапазона
+    :param end: конец диапазона
+    :return: все простые числа в диапазоне
+    """
     if start < 2:
         start = 2
     primes = list()
