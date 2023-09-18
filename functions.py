@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import algorithms, Cipher, modes
 
 
-def aa(a, b):
+def swap(a, b):
     print('var_1:', a, 'var_2:', b)
     c = a
     a = b
@@ -16,7 +16,7 @@ def aa(a, b):
     print('var_1:', a, 'var_2:', b)
 
 
-def bb(a, b, c):
+def all_permutations(a, b, c):
     d = list()
     d.append(a)
     d.append(b)
@@ -28,7 +28,7 @@ def bb(a, b, c):
                     print(d[i], d[j], d[k])
 
 
-def cc(a, b):
+def encrypt(a, b):
     c = padding.ANSIX923(128).padder()
     d = c.update(a) + c.finalize()
     e = os.urandom(16)
@@ -38,7 +38,7 @@ def cc(a, b):
     return h
 
 
-def dd(a, b):
+def decrypt(a, b):
     a, c = a[16:], a[:16]
     d = Cipher(algorithms.AES(b), mode=modes.CBC(c))
     i = d.decryptor()
@@ -48,7 +48,7 @@ def dd(a, b):
     return h
 
 
-def ee(a):
+def count_unique_words(a):
     try:
         with open(a, 'r', encoding='utf-8') as file:
             b = file.read().lower()
@@ -70,7 +70,7 @@ def ee(a):
         print(f"Произошла ошибка: {e}")
 
 
-def ff(a, b, c):
+def caesar_cipher(a, b, c):
     f = ""
     c = c.lower()
     for d in c:
@@ -84,7 +84,7 @@ def ff(a, b, c):
     return f
 
 
-def gg(a):
+def factorial(a):
     if a == 0:
         return 1
     else:
@@ -94,7 +94,7 @@ def gg(a):
         return b
 
 
-def hh(a):
+def bubble_sort(a):
     n = len(a)
     for i in range(n):
         b = False
@@ -106,7 +106,7 @@ def hh(a):
             break
 
 
-def ii(a):
+def insertion_sort(a):
     for i in range(1, len(a)):
         b = a[i]
         j = i - 1
@@ -116,7 +116,7 @@ def ii(a):
         a[j + 1] = b
 
 
-def jj(a):
+def selection_sort(a):
     for i in range(len(a)):
         b = i
         for j in range(i + 1, len(a)):
@@ -125,13 +125,13 @@ def jj(a):
         a[i], a[b] = a[b], a[i]
 
 
-def kk(a):
+def merge_sort(a):
     if len(a) > 1:
         b = len(a) // 2
         c = a[:b]
         d = a[b:]
-        kk(c)
-        kk(d)
+        merge_sort(c)
+        merge_sort(d)
         i = j = k = 0
         while i < len(c) and j < len(d):
             if c[i] < d[j]:
@@ -151,20 +151,20 @@ def kk(a):
             k += 1
 
 
-def ll(a):
+def quick_sort(a):
     if len(a) <= 1:
         return a
     b = a[len(a) // 2]
     c = [x for x in a if x < b]
     d = [x for x in a if x == b]
     e = [x for x in a if x > b]
-    return ll(c) + d + ll(e)
+    return quick_sort(c) + d + quick_sort(e)
 
 
 memo = {}
 
 
-def mm(a):
+def fibonacci(a):
     if a in memo:
         return memo[a]
     if a == 0:
@@ -172,12 +172,12 @@ def mm(a):
     elif a == 1:
         b = 1
     else:
-        b = mm(a - 1) + mm(a - 2)
+        b = fibonacci(a - 1) + fibonacci(a - 2)
     memo[a] = b
     return b
 
 
-def nn(a):
+def draw_pyramid(a):
     for i in range(1, a + 1):
         for j in range(a - i):
             print(" ", end="")
@@ -188,7 +188,7 @@ def nn(a):
         print()
 
 
-def oo(a):
+def draw_circle(a):
     for i in range(-a, a + 1):
         for j in range(-a, a + 1):
             if math.sqrt(i ** 2 + j ** 2) <= a + 0.5:
@@ -198,7 +198,7 @@ def oo(a):
         print()
 
 
-def pp(a):
+def draw_christmas_tree(a):
     for i in range(a):
         print(" " * (a - i - 1) + "*" * (2 * i + 1))
     b = a // 3
@@ -207,7 +207,7 @@ def pp(a):
         print(" " * (a - c // 2 - 1) + "*" * c)
 
 
-def qq(a):
+def draw_square(a):
     if a < 2:
         print("Слишком маленькая сторона для квадрата.")
         return
@@ -215,7 +215,7 @@ def qq(a):
         print("/" * a)
 
 
-def rr(a, b="res_file.csv") -> None:
+def write_string_to_csv(a, b="res_file.csv") -> None:
     try:
         with open(b, 'a', newline='') as b:
             c = csv.writer(b)
@@ -224,7 +224,7 @@ def rr(a, b="res_file.csv") -> None:
         logging.error(f'Ошибка, не удалось открыть файл: {error}')
 
 
-def ss(a, b):
+def get_curency_course(a, b):
     c = requests.get(b)
     d = json.loads(c.text)
     while True:
@@ -232,7 +232,7 @@ def ss(a, b):
         f = d['Valute'][a]['Value']
         print(f'Программа на данный момент на дате: {e}')
         g = e + ', ' + str(f)
-        rr(g)
+        write_string_to_csv(g)
         h = "https:" + d['PreviousURL']
         i = requests.get(h)
         d = json.loads(i.text)
@@ -241,7 +241,7 @@ def ss(a, b):
             break
 
 
-def tt(a):
+def is_prime(a):
     if a <= 1:
         return False
     if a <= 3:
@@ -256,11 +256,11 @@ def tt(a):
     return True
 
 
-def uu(a, b):
+def find_primes_in_range(a, b):
     if a < 2:
         a = 2
     c = list()
     for num in range(a, b + 1):
-        if tt(num):
+        if is_prime(num):
             c.append(num)
     return c
