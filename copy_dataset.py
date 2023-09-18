@@ -6,7 +6,9 @@ from annotation import Annotation
 
 
 def random_copy(path_main: str, path: str, annotation: Annotation) -> None:
-    """Copying dataset to another directory (dataset/номер.jpg) and creating an annotation"""
+    """Copying dataset to another directory (dataset/номер.jpg) 
+    and creating an annotation
+    """
     if not os.path.isdir(path):
         try:
             os.mkdir(path)
@@ -24,8 +26,11 @@ def random_copy(path_main: str, path: str, annotation: Annotation) -> None:
             annotation.add_line(path, fname2, subfolder)
 
 
-def copy_and_annotation(path_main: str, path: str, annotation: Annotation) -> None:
-    """Copying dataset to another directory (dataset/class_0000.jpg) and creating an annotation"""
+def copy_and_annotation(path_main: str, path: str, 
+                        annotation: Annotation) -> None:
+    """Copying dataset to another directory (dataset/class_0000.jpg) 
+    and creating an annotation
+    """
     if not os.path.isdir(path):
         try:
             os.mkdir(path)
@@ -36,7 +41,8 @@ def copy_and_annotation(path_main: str, path: str, annotation: Annotation) -> No
         files = os.listdir(os.path.join(path_main, subfolder))
         for fname in files:
             shutil.copy(os.path.join(path_main, subfolder, fname), path)
-            os.rename(os.path.join(path, fname),os.path.join(path, f"{subfolder}_{fname}"))
+            os.rename(os.path.join(path, fname),
+                      os.path.join(path, f"{subfolder}_{fname}"))
             annotation.add_line(path, f"{subfolder}_{fname}", subfolder)
 
 

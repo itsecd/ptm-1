@@ -3,7 +3,8 @@ import sys
 
 from PyQt6 import QtGui
 from PyQt6.QtCore import QSize
-from PyQt6.QtWidgets import (QPushButton, QInputDialog, QApplication, QMainWindow, QFileDialog, QLabel)
+from PyQt6.QtWidgets import (QPushButton, QInputDialog, QApplication, 
+                             QMainWindow, QFileDialog, QLabel)
 
 from annotation import Annotation 
 from annotation_iterator import AnnotationIterator as AnnIt
@@ -23,7 +24,8 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Work with dataset")
         self.setStyleSheet("background-color : #FFDEAD")
         self.setMinimumSize(800, 400)
-        self.folder_path = QFileDialog.getExistingDirectory(self, 'Выберите папку исходного датасета')
+        self.folder_path = QFileDialog.getExistingDirectory(
+            self, 'Выберите папку исходного датасета')
         annotation = Annotation("tmp.cvs")
         creat_annotation(self.folder_path, annotation)
         iter_ann = AnnIt(annotation)
@@ -32,33 +34,42 @@ class MainWindow(QMainWindow):
         src.setFixedSize(QSize(250, 50))
         src.move(5, 0)
         
-        button_create_annotation = self.add_button("Сформировать аннотацию", 250, 50, 5, 50)
+        button_create_annotation = self.add_button("Сформировать аннотацию", 
+                                                   250, 50, 5, 50)
         button_create_annotation.clicked.connect(self.create_annotation)
         button_create_annotation.setStyleSheet("background-color : #FFA07A")
 
-        button_copy_dataset = self.add_button("Скопировать датасет", 250, 50, 5, 100)
+        button_copy_dataset = self.add_button("Скопировать датасет", 
+                                              250, 50, 5, 100)
         button_copy_dataset.clicked.connect(self.dataset_copy)
         button_copy_dataset.setStyleSheet("background-color : #FFA07A")
 
-        button_copy_random_dataset = self.add_button("Рандом датасета", 250, 50, 5, 150)
+        button_copy_random_dataset = self.add_button("Рандом датасета", 
+                                                     250, 50, 5, 150)
         button_copy_random_dataset.clicked.connect(self.dataset_random)
         button_copy_random_dataset.setStyleSheet("background-color : #FFA07A")
 
         next_zebra_button = self.add_button("Следующая зебра", 250, 50, 5, 200)
-        next_zebra_button.clicked.connect(lambda label="zebra", iter=iter_ann:self.next_image("zebra", iter_ann))
+        next_zebra_button.clicked.connect(
+             lambda label="zebra", 
+             iter=iter_ann:self.next_image("zebra", iter_ann))
         next_zebra_button.setStyleSheet("background-color : #D8BFD8")
 
         next_horse_button = self.add_button("Следующая лошадь", 250, 50, 5, 250)
-        next_horse_button.clicked.connect(lambda label="bay horse", iter=iter_ann:self.next_image("bay horse", iter_ann))
+        next_horse_button.clicked.connect(
+             lambda label="bay horse", 
+             iter=iter_ann:self.next_image("bay horse", iter_ann))
         next_horse_button.setStyleSheet("background-color : #D8BFD8")
         
-        self.image = QLabel('Нажмите кнопку "Следующая лошадь" или "Следующая зебра".', self)
+        self.image = QLabel(
+             'Нажмите кнопку "Следующая лошадь" или "Следующая зебра".', self)
         self.image.setStyleSheet("color : #800000")
         self.image.resize(400, 300)
         self.image.move(280, 60)
         self.show()
 
-    def add_button(self, name: str, size_x: int, size_y: int, pos_x: int, pos_y: int) -> QPushButton:
+    def add_button(self, name: str, size_x: int, 
+                   size_y: int, pos_x: int, pos_y: int) -> QPushButton:
         """Add button with a fixed size and position"""
         button = QPushButton(name, self)
         button.setFixedSize(QSize(size_x, size_y))
@@ -74,18 +85,23 @@ class MainWindow(QMainWindow):
             creat_annotation(self.folder_path, annotation)
 
     def dataset_copy(self) -> None:
-        """Copying dataset (dataset/class_0000.jpg) and creating an annotation"""
-        path_copy = QFileDialog.getExistingDirectory(self, 'Введите путь к папке, в которую будет скопирован датасет')
+        """Copying dataset (dataset/class_0000.jpg) 
+        and creating an annotation
+        """
+        path_copy = QFileDialog.getExistingDirectory(
+            self, 'Введите путь к папке, в которую будет скопирован датасет')
         if not path_copy:
             return
-        text, ok = QInputDialog.getText(self, 'Ввод', 'Введите название файла-аннотации:')
+        text, ok = QInputDialog.getText(
+            self, 'Ввод', 'Введите название файла-аннотации:')
         if ok:
             annotation = Annotation( f"{str(text)}.cvs")
             copy_and_annotation(self.folder_path, path_copy, annotation)
 
     def dataset_random(self) -> None:
         """Copying dataset (dataset/номер.jpg) and creating an annotation"""
-        path_copy = QFileDialog.getExistingDirectory(self, 'Введите путь к папке, в которую будет скопирован датасет')
+        path_copy = QFileDialog.getExistingDirectory(
+            self, 'Введите путь к папке, в которую будет скопирован датасет')
         if not path_copy:
             return
         text, ok = QInputDialog.getText(self, 'Ввод',
