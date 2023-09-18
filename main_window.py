@@ -14,10 +14,12 @@ from creat_ann import creat_annotation
 class MainWindow(QMainWindow):
 
     def __init__(self) -> None:
+        """Constructor"""
         super(MainWindow, self).__init__()
         self.initUI()
 
     def initUI(self) -> None:
+        """Sets window parameters"""
         self.setWindowTitle("Work with dataset")
         self.setStyleSheet("background-color : #FFDEAD")
         self.setMinimumSize(800, 400)

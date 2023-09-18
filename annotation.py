@@ -5,6 +5,7 @@ import os
 class Annotation:
 
     def __init__(self, file_name: str) -> None:
+        """Constructor"""
         self.number_lines = 0
         self.viewed_files = 1
         self.file_name = file_name
