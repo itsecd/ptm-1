@@ -14,7 +14,20 @@ dog_path = "C:/Users/User/nuck figgers/dataset/dog"
 cat_path = "C:/Users/User/nuck figgers/dataset/cat"
 
 
-def get_images(count_images, path, type_name, indexs=None):
+def get_images(count_images: int, path: str, type_name: str, indexs: int = None) -> None or int:
+    """Photo parsing function
+
+    Args:
+        count_images (int): Counter of parsed photos
+        path (str): Path to the folder to save the photo
+        type_name (str): Type of image for parsing
+        indexs (int, optional): Index of not uploaded photos. Defaults to None.
+
+    Returns:
+        None or int: Index of missing photos
+
+    """
+    
     if not os.path.exists("C:/Users/User/nuck figgers/dataset"):
         os.mkdir("C:/Users/User/nuck figgers/dataset")
     if not os.path.exists(path):
@@ -63,11 +76,32 @@ def get_images(count_images, path, type_name, indexs=None):
                     print("Error in: \n", count)
 
 
-def is_similar(image1, image2):
-    return image1.shape == image2.shape and not(np.bitwise_xor(image1, image2).any())
+def is_similar(image1, image2) -> bool:
+    """Photo comparison function
+
+    Args:
+        image1 : First foto
+        image2 : Second foto
+
+    Returns:
+        bool: True or False
+
+    """
+    
+    return image1.shape == image2.shape and not(
+        np.bitwise_xor(image1, image2).any())
 
 
-def check_images(path):
+def check_images(path: str) -> list:
+    """A function that goes through photos and compares them
+
+    Args:
+        path (str): Path to the folder to save the photo
+
+    Returns:
+        list: List with indexes of all copies
+    """
+    
     images = []
     images2 = []
     for file_name in os.listdir(path):
@@ -94,6 +128,8 @@ def check_images(path):
 
 
 def main():
+    """Main function"""
+    
     count_find = 1250
     get_images(count_find, dog_path, "dog")
     print("Пауза")
