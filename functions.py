@@ -8,178 +8,178 @@ from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import algorithms, Cipher, modes
 
 
-def swap(a, b):
-    print('var_1:', a, 'var_2:', b)
-    c = a
-    a = b
-    b = c
-    print('var_1:', a, 'var_2:', b)
+def swap(val_1, val_2):
+    print('var_1:', val_1, 'var_2:', val_2)
+    tmp_val = val_1
+    val_1 = val_2
+    val_2 = tmp_val
+    print('var_1:', val_1, 'var_2:', val_2)
 
 
-def all_permutations(a, b, c):
-    d = list()
-    d.append(a)
-    d.append(b)
-    d.append(c)
+def all_permutations(val_1, val_2, val_3):
+    arr = list()
+    arr.append(val_1)
+    arr.append(val_2)
+    arr.append(val_3)
     for i in range(0, 3):
         for j in range(0, 3):
             for k in range(0, 3):
                 if (i != j & j != k & k != i):
-                    print(d[i], d[j], d[k])
+                    print(arr[i], arr[j], arr[k])
 
 
-def encrypt(a, b):
-    c = padding.ANSIX923(128).padder()
-    d = c.update(a) + c.finalize()
-    e = os.urandom(16)
-    f = Cipher(algorithms.AES(b), mode=modes.CBC(e))
-    g = f.encryptor()
-    h = e + g.update(d) + g.finalize()
-    return h
+def encrypt(text_bytes, key_bytes):
+    padder = padding.ANSIX923(128).padder()
+    padded_text = padder.update(text_bytes) + padder.finalize()
+    iv = os.urandom(16)
+    cipher = Cipher(algorithms.AES(key_bytes), mode=modes.CBC(iv))
+    encryptor = cipher.encryptor()
+    encrypted_text = iv + encryptor.update(padded_text) + encryptor.finalize()
+    return encrypted_text
 
 
-def decrypt(a, b):
-    a, c = a[16:], a[:16]
-    d = Cipher(algorithms.AES(b), mode=modes.CBC(c))
-    i = d.decryptor()
-    f = i.update(a) + i.finalize()
-    g = padding.ANSIX923(128).unpadder()
-    h = g.update(f) + g.finalize()
-    return h
+def decrypt(encrypted_text, key_bytes):
+    encrypted_text, iv = encrypted_text[16:], encrypted_text[:16]
+    cipher = Cipher(algorithms.AES(key_bytes), mode=modes.CBC(iv))
+    decryptor = cipher.decryptor()
+    decrypted_text = decryptor.update(encrypted_text) + decryptor.finalize()
+    unpadder = padding.ANSIX923(128).unpadder()
+    text = unpadder.update(decrypted_text) + unpadder.finalize()
+    return text
 
 
-def count_unique_words(a):
+def count_unique_words(filename):
     try:
-        with open(a, 'r', encoding='utf-8') as file:
-            b = file.read().lower()
-            c = b.split()
-            d = {}
-            for e in c:
-                e = ''.join(c for c in e if c.isalnum())
-                if e:
-                    if e in d:
-                        d[e] += 1
+        with open(filename, 'r', encoding='utf-8') as file:
+            text = file.read().lower()
+            words = text.split()
+            word_count = {}
+            for word in words:
+                word = ''.join(c for c in word if c.isalnum())
+                if word:
+                    if word in word_count:
+                        word_count[word] += 1
                     else:
-                        d[e] = 1
-            for e, count in d.items():
-                print(f"{e}: {count}")
-            return len(d)
+                        word_count[word] = 1
+            for word, count in word_count.items():
+                print(f"{word}: {count}")
+            return len(word_count)
     except FileNotFoundError:
         print("Файл не найден.")
     except Exception as e:
         print(f"Произошла ошибка: {e}")
 
 
-def caesar_cipher(a, b, c):
-    f = ""
-    c = c.lower()
-    for d in c:
-        e = False
-        for j in range(len(a)):
-            if d == a[j]:
-                f += b[j]
-                e = True
-        if not e:
-            f += d
-    return f
+def caesar_cipher(alf, alf_cipher, text):
+    encoded_text = ""
+    text = text.lower()
+    for symbol in text:
+        flag = False
+        for j in range(len(alf)):
+            if symbol == alf[j]:
+                encoded_text += alf_cipher[j]
+                flag = True
+        if not flag:
+            encoded_text += symbol
+    return encoded_text
 
 
-def factorial(a):
-    if a == 0:
+def factorial(val):
+    if val == 0:
         return 1
     else:
-        b = 1
-        for i in range(1, a + 1):
-            b *= i
-        return b
+        result = 1
+        for i in range(1, val + 1):
+            result *= i
+        return result
 
 
-def bubble_sort(a):
-    n = len(a)
+def bubble_sort(arr):
+    n = len(arr)
     for i in range(n):
-        b = False
+        swapped = False
         for j in range(0, n - i - 1):
-            if a[j] > a[j + 1]:
-                a[j], a[j + 1] = a[j + 1], a[j]
-                b = True
-        if not b:
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:
             break
 
 
-def insertion_sort(a):
-    for i in range(1, len(a)):
-        b = a[i]
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
         j = i - 1
-        while j >= 0 and b < a[j]:
-            a[j + 1] = a[j]
+        while j >= 0 and key < arr[j]:
+            arr[j + 1] = arr[j]
             j -= 1
-        a[j + 1] = b
+        arr[j + 1] = key
 
 
-def selection_sort(a):
-    for i in range(len(a)):
-        b = i
-        for j in range(i + 1, len(a)):
-            if a[j] < a[b]:
-                b = j
-        a[i], a[b] = a[b], a[i]
+def selection_sort(arr):
+    for i in range(len(arr)):
+        min_idx = i
+        for j in range(i + 1, len(arr)):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
 
 
-def merge_sort(a):
-    if len(a) > 1:
-        b = len(a) // 2
-        c = a[:b]
-        d = a[b:]
-        merge_sort(c)
-        merge_sort(d)
+def merge_sort(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        left_half = arr[:mid]
+        right_half = arr[mid:]
+        merge_sort(left_half)
+        merge_sort(right_half)
         i = j = k = 0
-        while i < len(c) and j < len(d):
-            if c[i] < d[j]:
-                a[k] = c[i]
+        while i < len(left_half) and j < len(right_half):
+            if left_half[i] < right_half[j]:
+                arr[k] = left_half[i]
                 i += 1
             else:
-                a[k] = d[j]
+                arr[k] = right_half[j]
                 j += 1
             k += 1
-        while i < len(c):
-            a[k] = c[i]
+        while i < len(left_half):
+            arr[k] = left_half[i]
             i += 1
             k += 1
-        while j < len(d):
-            a[k] = d[j]
+        while j < len(right_half):
+            arr[k] = right_half[j]
             j += 1
             k += 1
 
 
-def quick_sort(a):
-    if len(a) <= 1:
-        return a
-    b = a[len(a) // 2]
-    c = [x for x in a if x < b]
-    d = [x for x in a if x == b]
-    e = [x for x in a if x > b]
-    return quick_sort(c) + d + quick_sort(e)
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)
 
 
 memo = {}
 
 
-def fibonacci(a):
-    if a in memo:
-        return memo[a]
-    if a == 0:
-        b = 0
-    elif a == 1:
-        b = 1
+def fibonacci(n):
+    if n in memo:
+        return memo[n]
+    if n == 0:
+        result = 0
+    elif n == 1:
+        result = 1
     else:
-        b = fibonacci(a - 1) + fibonacci(a - 2)
-    memo[a] = b
-    return b
+        result = fibonacci(n - 1) + fibonacci(n - 2)
+    memo[n] = result
+    return result
 
 
-def draw_pyramid(a):
-    for i in range(1, a + 1):
-        for j in range(a - i):
+def draw_pyramid(rows):
+    for i in range(1, rows + 1):
+        for j in range(rows - i):
             print(" ", end="")
         for j in range(i, 0, -1):
             print(j, end="")
@@ -188,79 +188,79 @@ def draw_pyramid(a):
         print()
 
 
-def draw_circle(a):
-    for i in range(-a, a + 1):
-        for j in range(-a, a + 1):
-            if math.sqrt(i ** 2 + j ** 2) <= a + 0.5:
+def draw_circle(radius):
+    for i in range(-radius, radius + 1):
+        for j in range(-radius, radius + 1):
+            if math.sqrt(i ** 2 + j ** 2) <= radius + 0.5:
                 print("*", end="")
             else:
                 print(" ", end="")
         print()
 
 
-def draw_christmas_tree(a):
-    for i in range(a):
-        print(" " * (a - i - 1) + "*" * (2 * i + 1))
-    b = a // 3
-    c = a // 3
-    for i in range(b):
-        print(" " * (a - c // 2 - 1) + "*" * c)
+def draw_christmas_tree(height):
+    for i in range(height):
+        print(" " * (height - i - 1) + "*" * (2 * i + 1))
+    trunk_height = height // 3
+    trunk_width = height // 3
+    for i in range(trunk_height):
+        print(" " * (height - trunk_width // 2 - 1) + "*" * trunk_width)
 
 
-def draw_square(a):
-    if a < 2:
+def draw_square(side_length):
+    if side_length < 2:
         print("Слишком маленькая сторона для квадрата.")
         return
-    for i in range(a):
-        print("/" * a)
+    for i in range(side_length):
+        print("/" * side_length)
 
 
-def write_string_to_csv(a, b="res_file.csv") -> None:
+def write_string_to_csv(data_string, file_name="res_file.csv") -> None:
     try:
-        with open(b, 'a', newline='') as b:
-            c = csv.writer(b)
-            c.writerow({a})
+        with open(file_name, 'a', newline='') as file_name:
+            writer = csv.writer(file_name)
+            writer.writerow({data_string})
     except OSError as error:
         logging.error(f'Ошибка, не удалось открыть файл: {error}')
 
 
-def get_curency_course(a, b):
-    c = requests.get(b)
-    d = json.loads(c.text)
+def get_curency_course(curency='USD', start_url_string='https://www.cbr-xml-daily.ru/daily_json.js'):
+    response = requests.get(start_url_string)
+    url_text = json.loads(response.text)
     while True:
-        e = d['Date'][:10]
-        f = d['Valute'][a]['Value']
-        print(f'Программа на данный момент на дате: {e}')
-        g = e + ', ' + str(f)
-        write_string_to_csv(g)
-        h = "https:" + d['PreviousURL']
-        i = requests.get(h)
-        d = json.loads(i.text)
-        if not i.ok:
+        date = url_text['Date'][:10]
+        curency_course = url_text['Valute'][curency]['Value']
+        print(f'Программа на данный момент на дате: {date}')
+        res_string = date + ', ' + str(curency_course)
+        write_string_to_csv(res_string)
+        prev_url_string = "https:" + url_text['PreviousURL']
+        prev_response = requests.get(prev_url_string)
+        url_text = json.loads(prev_response.text)
+        if not prev_response.ok:
             print(f'Программа дошла до последней возможной даты')
             break
 
 
-def is_prime(a):
-    if a <= 1:
+def is_prime(n):
+    if n <= 1:
         return False
-    if a <= 3:
+    if n <= 3:
         return True
-    if a % 2 == 0 or a % 3 == 0:
+    if n % 2 == 0 or n % 3 == 0:
         return False
     i = 5
-    while i * i <= a:
-        if a % i == 0 or a % (i + 2) == 0:
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
             return False
         i += 6
     return True
 
 
-def find_primes_in_range(a, b):
-    if a < 2:
-        a = 2
-    c = list()
-    for num in range(a, b + 1):
+def find_primes_in_range(start, end):
+    if start < 2:
+        start = 2
+    primes = list()
+    for num in range(start, end + 1):
         if is_prime(num):
-            c.append(num)
-    return c
+            primes.append(num)
+    return primes
