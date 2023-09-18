@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import algorithms, Cipher, modes
 
 
-def swap(val_1: int, val_2: int):
+def swap(val_1: int, val_2: int) -> None:
     """
     функция печатает 2 значения, затем меняет их местами и снова печатает
     :param val_1: первое число
@@ -22,7 +22,7 @@ def swap(val_1: int, val_2: int):
     print('var_1:', val_1, 'var_2:', val_2)
 
 
-def all_permutations(val_1: int, val_2: int, val_3: int):
+def all_permutations(val_1: int, val_2: int, val_3: int) -> None:
     """
     функция находит все перестановки трёх чисел
     :param val_1: первое число
@@ -41,7 +41,7 @@ def all_permutations(val_1: int, val_2: int, val_3: int):
                     print(arr[i], arr[j], arr[k])
 
 
-def encrypt(text_bytes: bytes, key_bytes: bytes):
+def encrypt(text_bytes: bytes, key_bytes: bytes) -> bytes:
     """
     функция шифрует текст с помощью ключа
     :param text_bytes: текст
@@ -57,7 +57,7 @@ def encrypt(text_bytes: bytes, key_bytes: bytes):
     return encrypted_text
 
 
-def decrypt(encrypted_text: bytes, key_bytes: bytes):
+def decrypt(encrypted_text: bytes, key_bytes: bytes) -> bytes:
     """
     функция шифрует зашифрованный текст с помощью ключа
     :param encrypted_text: зашифрованный текст
@@ -73,7 +73,7 @@ def decrypt(encrypted_text: bytes, key_bytes: bytes):
     return text
 
 
-def count_unique_words(filename: str):
+def count_unique_words(filename: str) -> int:
     """
     функция читает файл и находит кол-во уникальных слов
     :param filename: имя файла
@@ -100,7 +100,7 @@ def count_unique_words(filename: str):
         print(f"Произошла ошибка: {e}")
 
 
-def caesar_cipher(alf: str, alf_cipher: str, text: str):
+def caesar_cipher(alf: str, alf_cipher: str, text: str) -> str:
     """
     функция реализует шифра цезаря
     :param alf: текущий алфавит текста
@@ -121,7 +121,7 @@ def caesar_cipher(alf: str, alf_cipher: str, text: str):
     return encoded_text
 
 
-def factorial(val: int):
+def factorial(val: int) -> int:
     """
     функция находит факториал
     :param val: число
@@ -136,7 +136,7 @@ def factorial(val: int):
         return result
 
 
-def bubble_sort(arr: list):
+def bubble_sort(arr: list) -> None:
     """
     функция реализует сортировку пузырьком
     :param arr: массив
@@ -153,7 +153,7 @@ def bubble_sort(arr: list):
             break
 
 
-def insertion_sort(arr: list):
+def insertion_sort(arr: list) -> None:
     """
     функция реализует сортировку вставками
     :param arr: массив
@@ -168,7 +168,7 @@ def insertion_sort(arr: list):
         arr[j + 1] = key
 
 
-def selection_sort(arr: list):
+def selection_sort(arr: list) -> None:
     """
     функция реализует сортировку выбором
     :param arr: массив
@@ -182,7 +182,7 @@ def selection_sort(arr: list):
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
 
 
-def merge_sort(arr: list):
+def merge_sort(arr: list) -> None:
     """
     функция реализует сортировку слиянием
     :param arr: массив
@@ -213,7 +213,7 @@ def merge_sort(arr: list):
             k += 1
 
 
-def quick_sort(arr: list):
+def quick_sort(arr: list) -> list:
     """
     функция реализует быструю сортировку
     :param arr: массив
@@ -231,7 +231,7 @@ def quick_sort(arr: list):
 memo = {}
 
 
-def fibonacci(n: int):
+def fibonacci(n: int) -> int:
     """
     функция вычисляет n-ое число фибоначчи
     :param n: номер числа
@@ -249,7 +249,7 @@ def fibonacci(n: int):
     return result
 
 
-def draw_pyramid(rows: int):
+def draw_pyramid(rows: int) -> None:
     """
     функция рисует пирамиду
     :param rows: кол-во строк
@@ -265,7 +265,7 @@ def draw_pyramid(rows: int):
         print()
 
 
-def draw_circle(radius: int):
+def draw_circle(radius: int) -> None:
     """
     функция рисует круг
     :param radius: радиус
@@ -280,7 +280,7 @@ def draw_circle(radius: int):
         print()
 
 
-def draw_christmas_tree(height: int):
+def draw_christmas_tree(height: int) -> None:
     """
     функция рисует ёлку
     :param height: высота
@@ -294,7 +294,7 @@ def draw_christmas_tree(height: int):
         print(" " * (height - trunk_width // 2 - 1) + "*" * trunk_width)
 
 
-def draw_square(side_length: int):
+def draw_square(side_length: int) -> None:
     """
     функция рисует квадрат
     :param side_length: длина стороны
@@ -321,7 +321,8 @@ def write_string_to_csv(data_string: str, file_name: str = "res_file.csv") -> No
         logging.error(f'Ошибка, не удалось открыть файл: {error}')
 
 
-def get_curency_course(curency: str = 'USD', start_url_string: str = 'https://www.cbr-xml-daily.ru/daily_json.js'):
+def get_curency_course(curency: str = 'USD', start_url_string: str = 'https://www.cbr-xml-daily.ru/daily_json.js') \
+        -> None:
     """
     функция получает курс заданной валюты на момент конкретной даты
     и записывает в файл до тех пор, пока не дойдёт до последней возможной даты
@@ -344,7 +345,7 @@ def get_curency_course(curency: str = 'USD', start_url_string: str = 'https://ww
             break
 
 
-def is_prime(n: int):
+def is_prime(n: int) -> bool:
     """
     функция определяет является ли число простым
     :param n: число
@@ -364,7 +365,7 @@ def is_prime(n: int):
     return True
 
 
-def find_primes_in_range(start: int, end: int):
+def find_primes_in_range(start: int, end: int) -> list:
     """
     функция находит все простые числа в диапазоне от start до end
     :param start: начало диапазона
