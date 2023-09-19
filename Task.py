@@ -248,45 +248,54 @@ for i in fList:
             resList.append('Outputs count = ' + str(outputCount))
             RawTX = RawTX + reverse(tmpHex)
             for m in range(outputCount):
-                tmpHex = read_bytes(f,8)
+                tmpHex = read_bytes(f, 8)
                 Value = tmpHex
                 RawTX = RawTX + reverse(tmpHex)
                 tmpHex = ''
+
                 b = f.read(1)
                 tmpB = b.hex().upper()
-                bInt = int(b.hex(),16)
+                bInt = int(b.hex(), 16)
                 c = 0
                 if bInt < 253:
                     c = 1
                     tmpHex = b.hex().upper()
                     tmpB = ''
-                if bInt == 253: c = 3
-                if bInt == 254: c = 5
-                if bInt == 255: c = 9
-                for j in range(1,c):
+
+                if bInt == 253:
+                    c = 3
+                if bInt == 254:
+                    c = 5
+                if bInt == 255:
+                    c = 9
+
+                for j in range(1, c):
                     b = f.read(1)
                     b = b.hex().upper()
                     tmpHex = b + tmpHex
-                scriptLength = int(tmpHex,16)
+
+                scriptLength = int(tmpHex, 16)
                 tmpHex = tmpHex + tmpB
                 RawTX = RawTX + reverse(tmpHex)
-                tmpHex = read_bytes(f,scriptLength,'B')
+                tmpHex = read_bytes(f, scriptLength, 'B')
                 resList.append('Value = ' + Value)
                 resList.append('Output script = ' + tmpHex)
                 RawTX = RawTX + tmpHex
                 tmpHex = ''
+
             if Witness == True:
                 for m in range(inCount):
                     tmpHex = read_varint(f)
-                    WitnessLength = int(tmpHex,16)
+                    WitnessLength = int(tmpHex, 16)
                     for j in range(WitnessLength):
                         tmpHex = read_varint(f)
-                        WitnessItemLength = int(tmpHex,16)
-                        tmpHex = read_bytes(f,WitnessItemLength)
+                        WitnessItemLength = int(tmpHex, 16)
+                        tmpHex = read_bytes(f, WitnessItemLength)
                         resList.append('Witness ' + str(m) + ' ' + str(j) + ' ' + str(WitnessItemLength) + ' ' + tmpHex)
                         tmpHex = ''
             Witness = False
-            tmpHex = read_bytes(f,4)
+
+            tmpHex = read_bytes(f, 4)
             resList.append('Lock time = ' + tmpHex)
             RawTX = RawTX + reverse(tmpHex)
             tmpHex = RawTX
@@ -297,14 +306,18 @@ for i in fList:
             tmpHex = tmpHex.hex().upper()
             resList.append('TX hash = ' + tmpHex)
             tx_hashes.append(tmpHex)
-            resList.append(''); tmpHex = ''; RawTX = ''
+            resList.append('')
+            tmpHex = ''
+            RawTX = ''
         a += 1
         tx_hashes = [bytes.fromhex(h) for h in tx_hashes]
         tmpHex = merkle_root(tx_hashes).hex().upper()
+
         if tmpHex != MerkleRoot:
-            print ('Merkle roots does not match! >',MerkleRoot,tmpHex)
+            print('Merkle roots does not match! >', MerkleRoot, tmpHex)
+
     f.close()
-    f = open(dirB + nameRes,'w')
+    f = open(dirB + nameRes, 'w')
     for j in resList:
-        f.write(j + '\n')
+     f.write(j + '\n')
     f.close()
