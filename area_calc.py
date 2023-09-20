@@ -1,7 +1,7 @@
 import math
 
 
-def calculate_circle_area(radius):
+def calculate_circle_area(radius: float) -> float:
     if radius <= 0:
         raise ValueError("Radius must be a positive number.")
 
@@ -9,7 +9,7 @@ def calculate_circle_area(radius):
     return area
 
 
-def calculate_triangle_area(base, height):
+def calculate_triangle_area(base: float, height: float) -> float:
     if base <= 0 or height <= 0:
         raise ValueError("Base and height must be positive numbers.")
 
@@ -17,7 +17,7 @@ def calculate_triangle_area(base, height):
     return area
 
 
-def calculate_rectangle_area(length, width):
+def calculate_rectangle_area(length: float, width: float) -> float:
     if length <= 0 or width <= 0:
         raise ValueError("Length and width must be positive numbers.")
 
@@ -25,7 +25,7 @@ def calculate_rectangle_area(length, width):
     return area
 
 
-def main():
+def main() -> None:
     try:
         radius = float(input("Enter the radius of the circle: "))
         circle_area = calculate_circle_area(radius)

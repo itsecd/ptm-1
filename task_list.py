@@ -1,19 +1,19 @@
 class Task:
-    def __init__(self, description, completed=False):
+    def __init__(self, description: str, completed: bool = False) -> None:
         self.description = description
         self.completed = completed
 
 
 class TaskList:
-    def __init__(self):
+    def __init__(self) -> None:
         self.tasks = []
 
-    def add_task(self, description):
+    def add_task(self, description: str) -> None:
         task = Task(description)
         self.tasks.append(task)
         print("Task added successfully.")
 
-    def complete_task(self, index):
+    def complete_task(self, index: int) -> None:
         if 0 <= index < len(self.tasks):
             task = self.tasks[index]
             task.completed = True
@@ -21,7 +21,7 @@ class TaskList:
         else:
             print("Invalid task index.")
 
-    def show_tasks(self):
+    def show_tasks(self) -> None:
         print("Task List:")
         for i, task in enumerate(self.tasks):
             status = "✓" if task.completed else "✗"

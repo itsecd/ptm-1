@@ -6,7 +6,7 @@ def read_text(filename: str) -> str:
         return file.read().upper()
 
 
-def write_text(filename: str, text: str):
+def write_text(filename: str, text: str) -> None:
     """
         Запись текста в файл.
     """
@@ -14,7 +14,7 @@ def write_text(filename: str, text: str):
         file.write(text)
 
 
-def encoding_text():
+def encoding_text() -> None:
     """
     Шифрование текста.
     """
@@ -36,7 +36,7 @@ def encoding_text():
     write_text('enc_text1.txt', text2)
 
 
-def decoding_text():
+def decoding_text() -> None:
     """
     Расшифровка текста.
     """

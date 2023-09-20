@@ -2,7 +2,7 @@ from math import sqrt, erfc
 from scipy.special import gammainc
 
 
-def frequency_bit_test(bit_sequence):
+def frequency_bit_test(bit_sequence: str) -> float:
     sum = 0
     for i in bit_sequence:
         if i == "1":
@@ -14,7 +14,7 @@ def frequency_bit_test(bit_sequence):
     return p
 
 
-def identical_consecutive_bit_test(bit_sequence):
+def identical_consecutive_bit_test(bit_sequence: str) -> float:
     unit_sum = 0
     for i in bit_sequence:
         if i == "1":
@@ -31,7 +31,7 @@ def identical_consecutive_bit_test(bit_sequence):
     return p
 
 
-def unit_long_sequence_test(bit_sequence):
+def unit_long_sequence_test(bit_sequence: str) -> float:
     pi0 = 0.2148
     pi1 = 0.3672
     pi2 = 0.2305
