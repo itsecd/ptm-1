@@ -5,12 +5,14 @@ def read_text(filename: str) -> str:
     with open(filename, 'r', encoding='utf-8', newline='') as file:
         return file.read().upper()
 
+
 def write_text(filename: str, text: str):
     """
         Запись текста в файл.
     """
     with open(filename, 'w', encoding='utf-8', newline='') as file:
         file.write(text)
+
 
 def encoding_text():
     """
@@ -32,6 +34,7 @@ def encoding_text():
         if not flag:
             text2 += i
     write_text('enc_text1.txt', text2)
+
 
 def decoding_text():
     """
@@ -81,6 +84,7 @@ def decoding_text():
            "'K'- 'Ч'\n'O'- 'У'\n'O'- 'У'\n'Z'- 'Ю'\n'C'- 'Щ'\n'P'- 'Ф'\n'F'- 'Ц'\n'D'- 'Ш'\n'9'- 'Г'\n'X'- 'Э'\n" \
            "'4'- 'Ж'\n'?'- '.'"
     write_text("key2.txt", key2)
+
 
 if __name__ == "__main__":
     encoding_text()

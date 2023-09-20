@@ -3,6 +3,7 @@ class Task:
         self.description = description
         self.completed = completed
 
+
 class TaskList:
     def __init__(self):
         self.tasks = []
@@ -25,6 +26,7 @@ class TaskList:
         for i, task in enumerate(self.tasks):
             status = "✓" if task.completed else "✗"
             print(f"{i+1}. [{status}] {task.description}")
+
 
 if __name__ == "__main__":
     task_list = TaskList()
