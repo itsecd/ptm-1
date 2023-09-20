@@ -60,7 +60,7 @@ def read_cicle(filename: str, Solder: bool):
         column_names.insert(2, "Код должности")
     wb = op.load_workbook(filename, data_only=True)
     sheet = wb.active
-    bar = IncrementalBar( " ", max=sheet.max_row -4 )
+    bar = IncrementalBar(" ", max=sheet.max_row -4 )
     for student_number in range (5, sheet.max_row + 1):
 
         column_students = []  # список значений студента в этих столбцах
@@ -110,7 +110,7 @@ def sum(list1, list2):  # функция сложения двух списко�
 
     list1=uniq_list(list1)
     list2=uniq_list(list2)
-    bar = IncrementalBar( " ", max=len( list1) )
+    bar = IncrementalBar(" ", max=len(list1) )
     
     tmp2=list2
     for elem1 in list1:  # для каждого элемента из первой таблицы
@@ -205,7 +205,7 @@ def write_excel(information, number):
         wb = op.load_workbook('Итоговые таблицы/(Итог)Офицеры.xlsx', data_only=True)
         sheet = wb.active
         id=0
-        for j in range (len( information)):
+        for j in range (len(information)):
             vuc=str(information[j].get('ВУС'))
             program_pdgotovki=str(information[j].get('Программа военной подготовки'))
             if  program_pdgotovki[:2]=='оф' or vuc=='461000' or vuc=='461100' or vuc=='461200' or vuc=='461300'  :
@@ -270,7 +270,7 @@ def write_excel(information, number):
         wb = op.load_workbook('Итоговые таблицы/(Итог)Солдаты.xlsx', data_only=True)
         sheet = wb.active
         id=0
-        for j in range (len( information)):
+        for j in range (len(information)):
             vuc=str(information[j].get('ВУС'))
             program_pdgotovki=str(information[j].get('Программа военной подготовки'))
             if  program_pdgotovki[:2]=='со' or program_pdgotovki[:2]=='ря' or vuc=='220' or vuc=='233' or vuc=='250' or vuc=='262'  :
@@ -304,7 +304,7 @@ def write_excel(information, number):
         for i in range (1, len(name_column)+1):
             ws.cell(row=1, column=i, value=name_column[i-1])
 
-        for j in range (len( information)):
+        for j in range (len(information)):
             for i in range (1, len(name_column)+1):
                 tmp=''
                 if  name_column[i-1] in information[j].keys():
