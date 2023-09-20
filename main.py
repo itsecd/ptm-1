@@ -55,11 +55,11 @@ class wall(gameobject):
 
 
 class gamerenderer:
-    def __init__(self, inwidth: int, inheight: int):
+    def __init__(self, in_width: int, in_height: int):
         pygame.init()
-        self._width = inwidth
-        self._height = inheight
-        self._screen = pygame.display.set_mode((inwidth, inheight))
+        self._width = in_width
+        self._height = in_height
+        self._screen = pygame.display.set_mode((in_width, in_height))
         pygame.display.set_caption('Pacman')
         self._clock = pygame.time.Clock()
         self._done = False
