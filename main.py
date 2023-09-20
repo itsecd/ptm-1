@@ -3,7 +3,7 @@ import tcod
 import pygame
 import numpy as np
 import random
-class direction(Enum):
+class Direction(Enum):
     left = 0
     up = 1
     right = 2
@@ -17,10 +17,10 @@ def translate_maze_to_screen(in_coords, in_size=32):
     return in_coords[0] * in_size, in_coords[1] * in_size
 
 
-class gameobject:
+class Gameobject:
     def __init__(self, in_surface, x, y, in_size: int, in_color=(255, 0, 0), is_circle: bool = False):
         self._size = in_size
-        self._renderer: gamerenderer = in_surface
+        self._renderer: GameRenderer = in_surface
         self._surface = in_surface._screen
         self.y = y
         self.x = x
@@ -49,12 +49,12 @@ class gameobject:
         return (self.x, self.y)
 
 
-class wall(gameobject):
+class Wall(Gameobject):
     def __init__(self, in_surface, x, y, in_size: int, in_color=(0, 0, 255)):
         super().__init__(in_surface, x * in_size, y * in_size, in_size, in_color)
 
 
-class gamerenderer:
+class GameRenderer:
     def __init__(self, in_width: int, in_height: int):
         pygame.init()
         self._width = in_width
@@ -66,7 +66,7 @@ class gamerenderer:
         self._game_objects = []
         self._walls = []
         self._cookies = []
-        self._hero: hero = None
+        self._hero: Hero = None
 
     def tick(self, in_fps: int):
         black = (0, 0, 0)
@@ -81,14 +81,14 @@ class gamerenderer:
             self._handle_events()
         print("Game over")
 
-    def add_game_object(self, obj: gameobject):
+    def add_game_object(self, obj: Gameobject):
         self._game_objects.append(obj)
 
-    def add_cookie(self, obj: gameobject):
+    def add_cookie(self, obj: Gameobject):
         self._game_objects.append(obj)
         self._cookies.append(obj)
 
-    def add_wall(self, obj: wall):
+    def add_wall(self, obj: Wall):
         self.add_game_object(obj)
         self._walls.append(obj)
 
@@ -112,21 +112,21 @@ class gamerenderer:
 
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_UP]:
-            self._hero.set_direction(direction.up)
+            self._hero.set_direction(Direction.up)
         elif pressed[pygame.K_LEFT]:
-            self._hero.set_direction(direction.left)
+            self._hero.set_direction(Direction.left)
         elif pressed[pygame.K_DOWN]:
-            self._hero.set_direction(direction.down)
+            self._hero.set_direction(Direction.down)
         elif pressed[pygame.K_RIGHT]:
-            self._hero.set_direction(direction.right)
+            self._hero.set_direction(Direction.right)
 
 
-class movableobject(gameobject):
+class MovableObject(Gameobject):
     def __init__(self, in_surface, x, y, in_size: int, in_color=(255, 0, 0), is_circle: bool = False):
         super().__init__(in_surface, x, y, in_size, in_color, is_circle)
-        self.current_direction = direction.none
-        self.direction_buffer = direction.none
-        self.last_working_direction = direction.none
+        self.current_direction = Direction.none
+        self.direction_buffer = Direction.none
+        self.last_working_direction = Direction.none
         self.location_queue = []
         self.next_target = None
 
@@ -146,21 +146,21 @@ class movableobject(gameobject):
             if collides: break
         return collides
 
-    def check_collision_in_direction(self, in_direction: direction):
+    def check_collision_in_direction(self, in_direction: Direction):
         desired_position = (0, 0)
-        if in_direction == direction.none: return False, desired_position
-        if in_direction == direction.up:
+        if in_direction == Direction.none: return False, desired_position
+        if in_direction == Direction.up:
             desired_position = (self.x, self.y - 1)
-        elif in_direction == direction.down:
+        elif in_direction == Direction.down:
             desired_position = (self.x, self.y + 1)
-        elif in_direction == direction.left:
+        elif in_direction == Direction.left:
             desired_position = (self.x - 1, self.y)
-        elif in_direction == direction.right:
+        elif in_direction == Direction.right:
             desired_position = (self.x + 1, self.y)
 
         return self.collides_with_wall(desired_position), desired_position
 
-    def automatic_move(self, in_direction: direction):
+    def automatic_move(self, in_direction: Direction):
         pass
 
     def tick(self):
@@ -171,7 +171,7 @@ class movableobject(gameobject):
         pass
 
 
-class hero(movableobject):
+class Hero(MovableObject):
     def __init__(self, in_surface, x, y, in_size: int):
         super().__init__(in_surface, x, y, in_size, (255, 255, 0), False)
         self.last_non_colliding_position = (0, 0)
@@ -197,7 +197,7 @@ class hero(movableobject):
 
         self.handle_cookie_pickup()
 
-    def automatic_move(self, in_direction: direction):
+    def automatic_move(self, in_direction: Direction):
         collision_result = self.check_collision_in_direction(in_direction)
 
         desired_position_collides = collision_result[0]
@@ -222,7 +222,7 @@ class hero(movableobject):
         pygame.draw.circle(self._surface, self._color, (self.x + half_size, self.y + half_size), half_size)
 
 
-class Ghost(movableobject):
+class Ghost(MovableObject):
     def __init__(self, in_surface, x, y, in_size: int, in_game_controller, in_color=(255, 0, 0)):
         super().__init__(in_surface, x, y, in_size, in_color, False)
         self.game_controller = in_game_controller
@@ -237,31 +237,31 @@ class Ghost(movableobject):
             self.location_queue.append(item)
         self.next_target = self.get_next_location()
 
-    def calculate_direction_to_next_target(self) -> direction:
+    def calculate_direction_to_next_target(self) -> Direction:
         if self.next_target is None:
             self.game_controller.request_new_random_path(self)
-            return direction.none
+            return Direction.none
         diff_x = self.next_target[0] - self.x
         diff_y = self.next_target[1] - self.y
         if diff_x == 0:
-            return direction.down if diff_y > 0 else direction.up
+            return Direction.down if diff_y > 0 else Direction.up
         if diff_y == 0:
-            return direction.left if diff_x < 0 else direction.right
+            return Direction.left if diff_x < 0 else Direction.right
         self.game_controller.request_new_random_path(self)
-        return direction.none
+        return Direction.none
 
-    def automatic_move(self, in_direction: direction):
-        if in_direction == direction.up:
+    def automatic_move(self, in_direction: Direction):
+        if in_direction == Direction.up:
             self.set_position(self.x, self.y - 1)
-        elif in_direction == direction.down:
+        elif in_direction == Direction.down:
             self.set_position(self.x, self.y + 1)
-        elif in_direction == direction.left:
+        elif in_direction == Direction.left:
             self.set_position(self.x - 1, self.y)
-        elif in_direction == direction.right:
+        elif in_direction == Direction.right:
             self.set_position(self.x + 1, self.y)
 
 
-class Cookie(gameobject):
+class Cookie(Gameobject):
     def __init__(self, in_surface, x, y):
         super().__init__(in_surface, x, y, 4, (255, 255, 0), True)
 
@@ -276,7 +276,7 @@ class Pathfinder:
         return [(sub[1], sub[0]) for sub in res]
 
 
-class pacmangamecontroller:
+class PacmanGameController:
     def __init__(self):
         self.ascii_maze = [
             "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -354,14 +354,14 @@ class pacmangamecontroller:
 
 if __name__ == "__main__":
     unified_size = 32
-    pacman_game = pacmangamecontroller()
+    pacman_game = PacmanGameController()
     size = pacman_game.size
-    game_renderer = gamerenderer(size[0] * unified_size, size[1] * unified_size)
+    game_renderer = GameRenderer(size[0] * unified_size, size[1] * unified_size)
 
     for y, row in enumerate(pacman_game.numpy_maze):
         for x, column in enumerate(row):
             if column == 0:
-                game_renderer.add_wall(wall(game_renderer, x, y, unified_size))
+                game_renderer.add_wall(Wall(game_renderer, x, y, unified_size))
 
     # Vykresleni cesty
     # red = (255, 0, 0)
@@ -396,6 +396,6 @@ if __name__ == "__main__":
                       pacman_game.ghost_colors[i % 4])
         game_renderer.add_game_object(ghost)
 
-    pacman = hero(game_renderer, unified_size, unified_size, unified_size)
+    pacman = Hero(game_renderer, unified_size, unified_size, unified_size)
     game_renderer.add_hero(pacman)
     game_renderer.tick(120)
