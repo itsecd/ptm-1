@@ -10,8 +10,8 @@ import requests
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-dog_path = "C:/Users/User/nuck figgers/dataset/dog"
-cat_path = "C:/Users/User/nuck figgers/dataset/cat"
+DOG_PATH = "C:/Users/User/nuck figgers/dataset/dog"
+CAT_PATH = "C:/Users/User/nuck figgers/dataset/cat"
 
 
 def get_images(count_images: int, path: str, type_name: str, indexs: int = None) -> None or int:
@@ -131,18 +131,18 @@ def main():
     """Main function"""
     
     count_find = 1250
-    get_images(count_find, dog_path, "dog")
+    get_images(count_find, DOG_PATH, "dog")
     print("Пауза")
     for sec in tqdm(range(1, 121), ):
         time.sleep(1)
-    get_images(count_find, cat_path, "cat")
-    indexs = check_images(dog_path)
-    get_images(count_find, dog_path, "dog", indexs)
+    get_images(count_find, CAT_PATH, "cat")
+    indexs = check_images(DOG_PATH)
+    get_images(count_find, DOG_PATH, "dog", indexs)
     print("Пауза")
     for sec in tqdm(range(1, 121), ):
         time.sleep(1)
-    indexs = check_images(cat_path)
-    get_images(count_find, cat_path, "cat", indexs)
+    indexs = check_images(CAT_PATH)
+    get_images(count_find, CAT_PATH, "cat", indexs)
 
 
 if __name__ == "__main__":
