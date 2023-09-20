@@ -9,9 +9,9 @@
 
 # Имена переменных: Имена переменных и функций должны быть в snake_case (снейк-регистре), то есть разделяться символами подчеркивания _, а не в camelCase (смешанный регистр).
 
-# Пропущенные пустые строки: В некоторых местах кода не хватает пустых строк для лучшей читаемости.
+# \/ Пропущенные пустые строки: В некоторых местах кода не хватает пустых строк для лучшей читаемости.
 
-# Избыточные точки с запятой: В Python точки с запятой в конце строк обычно не используются, за исключением случаев, когда необходимо разместить несколько выражений в одной строке.
+# \/ Избыточные точки с запятой: В Python точки с запятой в конце строк обычно не используются, за исключением случаев, когда необходимо разместить несколько выражений в одной строке.
 
 # \/ Длинные строки: Некоторые строки кода слишком длинные, что затрудняет их чтение. Рекомендуется разбивать длинные строки на более короткие.
 
@@ -34,16 +34,16 @@ def reverse(input_str):
     Returns:
         str: The reversed string.
     """
-    L = len(input_str)
-    if (L % 2) != 0:
+    length = len(input_str)
+    if (length % 2) != 0:
         return None
     else:
         result = ''
-        L = L // 2
-        for i in range(L):
-            T = input_str[i*2] + input_str[i*2+1]
-            result = T + result
-            T = ''
+        length = length // 2
+        for i in range(length):
+            t = input_str[i * 2] + input_str[i * 2 + 1]
+            result = t + result
+            t = ''
         return result
 
 def merkle_root(lst):
@@ -95,18 +95,18 @@ def read_varint(file):
         str: The variable length integer as an uppercase hexadecimal string.
     """
     b = file.read(1)
-    bInt = int(b.hex(), 16)
+    b_int = int(b.hex(), 16)
     c = 0
     data = ''
 
-    if bInt < 253:
+    if b_int < 253:
         c = 1
         data = b.hex().upper()
-    if bInt == 253:
+    if b_int == 253:
         c = 3
-    if bInt == 254:
+    if b_int == 254:
         c = 5
-    if bInt == 255:
+    if b_int == 255:
         c = 9
 
     for j in range(1, c):
@@ -115,165 +115,165 @@ def read_varint(file):
         data = b + data
     return data
 
-dirA = './blocks/'  # Directory where blk*.dat files are stored
-dirB = './result/'  # Directory where to save parsing results
+dir_a = './blocks/'  # Directory where blk*.dat files are stored
+dir_b = './result/'  # Directory where to save parsing results
 
-fList = os.listdir(dirA)
-fList = [x for x in fList if (x.endswith('.dat') and x.startswith('blk'))]
-fList.sort()
+f_list = os.listdir(dir_a)
+f_list = [x for x in f_list if (x.endswith('.dat') and x.startswith('blk'))]
+f_list.sort()
 
-for i in fList:
-    nameSrc = i
-    nameRes = nameSrc.replace('.dat', '.txt')
-    resList = []
+for i in f_list:
+    name_src = i
+    name_res = name_src.replace('.dat', '.txt')
+    res_list = []
     a = 0
-    t = dirA + nameSrc
-    resList.append('Start ' + t + ' in ' + str(datetime.datetime.now()))
+    t = dir_a + name_src
+    res_list.append('Start ' + t + ' in ' + str(datetime.datetime.now()))
     print('Start ' + t + ' in ' + str(datetime.datetime.now()))
 
     f = open(t, 'rb')
-    tmpHex = ''
-    fSize = os.path.getsize(t)
-    while f.tell() != fSize:
-        tmpHex = read_bytes(f, 4)
-        resList.append('Magic number = ' + tmpHex)
-        tmpHex = read_bytes(f, 4)
-        resList.append('Block size = ' + tmpHex)
-        tmpPos3 = f.tell()
-        tmpHex = read_bytes(f, 80, 'B')
-        tmpHex = bytes.fromhex(tmpHex)
-        tmpHex = hashlib.new('sha256', tmpHex).digest()
-        tmpHex = hashlib.new('sha256', tmpHex).digest()
-        tmpHex = tmpHex[::-1]
-        tmpHex = tmpHex.hex().upper()
-        resList.append('SHA256 hash of the current block hash = ' + tmpHex)
-        f.seek(tmpPos3, 0)
-        tmpHex = read_bytes(f, 4)
-        resList.append('Version number = ' + tmpHex)
-        tmpHex = read_bytes(f, 32)
-        resList.append('SHA256 hash of the previous block hash = ' + tmpHex)
-        tmpHex = read_bytes(f, 32)
-        resList.append('MerkleRoot hash = ' + tmpHex)
-        MerkleRoot = tmpHex
-        tmpHex = read_bytes(f, 4)
-        resList.append('Time stamp = ' + tmpHex)
-        tmpHex = read_bytes(f, 4)
-        resList.append('Difficulty = ' + tmpHex)
-        tmpHex = read_bytes(f, 4)
-        resList.append('Random number = ' + tmpHex)
-        tmpHex = read_varint(f)
-        txCount = int(tmpHex, 16)
-        resList.append('Transactions count = ' + str(txCount))
-        resList.append('')
-        tmpHex = ''
-        RawTX = ''
+    tmp_hex = ''
+    f_size = os.path.getsize(t)
+    while f.tell() != f_size:
+        tmp_hex = read_bytes(f, 4)
+        res_list.append('Magic number = ' + tmp_hex)
+        tmp_hex = read_bytes(f, 4)
+        res_list.append('Block size = ' + tmp_hex)
+        tmp_pos3 = f.tell()
+        tmp_hex = read_bytes(f, 80, 'B')
+        tmp_hex = bytes.fromhex(tmp_hex)
+        tmp_hex = hashlib.new('sha256', tmp_hex).digest()
+        tmp_hex = hashlib.new('sha256', tmp_hex).digest()
+        tmp_hex = tmp_hex[::-1]
+        tmp_hex = tmp_hex.hex().upper()
+        res_list.append('SHA256 hash of the current block hash = ' + tmp_hex)
+        f.seek(tmp_pos3, 0)
+        tmp_hex = read_bytes(f, 4)
+        res_list.append('Version number = ' + tmp_hex)
+        tmp_hex = read_bytes(f, 32)
+        res_list.append('SHA256 hash of the previous block hash = ' + tmp_hex)
+        tmp_hex = read_bytes(f, 32)
+        res_list.append('MerkleRoot hash = ' + tmp_hex)
+        merkle_root = tmp_hex
+        tmp_hex = read_bytes(f, 4)
+        res_list.append('Time stamp = ' + tmp_hex)
+        tmp_hex = read_bytes(f, 4)
+        res_list.append('Difficulty = ' + tmp_hex)
+        tmp_hex = read_bytes(f, 4)
+        res_list.append('Random number = ' + tmp_hex)
+        tmp_hex = read_varint(f)
+        tx_count = int(tmp_hex, 16)
+        res_list.append('Transactions count = ' + str(tx_count))
+        res_list.append('')
+        tmp_hex = ''
+        raw_tx = ''
         tx_hashes = []
-        for k in range(txCount):
-            tmpHex = read_bytes(f, 4)
-            resList.append('TX version number = ' + tmpHex)
-            RawTX = reverse(tmpHex)
-            tmpHex = ''
-            Witness = False
+        for k in range(tx_count):
+            tmp_hex = read_bytes(f, 4)
+            res_list.append('TX version number = ' + tmp_hex)
+            raw_tx = reverse(tmp_hex)
+            tmp_hex = ''
+            witness = False
             b = f.read(1)
-            tmpB = b.hex().upper()
-            bInt = int(b.hex(), 16)
-            if bInt == 0:
-                tmpB = ''
+            tmp_b = b.hex().upper()
+            b_int = int(b.hex(), 16)
+            if b_int == 0:
+                tmp_b = ''
                 f.seek(1, 1)
                 c = 0
                 c = f.read(1)
-                bInt = int(c.hex(), 16)
-                tmpB = c.hex().upper()
-                Witness = True
+                b_int = int(c.hex(), 16)
+                tmp_b = c.hex().upper()
+                witness = True
             c = 0
-            if bInt < 253:
+            if b_int < 253:
                 c = 1
-                tmpHex = hex(bInt)[2:].upper().zfill(2)
-                tmpB = ''
-            if bInt == 253:
+                tmp_hex = hex(b_int)[2:].upper().zfill(2)
+                tmp_b = ''
+            if b_int == 253:
                 c = 3
-            if bInt == 254:
+            if b_int == 254:
                 c = 5
-            if bInt == 255:
+            if b_int == 255:
                 c = 9
             for j in range(1, c):
                 b = f.read(1)
                 b = b.hex().upper()
-                tmpHex = b + tmpHex
-            inCount = int(tmpHex, 16)
-            resList.append('Inputs count = ' + tmpHex)
-            tmpHex = tmpHex + tmpB
-            RawTX = RawTX + reverse(tmpHex)
-            for m in range(inCount):
-                tmpHex = read_bytes(f, 32)
-                resList.append('TX from hash = ' + tmpHex)
-                RawTX = RawTX + reverse(tmpHex)
-                tmpHex = read_bytes(f, 4)
-                resList.append('N output = ' + tmpHex)
-                RawTX = RawTX + reverse(tmpHex)
-                tmpHex = ''
+                tmp_hex = b + tmp_hex
+            in_count = int(tmp_hex, 16)
+            res_list.append('Inputs count = ' + tmp_hex)
+            tmp_hex = tmp_hex + tmp_b
+            raw_tx = raw_tx + reverse(tmp_hex)
+            for m in range(in_count):
+                tmp_hex = read_bytes(f, 32)
+                res_list.append('TX from hash = ' + tmp_hex)
+                raw_tx = raw_tx + reverse(tmp_hex)
+                tmp_hex = read_bytes(f, 4)
+                res_list.append('N output = ' + tmp_hex)
+                raw_tx = raw_tx + reverse(tmp_hex)
+                tmp_hex = ''
                 b = f.read(1)
-                tmpB = b.hex().upper()
-                bInt = int(b.hex(), 16)
+                tmp_b = b.hex().upper()
+                b_int = int(b.hex(), 16)
                 c = 0
-                if bInt < 253:
+                if b_int < 253:
                     c = 1
-                    tmpHex = b.hex().upper()
-                    tmpB = ''
+                    tmp_hex = b.hex().upper()
+                    tmp_b = ''
 
-                if bInt == 253:
+                if b_int == 253:
                     c = 3
-                if bInt == 254:
+                if b_int == 254:
                     c = 5
-                if bInt == 255:
+                if b_int == 255:
                     c = 9
                 for j in range(1, c):
                     b = f.read(1)
                     b = b.hex().upper()
-                    tmpHex = b + tmpHex
+                    tmp_hex = b + tmp_hex
 
-                scriptLength = int(tmpHex, 16)
-                tmpHex = tmpHex + tmpB
-                RawTX = RawTX + reverse(tmpHex)
-                tmpHex = read_bytes(f, scriptLength, 'B')
-                resList.append('Value = ' + Value)
-                resList.append('Output script = ' + tmpHex)
-                RawTX = RawTX + tmpHex
-                tmpHex = ''
+                script_length = int(tmp_hex, 16)
+                tmp_hex = tmp_hex + tmp_b
+                raw_tx = raw_tx + reverse(tmp_hex)
+                tmp_hex = read_bytes(f, script_length, 'B')
+                res_list.append('Value = ' + tmp_hex)
+                res_list.append('Output script = ' + tmp_hex)
+                raw_tx = raw_tx + tmp_hex
+                tmp_hex = ''
 
-            if Witness == True:
-                for m in range(inCount):
-                    tmpHex = read_varint(f)
-                    WitnessLength = int(tmpHex,16)
-                    for j in range(WitnessLength):
-                        tmpHex = read_varint(f)
-                        WitnessItemLength = int(tmpHex,16)
-                        tmpHex = read_bytes(f,WitnessItemLength)
-                        resList.append('Witness ' + str(m) + ' ' + str(j) + ' ' + str(WitnessItemLength) + ' ' + tmpHex)
-                        tmpHex = ''
-            Witness = False
-            tmpHex = read_bytes(f,4)
-            resList.append('Lock time = ' + tmpHex)
-            RawTX = RawTX + reverse(tmpHex)
-            tmpHex = RawTX
-            tmpHex = bytes.fromhex(tmpHex)
-            tmpHex = hashlib.new('sha256', tmpHex).digest()
-            tmpHex = hashlib.new('sha256', tmpHex).digest()
-            tmpHex = tmpHex[::-1]
-            tmpHex = tmpHex.hex().upper()
-            resList.append('TX hash = ' + tmpHex)
-            tx_hashes.append(tmpHex)
-            resList.append('')
-            tmpHex = ''
-            RawTX = ''
+    if witness == True:
+        for m in range(in_count):
+            tmp_hex = read_varint(f)
+            witness_length = int(tmp_hex, 16)
+            for j in range(witness_length):
+                tmp_hex = read_varint(f)
+                witness_item_length = int(tmp_hex, 16)
+                tmp_hex = read_bytes(f, witness_item_length)
+                res_list.append('Witness ' + str(m) + ' ' + str(j) + ' ' + str(witness_item_length) + ' ' + tmp_hex)
+                tmp_hex = ''
+            witness = False
+            tmp_hex = read_bytes(f, 4)
+            res_list.append('Lock time = ' + tmp_hex)
+            raw_tx = raw_tx + reverse(tmp_hex)
+            tmp_hex = raw_tx
+            tmp_hex = bytes.fromhex(tmp_hex)
+            tmp_hex = hashlib.new('sha256', tmp_hex).digest()
+            tmp_hex = hashlib.new('sha256', tmp_hex).digest()
+            tmp_hex = tmp_hex[::-1]
+            tmp_hex = tmp_hex.hex().upper()
+            res_list.append('TX hash = ' + tmp_hex)
+            tx_hashes.append(tmp_hex)
+            res_list.append('')
+            tmp_hex = ''
+            raw_tx = ''
 
         a += 1
         tx_hashes = [bytes.fromhex(h) for h in tx_hashes]
-        tmpHex = merkle_root(tx_hashes).hex().upper()
-        if tmpHex != MerkleRoot:
-            print ('Merkle roots does not match! >',MerkleRoot,tmpHex)
+        tmp_hex = merkle_root(tx_hashes).hex().upper()
+        if tmp_hex != merkle_root:
+            print('Merkle roots do not match! >', MerkleRoot, tmp_hex)
         f.close()
-        f = open(dirB + nameRes,'w')
-        for j in resList:
+        f = open(dir_b + name_res, 'w')
+        for j in res_list:
             f.write(j + '\n')
         f.close()
