@@ -60,12 +60,12 @@ def read_cicle(filename: str, Solder: bool):
         column_names.insert(2, "Код должности")
     wb = op.load_workbook(filename, data_only=True)
     sheet = wb.active
-    bar = IncrementalBar(" ", max=sheet.max_row - 4 )
+    bar = IncrementalBar(" ", max=sheet.max_row - 4)
     for student_number in range (5, sheet.max_row + 1):
 
         column_students = []  # список значений студента в этих столбцах
         for i in range(1, sheet.max_column + 1):
-            column_students.append(sheet.cell(row=student_number, column=i).value )
+            column_students.append(sheet.cell(row=student_number, column=i).value)
         tmp = dict(zip(column_names, column_students))
         if Solder and str(tmp['Код должности']) != '256':
             tmp_vuc = tmp['Код должности']
@@ -110,7 +110,7 @@ def sum(list1, list2):  # функция сложения двух списко�
 
     list1 = uniq_list(list1)
     list2 = uniq_list(list2)
-    bar = IncrementalBar(" ", max=len(list1) )
+    bar = IncrementalBar(" ", max=len(list1))
     
     tmp2 = list2
     for elem1 in list1:  # для каждого элемента из первой таблицы
