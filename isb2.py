@@ -75,6 +75,6 @@ def unit_long_sequence_test(bit_sequence):
 if __name__ == '__main__':
     bit_sequence = "00101110111111110000101100101000011110011001010011000000101001010101110100100100011111000110011" \
                    "101001000110010111100111111110011 "
-    print (frequency_bit_test(bit_sequence))
-    print (identical_consecutive_bit_test(bit_sequence))
+    print(frequency_bit_test(bit_sequence))
+    print(identical_consecutive_bit_test(bit_sequence))
     print(unit_long_sequence_test(bit_sequence))

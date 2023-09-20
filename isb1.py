@@ -25,12 +25,12 @@ def encoding_text():
     for i in text1:
         flag = False
         for j in range(len(rus_alph)):
-             if i == rus_alph[j]:
-                 if rus_alph[j] == " ":
-                     text2 += "а"
-                 else:
-                    text2 += rus_alph[j+1]
-                 flag = True
+            if i == rus_alph[j]:
+                if rus_alph[j] == " ":
+                    text2 += "а"
+                else:
+                    text2 += rus_alph[j + 1]
+                flag = True
         if not flag:
             text2 += i
     write_text('enc_text1.txt', text2)
