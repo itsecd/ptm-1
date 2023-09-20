@@ -61,7 +61,7 @@ def read_cicle(filename: str, Solder: bool):
     wb = op.load_workbook(filename, data_only=True)
     sheet = wb.active
     bar = IncrementalBar(" ", max=sheet.max_row - 4)
-    for student_number in range (5, sheet.max_row + 1):
+    for student_number in range(5, sheet.max_row + 1):
 
         column_students = []  # список значений студента в этих столбцах
         for i in range(1, sheet.max_column + 1):
@@ -134,8 +134,8 @@ def uniq_list(information):
         if (len(tmp)) != 0:
             list1.append(tmp)  # удаляем значения у словарей где None
     tmp = []  # для индексов дубликатов
-    for i in range (len(list1)-1):
-        for j in range (i+1, len(list1)-2):
+    for i in range(len(list1)-1):
+        for j in range(i+1, len(list1)-2):
 
                 if str(list1[i].get("Имя")).lower().strip() == str(list1[j].get("Имя")).lower().strip():
                     if str(list1[i].get("Фамилия")).lower().strip() == str(list1[j].get("Фамилия")).lower().strip():
@@ -205,12 +205,12 @@ def write_excel(information, number):
         wb = op.load_workbook('Итоговые таблицы/(Итог)Офицеры.xlsx', data_only=True)
         sheet = wb.active
         id = 0
-        for j in range (len(information)):
+        for j in range(len(information)):
             vuc = str(information[j].get('ВУС'))
             program_pdgotovki = str(information[j].get('Программа военной подготовки'))
             if  program_pdgotovki[:2] == 'оф' or vuc == '461000' or vuc == '461100' or vuc == '461200' or vuc == '461300'  :
                         
-                            for i in range (1, len(name_column)+1):
+                            for i in range(1, len(name_column)+1):
                                 tmp = ''
                                 if  name_column[i-1] in information[j].keys():
                                     tmp = information[j][name_column[i-1]]
@@ -270,11 +270,11 @@ def write_excel(information, number):
         wb = op.load_workbook('Итоговые таблицы/(Итог)Солдаты.xlsx', data_only=True)
         sheet = wb.active
         id = 0
-        for j in range (len(information)):
+        for j in range(len(information)):
             vuc = str(information[j].get('ВУС'))
             program_pdgotovki = str(information[j].get('Программа военной подготовки'))
             if  program_pdgotovki[:2] == 'со' or program_pdgotovki[:2] == 'ря' or vuc == '220' or vuc == '233' or vuc == '250' or vuc == '262'  :
-                    for i in range (1, len(name_column)+1):
+                    for i in range(1, len(name_column)+1):
                         tmp = ''
                         if  name_column[i-1] in information[j].keys():
                             tmp = information[j][name_column[i-1]]
@@ -301,11 +301,11 @@ def write_excel(information, number):
         ws = wb.active
 
         #Код, который выводит в первый столбец инфу с первого массива. Нужно сделать +- то же самое для остальных и все по сути.
-        for i in range (1, len(name_column)+1):
+        for i in range(1, len(name_column)+1):
             ws.cell(row=1, column=i, value=name_column[i-1])
 
-        for j in range (len(information)):
-            for i in range (1, len(name_column)+1):
+        for j in range(len(information)):
+            for i in range(1, len(name_column)+1):
                 tmp = ''
                 if  name_column[i-1] in information[j].keys():
                     tmp = information[j][name_column[i-1]]
@@ -332,7 +332,7 @@ if __name__ == "__main__":
             for elem in excel_name:
                 print('\nЧитаем файл   '+str(elem))
                 information_list.append(read_excel('Таблицы откуда берём информацию/'+elem))
-            print ("\n" * 100)
+            print("\n" * 100)
             print('Данные успешно собраны')
             print('Совмещаем данные')
             
@@ -349,7 +349,7 @@ if __name__ == "__main__":
                 information_list.pop(0)
 
                 information_list.append(tmp)
-            print ("\n" * 100)
+            print("\n" * 100)
             print('Данные совмещены')
             while True:
                 tmp = input('Какую таблицу создаём?\n1)Две таблицы: Солдаты, Офицеры\n2)Выгрузить все данные в произвольную таблицу ')
