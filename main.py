@@ -1,0 +1,401 @@
+from enum import Enum
+import tcod
+import pygame
+import numpy as np
+import random
+class direction(Enum):
+    left = 0
+    up = 1
+    right = 2
+    down = 3,
+    none = 4
+
+def translatescreentomaze(in_coords, in_size=32):
+    return int(in_coords[0] / in_size), int(in_coords[1] / in_size)
+
+def translatemazetoscreen(in_coords, in_size=32):
+    return in_coords[0] * in_size, in_coords[1] * in_size
+
+
+class gameobject:
+    def __init__(self, in_surface, x, y, in_size: int, in_color=(255, 0, 0), is_circle: bool = False):
+        self._size = in_size
+        self._renderer: gamerenderer = in_surface
+        self._surface = in_surface._screen
+        self.y = y
+        self.x = x
+        self._color = in_color
+        self._circle = is_circle
+        self._shape = pygame.Rect(self.x, self.y, in_size, in_size)
+
+    def draw(self):
+        if self._circle:
+            pygame.draw.circle(self._surface, self._color, (self.x, self.y), self._size)
+        else:
+            rect_object = pygame.Rect(self.x, self.y, self._size, self._size)
+            pygame.draw.rect(self._surface, self._color, rect_object, border_radius=4)
+
+    def tick(self):
+        pass
+
+    def get_shape(self):
+        return self._shape
+
+    def setposition(self, in_x, in_y):
+        self.x = in_x
+        self.y = in_y
+
+    def getposition(self):
+        return (self.x, self.y)
+
+
+class wall(gameobject):
+    def __init__(self, in_surface, x, y, in_size: int, in_color=(0, 0, 255)):
+        super().__init__(in_surface, x * in_size, y * in_size, in_size, in_color)
+
+
+class gamerenderer:
+    def __init__(self, inwidth: int, inheight: int):
+        pygame.init()
+        self._width = inwidth
+        self._height = inheight
+        self._screen = pygame.display.set_mode((inwidth, inheight))
+        pygame.display.set_caption('Pacman')
+        self._clock = pygame.time.Clock()
+        self._done = False
+        self._game_objects = []
+        self._walls = []
+        self._cookies = []
+        self._hero: hero = None
+
+    def tick(self, in_fps: int):
+        black = (0, 0, 0)
+        while not self._done:
+            for game_object in self._game_objects:
+                game_object.tick()
+                game_object.draw()
+
+            pygame.display.flip()
+            self._clock.tick(in_fps)
+            self._screen.fill(black)
+            self._handleevents()
+        print("Game over")
+
+    def addgameobject(self, obj: gameobject):
+        self._game_objects.append(obj)
+
+    def addcookie(self, obj: gameobject):
+        self._game_objects.append(obj)
+        self._cookies.append(obj)
+
+    def addwall(self, obj: wall):
+        self.addgameobject(obj)
+        self._walls.append(obj)
+
+    def getwalls(self):
+        return self._walls
+
+    def getcookies(self):
+        return self._cookies
+
+    def getgameobjects(self):
+        return self._game_objects
+
+    def addhero(self, in_hero):
+        self.addgameobject(in_hero)
+        self._hero = in_hero
+
+    def _handleevents(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self._done = True
+
+        pressed = pygame.key.get_pressed()
+        if pressed[pygame.K_UP]:
+            self._hero.setdirection(direction.up)
+        elif pressed[pygame.K_LEFT]:
+            self._hero.setdirection(direction.left)
+        elif pressed[pygame.K_DOWN]:
+            self._hero.setdirection(direction.down)
+        elif pressed[pygame.K_RIGHT]:
+            self._hero.setdirection(direction.right)
+
+
+class movableobject(gameobject):
+    def __init__(self, in_surface, x, y, in_size: int, in_color=(255, 0, 0), is_circle: bool = False):
+        super().__init__(in_surface, x, y, in_size, in_color, is_circle)
+        self.current_direction = direction.none
+        self.direction_buffer = direction.none
+        self.last_working_direction = direction.none
+        self.location_queue = []
+        self.next_target = None
+
+    def getnextlocation(self):
+        return None if len(self.location_queue) == 0 else self.location_queue.pop(0)
+
+    def setdirection(self, in_direction):
+        self.current_direction = in_direction
+        self.direction_buffer = in_direction
+
+    def collideswithwall(self, in_position):
+        collision_rect = pygame.Rect(in_position[0], in_position[1], self._size, self._size)
+        collides = False
+        walls = self._renderer.getwalls()
+        for wall in walls:
+            collides = collision_rect.colliderect(wall.get_shape())
+            if collides: break
+        return collides
+
+    def checkcollisionindirection(self, in_direction: direction):
+        desired_position = (0, 0)
+        if in_direction == direction.none: return False, desired_position
+        if in_direction == direction.up:
+            desired_position = (self.x, self.y - 1)
+        elif in_direction == direction.down:
+            desired_position = (self.x, self.y + 1)
+        elif in_direction == direction.left:
+            desired_position = (self.x - 1, self.y)
+        elif in_direction == direction.right:
+            desired_position = (self.x + 1, self.y)
+
+        return self.collideswithwall(desired_position), desired_position
+
+    def automatic_move(self, in_direction: direction):
+        pass
+
+    def tick(self):
+        self.reached_target()
+        self.automatic_move(self.current_direction)
+
+    def reached_target(self):
+        pass
+
+
+class hero(movableobject):
+    def __init__(self, in_surface, x, y, in_size: int):
+        super().__init__(in_surface, x, y, in_size, (255, 255, 0), False)
+        self.last_non_colliding_position = (0, 0)
+
+    def tick(self):
+        # TELEPORT
+        if self.x < 0:
+            self.x = self._renderer._width
+
+        if self.x > self._renderer._width:
+            self.x = 0
+
+        self.last_non_colliding_position = self.getposition()
+
+        if self.checkcollisionindirection(self.direction_buffer)[0]:
+            self.automatic_move(self.current_direction)
+        else:
+            self.automatic_move(self.direction_buffer)
+            self.current_direction = self.direction_buffer
+
+        if self.collideswithwall((self.x, self.y)):
+            self.setposition(self.last_non_colliding_position[0], self.last_non_colliding_position[1])
+
+        self.handlecookiepickup()
+
+    def automatic_move(self, in_direction: direction):
+        collision_result = self.checkcollisionindirection(in_direction)
+
+        desired_position_collides = collision_result[0]
+        if not desired_position_collides:
+            self.last_working_direction = self.current_direction
+            desired_position = collision_result[1]
+            self.setposition(desired_position[0], desired_position[1])
+        else:
+            self.current_direction = self.last_working_direction
+
+    def handlecookiepickup(self):
+        collision_rect = pygame.Rect(self.x, self.y, self._size, self._size)
+        cookies = self._renderer.getcookies()
+        game_objects = self._renderer.getgameobjects()
+        for cookie in cookies:
+            collides = collision_rect.colliderect(cookie.get_shape())
+            if collides and cookie in game_objects:
+                game_objects.remove(cookie)
+
+    def draw(self):
+        half_size = self._size / 2
+        pygame.draw.circle(self._surface, self._color, (self.x + half_size, self.y + half_size), half_size)
+
+
+class Ghost(movableobject):
+    def __init__(self, in_surface, x, y, in_size: int, in_game_controller, in_color=(255, 0, 0)):
+        super().__init__(in_surface, x, y, in_size, in_color, False)
+        self.game_controller = in_game_controller
+
+    def reached_target(self):
+        if (self.x, self.y) == self.next_target:
+            self.next_target = self.getnextlocation()
+        self.current_direction = self.calculatedirectiontonexttarget()
+
+    def set_new_path(self, in_path):
+        for item in in_path:
+            self.location_queue.append(item)
+        self.next_target = self.getnextlocation()
+
+    def calculatedirectiontonexttarget(self) -> direction:
+        if self.next_target is None:
+            self.game_controller.request_new_random_path(self)
+            return direction.none
+        diff_x = self.next_target[0] - self.x
+        diff_y = self.next_target[1] - self.y
+        if diff_x == 0:
+            return direction.down if diff_y > 0 else direction.up
+        if diff_y == 0:
+            return direction.left if diff_x < 0 else direction.right
+        self.game_controller.request_new_random_path(self)
+        return direction.none
+
+    def automatic_move(self, in_direction: direction):
+        if in_direction == direction.up:
+            self.setposition(self.x, self.y - 1)
+        elif in_direction == direction.down:
+            self.setposition(self.x, self.y + 1)
+        elif in_direction == direction.left:
+            self.setposition(self.x - 1, self.y)
+        elif in_direction == direction.right:
+            self.setposition(self.x + 1, self.y)
+
+
+class Cookie(gameobject):
+    def __init__(self, in_surface, x, y):
+        super().__init__(in_surface, x, y, 4, (255, 255, 0), True)
+
+
+class Pathfinder:
+    def __init__(self, in_arr):
+        cost = np.array(in_arr, dtype=np.bool_).tolist()
+        self.pf = tcod.path.AStar(cost=cost, diagonal=0)
+
+    def get_path(self, from_x, from_y, to_x, to_y) -> object:
+        res = self.pf.get_path(from_x, from_y, to_x, to_y)
+        return [(sub[1], sub[0]) for sub in res]
+
+
+class pacmangamecontroller:
+    def __init__(self):
+        self.ascii_maze = [
+            "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            "XP           XX            X",
+            "X XXXX XXXXX XX XXXXX XXXX X",
+            "X XXXX XXXXX XX XXXXX XXXX X",
+            "X XXXX XXXXX XX XXXXX XXXX X",
+            "X                          X",
+            "X XXXX XX XXXXXXXX XX XXXX X",
+            "X XXXX XX XXXXXXXX XX XXXX X",
+            "X      XX    XX    XX      X",
+            "XXXXXX XXXXX XX XXXXX XXXXXX",
+            "XXXXXX XXXXX XX XXXXX XXXXXX",
+            "XXXXXX XX          XX XXXXXX",
+            "XXXXXX XX XXXXXXXX XX XXXXXX",
+            "XXXXXX XX X   G  X XX XXXXXX",
+            "          X G    X          ",
+            "XXXXXX XX X   G  X XX XXXXXX",
+            "XXXXXX XX XXXXXXXX XX XXXXXX",
+            "XXXXXX XX          XX XXXXXX",
+            "XXXXXX XX XXXXXXXX XX XXXXXX",
+            "XXXXXX XX XXXXXXXX XX XXXXXX",
+            "X            XX            X",
+            "X XXXX XXXXX XX XXXXX XXXX X",
+            "X XXXX XXXXX XX XXXXX XXXX X",
+            "X   XX       G        XX   X",
+            "XXX XX XX XXXXXXXX XX XX XXX",
+            "XXX XX XX XXXXXXXX XX XX XXX",
+            "X      XX    XX    XX      X",
+            "X XXXXXXXXXX XX XXXXXXXXXX X",
+            "X XXXXXXXXXX XX XXXXXXXXXX X",
+            "X                          X",
+            "XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        ]
+
+        self.numpy_maze = []
+        self.cookie_spaces = []
+        self.reachable_spaces = []
+        self.ghost_spawns = []
+        self.ghost_colors = [
+            (255, 184, 255),
+            (255, 0, 20),
+            (0, 255, 255),
+            (255, 184, 82)
+        ]
+        self.size = (0, 0)
+        self.convertmazetonumpy()
+        self.p = Pathfinder(self.numpy_maze)
+
+    def request_new_random_path(self, in_ghost: Ghost):
+        random_space = random.choice(self.reachable_spaces)
+        current_maze_coord = translatescreentomaze(in_ghost.getposition())
+
+        path = self.p.get_path(current_maze_coord[1], current_maze_coord[0], random_space[1],
+                               random_space[0])
+        test_path = [translatemazetoscreen(item) for item in path]
+        in_ghost.set_new_path(test_path)
+
+    def convertmazetonumpy(self):
+        for x, row in enumerate(self.ascii_maze):
+            self.size = (len(row), x + 1)
+            binary_row = []
+            for y, column in enumerate(row):
+                if column == "G":
+                    self.ghost_spawns.append((y, x))
+
+                if column == "X":
+                    binary_row.append(0)
+                else:
+                    binary_row.append(1)
+                    self.cookie_spaces.append((y, x))
+                    self.reachable_spaces.append((y, x))
+            self.numpy_maze.append(binary_row)
+
+
+if __name__ == "__main__":
+    unified_size = 32
+    pacman_game = pacmangamecontroller()
+    size = pacman_game.size
+    game_renderer = gamerenderer(size[0] * unified_size, size[1] * unified_size)
+
+    for y, row in enumerate(pacman_game.numpy_maze):
+        for x, column in enumerate(row):
+            if column == 0:
+                game_renderer.addwall(wall(game_renderer, x, y, unified_size))
+
+    # Vykresleni cesty
+    # red = (255, 0, 0)
+    # green = (0, 255, 0)
+    # _from = (1, 1)
+    # _to = (24, 24)
+    # path_array = pacman_game.p.get_path(_from[1], _from[0], _to[1], _to[0])
+    #
+    # print(path_array)
+    # # [(1, 2), (1, 3), (1, 4), (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (6, 6), (6, 7) ...
+    #
+    # white = (255, 255, 255)
+    # for path in path_array:
+    #     game_renderer.add_game_object(Wall(game_renderer, path[0], path[1], unified_size, white))
+    #
+    # from_translated = translate_maze_to_screen(_from)
+    # game_renderer.add_game_object(
+    #     GameObject(game_renderer, from_translated[0], from_translated[1], unified_size, red))
+    #
+    # to_translated = translate_maze_to_screen(_to)
+    # game_renderer.add_game_object(
+    #     GameObject(game_renderer, to_translated[0], to_translated[1], unified_size, green))
+
+    for cookie_space in pacman_game.cookie_spaces:
+        translated = translatemazetoscreen(cookie_space)
+        cookie = Cookie(game_renderer, translated[0] + unified_size / 2, translated[1] + unified_size / 2)
+        game_renderer.addcookie(cookie)
+
+    for i, ghost_spawn in enumerate(pacman_game.ghost_spawns):
+        translated = translatemazetoscreen(ghost_spawn)
+        ghost = Ghost(game_renderer, translated[0], translated[1], unified_size, pacman_game,
+                      pacman_game.ghost_colors[i % 4])
+        game_renderer.addgameobject(ghost)
+
+    pacman = hero(game_renderer, unified_size, unified_size, unified_size)
+    game_renderer.addhero(pacman)
+    game_renderer.tick(120)
