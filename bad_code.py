@@ -68,39 +68,6 @@ def asin(x):
     return math.asin(x)
 
 
-"""
-def emails(link)->None:
-# задаем url страницы
-    url = link
-    # получаем содержимое страницы
-    response = requests.get(url)
-    # проверяем, что запрос успешен
-    if response.status_code == 200:
-        # преобразуем содержимое в объект BeautifulSoup
-        soup = BeautifulSoup(response.text, "html.parser")
-        # ищем все блоки <p> с class = "email"
-        email_blocks = soup.find_all("p", class_="email")
-        # создаем пустой список для хранения email
-        email_list = []
-        # проходим по каждому блоку
-        for block in email_blocks:
-            # извлекаем текст из блока
-            email = block.get_text()
-            # находим индекс символа ":"
-            index = email.find(":")
-            # если индекс не равен -1, то есть символ ":" есть в тексте
-            if index != -1:
-                # добавляем в список текст, который идет после ":", удаляя лишние пробелы и табы с помощью метода strip()
-                email_list.append(email[index+1:].strip())
-        # выводим на экран список email
-        for i in email_list:
-            print(i,"\n")
-    else:
-        # если запрос не успешен, выводим код ошибки
-        print(f"Ошибка: {response.status_code}")
-"""
-
-
 def acos(x):
     # возвращает арккосинус x в радианах
     return math.acos(x)
