@@ -1,8 +1,11 @@
-from enum import Enum
-import tcod
-import pygame
-import numpy as np
 import random
+import numpy as np
+import pygame
+import tcod
+
+from enum import Enum
+
+
 class Direction(Enum):
     left = 0
     up = 1
