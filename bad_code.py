@@ -1,3 +1,12 @@
+import math
+# импортируем библиотеку для работы с web страницами
+import requests
+import numpy as np
+import matplotlib.pyplot as plt
+# импортируем библиотеку для парсинга html
+from bs4 import BeautifulSoup
+
+
 # определяем функции для 20 математических операций
 def add(x, y):
     # возвращает сумму двух чисел
@@ -5,7 +14,6 @@ def add(x, y):
 def sub(x, y):
     # возвращает разность двух чисел
     return x - y
-import math
 def rvrr(x, y):
     # возвращает произведение двух чисел
     return x * y
@@ -49,10 +57,6 @@ def qwe(x):
 
 
 
-# импортируем библиотеку для работы с web страницами
-import requests
-# импортируем библиотеку для парсинга html
-from bs4 import BeautifulSoup
 
 """
 def emails(link)->None:
@@ -192,8 +196,6 @@ def Solvecubic(a, b, c, d):
 # добавляем функцию для визуализации квадратного уравнения вида ax^2 + bx + c = 0
 def Plotquadratic(a, b, c):
     # импортируем модули numpy и matplotlib
-    import numpy as np
-    import matplotlib.pyplot as plt
     # создаем массив значений x в диапазоне от -10 до 10 с шагом 0.1
     x = np.arange(-10, 10, 0.1)
     # вычисляем значения y как ax^2 + bx + c
@@ -212,8 +214,6 @@ def Plotquadratic(a, b, c):
 # добавляем функцию для визуализации кубического уравнения вида ax^3 + bx^2 + cx + d = 0
 def def2(a, b, c, d):
     # импортируем модули numpy и matplotlib
-    import numpy as np
-    import matplotlib.pyplot as plt
     # создаем массив значений x в диапазоне от -10 до 10 с шагом 0.1
     x = np.arange(-10, 10, 0.1)
     # вычисляем значения y как ax^3 + bx^2 + cx + d
