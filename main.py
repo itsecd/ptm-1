@@ -1,9 +1,11 @@
 import random
+
 import numpy as np
 import pygame
 import tcod
 
 from enum import Enum
+from typing import List, Optional, Tuple
 
 
 class Direction(Enum):
@@ -14,11 +16,11 @@ class Direction(Enum):
     NONE = 4
 
 
-def translate_screen_to_maze(in_coords, in_size=32):
+def translate_screen_to_maze(in_coords, in_size=32) -> tuple:
     return int(in_coords[0] / in_size), int(in_coords[1] / in_size)
 
 
-def translate_maze_to_screen(in_coords, in_size=32):
+def translate_maze_to_screen(in_coords, in_size=32) -> tuple:
     return in_coords[0] * in_size, in_coords[1] * in_size
 
 
@@ -33,34 +35,34 @@ class GameObject:
         self._circle = is_circle
         self._shape = pygame.Rect(self.x, self.y, in_size, in_size)
 
-    def draw(self):
+    def draw(self) -> None:
         if self._circle:
             pygame.draw.circle(self._surface, self._color, (self.x, self.y), self._size)
         else:
             rect_object = pygame.Rect(self.x, self.y, self._size, self._size)
             pygame.draw.rect(self._surface, self._color, rect_object, border_radius=4)
 
-    def tick(self):
+    def tick(self) -> None:
         pass
 
-    def get_shape(self):
+    def get_shape(self) -> pygame.Rect:
         return self._shape
 
-    def set_position(self, in_x, in_y):
+    def set_position(self, in_x, in_y) -> None:
         self.x = in_x
         self.y = in_y
 
-    def get_position(self):
+    def get_position(self) -> tuple:
         return (self.x, self.y)
 
 
 class Wall(GameObject):
-    def __init__(self, in_surface, x, y, in_size: int, in_color=(0, 0, 255)):
+    def __init__(self, in_surface, x, y, in_size: int, in_color=(0, 0, 255)) -> None:
         super().__init__(in_surface, x * in_size, y * in_size, in_size, in_color)
 
 
 class GameRenderer:
-    def __init__(self, in_width: int, in_height: int):
+    def __init__(self, in_width: int, in_height: int) -> None:
         pygame.init()
         self._width = in_width
         self._height = in_height
@@ -73,7 +75,7 @@ class GameRenderer:
         self._cookies = []
         self._hero: Hero = None
 
-    def tick(self, in_fps: int):
+    def tick(self, in_fps: int) -> None:
         black = (0, 0, 0)
         while not self._done:
             for game_object in self._game_objects:
@@ -86,31 +88,31 @@ class GameRenderer:
             self._handle_events()
         print("Game over")
 
-    def add_game_object(self, obj: GameObject):
+    def add_game_object(self, obj: GameObject) -> None:
         self._game_objects.append(obj)
 
-    def add_cookie(self, obj: GameObject):
+    def add_cookie(self, obj: GameObject) -> None:
         self._game_objects.append(obj)
         self._cookies.append(obj)
 
-    def add_wall(self, obj: Wall):
+    def add_wall(self, obj: Wall) -> None:
         self.add_game_object(obj)
         self._walls.append(obj)
 
-    def get_walls(self):
+    def get_walls(self) -> List[Wall]:
         return self._walls
 
-    def get_cookies(self):
+    def get_cookies(self) -> List[GameObject]:
         return self._cookies
 
-    def get_game_objects(self):
+    def get_game_objects(self) -> List[GameObject]:
         return self._game_objects
 
-    def add_hero(self, in_hero):
+    def add_hero(self, in_hero) -> None:
         self.add_game_object(in_hero)
         self._hero = in_hero
 
-    def _handle_events(self):
+    def _handle_events(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self._done = True
@@ -127,7 +129,7 @@ class GameRenderer:
 
 
 class MovableObject(GameObject):
-    def __init__(self, in_surface, x, y, in_size: int, in_color=(255, 0, 0), is_circle: bool = False):
+    def __init__(self, in_surface, x, y, in_size: int, in_color=(255, 0, 0), is_circle: bool = False) -> None:
         super().__init__(in_surface, x, y, in_size, in_color, is_circle)
         self.current_direction = Direction.NONE
         self.direction_buffer = Direction.NONE
@@ -135,14 +137,14 @@ class MovableObject(GameObject):
         self.location_queue = []
         self.next_target = None
 
-    def get_next_location(self):
+    def get_next_location(self) -> Optional[Tuple[int, int]]:
         return None if len(self.location_queue) == 0 else self.location_queue.pop(0)
 
-    def set_direction(self, in_direction):
+    def set_direction(self, in_direction) -> None:
         self.current_direction = in_direction
         self.direction_buffer = in_direction
 
-    def collides_with_wall(self, in_position):
+    def collides_with_wall(self, in_position) -> bool:
         collision_rect = pygame.Rect(in_position[0], in_position[1], self._size, self._size)
         collides = False
         walls = self._renderer.get_walls()
@@ -151,7 +153,7 @@ class MovableObject(GameObject):
             if collides: break
         return collides
 
-    def check_collision_in_direction(self, in_direction: Direction):
+    def check_collision_in_direction(self, in_direction: Direction) -> Tuple[bool, Tuple[int, int]]:
         desired_position = (0, 0)
         if in_direction == Direction.NONE: return False, desired_position
         if in_direction == Direction.UP:
@@ -165,23 +167,23 @@ class MovableObject(GameObject):
 
         return self.collides_with_wall(desired_position), desired_position
 
-    def automatic_move(self, in_direction: Direction):
+    def automatic_move(self, in_direction: Direction) -> None:
         pass
 
-    def tick(self):
+    def tick(self) -> None:
         self.reached_target()
         self.automatic_move(self.current_direction)
 
-    def reached_target(self):
+    def reached_target(self) -> None:
         pass
 
 
 class Hero(MovableObject):
-    def __init__(self, in_surface, x, y, in_size: int):
+    def __init__(self, in_surface, x, y, in_size: int) -> None:
         super().__init__(in_surface, x, y, in_size, (255, 255, 0), False)
         self.last_non_colliding_position = (0, 0)
 
-    def tick(self):
+    def tick(self) -> None:
         # TELEPORT
         if self.x < 0:
             self.x = self._renderer._width
@@ -202,7 +204,7 @@ class Hero(MovableObject):
 
         self.handle_cookie_pickup()
 
-    def automatic_move(self, in_direction: Direction):
+    def automatic_move(self, in_direction: Direction) -> None:
         collision_result = self.check_collision_in_direction(in_direction)
 
         desired_position_collides = collision_result[0]
@@ -213,7 +215,7 @@ class Hero(MovableObject):
         else:
             self.current_direction = self.last_working_direction
 
-    def handle_cookie_pickup(self):
+    def handle_cookie_pickup(self) -> None:
         collision_rect = pygame.Rect(self.x, self.y, self._size, self._size)
         cookies = self._renderer.get_cookies()
         game_objects = self._renderer.get_game_objects()
@@ -222,7 +224,7 @@ class Hero(MovableObject):
             if collides and cookie in game_objects:
                 game_objects.remove(cookie)
 
-    def draw(self):
+    def draw(self) -> None:
         half_size = self._size / 2
         pygame.draw.circle(self._surface, self._color, (self.x + half_size, self.y + half_size), half_size)
 
@@ -232,12 +234,12 @@ class Ghost(MovableObject):
         super().__init__(in_surface, x, y, in_size, in_color, False)
         self.game_controller = in_game_controller
 
-    def reached_target(self):
+    def reached_target(self) -> None:
         if (self.x, self.y) == self.next_target:
             self.next_target = self.get_next_location()
         self.current_direction = self.calculate_direction_to_next_target()
 
-    def set_new_path(self, in_path):
+    def set_new_path(self, in_path) -> None:
         for item in in_path:
             self.location_queue.append(item)
         self.next_target = self.get_next_location()
@@ -255,7 +257,7 @@ class Ghost(MovableObject):
         self.game_controller.request_new_random_path(self)
         return Direction.NONE
 
-    def automatic_move(self, in_direction: Direction):
+    def automatic_move(self, in_direction: Direction) -> None:
         if in_direction == Direction.UP:
             self.set_position(self.x, self.y - 1)
         elif in_direction == Direction.DOWN:
@@ -267,12 +269,12 @@ class Ghost(MovableObject):
 
 
 class Cookie(GameObject):
-    def __init__(self, in_surface, x, y):
+    def __init__(self, in_surface, x, y) -> None:
         super().__init__(in_surface, x, y, 4, (255, 255, 0), True)
 
 
 class Pathfinder:
-    def __init__(self, in_arr):
+    def __init__(self, in_arr) -> None:
         cost = np.array(in_arr, dtype=np.bool_).tolist()
         self.pf = tcod.path.AStar(cost=cost, diagonal=0)
 
@@ -331,7 +333,7 @@ class PacmanGameController:
         self.convert_maze_to_numpy()
         self.p = Pathfinder(self.numpy_maze)
 
-    def request_new_random_path(self, in_ghost: Ghost):
+    def request_new_random_path(self, in_ghost: Ghost) -> None:
         random_space = random.choice(self.reachable_spaces)
         current_maze_coord = translate_screen_to_maze(in_ghost.get_position())
 
@@ -340,7 +342,7 @@ class PacmanGameController:
         test_path = [translate_maze_to_screen(item) for item in path]
         in_ghost.set_new_path(test_path)
 
-    def convert_maze_to_numpy(self):
+    def convert_maze_to_numpy(self) -> None:
         for x, row in enumerate(self.ascii_maze):
             self.size = (len(row), x + 1)
             binary_row = []
