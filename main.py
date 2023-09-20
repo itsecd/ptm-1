@@ -56,14 +56,16 @@ def read_cicle(filename: str, Solder: bool):
         "Приказ о отчислении",  # 43
         "Причина отчисления"  # 44
     ]
-    if Solder: column_names.insert(2, "Код должности")
+    if Solder:
+        column_names.insert(2, "Код должности")
     wb = op.load_workbook(filename, data_only=True)
     sheet = wb.active
     bar = IncrementalBar( " ", max=sheet.max_row -4 )
     for student_number in range (5, sheet.max_row + 1):
 
         column_students = []  # список значений студента в этих столбцах
-        for i in range(1, sheet.max_column + 1): column_students.append(sheet.cell(row=student_number, column=i).value )
+        for i in range(1, sheet.max_column + 1):
+            column_students.append(sheet.cell(row=student_number, column=i).value )
         tmp=dict(zip(column_names, column_students))
         if Solder and str(tmp['Код должности'])!='256':
             tmp_vuc=tmp['Код должности']
@@ -85,7 +87,8 @@ def read_excel(filename: str):  # функция принимающая имя �
 
     information = []  # список информации о студентах
     column_names = []  # список имён столбцов
-    for i in range(1, sheet.max_column + 1): column_names.append(sheet.cell(row=1, column=i).value)
+    for i in range(1, sheet.max_column + 1):
+        column_names.append(sheet.cell(row=1, column=i).value)
     
     
     for student_number in trange(2, sheet.max_row + 1):  # бежим по каждой строчке
@@ -128,7 +131,8 @@ def uniq_list(information):
     list1=[]
     for elem in information:
         tmp={key: val for key, val in elem.items() if val != None  and val!=''}
-        if (len(tmp))!=0: list1.append(tmp)  # удаляем значения у словарей где None
+        if (len(tmp))!=0:
+            list1.append(tmp)  # удаляем значения у словарей где None
     tmp=[]  # для индексов дубликатов
     for i in range (len(list1)-1):
         for j in range (i+1, len(list1)-2):
@@ -208,7 +212,8 @@ def write_excel(information, number):
                         
                             for i in range (1, len(name_column)+1):
                                 tmp=''
-                                if  name_column[i-1] in information[j].keys(): tmp=information[j][name_column[i-1]]
+                                if  name_column[i-1] in information[j].keys():
+                                    tmp=information[j][name_column[i-1]]
                                 sheet.cell(row=id+5, column=i, value=tmp)
                             id+=1
         wb.save('Итоговые таблицы/(Итог)Офицеры.xlsx')
@@ -271,7 +276,8 @@ def write_excel(information, number):
             if  program_pdgotovki[:2]=='со' or program_pdgotovki[:2]=='ря' or vuc=='220' or vuc=='233' or vuc=='250' or vuc=='262'  :
                     for i in range (1, len(name_column)+1):
                         tmp=''
-                        if  name_column[i-1] in information[j].keys(): tmp=information[j][name_column[i-1]]
+                        if  name_column[i-1] in information[j].keys():
+                            tmp=information[j][name_column[i-1]]
                         sheet.cell(row=id+5, column=i, value=tmp)
                     id+=1
         wb.save('Итоговые таблицы/(Итог)Солдаты.xlsx')
@@ -301,7 +307,8 @@ def write_excel(information, number):
         for j in range (len( information)):
             for i in range (1, len(name_column)+1):
                 tmp=''
-                if  name_column[i-1] in information[j].keys(): tmp=information[j][name_column[i-1]]
+                if  name_column[i-1] in information[j].keys():
+                    tmp=information[j][name_column[i-1]]
                 ws.cell(row=j+2, column=i, value=tmp)
 
         wb.save("Итоговые таблицы/Все данные.xlsx")
@@ -312,7 +319,8 @@ if __name__ == "__main__":
         excel_name=[]
         for elem in all_files:
             filename, file_extension = path.splitext(elem)
-            if  file_extension=='.xlsx': excel_name.append(elem)
+            if  file_extension=='.xlsx':
+                excel_name.append(elem)
         
 
         print("Программа увидела следующие таблицы:")
@@ -352,4 +360,5 @@ if __name__ == "__main__":
                 elif tmp=='2':
                     write_excel(information_list[0], 4)
                     input('Успешно,  создали "Все данные.xlsx"  в папке "Итоговые таблицы"')
-                else : input('Нет такого варианта..')
+                else :
+                    input('Нет такого варианта..')
