@@ -1,6 +1,7 @@
 def read_text(filename: str) -> str:
     """
         Получение текста из файла.
+        :param filename: Название файла.
     """
     with open(filename, 'r', encoding='utf-8', newline='') as file:
         return file.read().upper()
@@ -9,6 +10,8 @@ def read_text(filename: str) -> str:
 def write_text(filename: str, text: str) -> None:
     """
         Запись текста в файл.
+        :param filename: Название файла.
+        :param text: Текст для записи.
     """
     with open(filename, 'w', encoding='utf-8', newline='') as file:
         file.write(text)

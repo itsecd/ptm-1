@@ -3,6 +3,10 @@ from scipy.special import gammainc
 
 
 def frequency_bit_test(bit_sequence: str) -> float:
+    """
+    Частотный побитовый тест.
+    :param bit_sequence: Битовая последовательность.
+    """
     sum = 0
     for i in bit_sequence:
         if i == "1":
@@ -15,6 +19,10 @@ def frequency_bit_test(bit_sequence: str) -> float:
 
 
 def identical_consecutive_bit_test(bit_sequence: str) -> float:
+    """
+    Тест на одинаковые идущие подряд биты.
+    :param bit_sequence: Битовая последовательность.
+    """
     unit_sum = 0
     for i in bit_sequence:
         if i == "1":
@@ -32,6 +40,10 @@ def identical_consecutive_bit_test(bit_sequence: str) -> float:
 
 
 def unit_long_sequence_test(bit_sequence: str) -> float:
+    """
+    Тест на самый длинный блок в последовательности.
+    :param bit_sequence: Битовая последовательность.
+    """
     pi0 = 0.2148
     pi1 = 0.3672
     pi2 = 0.2305

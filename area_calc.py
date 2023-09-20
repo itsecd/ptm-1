@@ -2,6 +2,10 @@ import math
 
 
 def calculate_circle_area(radius: float) -> float:
+    """
+    Вычисление площади окружности.
+    :param radius: Радиус окружности.
+    """
     if radius <= 0:
         raise ValueError("Radius must be a positive number.")
 
@@ -10,6 +14,11 @@ def calculate_circle_area(radius: float) -> float:
 
 
 def calculate_triangle_area(base: float, height: float) -> float:
+    """
+    Вычисление площади треугольника.
+    :param base: Основание треугольника.
+    :param height: Высота треугольника.
+    """
     if base <= 0 or height <= 0:
         raise ValueError("Base and height must be positive numbers.")
 
@@ -18,6 +27,11 @@ def calculate_triangle_area(base: float, height: float) -> float:
 
 
 def calculate_rectangle_area(length: float, width: float) -> float:
+    """
+    Вычисление площади прямоугольника.
+    :param length: Длина прямоугольника.
+    :param width: Ширина прямоугольника.
+    """
     if length <= 0 or width <= 0:
         raise ValueError("Length and width must be positive numbers.")
 
@@ -26,6 +40,9 @@ def calculate_rectangle_area(length: float, width: float) -> float:
 
 
 def main() -> None:
+    """
+    Основная функция.
+    """
     try:
         radius = float(input("Enter the radius of the circle: "))
         circle_area = calculate_circle_area(radius)
