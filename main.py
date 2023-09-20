@@ -7,11 +7,11 @@ from enum import Enum
 
 
 class Direction(Enum):
-    left = 0
-    up = 1
-    right = 2
-    down = 3,
-    none = 4
+    LEFT = 0
+    UP = 1
+    RIGHT = 2
+    DOWN = 3
+    NONE = 4
 
 def translate_screen_to_maze(in_coords, in_size=32):
     return int(in_coords[0] / in_size), int(in_coords[1] / in_size)
@@ -115,21 +115,21 @@ class GameRenderer:
 
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_UP]:
-            self._hero.set_direction(Direction.up)
+            self._hero.set_direction(Direction.UP)
         elif pressed[pygame.K_LEFT]:
-            self._hero.set_direction(Direction.left)
+            self._hero.set_direction(Direction.LEFT)
         elif pressed[pygame.K_DOWN]:
-            self._hero.set_direction(Direction.down)
+            self._hero.set_direction(Direction.DOWN)
         elif pressed[pygame.K_RIGHT]:
-            self._hero.set_direction(Direction.right)
+            self._hero.set_direction(Direction.RIGHT)
 
 
 class MovableObject(Gameobject):
     def __init__(self, in_surface, x, y, in_size: int, in_color=(255, 0, 0), is_circle: bool = False):
         super().__init__(in_surface, x, y, in_size, in_color, is_circle)
-        self.current_direction = Direction.none
-        self.direction_buffer = Direction.none
-        self.last_working_direction = Direction.none
+        self.current_direction = Direction.NONE
+        self.direction_buffer = Direction.NONE
+        self.last_working_direction = Direction.NONE
         self.location_queue = []
         self.next_target = None
 
@@ -151,14 +151,14 @@ class MovableObject(Gameobject):
 
     def check_collision_in_direction(self, in_direction: Direction):
         desired_position = (0, 0)
-        if in_direction == Direction.none: return False, desired_position
-        if in_direction == Direction.up:
+        if in_direction == Direction.NONE: return False, desired_position
+        if in_direction == Direction.UP:
             desired_position = (self.x, self.y - 1)
-        elif in_direction == Direction.down:
+        elif in_direction == Direction.DOWN:
             desired_position = (self.x, self.y + 1)
-        elif in_direction == Direction.left:
+        elif in_direction == Direction.LEFT:
             desired_position = (self.x - 1, self.y)
-        elif in_direction == Direction.right:
+        elif in_direction == Direction.RIGHT:
             desired_position = (self.x + 1, self.y)
 
         return self.collides_with_wall(desired_position), desired_position
@@ -243,24 +243,24 @@ class Ghost(MovableObject):
     def calculate_direction_to_next_target(self) -> Direction:
         if self.next_target is None:
             self.game_controller.request_new_random_path(self)
-            return Direction.none
+            return Direction.NONE
         diff_x = self.next_target[0] - self.x
         diff_y = self.next_target[1] - self.y
         if diff_x == 0:
-            return Direction.down if diff_y > 0 else Direction.up
+            return Direction.DOWN if diff_y > 0 else Direction.UP
         if diff_y == 0:
-            return Direction.left if diff_x < 0 else Direction.right
+            return Direction.LEFT if diff_x < 0 else Direction.RIGHT
         self.game_controller.request_new_random_path(self)
-        return Direction.none
+        return Direction.NONE
 
     def automatic_move(self, in_direction: Direction):
-        if in_direction == Direction.up:
+        if in_direction == Direction.UP:
             self.set_position(self.x, self.y - 1)
-        elif in_direction == Direction.down:
+        elif in_direction == Direction.DOWN:
             self.set_position(self.x, self.y + 1)
-        elif in_direction == Direction.left:
+        elif in_direction == Direction.LEFT:
             self.set_position(self.x - 1, self.y)
-        elif in_direction == Direction.right:
+        elif in_direction == Direction.RIGHT:
             self.set_position(self.x + 1, self.y)
 
 
