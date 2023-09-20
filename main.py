@@ -13,14 +13,16 @@ class Direction(Enum):
     DOWN = 3
     NONE = 4
 
+
 def translate_screen_to_maze(in_coords, in_size=32):
     return int(in_coords[0] / in_size), int(in_coords[1] / in_size)
+
 
 def translate_maze_to_screen(in_coords, in_size=32):
     return in_coords[0] * in_size, in_coords[1] * in_size
 
 
-class Gameobject:
+class GameObject:
     def __init__(self, in_surface, x, y, in_size: int, in_color=(255, 0, 0), is_circle: bool = False):
         self._size = in_size
         self._renderer: GameRenderer = in_surface
@@ -52,7 +54,7 @@ class Gameobject:
         return (self.x, self.y)
 
 
-class Wall(Gameobject):
+class Wall(GameObject):
     def __init__(self, in_surface, x, y, in_size: int, in_color=(0, 0, 255)):
         super().__init__(in_surface, x * in_size, y * in_size, in_size, in_color)
 
@@ -84,10 +86,10 @@ class GameRenderer:
             self._handle_events()
         print("Game over")
 
-    def add_game_object(self, obj: Gameobject):
+    def add_game_object(self, obj: GameObject):
         self._game_objects.append(obj)
 
-    def add_cookie(self, obj: Gameobject):
+    def add_cookie(self, obj: GameObject):
         self._game_objects.append(obj)
         self._cookies.append(obj)
 
@@ -124,7 +126,7 @@ class GameRenderer:
             self._hero.set_direction(Direction.RIGHT)
 
 
-class MovableObject(Gameobject):
+class MovableObject(GameObject):
     def __init__(self, in_surface, x, y, in_size: int, in_color=(255, 0, 0), is_circle: bool = False):
         super().__init__(in_surface, x, y, in_size, in_color, is_circle)
         self.current_direction = Direction.NONE
@@ -264,7 +266,7 @@ class Ghost(MovableObject):
             self.set_position(self.x + 1, self.y)
 
 
-class Cookie(Gameobject):
+class Cookie(GameObject):
     def __init__(self, in_surface, x, y):
         super().__init__(in_surface, x, y, 4, (255, 255, 0), True)
 
