@@ -263,14 +263,17 @@ for i in fList:
             tmpHex = tmpHex.hex().upper()
             resList.append('TX hash = ' + tmpHex)
             tx_hashes.append(tmpHex)
-            resList.append(''); tmpHex = ''; RawTX = ''
+            resList.append('')
+            tmpHex = ''
+            RawTX = ''
+
         a += 1
         tx_hashes = [bytes.fromhex(h) for h in tx_hashes]
         tmpHex = merkle_root(tx_hashes).hex().upper()
         if tmpHex != MerkleRoot:
             print ('Merkle roots does not match! >',MerkleRoot,tmpHex)
-    f.close()
-    f = open(dirB + nameRes,'w')
-    for j in resList:
-        f.write(j + '\n')
-    f.close()
+        f.close()
+        f = open(dirB + nameRes,'w')
+        for j in resList:
+            f.write(j + '\n')
+        f.close()
