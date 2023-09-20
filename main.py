@@ -73,7 +73,7 @@ def read_cicle(filename: str, Solder: bool):
             tmp['ВУС'] = tmp_vuc
 
         information.append(tmp)  # создаем из списка имён столбцов и список значений студента словарик  и добавляем каждый словарик в список information
-        
+
         bar.next()
     return information
 
@@ -89,8 +89,8 @@ def read_excel(filename: str):  # функция принимающая имя �
     column_names = []  # список имён столбцов
     for i in range(1, sheet.max_column + 1):
         column_names.append(sheet.cell(row=1, column=i).value)
-    
-    
+
+
     for student_number in trange(2, sheet.max_row + 1):  # бежим по каждой строчке
         column_students = []  # список значений студента в этих столбцах
         for i in range(1, sheet.max_column + 1):  # бежим по каждому столбцу
@@ -102,7 +102,7 @@ def read_excel(filename: str):  # функция принимающая имя �
                         tmp_vuc = tmp['Код должности']
                         tmp['Код должности'] = '256'
                         tmp['ВУС'] = tmp_vuc
-                        
+
         information.append(tmp)  # создаем из списка имён столбцов и список значений студента словарик  и добавляем каждый словарик в список information
     return information  # вовзращаем список из словарей
 
@@ -111,7 +111,7 @@ def sum(list1, list2):  # функция сложения двух списко�
     list1 = uniq_list(list1)
     list2 = uniq_list(list2)
     bar = IncrementalBar(" ", max=len(list1))
-    
+
     tmp2 = list2
     for elem1 in list1:  # для каждого элемента из первой таблицы
         for elem2 in list2:  # для каждого элемента из второйтаблицы
@@ -209,7 +209,7 @@ def write_excel(information, number):
             vuc = str(information[j].get('ВУС'))
             program_pdgotovki = str(information[j].get('Программа военной подготовки'))
             if  program_pdgotovki[:2] == 'оф' or vuc == '461000' or vuc == '461100' or vuc == '461200' or vuc == '461300'  :
-                        
+
                             for i in range(1, len(name_column)+1):
                                 tmp = ''
                                 if  name_column[i-1] in information[j].keys():
@@ -217,7 +217,7 @@ def write_excel(information, number):
                                 sheet.cell(row=id+5, column=i, value=tmp)
                             id += 1
         wb.save('Итоговые таблицы/(Итог)Офицеры.xlsx')
-    
+
     elif number == 2:
         name_column = [
         "ФГОО ВО в котором обучается студент",  # 1
@@ -288,7 +288,7 @@ def write_excel(information, number):
         for elem in information:
             name_column = name_column + list(elem.keys())
         name_column = list(set(name_column))
-       
+
         name_column.remove('Фамилия')
         name_column.remove('Имя')
         name_column.remove('Отчество')
@@ -321,7 +321,7 @@ if __name__ == "__main__":
             filename, file_extension = path.splitext(elem)
             if  file_extension == '.xlsx':
                 excel_name.append(elem)
-        
+
 
         print("Программа увидела следующие таблицы:")
         for elem in excel_name:
@@ -335,14 +335,14 @@ if __name__ == "__main__":
             print("\n" * 100)
             print('Данные успешно собраны')
             print('Совмещаем данные')
-            
-            
+
+
             if len(information_list) == 1:
                 tmp = uniq_list(information_list[0])
                 information_list.append(tmp)
                 print(len(information_list))
                 information_list.pop(0)
-            
+
             while len(information_list) > 1:
                 tmp = sum(information_list[0], information_list[1])
                 information_list.pop(1)
