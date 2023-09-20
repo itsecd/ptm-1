@@ -25,7 +25,9 @@ def translate_maze_to_screen(in_coords, in_size=32) -> tuple:
 
 
 class GameObject:
-    def __init__(self, in_surface, x, y, in_size: int, in_color=(255, 0, 0), is_circle: bool = False):
+    def __init__(self, in_surface, x, y,
+                 in_size: int, in_color=(255, 0, 0),
+                 is_circle: bool = False):
         self._size = in_size
         self._renderer: GameRenderer = in_surface
         self._surface = in_surface._screen
@@ -37,10 +39,16 @@ class GameObject:
 
     def draw(self) -> None:
         if self._circle:
-            pygame.draw.circle(self._surface, self._color, (self.x, self.y), self._size)
+            pygame.draw.circle(self._surface,
+                               self._color,
+                               (self.x, self.y),
+                               self._size)
         else:
             rect_object = pygame.Rect(self.x, self.y, self._size, self._size)
-            pygame.draw.rect(self._surface, self._color, rect_object, border_radius=4)
+            pygame.draw.rect(self._surface,
+                             self._color,
+                             rect_object,
+                             border_radius=1)
 
     def tick(self) -> None:
         pass
@@ -129,7 +137,8 @@ class GameRenderer:
 
 
 class MovableObject(GameObject):
-    def __init__(self, in_surface, x, y, in_size: int, in_color=(255, 0, 0), is_circle: bool = False) -> None:
+    def __init__(self, in_surface, x, y, in_size: int,
+                 in_color=(255, 0, 0), is_circle: bool = False) -> None:
         super().__init__(in_surface, x, y, in_size, in_color, is_circle)
         self.current_direction = Direction.NONE
         self.direction_buffer = Direction.NONE
@@ -200,7 +209,8 @@ class Hero(MovableObject):
             self.current_direction = self.direction_buffer
 
         if self.collides_with_wall((self.x, self.y)):
-            self.set_position(self.last_non_colliding_position[0], self.last_non_colliding_position[1])
+            self.set_position(self.last_non_colliding_position[0],
+                              self.last_non_colliding_position[1])
 
         self.handle_cookie_pickup()
 
@@ -226,7 +236,8 @@ class Hero(MovableObject):
 
     def draw(self) -> None:
         half_size = self._size / 2
-        pygame.draw.circle(self._surface, self._color, (self.x + half_size, self.y + half_size), half_size)
+        pygame.draw.circle(self._surface, self._color,
+                           (self.x + half_size, self.y + half_size), half_size)
 
 
 class Ghost(MovableObject):
@@ -372,7 +383,8 @@ if __name__ == "__main__":
 
     for cookie_space in pacman_game.cookie_spaces:
         translated = translate_maze_to_screen(cookie_space)
-        cookie = Cookie(game_renderer, translated[0] + unified_size / 2, translated[1] + unified_size / 2)
+        cookie = Cookie(game_renderer, translated[0] + unified_size / 2,
+                        translated[1] + unified_size / 2)
         game_renderer.add_cookie(cookie)
 
     for i, ghost_spawn in enumerate(pacman_game.ghost_spawns):
