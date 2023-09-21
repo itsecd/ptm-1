@@ -13,7 +13,6 @@ if __name__ == "__main__":
         start_time = 0
         end_time = 0
         arr = []
-        # Ввод массива
         choose = int(input("1. Рандомный массив\n2. Вручную написанный массив"))
         if choose == 1:
             length = int(input("Введите длину массива: "))
@@ -62,9 +61,6 @@ if __name__ == "__main__":
             start_time = time.time()
             quick_sort(arr)
             end_time = time.time()
-            start_time = time.time()
-            insertion_sort(arr)
-            end_time = time.time()
         elif choice == 7:
             start_time = time.time()
             shell_sort(arr)
@@ -75,7 +71,6 @@ if __name__ == "__main__":
         else:
             print("Неверный выбор метода.")
 
-        # Вывод отсортированного массива
         print("Отсортированный массив:")
         print("Время выполнения: %.10f секунд" % (end_time - start_time))
         print(arr)
