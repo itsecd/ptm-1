@@ -5,7 +5,18 @@ from sorts import (bubble_sort, selection_sort, shell_sort,
                    quick_sort, heap_sort, merge_sort, insertion_sort)
 
 
-def generate_random_array(length, start, end):
+def generate_random_array(length: int, start: int, end: int) -> list:
+    """
+    Generate a random array of integers.
+
+    Parameters:
+    length (int): The length of the array.
+    start (int): The minimum value for the random numbers.
+    end (int): The maximum value for the random numbers.
+
+    Returns:
+    list: The generated random array.
+    """
     array = [random.randint(start, end) for _ in range(length)]
     return array
 
@@ -28,7 +39,6 @@ if __name__ == "__main__":
             arr = input("Введите элементы массива через пробел: ").split()
             arr = [int(num) for num in arr]
 
-        # Выбор метода сортировки
         print("Выберите метод сортировки:")
         print("1. Пузырьковая сортировка")
         print("2. Сортировка выбором")

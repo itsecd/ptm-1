@@ -2,7 +2,16 @@ import math
 import random
 
 
-def quick_sort(nums):
+def quick_sort(nums: list) -> list:
+    """
+    Sorts a list of numbers using the quicksort algorithm.
+
+    Parameters:
+    nums (list): The list of numbers to be sorted.
+
+    Returns:
+    list: The sorted list of numbers.
+    """
     if len(nums) <= 1:
         return nums
     else:
@@ -20,7 +29,16 @@ def quick_sort(nums):
         return quick_sort(s_nums) + e_nums + quick_sort(m_nums)
 
 
-def bubble_sort(nums):
+def bubble_sort(nums: list) -> None:
+    """
+    Sorts a list of numbers using the bubble sort algorithm.
+
+    Parameters:
+    nums (list): The list of numbers to be sorted.
+
+    Returns:
+    None
+    """
     swapped = True
     while swapped:
         swapped = False
@@ -30,7 +48,16 @@ def bubble_sort(nums):
                 swapped = True
 
 
-def selection_sort(nums):
+def selection_sort(nums: list) -> None:
+    """
+    Sorts a list of numbers using the selection sort algorithm.
+
+    Parameters:
+    nums (list): The list of numbers to be sorted.
+
+    Returns:
+    None
+    """
     for i in range(len(nums)):
         lowest_value_index = i
         for j in range(i + 1, len(nums)):
@@ -38,7 +65,17 @@ def selection_sort(nums):
                 lowest_value_index = j
         nums[i], nums[lowest_value_index] = nums[lowest_value_index], nums[i]
 
-def insertion_sort(nums):
+
+def insertion_sort(nums: list) -> None:
+    """
+    Sorts a list of numbers using the insertion sort algorithm.
+
+    Parameters:
+    nums (list): List of numbers to be sorted.
+
+    Returns:
+    None
+    """
     for i in range(1, len(nums)):
         item_to_insert = nums[i]
         j = i - 1
@@ -48,7 +85,17 @@ def insertion_sort(nums):
         nums[j + 1] = item_to_insert
 
 
-def heapify(nums, heap_size, root_index):
+def heapify(nums: list, heap_size: int, root_index: int) -> None:
+    """Rearranges the elements in the list in order to maintain the max-heap property.
+
+    Parameters:
+        nums: A list of integers representing the heap.
+        heap_size: An integer representing the size of the heap.
+        root_index: An integer representing the index of the root element.
+
+    Returns:
+        None.
+    """
     largest = root_index
     left_child = (2 * root_index) + 1
     right_child = (2 * root_index) + 2
@@ -65,7 +112,15 @@ def heapify(nums, heap_size, root_index):
         heapify(nums, heap_size, largest)
 
 
-def heap_sort(nums):
+def heap_sort(nums: list) -> None:
+    """Sorts a list of integers using the heap sort algorithm.
+
+    Parameters:
+        nums: A list of integers to be sorted.
+
+    Returns:
+        None. The list is sorted in-place.
+    """
     n = len(nums)
 
     for i in range(n, -1, -1):
@@ -76,7 +131,16 @@ def heap_sort(nums):
         heapify(nums, i, 0)
 
 
-def merge(left_list, right_list):
+def merge(left_list: list, right_list: list) -> list:
+    """Merges two sorted lists of integers into a single sorted list.
+
+    Parameters:
+        left_list: A sorted list of integers.
+        right_list: A sorted list of integers.
+
+    Returns:
+        A new list that contains all the elements from both input lists in sorted order.
+    """
     sorted_list = []
     left_list_index = right_list_index = 0
 
@@ -101,7 +165,17 @@ def merge(left_list, right_list):
     return sorted_list
 
 
-def merge_sort(nums):
+def merge_sort(nums: list) -> list:
+    """
+    Sorts a list of integers using the merge sort algorithm.
+
+    Parameters:
+        nums: a list of integers to be sorted.
+
+    Returns:
+        A new list with the elements of nums sorted in ascending order.
+    """
+
     if len(nums) <= 1:
         return nums
 
@@ -113,7 +187,19 @@ def merge_sort(nums):
     return merge(left_list, right_list)
 
 
-def partition(nums, low, high):
+def partition(nums: list, low: int, high: int) -> int:
+    """
+    This function takes an input list and reorders the elements so that all elements
+    Those smaller than the anchor point are moved to the left of it, and all elements
+    larger than the anchor point are moved to the right.
+
+    Parameters:
+        nums: A list of integers
+        low: The lower index of the sub-list to be partitioned
+        high: The upper index of the sub-list to be partitioned
+    Returns:
+        The index of the pivot element after rearranging the elements of the sub-list
+    """
     pivot = nums[(low + high) // 2]
     i = low - 1
     j = high + 1
@@ -131,18 +217,27 @@ def partition(nums, low, high):
         nums[i], nums[j] = nums[j], nums[i]
 
 
-def shell_sort(array):
-    n = len(array)
+def shell_sort(nums: list) -> list:
+    """
+    Sorts a list of integers using the shell sort algorithm.
+
+    Parameters:
+        nums: a list of integers to be sorted.
+
+    Returns:
+        A new list with the elements of nums sorted in ascending order.
+    """
+    n = len(nums)
     k = int(math.log2(n))
     interval = 2 ** k - 1
     while interval > 0:
         for i in range(interval, n):
-            temp = array[i]
+            temp = nums[i]
             j = i
-            while j >= interval and array[j - interval] > temp:
-                array[j] = array[j - interval]
+            while j >= interval and nums[j - interval] > temp:
+                nums[j] = nums[j - interval]
                 j -= interval
-            array[j] = temp
+            nums[j] = temp
         k -= 1
         interval = 2 ** k - 1
-    return array
+    return nums
