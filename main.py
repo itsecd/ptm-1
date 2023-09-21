@@ -1,5 +1,8 @@
-from sorts import *
+import random
 import time
+
+from sorts import (bubble_sort, selection_sort, shell_sort,
+                   quick_sort, heap_sort, merge_sort, insertion_sort)
 
 
 def generate_random_array(length, start, end):
