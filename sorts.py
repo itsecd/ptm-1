@@ -7,7 +7,7 @@ def quicksort(nums):
     if len(nums) <= 1:
         return nums
     else:
-        q=random.choice(nums)
+        q = random.choice(nums)
         s_nums = []
         m_nums = []
         e_nums = []
@@ -41,7 +41,7 @@ def bubble_sort(nums):
 
 
 # Выбором
-def selection_sort (nums):
+def selection_sort(nums):
     # Значение i соответствует кол-ву отсортированных значений
     for i in range(len(nums)):
         # Исходно считаем наименьшим первый элемент
@@ -73,7 +73,7 @@ def insertion_sort(nums):
 # пирамидой
 def heapify(nums, heap_size, root_index):
     # Индекс наибольшего элемента считаем корневым индексом
-    largest  = root_index
+    largest = root_index
     left_child = (2 * root_index) + 1
     right_child = (2 * root_index) + 2
 
@@ -123,7 +123,7 @@ def merge(left_list, right_list):
             # Сравниваем первые элементы в начале каждого списка
             # Если первый элемент левого подсписка меньше, добавляем его
             # в отсортированный массив
-            if  left_list[left_list_index] <= right_list[right_list_index]:
+            if left_list[left_list_index] <= right_list[right_list_index]:
                 sorted_list.append(left_list[left_list_index])
                 left_list_index += 1
             # Если первый элемент правого подсписка меньше, добавляем его
@@ -148,7 +148,7 @@ def merge(left_list, right_list):
 
 def mergeSort(nums):
     # Возвращаем список, если он состоит из одного элемента
-    if  len(nums) <= 1:
+    if len(nums) <= 1:
         return nums
 
     # Для того чтобы найти середину списка, используем деление без остатка
@@ -176,7 +176,7 @@ def partition(nums, low, high):
         while nums[i] < pivot:
             i += 1
 
-        j -=  1
+        j -= 1
         while nums[j] > pivot:
             j -= 1
 
@@ -211,7 +211,7 @@ def shellSort(array):
             temp = array[i]
             j = i
             while j >= interval and array[j - interval] > temp:
-                array[j] =  array[j - interval]
+                array[j] = array[j - interval]
                 j -= interval
             array[j] = temp
         k -= 1
