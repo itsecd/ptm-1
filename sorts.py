@@ -146,7 +146,7 @@ def merge(left_list, right_list):
     return sorted_list
 
 
-def mergeSort(nums):
+def merge_sort(nums):
     # Возвращаем список, если он состоит из одного элемента
     if len(nums) <= 1:
         return nums
@@ -156,8 +156,8 @@ def mergeSort(nums):
     mid = len(nums) // 2
 
     # Сортируем и объединяем подсписки
-    left_list = mergeSort(nums[:mid])
-    right_list = mergeSort(nums[mid:])
+    left_list = merge_sort(nums[:mid])
+    right_list = merge_sort(nums[mid:])
 
     # Объединяем отсортированные списки в результирующий
     return merge(left_list, right_list)

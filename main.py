@@ -2,14 +2,14 @@ from sorts import *
 import time
 
 
-def generateRandomArray(length, start, end):
-    arr = [random.randint(start, end) for _ in range(length)]
-    return arr
+def generate_random_array(length, start, end):
+    array = [random.randint(start, end) for _ in range(length)]
+    return array
 
 
 if __name__ == "__main__":
-    exit = 0
-    while exit == 0:
+    flag = 0
+    while flag == 0:
         start_time = 0
         end_time = 0
         arr = []
@@ -20,7 +20,7 @@ if __name__ == "__main__":
             start = int(input("Введите начальное значение: "))
             end = int(input("Введите конечное значение: "))
 
-            arr = generateRandomArray(length, start, end)
+            arr = generate_random_array(length, start, end)
             print("Сгенерированный массив:", arr)
         if choose == 2:
             arr = input("Введите элементы массива через пробел: ").split()
@@ -56,7 +56,7 @@ if __name__ == "__main__":
             end_time = time.time()
         elif choice == 5:
             start_time = time.time()
-            mergeSort(arr)
+            merge_sort(arr)
             end_time = time.time()
         elif choice == 6:
             start_time = time.time()
@@ -70,7 +70,7 @@ if __name__ == "__main__":
             shellSort(arr)
             end_time = time.time()
         elif choice == 8:
-            exit = 1
+            flag = 1
             continue
         else:
             print("Неверный выбор метода.")
@@ -82,4 +82,4 @@ if __name__ == "__main__":
 
         a = int(input("\nВы хотите выйти?\n1. Да \n2. Нет"))
         if a == 1:
-            exit = 1
+            flag = 1
