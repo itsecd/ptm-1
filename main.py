@@ -153,7 +153,7 @@ def uniq_list(information):
         list1.pop(tmp[i]-i)
 
     return list1
-#для суммирования вспомогаюзая
+# для суммирования вспомогаюзая
 
 
 def write_excel(information, number):
@@ -302,7 +302,7 @@ def write_excel(information, number):
         wb = Workbook()
         ws = wb.active
 
-        #Код, который выводит в первый столбец инфу с первого массива. Нужно сделать +- то же самое для остальных и все по сути.
+        # Код, который выводит в первый столбец инфу с первого массива. Нужно сделать +- то же самое для остальных и все по сути.
         for i in range(1, len(name_column)+1):
             ws.cell(row=1, column=i, value=name_column[i-1])
 
