@@ -97,7 +97,7 @@ def read_excel(filename: str):  # функция принимающая имя �
             column_students.append(sheet.cell(row=student_number, column=i).value)  # добавляем в список значений студента текущее значение студента
         tmp = dict(zip(column_names, column_students))
         for elem in tmp.values():
-                if str(elem)[:5] == 'солда' or str(elem)[:5] == 'рядов' :
+                if str(elem)[:5] == 'солда' or str(elem)[:5] == 'рядов':
                     if 'Код должности' in tmp.keys()  and 'ВУС' in tmp.keys() != '256':
                         tmp_vuc = tmp['Код должности']
                         tmp['Код должности'] = '256'
@@ -208,7 +208,7 @@ def write_excel(information, number):
         for j in range(len(information)):
             vuc = str(information[j].get('ВУС'))
             program_pdgotovki = str(information[j].get('Программа военной подготовки'))
-            if  program_pdgotovki[:2] == 'оф' or vuc == '461000' or vuc == '461100' or vuc == '461200' or vuc == '461300'  :
+            if  program_pdgotovki[:2] == 'оф' or vuc == '461000' or vuc == '461100' or vuc == '461200' or vuc == '461300':
 
                             for i in range(1, len(name_column)+1):
                                 tmp = ''
@@ -273,7 +273,7 @@ def write_excel(information, number):
         for j in range(len(information)):
             vuc = str(information[j].get('ВУС'))
             program_pdgotovki = str(information[j].get('Программа военной подготовки'))
-            if  program_pdgotovki[:2] == 'со' or program_pdgotovki[:2] == 'ря' or vuc == '220' or vuc == '233' or vuc == '250' or vuc == '262'  :
+            if  program_pdgotovki[:2] == 'со' or program_pdgotovki[:2] == 'ря' or vuc == '220' or vuc == '233' or vuc == '250' or vuc == '262':
                     for i in range(1, len(name_column)+1):
                         tmp = ''
                         if  name_column[i-1] in information[j].keys():
@@ -360,5 +360,5 @@ if __name__ == "__main__":
                 elif tmp == '2':
                     write_excel(information_list[0], 4)
                     input('Успешно,  создали "Все данные.xlsx"  в папке "Итоговые таблицы"')
-                else :
+                else:
                     input('Нет такого варианта..')
