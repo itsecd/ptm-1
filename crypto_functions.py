@@ -1,6 +1,7 @@
+import os
+
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import algorithms, Cipher, modes
-import os
 
 
 def encrypt(text_bytes: bytes, key_bytes: bytes) -> bytes:
