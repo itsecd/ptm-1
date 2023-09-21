@@ -211,11 +211,11 @@ def write_excel(information, number):
         for j in range(len(information)):
             vuc = str(information[j].get('ВУС'))
             program_pdgotovki = str(information[j].get('Программа военной подготовки'))
-            if  program_pdgotovki[:2] == 'оф' or vuc == '461000' or vuc == '461100' or vuc == '461200' or vuc == '461300':
+            if program_pdgotovki[:2] == 'оф' or vuc == '461000' or vuc == '461100' or vuc == '461200' or vuc == '461300':
 
                 for i in range(1, len(name_column)+1):
                     tmp = ''
-                    if  name_column[i-1] in information[j].keys():
+                    if name_column[i-1] in information[j].keys():
                         tmp = information[j][name_column[i-1]]
                     sheet.cell(row=id+5, column=i, value=tmp)
                 id += 1
@@ -276,10 +276,10 @@ def write_excel(information, number):
         for j in range(len(information)):
             vuc = str(information[j].get('ВУС'))
             program_pdgotovki = str(information[j].get('Программа военной подготовки'))
-            if  program_pdgotovki[:2] == 'со' or program_pdgotovki[:2] == 'ря' or vuc == '220' or vuc == '233' or vuc == '250' or vuc == '262':
+            if program_pdgotovki[:2] == 'со' or program_pdgotovki[:2] == 'ря' or vuc == '220' or vuc == '233' or vuc == '250' or vuc == '262':
                 for i in range(1, len(name_column)+1):
                     tmp = ''
-                    if  name_column[i-1] in information[j].keys():
+                    if name_column[i-1] in information[j].keys():
                         tmp = information[j][name_column[i-1]]
                     sheet.cell(row=id+5, column=i, value=tmp)
                 id += 1
@@ -309,7 +309,7 @@ def write_excel(information, number):
         for j in range(len(information)):
             for i in range(1, len(name_column)+1):
                 tmp = ''
-                if  name_column[i-1] in information[j].keys():
+                if name_column[i-1] in information[j].keys():
                     tmp = information[j][name_column[i-1]]
                 ws.cell(row=j+2, column=i, value=tmp)
 
@@ -320,7 +320,7 @@ if __name__ == "__main__":
     excel_name = []
     for elem in all_files:
         filename, file_extension = path.splitext(elem)
-        if  file_extension == '.xlsx':
+        if file_extension == '.xlsx':
             excel_name.append(elem)
 
     print("Программа увидела следующие таблицы:")
