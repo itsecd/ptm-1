@@ -91,7 +91,6 @@ def read_excel(filename: str):  # функция принимающая имя �
     for i in range(1, sheet.max_column + 1):
         column_names.append(sheet.cell(row=1, column=i).value)
 
-
     for student_number in trange(2, sheet.max_row + 1):  # бежим по каждой строчке
         column_students = []  # список значений студента в этих столбцах
         for i in range(1, sheet.max_column + 1):  # бежим по каждому столбцу
@@ -300,7 +299,6 @@ def write_excel(information, number):
         name_column.insert(1, 'Имя')
         name_column.insert(2, 'Отчество')
 
-
         wb = Workbook()
         ws = wb.active
 
@@ -326,7 +324,6 @@ if __name__ == "__main__":
             if  file_extension == '.xlsx':
                 excel_name.append(elem)
 
-
         print("Программа увидела следующие таблицы:")
         for elem in excel_name:
             print(elem)
@@ -339,7 +336,6 @@ if __name__ == "__main__":
             print("\n" * 100)
             print('Данные успешно собраны')
             print('Совмещаем данные')
-
 
             if len(information_list) == 1:
                 tmp = uniq_list(information_list[0])
