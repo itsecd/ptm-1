@@ -132,7 +132,7 @@ def sum(list1, list2):  # функция сложения двух списко�
 def uniq_list(information):
     list1 = []
     for elem in information:
-        tmp = {key: val for key, val in elem.items() if val != None and val != ''}
+        tmp = {key: val for key, val in elem.items() if val and val != ''}
         if (len(tmp)) != 0:
             list1.append(tmp)  # удаляем значения у словарей где None
     tmp = []  # для индексов дубликатов
