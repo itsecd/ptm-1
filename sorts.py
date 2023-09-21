@@ -202,7 +202,7 @@ def quick_sort(nums):
 
 
 # шелла
-def shellSort(array):
+def shell_sort(array):
     n = len(array)
     k = int(math.log2(n))
     interval = 2 ** k - 1

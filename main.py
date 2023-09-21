@@ -67,7 +67,7 @@ if __name__ == "__main__":
             end_time = time.time()
         elif choice == 7:
             start_time = time.time()
-            shellSort(arr)
+            shell_sort(arr)
             end_time = time.time()
         elif choice == 8:
             flag = 1
