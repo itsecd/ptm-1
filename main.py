@@ -315,6 +315,7 @@ def write_excel(information, number):
 
         wb.save("Итоговые таблицы/Все данные.xlsx")
 
+
 if __name__ == "__main__":
     all_files = listdir(getcwd()+'/Таблицы откуда берём информацию')
     excel_name = []
