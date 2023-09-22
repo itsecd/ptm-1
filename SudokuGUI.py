@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 from sudokutools import valid, solve, find_empty, generate_board
 from copy import deepcopy
 from sys import exit
@@ -13,16 +11,14 @@ pygame.init()
 class Board:
     def __init__(self, window):
         """
-        Initializes a Board object.
-
-        Args:
-            window: The Pygame window object.
+        Инициализирует объект Board.
+        :param window: Объект окна Pygame.
         """
-        # Generate a new Sudoku board and create a solved version of it.
+        # Создайте новую доску судоку и создайте ее решенную версию.
         self.board = generate_board()
         self.solvedBoard = deepcopy(self.board)
         solve(self.solvedBoard)
-        # Create a 2D list of Tile objects to represent the Sudoku board.
+        # Создайте двумерный список объектов Tile, представляющих доску судоку.
         self.tiles = [
             [Tile(self.board[i][j], window, i * 60, j * 60) for j in range(9)]
             for i in range(9)
@@ -31,11 +27,11 @@ class Board:
 
     def draw_board(self):
         """
-        Draws the Sudoku board on the Pygame window.
+        Рисует доску судоку в окне Pygame.
         """
         for i in range(9):
             for j in range(9):
-                # Draw vertical lines every three columns.
+                # Нарисовать вертикальные линии через каждые три столбца.
                 if j % 3 == 0 and j != 0:
                     pygame.draw.line(
                         self.window,
@@ -44,7 +40,7 @@ class Board:
                         (j // 3 * 180, 540),
                         4,
                     )
-                # Draw horizontal lines every three rows.
+                # Нарисовать горизонтальные линии через каждые три ряда.
                 if i % 3 == 0 and i != 0:
                     pygame.draw.line(
                         self.window,
@@ -53,15 +49,15 @@ class Board:
                         (540, i // 3 * 180),
                         4,
                     )
-                # Draw the Tile object on the board.
+                # Нарисовать объект Tile на доске.
                 self.tiles[i][j].draw((0, 0, 0), 1)
 
-                # Display the Tile value if it is not 0 (empty).
+                # Отобразите значение плитки, если оно не равно 0 (пусто).
                 if self.tiles[i][j].value != 0:
                     self.tiles[i][j].display(
                         self.tiles[i][j].value, (21 + j * 60, 16 + i * 60), (0, 0, 0)
                     )
-        # Draw a horizontal line at the bottom of the board.
+        # Нарисовать горизонтальную линию внизу доски.
         pygame.draw.line(
             self.window,
             (0, 0, 0),
@@ -72,13 +68,9 @@ class Board:
 
     def deselect(self, tile):
         """
-        Deselects all tiles except the given tile.
-
-        Args:
-            tile (Tile): The tile that should remain selected.
-
-        Returns:
-            None
+        Отменяет выбор всех плиток, кроме данной плитки.
+        :param tile: Плитка, которая должна оставаться выделенной.
+        :return: None
         """
         for i in range(9):
             for j in range(9):
@@ -87,34 +79,33 @@ class Board:
 
     def redraw(self, keys, wrong, time):
         """
-        Redraws the Sudoku board on the game window, highlighting selected, correct, and incorrect tiles, displaying the
-        current wrong count and time, and rendering the current keys (potential values) for each tile.
-
-        Args:
-            keys (dict): A dictionary containing tuples of (x, y) coordinates as keys and potential values as values.
-            wrong (int): The current wrong count.
-            time (int): The current time elapsed.
-
-        Returns:
-            None
+        Перерисовывает доску судоку в окне игры, выделяя выбранные,
+        правильные и неправильные плитки,отображая текущий неправильный счетчик и время,
+        а также отображая текущие ключи для каждой плитки.
+        :param keys: Словарь, содержащий (x, y) в качестве ключей и потенциальные значения
+        :param wrong: Текущий неправильный подсчет.
+        :param time: Текущее время истекло.
+        :return: None
         """
-        self.window.fill((255, 255, 255))  # fill the window with white
-        self.draw_board()  # draw the Sudoku board
+        # залейте окно белым цветом
+        self.window.fill((255, 255, 255))
+        # нарисовать доску судоку
+        self.draw_board()
         for i in range(9):
             for j in range(9):
                 if self.tiles[j][i].selected:
-                    # highlight selected tiles in green
+                    # выделить выбранные плитки зеленым цветом
                     self.tiles[j][i].draw((50, 205, 50), 4)
                 elif self.tiles[i][j].correct:
-                    # highlight correct tiles in dark green
+                    # выделите правильные плитки темно-зеленым цветом
                     self.tiles[j][i].draw((34, 139, 34), 4)
                 elif self.tiles[i][j].incorrect:
-                    # highlight incorrect tiles in red
+                    # выделите неправильные плитки красным цветом
                     self.tiles[j][i].draw((255, 0, 0), 4)
 
         if len(keys) != 0:
             for value in keys:
-                # display the potential values for each tile
+                # отображать потенциальные значения для каждой плитки
                 self.tiles[value[0]][value[1]].display(
                     keys[value],
                     (21 + value[0] * 60, 16 + value[1] * 60),
@@ -122,7 +113,7 @@ class Board:
                 )
 
         if wrong > 0:
-            # display the current wrong count as an "X" icon and a number
+            # отображать текущий неправильный счетчик в виде значка «X» и числа
             font = pygame.font.SysFont("Bauhaus 93", 30)
             text = font.render("X", True, (255, 0, 0))
             self.window.blit(text, (10, 554))
@@ -131,7 +122,7 @@ class Board:
             text = font.render(str(wrong), True, (0, 0, 0))
             self.window.blit(text, (32, 542))
 
-        # display the current time elapsed as a number
+        # отображать текущее прошедшее время в виде числа
         font = pygame.font.SysFont("Bahnschrift", 40)
         text = font.render(str(time), True, (0, 0, 0))
         self.window.blit(text, (388, 542))
@@ -139,56 +130,51 @@ class Board:
 
     def visualSolve(self, wrong, time):
         """
-        Recursively solves the Sudoku board visually, highlighting correct and incorrect tiles as it fills them in.
-
-        Args:
-            wrong (int): The current wrong count.
-            time (int): The current time elapsed.
-
-        Returns:
-            bool: True if the board is successfully solved, False otherwise.
+        Рекурсивно решает доску судоку визуально, выделяя правильные
+        и неправильные плитки по мере их заполнения.
+        :param wrong: Текущий неправильный подсчет.
+        :param time: Текущее время истекло.
+        :return: True, если доска успешно решена, в противном случае False.
         """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                exit()  # exit the game if the user clicks the close button
+                exit()
 
         empty = find_empty(self.board)
         if not empty:
-            return True  # the board is solved if there are no empty tiles left
+            return True
 
         for nums in range(9):
             if valid(self.board, (empty[0], empty[1]), nums + 1):
-                # fill in the current empty tile with a valid number
+                # заполните текущую пустую плитку действительным числом
                 self.board[empty[0]][empty[1]] = nums + 1
                 self.tiles[empty[0]][empty[1]].value = nums + 1
                 self.tiles[empty[0]][empty[1]].correct = True
-                pygame.time.delay(63)  # delay to slow down the solving animation
+                # задержка, чтобы замедлить анимацию решения
+                pygame.time.delay(63)
+                # перерисовать окно игры с обновленным полем
                 self.redraw(
                     {}, wrong, time
-                )  # redraw the game window with the updated board
+                )
 
                 if self.visualSolve(wrong, time):
-                    return True  # recursively solve the rest of the board if the current move is valid
+                    return True
 
-                # if the current move is not valid, reset the tile and highlight it as incorrect
+
                 self.board[empty[0]][empty[1]] = 0
                 self.tiles[empty[0]][empty[1]].value = 0
                 self.tiles[empty[0]][empty[1]].incorrect = True
                 self.tiles[empty[0]][empty[1]].correct = False
-                pygame.time.delay(63)  # delay to slow down the solving animation
+                pygame.time.delay(63)
                 self.redraw(
                     {}, wrong, time
-                )  # redraw the game window with the updated board
+                )
 
     def hint(self, keys):
         """
-        Provides a hint by filling in a random empty tile with the correct number.
-
-        Args:
-            keys (dict): A dictionary containing tuples of (x, y) coordinates as keys and potential values as values.
-
-        Returns:
-            bool: True if a hint is successfully provided, False if the board is already solved.
+        Предоставляет подсказку, заполняя случайную пустую плитку правильным номером.
+        :param keys: Словарь, содержащий (x, y) в качестве ключей и потенциальных значений
+        :return: True, если подсказка успешно предоставлена, False, если доска уже решена.
         """
         while True:
             i = random.randint(0, 8)
@@ -196,13 +182,13 @@ class Board:
             if self.board[i][j] == 0:
                 if (j, i) in keys:
                     del keys[(j, i)]
-                # fill in the selected empty tile with the correct number
+                # заполните выбранную пустую плитку правильным номером
                 self.board[i][j] = self.solvedBoard[i][j]
                 self.tiles[i][j].value = self.solvedBoard[i][j]
                 return True
+            # доска уже решена, поэтому подсказок дать невозможно.
             elif self.board == self.solvedBoard:
-                return False  # the board is already solved, so no hint can be provided.
-
+                return False
 
 class Tile:
     def __init__(
@@ -213,21 +199,11 @@ class Tile:
         y1,
     ):
         """
-        Initializes a Tile object.
-
-        Args:
-            value (int): The value to be displayed in the Tile.
-            window (pygame.Surface): The surface to draw the Tile on.
-            x1 (int): The x-coordinate of the top-left corner of the Tile.
-            y1 (int): The y-coordinate of the top-left corner of the Tile.
-
-        Attributes:
-            value (int): The value to be displayed in the Tile.
-            window (pygame.Surface): The surface to draw the Tile on.
-            rect (pygame.Rect): The rectangular area of the Tile.
-            selected (bool): Whether the Tile is currently selected.
-            correct (bool): Whether the value in the Tile is correct.
-            incorrect (bool): Whether the value in the Tile is incorrect.
+        Инициализирует объект Tile.
+        :param value: Значение, которое будет отображаться на плитке.
+        :param window: Поверхность, на которой будет нарисована плитка.
+        :param x1: Координата X верхнего левого угла плитки.
+        :param y1: Координата Y верхнего левого угла плитки.
         """
 
         self.value = value
@@ -239,14 +215,10 @@ class Tile:
 
     def draw(self, color, thickness):
         """
-        Draws the Tile on the window with a colored border.
-
-        Args:
-            color (tuple[int, int, int]): The RGB color value of the border.
-            thickness (int): The thickness of the border.
-
-        Returns:
-            None.
+        Рисовать плитку в окне с цветной рамкой.
+        :param color: Значение цвета RGB границы.
+        :param thickness: Толщина границы.
+        :return: None
         """
 
         pygame.draw.rect(self.window, color, self.rect, thickness)
@@ -258,15 +230,11 @@ class Tile:
         color,
     ):
         """
-        Displays the value of the Tile in the center of the Tile.
-
-        Args:
-            value (int): The value to be displayed.
-            position (tuple[int, int]): The (x, y) coordinates of the center of the Tile.
-            color (tuple[int, int, int]): The RGB color value of the text.
-
-        Returns:
-            None.
+        Отображает значение плитки в центре плитки.
+        :param value: Значение, которое будет отображаться.
+        :param position: The (x, y) coordinates of the center of the Tile.
+        :param color: The RGB color value of the text.
+        :return: None.
         """
 
         font = pygame.font.SysFont("lato", 45)
@@ -275,13 +243,9 @@ class Tile:
 
     def clicked(self, mousePos):
         """
-        Checks if the Tile is clicked by the mouse.
-
-        Args:
-            mousePos (tuple[int, int]): The (x, y) coordinates of the mouse.
-
-        Returns:
-            bool: True if the Tile is clicked, False otherwise.
+        Проверяет, щелкнута ли мышью по плитке.
+        :param mousePos: Координаты (x, y) мыши.
+        :return: True, если щелкнуть плитку, в противном случае — False.
         """
 
         if self.rect.collidepoint(mousePos):
@@ -290,14 +254,14 @@ class Tile:
 
 
 def main():
-    # Set up the pygame window
+    # Настройте окно pygame
     screen = pygame.display.set_mode((540, 590))
     screen.fill((255, 255, 255))
     pygame.display.set_caption("Sudoku Solver")
     icon = pygame.image.load("assets/thumbnail.png")
     pygame.display.set_icon(icon)
 
-    # Display "Generating Random Grid" text while generating a random grid
+    # Отображение текста «Генерация случайной сетки» при создании случайной сетки.
     font = pygame.font.SysFont("Bahnschrift", 40)
     text = font.render("Generating", True, (0, 0, 0))
     screen.blit(text, (175, 245))
@@ -307,7 +271,7 @@ def main():
     screen.blit(text, (156, 290))
     pygame.display.flip()
 
-    # Initialize variables
+    # Инициализировать переменные
     wrong = 0
     board = Board(screen)
     selected = (-1, -1)
@@ -315,24 +279,24 @@ def main():
     solved = False
     startTime = time.time()
 
-    # Loop until the sudoku is solved
+    # Цикл, пока судоку не будет решена
     while not solved:
-        # Get elapsed time and format it to display in the window
+        # Получите прошедшее время и отформатируйте его для отображения в окне.
         elapsed = time.time() - startTime
         passedTime = time.strftime("%H:%M:%S", time.gmtime(elapsed))
 
-        # Check if the sudoku is solved
+        # Проверьте, решена ли судоку
         if board.board == board.solvedBoard:
             solved = True
 
-        # Handle events
+        # Обработка событий
         for event in pygame.event.get():
             elapsed = time.time() - startTime
             passedTime = time.strftime("%H:%M:%S", time.gmtime(elapsed))
             if event.type == pygame.QUIT:
                 exit()
             elif event.type == pygame.MOUSEBUTTONUP:
-                # Check if a Tile is clicked
+                # Проверьте, нажата ли плитка
                 mousePos = pygame.mouse.get_pos()
                 for i in range(9):
                     for j in range(9):
@@ -340,7 +304,7 @@ def main():
                             selected = (i, j)
                             board.deselect(board.tiles[i][j])
             elif event.type == pygame.KEYDOWN:
-                # Handle key presses
+                # Обрабатывать нажатия клавиш
                 if board.board[selected[1]][selected[0]] == 0 and selected != (-1, -1):
                     if event.key == pygame.K_1:
                         keyDict[selected] = 1
@@ -383,7 +347,7 @@ def main():
                                 wrong += 1
                                 board.tiles[selected[1]][selected[0]].value = 0
                                 del keyDict[selected]
-                                # break
+
 
                             board.tiles[selected[1]][selected[0]].value = keyDict[
                                 selected
@@ -391,19 +355,19 @@ def main():
                             board.board[selected[1]][selected[0]] = keyDict[selected]
                             del keyDict[selected]
 
-                # Handle hint key
+                # Обработка клавиши подсказки
                 if event.key == pygame.K_h:
                     board.hint(keyDict)
 
-                # Handle space key
+                # Обработка клавиши пробела
                 if event.key == pygame.K_SPACE:
-                    # Deselect all tiles and clear keyDict
+                    # Отмените выбор всех плиток и очистите keyDict.
                     for i in range(9):
                         for j in range(9):
                             board.tiles[i][j].selected = False
                     keyDict = {}
 
-                    # Solve the sudoku visually and reset all tile correctness
+                    # Решите судоку визуально и восстановите правильность всех плиток.
                     elapsed = time.time() - startTime
                     passedTime = time.strftime("%H:%M:%S", time.gmtime(elapsed))
                     board.visualSolve(wrong, passedTime)
@@ -412,7 +376,6 @@ def main():
                             board.tiles[i][j].correct = False
                             board.tiles[i][j].incorrect = False
 
-                    # Set solved to True after solving the sudoku:
                     solved = True
 
         board.redraw(keyDict, wrong, passedTime)

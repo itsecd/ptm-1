@@ -1,18 +1,11 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
 from random import randint, shuffle
 
 
 def print_board(board):
     """
-    Prints the sudoku board.
-
-    Args:
-        board (list[list[int]]): A 9x9 sudoku board represented as a list of lists of integers.
-
-    Returns:
-        None.
+    Распечать доску судоку.
+    :param board: Доска судоку 9x9, представленная в виде списка целых чисел.
+    :return: None.
     """
 
     boardString = ""
@@ -32,13 +25,10 @@ def print_board(board):
 
 def find_empty(board):
     """
-    Finds an empty cell in the sudoku board.
-
-    Args:
-        board (list[list[int]]): A 9x9 sudoku board represented as a list of lists of integers.
-
-    Returns:
-        tuple[int, int]|None: The position of the first empty cell found as a tuple of row and column indices, or None if no empty cell is found.
+    Найти пустую ячейку на доске судоку.
+    :param board: Доска судоку 9x9, представленная в виде списка целых чисел.
+    :return: (tuple[int, int]|None) Позиция первой пустой ячейки, найденной как
+            кортеж индексов строк и столбцов, или «None», если пустая ячейка не найдена.
     """
 
     for i in range(9):
@@ -50,15 +40,11 @@ def find_empty(board):
 
 def valid(board, pos, num):
     """
-    Checks whether a number is valid in a cell of the sudoku board.
-
-    Args:
-        board (list[list[int]]): A 9x9 sudoku board represented as a list of lists of integers.
-        pos (tuple[int, int]): The position of the cell to check as a tuple of row and column indices.
-        num (int): The number to check.
-
-    Returns:
-        bool: True if the number is valid in the cell, False otherwise.
+    Проверяет, допустимо ли число в ячейке доски судоку.
+    :param board: Доска судоку 9x9, представленная в виде списка целых чисел.
+    :param pos: Положение ячейки, которую нужно проверить как кортеж индексов строк и столбцов.
+    :param num: Номер для проверки.
+    :return: True, если число допустимо в ячейке, в противном случае — False.
     """
 
     for i in range(9):
@@ -80,13 +66,9 @@ def valid(board, pos, num):
 
 def solve(board):
     """
-    Solves the sudoku board using the backtracking algorithm.
-
-    Args:
-        board (list[list[int]]): A 9x9 sudoku board represented as a list of lists of integers.
-
-    Returns:
-        bool: True if the sudoku board is solvable, False otherwise.
+    Решает доску судоку, используя алгоритм возврата.
+    :param board: Доска судоку 9x9, представленная в виде списка целых чисел.
+    :return: True - если доска судоку разрешима, в противном случае - False.
     """
 
     empty = find_empty(board)
@@ -96,24 +78,23 @@ def solve(board):
     for nums in range(1, 10):
         if valid(board, empty, nums):
             board[empty[0]][empty[1]] = nums
-
-            if solve(board):  # recursive step
+            # рекурсивный шаг
+            if solve(board):
                 return True
-            board[empty[0]][empty[1]] = 0  # this number is wrong so we set it back to 0
+            # это число неверно, поэтому мы устанавливаем его обратно на 0
+            board[empty[0]][empty[1]] = 0
     return False
 
 
 def generate_board():
     """
-    Generates a random sudoku board with fewer initial numbers.
-
-    Returns:
-        list[list[int]]: A 9x9 sudoku board represented as a list of lists of integers.
+    Генерирует случайную доску судоку с меньшим количеством начальных чисел.
+    :return: (list[list[int]]) Доска судоку 9x9, представленная в виде списка целых чисел.
     """
 
     board = [[0 for i in range(9)] for j in range(9)]
 
-    # Fill the diagonal boxes
+    # заполнить диагональные поля
     for i in range(0, 9, 3):
         nums = list(range(1, 10))
         shuffle(nums)
@@ -121,18 +102,14 @@ def generate_board():
             for col in range(3):
                 board[i + row][i + col] = nums.pop()
 
-    # Fill the remaining cells with backtracking
+    # заполните оставшиеся ячейки возвратом
     def fill_cells(board, row, col):
         """
-        Fills the remaining cells of the sudoku board with backtracking.
-
-        Args:
-            board (list[list[int]]): A 9x9 sudoku board represented as a list of lists of integers.
-            row (int): The current row index to fill.
-            col (int): The current column index to fill.
-
-        Returns:
-            bool: True if the remaining cells are successfully filled, False otherwise.
+        Заполняет оставшиеся ячейки доски судоку с возвратом.
+        :param board: Доска судоку 9x9, представленная в виде списка целых чисел.
+        :param row: Индекс текущей строки для заполнения.
+        :param col: Индекс текущего столбца для заполнения.
+        :return: True - если оставшиеся ячейки успешно заполнены, в противном случае — False.
         """
 
         if row == 9:
@@ -155,7 +132,7 @@ def generate_board():
 
     fill_cells(board, 0, 0)
 
-    # Remove a greater number of cells to create a puzzle with fewer initial numbers
+    # Удалите большее количество ячеек, чтобы создать головоломку с меньшим количеством начальных чисел.
     for _ in range(randint(55, 65)):
         row, col = randint(0, 8), randint(0, 8)
         board[row][col] = 0
