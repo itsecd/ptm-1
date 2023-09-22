@@ -20,13 +20,14 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from torch.utils.data import DataLoader, Dataset
 SETTINGS = {
-        'initial_file': 'file\initial_file.txt',
-        'encrypted_file': 'file\encrypted_file.txt',
-        'decrypted_file': 'file\decrypted_file.txt',
-        'symmetric_key': 'key\symmetric_key.txt',
-        'public_key': 'key\public\key.pem',
-        'secret_key': 'key\secret\key.pem'
-    }
+    'initial_file': 'file\initial_file.txt',
+    'encrypted_file': 'file\encrypted_file.txt',
+    'decrypted_file': 'file\decrypted_file.txt',
+    'symmetric_key': 'key\symmetric_key.txt',
+    'public_key': 'key\public\key.pem',
+    'secret_key': 'key\secret\key.pem'
+}
+
 
 def GenerateKeyPair(private_key_path: str,  public_key_path: str, symmetric_key_path: str) -> None:
     """Эта функция генерирует пару ключей(ассиметричный и симметричный) гибридной системы, а после сохраняет их в файлы.
@@ -276,11 +277,11 @@ def main():
             logging.info('The keys have been created\n')
         elif answ.lower() == 'E':
             EncryptData(settings['initial_file'], settings['secret_key'],
-                         settings['symmetric_key'], settings['encrypted_file'])
+                        settings['symmetric_key'], settings['encrypted_file'])
             logging.info('Data is encrypted\n')
         elif answ.lower() == 'D':
             DecryptData(settings['encrypted_file'], settings['secret_key'],
-                         settings['symmetric_key'], settings['decrypted_file'])
+                        settings['symmetric_key'], settings['decrypted_file'])
             logging.info('Data Decryped\n')
         else:
             logging.info('Program completed\n')
