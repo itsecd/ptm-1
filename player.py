@@ -97,7 +97,7 @@ def log(string):
     try:
         if debug:
             print ("[Debug]: " + string)
-    log_file.write("[Logger]: ")
+        log_file.write("[Logger]: ")
         log_file.write(string)
         log_file.write("\n")
     except:
@@ -378,10 +378,10 @@ try:
         while i < len(sys.argv):
             arg = sys.argv[i]
             if arg == "--console" or arg == "-c":
-		console = True
-	    elif arg == "--verbose" or arg == "-v":
-		debug = True
-	    elif arg == "-f" or arg == "--file":
+                console = True
+            elif arg == "--verbose" or arg == "-v":
+                debug = True
+            elif arg == "-f" or arg == "--file":
                 pygame.init()
                 try:
                     pygame.mixer.music.load(sys.argv[i+1])
@@ -394,16 +394,16 @@ try:
                     LogErr()
                     print ("There was an error playing the file")
                     kill = True
-	    elif arg == "-h" or arg == "--help":
-		print ('Plays music in the "Music" folder within the current directory\n')
-		print ("Usage: " + sys.argv[0] + " [-hvc] [-f <filepath>]")
-		print ("Options: ")
-		print ("\t -h, --help\t Displays this help text")
-		print ("\t -v, --verbose\t Displays extra information")
-		print ("\t -c, --console\t Disables Pygame screen (text-only mode)")
-		print ("\t -f, --file\t Plays the file at the filepath specified")
-		print ("\nExamples: \n\t " + sys.argv[0] + " -v -c -f /sample/file/path/foo.bar")
-		print ("\t " + sys.argv[0] + " -f foo.bar")
+            elif arg == "-h" or arg == "--help":
+                print ('Plays music in the "Music" folder within the current directory\n')
+                print ("Usage: " + sys.argv[0] + " [-hvc] [-f <filepath>]")
+                print ("Options: ")
+                print ("\t -h, --help\t Displays this help text")
+                print ("\t -v, --verbose\t Displays extra information")
+                print ("\t -c, --console\t Disables Pygame screen (text-only mode)")
+                print ("\t -f, --file\t Plays the file at the filepath specified")
+                print ("\nExamples: \n\t " + sys.argv[0] + " -v -c -f /sample/file/path/foo.bar")
+                print ("\t " + sys.argv[0] + " -f foo.bar")
                 kill = True
             i = i + 1
 except:
