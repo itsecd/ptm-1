@@ -66,8 +66,7 @@ def EncryptData(initial_file_path: str, private_key_path: str, encrypted_symmetr
     symmetric_key = private_key.decrypt(encrypted_symmetric_key, padding.OAEP(
         mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
     iv = os.urandom(16)
-    cipher = Cipher(algorithms.SM4(symmetric_key), modes.CBC(
-        iv))
+    cipher = Cipher(algorithms.SM4(symmetric_key), modes.CBC(iv))
     encryptor = cipher.encryptor()
     padder = sym_padding.PKCS7(128).padder()
     with open(initial_file_path, "rb") as f_in, open(encrypted_file_path, "wb") as f_out:
@@ -98,8 +97,7 @@ def DecryptData(encrypted_file_path: str, private_key_path: str, encrypted_symme
         mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
     with open(encrypted_file_path, "rb") as f_in, open(decrypted_file_path, "wb") as f_out:
         iv = f_in.read(16)
-        cipher = Cipher(algorithms.SM4(symmetric_key),
-                        modes.CBC(iv))
+        cipher = Cipher(algorithms.SM4(symmetric_key), modes.CBC(iv))
         decryptor = cipher.decryptor()
         unpadder = sym_padding.PKCS7(128).unpadder()
         with open(decrypted_file_path, "wb") as f_out:
