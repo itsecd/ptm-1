@@ -269,10 +269,10 @@ def control():
         elif option == '':
             option = ''
         elif option == 'debug':
-            if debug == True:
+            if debug:
                 print ("Debug mode disabled")
                 debug = False
-            elif debug == False:
+            elif not debug:
                 print ("Debug mode enabled")
                 debug = True
         elif option == 'news':
@@ -298,10 +298,10 @@ def control2():
                 if (event.key == pygame.K_SPACE or 
                     event.key == pygame.K_F11):
                     bcast("Pause")
-                    if pause == True:
+                    if pause:
                         pygame.mixer.music.play()
                         pause = False
-                    elif pause == False:
+                    elif not pause:
                         pygame.mixer.music.pause()
                         pause = True
                 if event.key == pygame.K_u:
@@ -509,7 +509,7 @@ news()
 
 
 try:
-    if console == False:
+    if not console:
         screen = pygame.display.set_mode((1000, 200))
         pygame.display.set_caption("Music Player")
         background = pygame.Surface(screen.get_size())
@@ -563,7 +563,7 @@ try:
             pygame.mixer.music.play()
 # Take user input for controlling player
             while pygame.mixer.music.get_busy():
-                if console == False:
+                if not console:
                     #font = pygame.font.Font(None, 36)
                     #out = font.render(text, 1, (10, 10, 10))
                     #textpos = out.get_rect()
@@ -576,7 +576,7 @@ try:
                     t.daemon = False
                     t.start()
 
-            if not current in played:
+            if current not in played:
                 played.append(current)
                 i = i + 1
             sleep(0.2)
