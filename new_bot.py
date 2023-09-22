@@ -422,11 +422,11 @@ def send_pdf(message) -> None:
         bot.register_next_step_handler(received_message, change_option)
 
 
-# RUN BOT
-while True:
-    try:
-        print("Eddie Start!")
-        bot.polling(none_stop=True)
-    except:
-        print("Some problem, restart")
-        time.sleep(15)
+if __name__ == "__main__":
+    while True:
+        try:
+            print("Eddie Start!")
+            bot.polling(none_stop=True)
+        except:
+            print("Some problem, restart")
+            time.sleep(15)
