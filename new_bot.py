@@ -12,7 +12,10 @@ bot = telebot.TeleBot(config.TOKEN)
 
 
 @bot.message_handler(commands=['start'])
-def welcome(message):
+def welcome(message) -> None:
+    '''
+    Функция приветствия с пользователем
+    '''
     list_info = []
     with open("data/info.txt", encoding='utf-8') as file:
         list_info = file.readlines()
@@ -26,7 +29,7 @@ def welcome(message):
     bot.send_sticker(message.chat.id, sti)
 
     bot.send_message(
-        message.chat.id, "Приветик, {0.first_name}!\nЯ бот Эдди, призванный помогать в учёбе\n".format(message.from_user))
+        message.chat.id, f"Приветик, {message.from_user.first_name}!\nЯ бот Эдди, призванный помогать в учёбе\n")
 
     bot.send_message(
         message.chat.id, list_info)
@@ -38,7 +41,10 @@ def welcome(message):
 
 
 @bot.message_handler(commands=['change'])
-def change_option(message):
+def change_option(message) -> None:
+    '''
+    Функция "выбора опции, где отрисовывается меню, а также проверется пользовался ли пользователь ботом"
+    '''
     write_in_file = True
     with open("users.csv", "r", encoding="utf-8") as file:
         readerder = csv.reader(file, delimiter=";")
@@ -75,7 +81,10 @@ def change_option(message):
 
 
 @bot.message_handler(content_types=['text'])
-def expanded_change(message):
+def expanded_change(message) -> None:
+    '''
+    Выбор дальнейших дествий в зависимости от того, что выбрал пользователь в функции change_option
+    '''
     if message.chat.type == 'private':
         if message.text == 'Узнать задание по лабе':
             sti1 = open('data/stickers/REALLY.webp', 'rb')
@@ -167,7 +176,10 @@ def expanded_change(message):
             error(message)
 
 
-def error(message):
+def error(message) -> None:
+    '''
+    Функция вывода информации о неверном вводе от пользователя, возвращает в начало
+    '''
     sti3 = open('data/stickers/IDK.webp', 'rb')
     bot.send_sticker(message.chat.id, sti3)
     markup = types.ReplyKeyboardRemove()
@@ -180,11 +192,17 @@ def error(message):
     bot.register_next_step_handler(received_message_text, welcome)
 
 
-def open_file(way_to_file):
+def open_file(way_to_file: str) -> bool:
+    '''
+    Проверка наличия файла
+    '''
     return os.path.exists(way_to_file)
 
 
-def important_links(message):
+def important_links(message) -> None:
+    '''
+    Вывод ссылок на сообщества
+    '''
     markup = types.ReplyKeyboardRemove()
     bot.send_message(message.chat.id, "ИИК Приём - https://vk.com/iik.ssau.priem\nСтуд. совет ИИК - https://vk.com/sciic\nРасписание ИИК - https://ssau.ru/rasp/faculty/492430598?course=1\nSSAU - https://ssau.ru\n", reply_markup=markup)
     print(
@@ -192,7 +210,10 @@ def important_links(message):
     change_option(message)
 
 
-def send_shedule(message):
+def send_shedule(message) -> None:
+    '''
+    Отправка расписания, при желании можно запросить вывод расписания сессии
+    '''
     if message.text == 'Вернуться в меню':
         change_option(message)
     else:
@@ -225,7 +246,10 @@ def send_shedule(message):
             error(message)
 
 
-def send_session_shedule(message):
+def send_session_shedule(message) -> None:
+    '''
+    Отправка расписания сессии
+    '''
     if message.text == "Вернуться в меню":
         os.remove(f"data/work_with_group_id/{message.chat.id}.txt")
         change_option(message)
@@ -248,7 +272,10 @@ def send_session_shedule(message):
                 message.chat.id, "Возникла ошибка, возможно расписания сессии ещё нет(")
 
 
-def send_news(message):
+def send_news(message) -> None:
+    '''
+    Отправка "новостей". Админ отправляет всем пользователям, кто сохранён в базе какую-либо информацию прописанную в файлу info.txt
+    '''
     with open('data/info.txt', 'r', encoding="utf-8") as file:
         news = file.read()
     with open('users.csv', 'r', encoding="utf-8") as file:
@@ -262,7 +289,10 @@ def send_news(message):
     change_option(message)
 
 
-def change_lab_task(message):
+def change_lab_task(message) -> None:
+    '''
+    Выбор задания лабораторной работы
+    '''
     list_items = []
     list_files = []
     if message.text == 'Вернуться в меню':
@@ -286,7 +316,10 @@ def change_lab_task(message):
             error(message)
 
 
-def change_book(message):
+def change_book(message) -> None:
+    '''
+    Выбор учебника
+    '''
     list_items = []
     list_files = []
     markup = types.ReplyKeyboardRemove()
@@ -312,7 +345,10 @@ def change_book(message):
             error(message)
 
 
-def change_secret(message):
+def change_secret(message) -> None:
+    '''
+    Выбор секкретного материала (доступно только для определённых пользователей)
+    '''
     list_items = []
     for doc in os.listdir("secret"):
         list_items.append(doc)
@@ -327,7 +363,10 @@ def change_secret(message):
     bot.register_next_step_handler(received_message, send_secret)
 
 
-def send_secret(message):
+def send_secret(message) -> None:
+    '''
+    Отправка секретног материала
+    '''
     if not message.text == 'Вернуться в меню':
         bot.send_message(message.chat.id, "Отправляю!")
         file = open(f"secret/{message.text}", "rb")
@@ -345,7 +384,10 @@ def send_secret(message):
         change_option(message)
 
 
-def send_pdf(message):
+def send_pdf(message) -> None:
+    '''
+    Отправка pdf-файлов пользователю
+    '''
     if message.text == 'Вернуться в меню':
         change_option(message)
     else:
@@ -380,7 +422,7 @@ def send_pdf(message):
         bot.register_next_step_handler(received_message, change_option)
 
 
-# RUN
+# RUN BOT
 while True:
     try:
         print("Eddie Start!")
