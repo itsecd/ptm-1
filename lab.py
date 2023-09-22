@@ -42,7 +42,6 @@ def GenerateKeyPair(private_key_path: str,  public_key_path: str, symmetric_key_
         f_c.write(private_key.private_bytes(encoding=serialization.Encoding.PEM,
                                             format=serialization.PrivateFormat.TraditionalOpenSSL,
                                             encryption_algorithm=serialization.NoEncryption()))
-
     symmetric_key = os.urandom(16)
     ciphertext = public_key.encrypt(symmetric_key, padding.OAEP(mgf=padding.MGF1(
         algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
@@ -126,12 +125,10 @@ class CustomImageDataset(Dataset):
         path_to_image = self.dataset_info.iloc[index, 0]
         image = cv2.cvtColor(cv2.imread(path_to_image), cv2.COLOR_BGR2RGB)
         label = self.dataset_info.iloc[index, 1]
-
         if self.transform:
             image = self.transform(image)
         if self.target_transform:
             label = self.target_Transform(label)
-
         return image, label
 
 
@@ -165,10 +162,8 @@ def main():
         "cuda:0") if torch.cuda.is_available() else torch.device("cpu")
     model = CNN().to(device)
     torch.cuda.is_available()
-    custom_transforms = torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
-                                                        torchvision.transforms.Resize(
-                                                            (224, 224)),
-                                                        torchvision.transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+    custom_transforms = torchvision.transforms.Compose([torchvision.transforms.ToTensor(), torchvision.transforms.Resize(
+        (224, 224)), torchvision.transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
     train_dataset = CustomImageDataset(
         'annotation_train.csv', custom_transforms)
     test_dataset = CustomImageDataset('annotation_test.csv', custom_transforms)
@@ -226,8 +221,8 @@ def main():
     plt.legend(["Acchukarevacy"])
     plt.figure(2, figsize=(15, 5))
     plt.title('Train loss')
-    plt.plot(range(len(accuracy_values)), [float(value.detach())
-             for value in loss_values], color="blue")
+    plt.plot(range(len(accuracy_values)), [
+             float(value.detach())for value in loss_values], color="blue")
     plt.legend(["Loss"])
     plt.figure(3, figsize=(15, 5))
     plt.title('valid accuracy')
@@ -236,8 +231,8 @@ def main():
     plt.legend(["Accuracy"])
     plt.figure(4, figsize=(15, 5))
     plt.title('valid loss')
-    plt.plot(range(len(accuracy_val_values)), [float(value.detach())
-             for value in loss_val_values], color="blue")
+    plt.plot(range(len(accuracy_val_values)), [
+             float(value.detach())for value in loss_val_values], color="blue")
     plt.legend(["Loss"])
     plt.show()
     model.eval()
@@ -253,8 +248,7 @@ def main():
         test_loss += float(loss.detach()) / len(test_dataloader)
     print('test_accuracy=', test_accuracy, ' ', 'test_loss=', test_loss)
     while True:
-        answ = input(
-            'Hello\nDo you have a set of instructions\n(Y)es\(N)o\n')
+        answ = input('Hello\nDo you have a set of instructions\n(Y)es\(N)o\n')
         if answ.lower() == 'Y':
             with open('settings.json') as json_file:
                 json_data = json.load(json_file)
