@@ -35,13 +35,10 @@ def GenerateKeyPair(private_key_path: str,  public_key_path: str, symmetric_key_
         public_exponent=65537, key_size=2048)
     public_key = private_key.public_key()
     with open(public_key_path, 'wb') as f_p, open(private_key_path, 'wb') as f_c:
-        f_p.write(public_key.public_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PublicFormat.SubjectPublicKeyInfo
-        ))
+        f_p.write(public_key.public_bytes(encoding=serialization.Encoding.PEM,
+                  format=serialization.PublicFormat.SubjectPublicKeyInfo))
         f_c.write(private_key.private_bytes(encoding=serialization.Encoding.PEM,
-                                            format=serialization.PrivateFormat.TraditionalOpenSSL,
-                                            encryption_algorithm=serialization.NoEncryption()))
+                  format=serialization.PrivateFormat.TraditionalOpenSSL, encryption_algorithm=serialization.NoEncryption()))
     symmetric_key = os.urandom(16)
     ciphertext = public_key.encrypt(symmetric_key, padding.OAEP(mgf=padding.MGF1(
         algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
