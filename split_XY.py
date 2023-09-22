@@ -25,7 +25,7 @@ def run_split_XY(path_to_csv: str=os.path.join("C:/", "PYTHON",
     :param path_to_csv: the path to the file folder.
     :return: None.
     """
-    path_fol, path_sc1 = "File_folder", "File_folder/scrnipt_1" 
+    path_fol, path_sc1 = "File_folder", "File_folder/dataset_XY" 
     check_file(path_fol, path_sc1) 
     list_tmp = [] 
     with open(path_to_csv + '/dataset.csv', 'r',
@@ -34,18 +34,18 @@ def run_split_XY(path_to_csv: str=os.path.join("C:/", "PYTHON",
         for row in file_reader: 
             list_tmp.append(row)
 
-    with open(path_to_csv + "/scrnipt_1/X.csv", 'w',
+    with open(path_to_csv + "/dataset_XY/X.csv", 'w',
                newline='', encoding='utf-8') as csvfile_x:
         for i in range(0, len(list_tmp)):
             all_data = [list_tmp[i][0]]
             writer = csv.writer(csvfile_x)
             writer.writerow(all_data)
 
-    with open(path_to_csv + "/scrnipt_1/Y.csv", 'w',
+    with open(path_to_csv + "/dataset_XY/Y.csv", 'w',
                newline='', encoding='utf-8') as csvfile_y:
         for i in range(0, len(list_tmp)):
             all_data = list_tmp[i][1:]
             writer = csv.writer(csvfile_y)
             writer.writerow(all_data)
 
-    print("\nscript_1 has finished working\n")
+    print("\nsplit_XY.py has finished working\n")

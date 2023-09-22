@@ -49,7 +49,7 @@ def search_dataset(date: datetime.date,  path_to_csv: str) -> None:
             return None
 
 
-def search_scrnipt_1(date: datetime.date,  path_to_csv: str) -> None:
+def search_dataset_XY(date: datetime.date,  path_to_csv: str) -> None:
     """
     the function accepts data, searches for it in 
     the file of the corresponding script
@@ -58,7 +58,7 @@ def search_scrnipt_1(date: datetime.date,  path_to_csv: str) -> None:
     :param path_to_csv: the path to the file folder
     :return: None
     """
-    with open(path_to_csv +'/scrnipt_1/X.csv', 'r',
+    with open(path_to_csv +'/dataset_XY/X.csv', 'r',
                encoding='utf-8') as csvfile:
         file_reader = list(csv.reader(csvfile))
         for i in range(len(file_reader)):
@@ -68,13 +68,13 @@ def search_scrnipt_1(date: datetime.date,  path_to_csv: str) -> None:
                 break
         else:
             return None
-    with open(path_to_csv+'/scrnipt_1/Y.csv', 'r',
+    with open(path_to_csv+'/dataset_XY/Y.csv', 'r',
                encoding='utf-8') as csvfile:
         file_reader = list(csv.reader(csvfile))
         print(*file_reader[tmp])
 
 
-def search_scrnipt_2(date: datetime.date, path_to_csv: str) -> None:
+def search_dataset_years(date: datetime.date, path_to_csv: str) -> None:
     """
     the function accepts data, searches for it in 
     the file of the corresponding script
@@ -83,11 +83,11 @@ def search_scrnipt_2(date: datetime.date, path_to_csv: str) -> None:
     :param path_to_csv: the path to the file folder
     :return: None
     """
-    ways = os.listdir(path_to_csv+"/scrnipt_2")
+    ways = os.listdir(path_to_csv+"/dataset_years")
     date = str(date)
     for i in range(len(ways)):
         if (ways[i][:4] == date[:4]):
-            with open(path_to_csv + "/scrnipt_2/" + ways[i], 'r',
+            with open(path_to_csv + "/dataset_years/" + ways[i], 'r',
                        encoding='utf-8') as csvfile:
                 file_reader = csv.reader(csvfile)
                 for row in file_reader:
@@ -98,7 +98,7 @@ def search_scrnipt_2(date: datetime.date, path_to_csv: str) -> None:
         return None
 
 
-def search_scrnipt_3(date: datetime.date, path_to_csv: str) -> None:
+def search_dataset_weeks(date: datetime.date, path_to_csv: str) -> None:
     """
     the function accepts data, searches for it in 
     the file of the corresponding script
@@ -107,7 +107,7 @@ def search_scrnipt_3(date: datetime.date, path_to_csv: str) -> None:
     :param path_to_csv: the path to the file folder
     :return: None
     """
-    ways = os.listdir(path_to_csv+"/scrnipt_3")
+    ways = os.listdir(path_to_csv+"/dataset_weeks")
     list_tmp = []
     date = str(date)
     date = re.sub(r'[-]', '_', date)
@@ -118,7 +118,7 @@ def search_scrnipt_3(date: datetime.date, path_to_csv: str) -> None:
     for i in range(len(list_tmp)):
         if (int(list_tmp[i][11:13]) >= int(date[8:10]) >= int(
                 list_tmp[i][8:10])):  
-            with open(path_to_csv + "/scrnipt_3/" + list_tmp[i], 'r', 
+            with open(path_to_csv + "/dataset_weeks/" + list_tmp[i], 'r', 
                       encoding='utf-8') as csvfile:
                 file_reader = csv.reader(csvfile)
                 date = re.sub(r'[_]', '-', date)
@@ -147,9 +147,9 @@ def run_search_datasets(path_to_csv: str=os.path.join("C:/", "PYTHON",
     """
     date = datetime.date(2022, 9, 7)
     search_dataset(date, path_to_csv)
-    search_scrnipt_1(date, path_to_csv)
-    search_scrnipt_2(date, path_to_csv)
-    search_scrnipt_3(date, path_to_csv)
+    search_dataset_XY(date, path_to_csv)
+    search_dataset_years(date, path_to_csv)
+    search_dataset_weeks(date, path_to_csv)
 
     with open(path_to_csv+'/dataset.csv', 'r',
                encoding='utf-8') as csvfile:
@@ -158,4 +158,4 @@ def run_search_datasets(path_to_csv: str=os.path.join("C:/", "PYTHON",
             next(path_to_csv, count)
             count += 1
 
-    print("\nscript_4 has finished working\n")
+    print("\nsearch_datasets.py has finished working\n")

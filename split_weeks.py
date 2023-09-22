@@ -51,7 +51,7 @@ def sort_file(week: list, path_to_csv: str) -> None:
     """
     date_1 = week[0][0][8:10]
     date_2 = week[-1][0][8:10]
-    name_file = path_to_csv + '/scrnipt_3/' + str(week[0][0][:4]) + \
+    name_file = path_to_csv + '/split_years.py/' + str(week[0][0][:4]) + \
         "_" + str(week[0][0][5:7]) + "_" + date_1 + "_" + date_2 + ".csv"
     print(name_file)
     with open(name_file, 'w', newline='', encoding='utf-8') as file_scr3:
@@ -60,7 +60,7 @@ def sort_file(week: list, path_to_csv: str) -> None:
             writer.writerow(week[i])
 
 
-def run_weeks(path_to_csv: str=os.path.join("C:/", "PYTHON",
+def run_split_weeks(path_to_csv: str=os.path.join("C:/", "PYTHON",
                                          "PTM-1", "File_folder")) -> None:
     """
     The main function of the script.
@@ -72,7 +72,7 @@ def run_weeks(path_to_csv: str=os.path.join("C:/", "PYTHON",
     :param path_to_csv: the path to the file folder
     :return: None
     """
-    path_sc3 = "File_folder/scrnipt_3"
+    path_sc3 = "File_folder/split_years.py"
     check_file(path_sc3)
     set_tmp = set()
     with open(path_to_csv + '/dataset.csv', 'r', newline='',
@@ -103,7 +103,7 @@ def run_weeks(path_to_csv: str=os.path.join("C:/", "PYTHON",
                     all_data = []
                     all_data.append(row)
 
-    print("\nscript_3 has finished working\n")
+    print("\nsplit_weeks.py has finished working\n")
 
 
   

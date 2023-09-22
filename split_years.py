@@ -25,7 +25,7 @@ def write_file(date_1: str, date_2: str, list_years: list,
     :param path_to_csv: folder path.
     :return: None.
     """
-    name_file = path_to_csv + '/scrnipt_2/' + date_1 + "_" + date_2 + ".csv"
+    name_file = path_to_csv + '/split_years.py/' + date_1 + "_" + date_2 + ".csv"
     print("create file: ", name_file)
     with open(name_file, 'w', newline='', encoding='utf-8') as namefile:
         writer = csv.writer(namefile)
@@ -47,7 +47,7 @@ def run_split_years(path_to_csv: str=os.path.join("C:/", "PYTHON",
     :param path_to_csv: the path to the file folder.
     :return: None.
     """
-    path_sc2 = path_to_csv + "/scrnipt_2"
+    path_sc2 = path_to_csv + "/split_years.py"
     check_file(path_sc2)
     set_tmp = set()
     list_years = []
@@ -72,4 +72,4 @@ def run_split_years(path_to_csv: str=os.path.join("C:/", "PYTHON",
             write_file(date_1, date_2, list_years, path_to_csv)
             list_years = []
 
-    print("\nscript_2 has finished working\n")
+    print("\nsplit_years.py has finished working\n")

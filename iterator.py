@@ -29,7 +29,7 @@ def run_iterator(path_to_csv: str=os.path.join("C:/", "PYTHON",
     :perem path_to_csv: the path to the file folder
     :return: None
     """
-    file_name = path_to_csv + "/scrnipt_2/20220901_20220130.csv"
+    file_name = path_to_csv + "/dataset_years/20220901_20220130.csv"
     iter = Iterator(file_name)
     for val in iter:
         print(val, end="")
