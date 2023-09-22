@@ -40,10 +40,10 @@ def GenerateKeyPair(private_key_path: str,  public_key_path: str, symmetric_key_
         f_c.write(private_key.private_bytes(encoding=serialization.Encoding.PEM,
                   format=serialization.PrivateFormat.TraditionalOpenSSL, encryption_algorithm=serialization.NoEncryption()))
     symmetric_key = os.urandom(16)
-    ciphertext = public_key.encrypt(symmetric_key, padding.OAEP(mgf=padding.MGF1(
+    cipher_text = public_key.encrypt(symmetric_key, padding.OAEP(mgf=padding.MGF1(
         algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
     with open(symmetric_key_path, "wb") as f:
-        f.write(ciphertext)
+        f.write(cipher_text)
 
 
 def EncryptData(initial_file_path: str, private_key_path: str, encrypted_symmetric_key_path: str, encrypted_file_path: str) -> None:
@@ -220,12 +220,12 @@ def main():
              float(value.detach())for value in loss_values], color="blue")
     plt.legend(["Loss"])
     plt.figure(3, figsize=(15, 5))
-    plt.title('valid accuracy')
+    plt.title('Valid accuracy')
     plt.plot(range(len(accuracy_val_values)),
              accuracy_val_values, color="green")
     plt.legend(["Accuracy"])
     plt.figure(4, figsize=(15, 5))
-    plt.title('valid loss')
+    plt.title('Valid loss')
     plt.plot(range(len(accuracy_val_values)), [
              float(value.detach())for value in loss_val_values], color="blue")
     plt.legend(["Loss"])
