@@ -1,5 +1,6 @@
 
 import json
+import logging
 import os
 from typing import Any, Tuple
 
@@ -95,7 +96,7 @@ def DecryptData(encrypted_file_path: str, private_key_path: str, encrypted_symme
     symmetric_key = private_key.decrypt(encrypted_symmetric_key, padding.OAEP(
         mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None))
     with open(encrypted_file_path, "rb") as f_in, open(decrypted_file_path, "wb") as f_out:
-        iv = f_in.read(16)  # Считывание IV из файла
+        iv = f_in.read(16)
         cipher = Cipher(algorithms.SM4(symmetric_key),
                         modes.CBC(iv))
         decryptor = cipher.decryptor()
@@ -260,8 +261,8 @@ def main():
     }
     while True:
         answ = input(
-            'Здравствуйте\nЕсть ли у вас набор инструкций?\n(Д)а\(Н)ет\n')
-        if answ.lower() == 'д':
+            'Hello\nDo you have a set of instructions\n(Y)es\(N)o\n')
+        if answ.lower() == 'Y':
             with open('settings.json') as json_file:
                 json_data = json.load(json_file)
             settings = json_data
@@ -270,21 +271,21 @@ def main():
             break
     while True:
         answ = input(
-            'Что вы хотите сделать?\nВведите первую букву слова\n(Г)генерация ключей\n(Ш)ифрование текста\n(Д)ешифрование текста\nдля выхода 1\n')
-        if answ.lower() == 'г':
+            'What do you want to do\nenter first letter\n(G)Key generation\n(E)Encrypt data\n(D)Decrypt data\nExit the program - 1\n')
+        if answ.lower() == 'G':
             GenerateKeyPair(
                 settings['secret_key'], settings['public_key'], settings['symmetric_key'])
-            print('Ключи созданы')
-        elif answ.lower() == 'ш':
+            logging.info('The keys have been created\n')
+        elif answ.lower() == 'E':
             EncryptData(settings['initial_file'], settings['secret_key'],
                          settings['symmetric_key'], settings['encrypted_file'])
-            print('Данные зашифрованы')
-        elif answ.lower() == 'д':
+            logging.info('Data is encrypted\n')
+        elif answ.lower() == 'D':
             DecryptData(settings['encrypted_file'], settings['secret_key'],
                          settings['symmetric_key'], settings['decrypted_file'])
-            print('Данные расшифрованы')
+            logging.info('Data Decryped\n')
         else:
-            print('Программа завершена')
+            logging.info('Program completed\n')
             break
     with open('settings.json', 'w') as fp:
         json.dump(settings, fp)
