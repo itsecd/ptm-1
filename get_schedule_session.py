@@ -4,6 +4,10 @@ import csv
 
 
 def find_schedule_session_url(num_group: str) -> str:
+    '''
+    Поиск ссылки на расписание необходимой группы
+    Возвращает ссылку в виде строки
+    '''
     with open(f"AllGroupShedule/AllGroup_course_{num_group[1]}.csv", "r", encoding="utf-8") as file:
         reader = csv.reader(file, delimiter=";")
         for row in reader:
@@ -13,6 +17,9 @@ def find_schedule_session_url(num_group: str) -> str:
 
 
 def pars_schedule_session(num_group: str) -> str:
+    '''
+    Парсинг расписания сессии и форматирование под красивый вид строки
+    '''
     url = find_schedule_session_url(num_group)
     response = requests.get(url)
     list_session = []

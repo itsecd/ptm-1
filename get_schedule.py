@@ -4,7 +4,10 @@ import csv
 import os
 
 
-def pars_all_group():
+def pars_all_group() -> None:
+    '''
+    Парсинг с ssau.ru ссылок на расписания всех групп и дальнейшая запись в соответствующие csv-файлы
+    '''
     os.makedirs('AllGroupShedule', exist_ok=True)
     for num_course in range(1, 6):
         url = f'https://ssau.ru/rasp/faculty/492430598?course={num_course}'
@@ -27,6 +30,10 @@ def pars_all_group():
 
 
 def find_schedule_url(num_group: str, selectedWeek: str, selectedWeekday: str) -> str:
+    '''
+    Поиск среди спарсенных ссылок необхимой
+    Функция возвращает ссылку в виде строки
+    '''
     with open(f"AllGroupShedule/AllGroup_course_{num_group[1]}.csv", "r", encoding="utf-8") as file:
         reader = csv.reader(file, delimiter=";")
         for row in reader:
@@ -36,6 +43,9 @@ def find_schedule_url(num_group: str, selectedWeek: str, selectedWeekday: str) -
 
 
 def pars_shedule(url: str) -> str:
+    '''
+    Парсинг рассписания по ссылке и форматирование под красивый вид результирующей строки
+    '''
     result = ""
     current_date = ""
     list_lessons = []
