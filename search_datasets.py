@@ -130,7 +130,7 @@ def search_scrnipt_3(date: datetime.date, path_to_csv: str) -> None:
         return None
 
 
-def run_4(path_to_csv: str=os.path.join("C:/", "PYTHON",
+def run_search_datasets(path_to_csv: str=os.path.join("C:/", "PYTHON",
                                          "PTM-1", "File_folder")) -> None:
     """
     The main function of the script.

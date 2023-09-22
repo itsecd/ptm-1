@@ -33,7 +33,7 @@ def write_file(date_1: str, date_2: str, list_years: list,
             writer.writerow(list_years[i])
 
 
-def run_2(path_to_csv: str=os.path.join("C:/", "PYTHON",
+def run_split_years(path_to_csv: str=os.path.join("C:/", "PYTHON",
                                          "PTM-1", "File_folder")) -> None:
     """
     The main function of the script.
