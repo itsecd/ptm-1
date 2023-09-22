@@ -20,7 +20,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from torch.utils.data import DataLoader, Dataset
 
 
-def generate_key_pair(private_key_path: str,  public_key_path: str, symmetric_key_path: str) -> None:
+def GenerateKeyPair(private_key_path: str,  public_key_path: str, symmetric_key_path: str) -> None:
     """Эта функция генерирует пару ключей(ассиметричный и симметричный) гибридной системы, а после сохроняет их в файлы.
 
     Args:
@@ -47,7 +47,7 @@ def generate_key_pair(private_key_path: str,  public_key_path: str, symmetric_ke
         f.write(ciphertext)
 
 
-def encrypt_data(initial_file_path: str, private_key_path: str, encrypted_symmetric_key_path: str, encrypted_file_path: str) -> None:
+def EncryptData(initial_file_path: str, private_key_path: str, encrypted_symmetric_key_path: str, encrypted_file_path: str) -> None:
     """Эта функция шифрует данные используя симмитричный и ассиметричные ключи, а так же сохраняет результат по указыному пути
 
     Args:
@@ -78,7 +78,7 @@ def encrypt_data(initial_file_path: str, private_key_path: str, encrypted_symmet
         f_out.write(encryptor.finalize())
 
 
-def decrypt_data(encrypted_file_path: str, private_key_path: str, encrypted_symmetric_key_path: str, decrypted_file_path: str) -> None:
+def DecryptData(encrypted_file_path: str, private_key_path: str, encrypted_symmetric_key_path: str, decrypted_file_path: str) -> None:
     """эта функция дешифрует данные используя симметричный и ассиметричные ключи, а так же сохраняет результат по указыному пути
 
     Args:
@@ -272,15 +272,15 @@ def main():
         answ = input(
             'Что вы хотите сделать?\nВведите первую букву слова\n(Г)генерация ключей\n(Ш)ифрование текста\n(Д)ешифрование текста\nдля выхода 1\n')
         if answ.lower() == 'г':
-            generate_key_pair(
+            GenerateKeyPair(
                 settings['secret_key'], settings['public_key'], settings['symmetric_key'])
             print('Ключи созданы')
         elif answ.lower() == 'ш':
-            encrypt_data(settings['initial_file'], settings['secret_key'],
+            EncryptData(settings['initial_file'], settings['secret_key'],
                          settings['symmetric_key'], settings['encrypted_file'])
             print('Данные зашифрованы')
         elif answ.lower() == 'д':
-            decrypt_data(settings['encrypted_file'], settings['secret_key'],
+            DecryptData(settings['encrypted_file'], settings['secret_key'],
                          settings['symmetric_key'], settings['decrypted_file'])
             print('Данные расшифрованы')
         else:
