@@ -128,7 +128,7 @@ class Board:
         self.window.blit(text, (388, 542))
         pygame.display.flip()  # update the game window
 
-    def visualSolve(self, wrong, time):
+    def visual_solve(self, wrong, time):
         """
         Рекурсивно решает доску судоку визуально, выделяя правильные
         и неправильные плитки по мере их заполнения.
@@ -157,7 +157,7 @@ class Board:
                     {}, wrong, time
                 )
 
-                if self.visualSolve(wrong, time):
+                if self.visual_solve(wrong, time):
                     return True
 
 
@@ -275,7 +275,7 @@ def main():
     wrong = 0
     board = Board(screen)
     selected = (-1, -1)
-    keyDict = {}
+    key_dict = {}
     solved = False
     startTime = time.time()
 
@@ -283,7 +283,7 @@ def main():
     while not solved:
         # Получите прошедшее время и отформатируйте его для отображения в окне.
         elapsed = time.time() - startTime
-        passedTime = time.strftime("%H:%M:%S", time.gmtime(elapsed))
+        passed_time = time.strftime("%H:%M:%S", time.gmtime(elapsed))
 
         # Проверьте, решена ли судоку
         if board.board == board.solvedBoard:
@@ -292,7 +292,7 @@ def main():
         # Обработка событий
         for event in pygame.event.get():
             elapsed = time.time() - startTime
-            passedTime = time.strftime("%H:%M:%S", time.gmtime(elapsed))
+            passed_time = time.strftime("%H:%M:%S", time.gmtime(elapsed))
             if event.type == pygame.QUIT:
                 exit()
             elif event.type == pygame.MOUSEBUTTONUP:
@@ -307,57 +307,57 @@ def main():
                 # Обрабатывать нажатия клавиш
                 if board.board[selected[1]][selected[0]] == 0 and selected != (-1, -1):
                     if event.key == pygame.K_1:
-                        keyDict[selected] = 1
+                        key_dict[selected] = 1
 
                     if event.key == pygame.K_2:
-                        keyDict[selected] = 2
+                        key_dict[selected] = 2
 
                     if event.key == pygame.K_3:
-                        keyDict[selected] = 3
+                        key_dict[selected] = 3
 
                     if event.key == pygame.K_4:
-                        keyDict[selected] = 4
+                        key_dict[selected] = 4
 
                     if event.key == pygame.K_5:
-                        keyDict[selected] = 5
+                        key_dict[selected] = 5
 
                     if event.key == pygame.K_6:
-                        keyDict[selected] = 6
+                        key_dict[selected] = 6
 
                     if event.key == pygame.K_7:
-                        keyDict[selected] = 7
+                        key_dict[selected] = 7
 
                     if event.key == pygame.K_8:
-                        keyDict[selected] = 8
+                        key_dict[selected] = 8
 
                     if event.key == pygame.K_9:
-                        keyDict[selected] = 9
+                        key_dict[selected] = 9
                     elif (
                         event.key == pygame.K_BACKSPACE or event.key == pygame.K_DELETE
                     ):
-                        if selected in keyDict:
+                        if selected in key_dict:
                             board.tiles[selected[1]][selected[0]].value = 0
-                            del keyDict[selected]
+                            del key_dict[selected]
                     elif event.key == pygame.K_RETURN:
-                        if selected in keyDict:
+                        if selected in key_dict:
                             if (
-                                keyDict[selected]
+                                key_dict[selected]
                                 != board.solvedBoard[selected[1]][selected[0]]
                             ):
                                 wrong += 1
                                 board.tiles[selected[1]][selected[0]].value = 0
-                                del keyDict[selected]
+                                del key_dict[selected]
 
 
-                            board.tiles[selected[1]][selected[0]].value = keyDict[
+                            board.tiles[selected[1]][selected[0]].value = key_dict[
                                 selected
                             ]
-                            board.board[selected[1]][selected[0]] = keyDict[selected]
-                            del keyDict[selected]
+                            board.board[selected[1]][selected[0]] = key_dict[selected]
+                            del key_dict[selected]
 
                 # Обработка клавиши подсказки
                 if event.key == pygame.K_h:
-                    board.hint(keyDict)
+                    board.hint(key_dict)
 
                 # Обработка клавиши пробела
                 if event.key == pygame.K_SPACE:
@@ -365,12 +365,12 @@ def main():
                     for i in range(9):
                         for j in range(9):
                             board.tiles[i][j].selected = False
-                    keyDict = {}
+                    key_dict = {}
 
                     # Решите судоку визуально и восстановите правильность всех плиток.
                     elapsed = time.time() - startTime
-                    passedTime = time.strftime("%H:%M:%S", time.gmtime(elapsed))
-                    board.visualSolve(wrong, passedTime)
+                    passed_time = time.strftime("%H:%M:%S", time.gmtime(elapsed))
+                    board.visual_solve(wrong, passed_time)
                     for i in range(9):
                         for j in range(9):
                             board.tiles[i][j].correct = False
@@ -378,12 +378,13 @@ def main():
 
                     solved = True
 
-        board.redraw(keyDict, wrong, passedTime)
+        board.redraw(key_dict, wrong, passed_time)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
 
 
-main()
-pygame.quit()
+if __name__ == "__main__":
+    main()
+    pygame.quit()

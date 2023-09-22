@@ -8,19 +8,19 @@ def print_board(board):
     :return: None.
     """
 
-    boardString = ""
+    board_string = ""
     for i in range(9):
         for j in range(9):
-            boardString += str(board[i][j]) + " "
+            board_string += str(board[i][j]) + " "
             if (j + 1) % 3 == 0 and j != 0 and j + 1 != 9:
-                boardString += "| "
+                board_string += "| "
 
             if j == 8:
-                boardString += "\n"
+                board_string += "\n"
 
             if j == 8 and (i + 1) % 3 == 0 and i + 1 != 9:
-                boardString += "- - - - - - - - - - - \n"
-    print(boardString)
+                board_string += "- - - - - - - - - - - \n"
+    print(board_string)
 
 
 def find_empty(board):
