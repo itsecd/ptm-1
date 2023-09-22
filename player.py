@@ -18,16 +18,16 @@ version = '2.4'
 revision = '3'
 
 import datetime
-import urllib
-import urllib2
 import os
+from random import randint
 import sys
 import string
 import tarfile
 from threading import Thread as Process
-#from multiprocessing import Process
 from time import sleep
-from random import randint
+import urllib
+import urllib2
+#from multiprocessing import Process
 try:
     import traceback
     import requests
