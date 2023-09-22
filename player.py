@@ -52,7 +52,7 @@ width = 800
 height = 600
 console = False
 text = ''
-songNum = 1
+song_num = 1
 kill = False
 
 print ("Starting Python Music Player " 
@@ -548,9 +548,9 @@ try:
 # Try to load the track
             bcast("Now Playing: " 
                   + current + " (" 
-                  + str(songNum) + " out of " 
+                  + str(song_num) + " out of " 
                   + str(amount) + ")")
-            log("Song " + str(songNum) 
+            log("Song " + str(song_num) 
                 + " out of " + str(amount))
             try:
                 log("Loading '" + current + "'")
@@ -580,7 +580,7 @@ try:
                 played.append(current)
                 i = i + 1
             sleep(0.2)
-            songNum = songNum + 1
+            song_num = song_num + 1
     bcast("All songs have been played!")
     log("All songs have been played")
     shutdown()
