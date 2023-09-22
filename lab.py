@@ -19,15 +19,22 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from torch.utils.data import DataLoader, Dataset
-
+SETTINGS = {
+        'initial_file': 'file\initial_file.txt',
+        'encrypted_file': 'file\encrypted_file.txt',
+        'decrypted_file': 'file\decrypted_file.txt',
+        'symmetric_key': 'key\symmetric_key.txt',
+        'public_key': 'key\public\key.pem',
+        'secret_key': 'key\secret\key.pem'
+    }
 
 def GenerateKeyPair(private_key_path: str,  public_key_path: str, symmetric_key_path: str) -> None:
-    """Эта функция генерирует пару ключей(ассиметричный и симметричный) гибридной системы, а после сохроняет их в файлы.
+    """Эта функция генерирует пару ключей(ассиметричный и симметричный) гибридной системы, а после сохраняет их в файлы.
 
     Args:
         private_key_path (str): путь до секретного ключа
         public_key_path (str): путь до общедоступного ключа
-        symmetric_key_path (str): путь до симмитричного ключа
+        symmetric_key_path (str): путь до симметричного ключа
     """
     private_key = rsa.generate_private_key(
         public_exponent=65537, key_size=2048)
@@ -49,12 +56,12 @@ def GenerateKeyPair(private_key_path: str,  public_key_path: str, symmetric_key_
 
 
 def EncryptData(initial_file_path: str, private_key_path: str, encrypted_symmetric_key_path: str, encrypted_file_path: str) -> None:
-    """Эта функция шифрует данные используя симмитричный и ассиметричные ключи, а так же сохраняет результат по указыному пути
+    """Эта функция шифрует данные используя симметричный и ассиметричные ключи, а так же сохраняет результат по указыному пути
 
     Args:
         initial_file_path (str): путь до шифруемых данных
         private_key_path (str): путь до приватного ключа
-        encrypted_symmetric_key_path (str): путь до зашифрованного симмитричного ключа
+        encrypted_symmetric_key_path (str): путь до зашифрованного симметричного ключа
         encrypted_file_path (str): путь куда шифруются данных
     """
     with open(private_key_path, "rb") as f:
@@ -85,7 +92,7 @@ def DecryptData(encrypted_file_path: str, private_key_path: str, encrypted_symme
     Args:
         encrypted_file_path (str): путь до зашифрованных данных
         private_key_path (str): путь до секретного ключа
-        encrypted_symmetric_key_path (str): путь до зашифрованного симмитричного ключа
+        encrypted_symmetric_key_path (str): путь до зашифрованного симметричного ключа
         decrypted_file_path (str): путь куда дешифруются данные
     """
     with open(private_key_path, "rb") as f:
@@ -250,15 +257,6 @@ def main():
         test_accuracy += acc / len(test_dataloader)
         test_loss += float(loss.detach()) / len(test_dataloader)
     print('test_accuracy=', test_accuracy, ' ', 'test_loss=', test_loss)
-    print('end')
-    settings = {
-        'initial_file': 'file\initial_file.txt',
-        'encrypted_file': 'file\encrypted_file.txt',
-        'decrypted_file': 'file\decrypted_file.txt',
-        'symmetric_key': 'key\symmetric_key.txt',
-        'public_key': 'key\public\key.pem',
-        'secret_key': 'key\secret\key.pem'
-    }
     while True:
         answ = input(
             'Hello\nDo you have a set of instructions\n(Y)es\(N)o\n')
