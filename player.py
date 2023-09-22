@@ -41,13 +41,13 @@ skip = False
 pause = False
 play = False
 debug = False
-option = "n"
+option = 'n'
 select = 0
-current = ""
+current = ''
 amount = 0
 played = []
 playlist = []
-check = ""
+check = ''
 width = 800
 height = 600
 console = False
@@ -138,16 +138,16 @@ def bcast(string, err=False):
 
 
 def updater():
-    log('Update requested; attempting...')
+    log("Update requested; attempting...")
     if update == 0:
-        bcast('No update found.')
-        log('No update found')
+        bcast("No update found.")
+        log("No update found")
     else:
-        bcast('Attempting to retrive tarball...')
+        bcast("Attempting to retrive tarball...")
         try:
-            log('Connecting to ' + url +'...')
+            log("Connecting to " + url + "...")
             try:
-                r = requests.get('http://' + url)
+                r = requests.get("http://" + url)
                 status = r.status_code
             except:
                 status = 200
@@ -155,45 +155,45 @@ def updater():
             if status == int(200):
                 try:
                     filename = urllib.urlretrieve(
-                        'http://' 
+                        "http://" 
                         + url 
-                        + '/python/downloads\
-                        /player/music-player-' 
+                        + "/python/downloads\
+                        /player/music-player-" 
                         + str(ver) 
-                        + '.tar.gz', 'music-player-' 
+                        + ".tar.gz", "music-player-" 
                         + str(ver) 
-                        + '.tar.gz')
+                        + ".tar.gz")
                 except:
                     LogErr()
                     raise IOError
-                bcast('Installing...')
-                log('Download success')
-                log('Will now attempt to install update')
+                bcast("Installing...")
+                log("Download success")
+                log("Will now attempt to install update")
                 try:
-                    mkdir('update')
+                    mkdir("update")
                     os.rename("music-player-" 
                               + str(ver) 
-                              + ".tar.gz", 'update/update.tar.gz')
-                    os.chdir('update')
+                              + ".tar.gz", "update/update.tar.gz")
+                    os.chdir("update")
                     tar = tarfile.open("update.tar.gz")
                     tar.extractall()
                     tar.close()
-                    os.remove('update.tar.gz')
-                    os.chdir('..')
-                    log('Success!')
-                    bcast('Done!')
+                    os.remove("update.tar.gz")
+                    os.chdir("..")
+                    log("Success!")
+                    bcast("Done!")
                     bcast("Move 'player.py' \
                           from the folder 'update' to: " 
                           + os.path.dirname(os.getcwd()))
                 except:
                     LogErr()
-                    bcast('Installation failed')
+                    bcast("Installation failed")
             else:
-                bcast('Server is down')
+                bcast("Server is down")
                 raise IOError
         except:
             LogErr()
-            bcast('Download failed')
+            bcast("Download failed")
 
 
 # To control the player remotely (non-functional)
@@ -206,9 +206,9 @@ def server():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.bind((HOST, PORT))
         except socket.error as msg:
-            print ('Bind failed. Error Code : ' 
+            print ("Bind failed. Error Code : " 
                    + str(msg[0]) 
-                   + ' Message ' 
+                   + "Message" 
                    + msg[1])
             LogErr()
             try:
@@ -217,7 +217,7 @@ def server():
                 LogErr()
                 pass
         s.listen(2)
-        print ('Started control server on ' 
+        print ("Started control server on " 
                + HOST + ':' + str(PORT))
     except:
         print ("Couldn't create control server")
@@ -244,7 +244,7 @@ def news():
 def control():
     threadUse = True
     option = ''
-    option = raw_input('> ')
+    option = raw_input(">")
     try:
         option = option.replace("\n", '')
         option = option.lower()
@@ -262,7 +262,7 @@ def control():
         elif option == 'pause':
             #pause = True
             pygame.mixer.music.pause()
-            bcast('Paused')
+            bcast("Paused")
         elif option == 'play':
             #play = True
             pygame.mixer.music.play()
@@ -275,7 +275,7 @@ def control():
             elif debug == False:
                 print ("Debug mode enabled")
                 debug = True
-        elif option == "news":
+        elif option == 'news':
             news()
         else:
             bcast("Invalid command: " + option)
@@ -319,7 +319,7 @@ def control2():
     sleep(0.2)
 
 
-mkdir('logs')
+mkdir("logs")
 time = datetime.datetime.now()
 try:
     log_file = open("./logs/" + str(time), "w+")
@@ -365,45 +365,45 @@ except ImportError:
     LogErr()
     try:
         print ("Downloading assets")
-        log('Pygame missing; getting installer')
+        log("Pygame missing; getting installer")
         osv = sys.platform
         if osv == 'win32':
             urllib.urlretrieve(
-                'https://pygame.org/ftp/\
-                pygame-1.9.1.win32-py2.7.msi', 
-                'pygame-1.9.1.msi')
+                "https://pygame.org/ftp/\
+                pygame-1.9.1.win32-py2.7.msi", 
+                "pygame-1.9.1.msi")
         elif osv == 'darwin':
             urllib.urlretrieve(
-                'https://pygame.org/ftp/\
+                "https://pygame.org/ftp/\
                 pygame-1.9.1release-python.org-32bit-py2.\
-                7-macosx10.3.dmg', 
-                'pygame-mac.dmg')
+                7-macosx10.3.dmg", 
+                "pygame-mac.dmg")
             log('Success!')
         elif osv == 'linux2' or 'cygwin':
-            print ('You are using linux or cygwin')
+            print ("You are using linux or cygwin")
             print ("Use the command \
                 'sudo pip install pygame' to download\
                     \nthe nessasary modules")
-            log(osv + ' detected; pip installer recommended')
+            log(osv + " detected; pip installer recommended")
         else:
             print ('Unrecognized os: ' + osv)
         try:
-            urllib.urlretrieve('http://' + url 
-                               + '/pygame.tar.gz', 
-                               'pygame.tar.gz')
+            urllib.urlretrieve("http://" + url 
+                               + "/pygame.tar.gz", 
+                               "pygame.tar.gz")
             tar = tarfile.open("pygame.tar.gz")
             tar.extractall()
             tar.close()
-            os.remove('pygame.tar.gz')
+            os.remove("pygame.tar.gz")
         except:
             LogErr()
             print ("Failed to get assets")
             exit()
-        print ('Please run the installer \
-            that has been dropped into the ' 
-               + os.path.dirname(os.getcwd()) + ' folder')
+        print ("Please run the installer \
+            that has been dropped into the " 
+               + os.path.dirname(os.getcwd()) + " folder")
     except:
-        print ('Failed to get assets')
+        print ("Failed to get assets")
         print ("Please install the 'pygame' \
             module manually at pygame.org")
         LogErr()
@@ -416,7 +416,7 @@ try:
     pygame.init()
     pygame.mixer.init()
     #pygame.font.init()
-    log('Pygame initialized')
+    log("Pygame initialized")
 except:
     bcast("Couldn't run pygame.init()", True)
     log("pygame.init() failed")
@@ -428,11 +428,11 @@ try:
         i = 1
         while i < len(sys.argv):
             arg = sys.argv[i]
-            if arg == "--console" or arg == "-c":
+            if arg == '--console' or arg == '-c':
                 console = True
-            elif arg == "--verbose" or arg == "-v":
+            elif arg == '--verbose' or arg == '-v':
                 debug = True
-            elif arg == "-f" or arg == "--file":
+            elif arg == '-f' or arg == '--file':
                 pygame.init()
                 try:
                     pygame.mixer.music.load(sys.argv[i+1])
@@ -445,9 +445,9 @@ try:
                     LogErr()
                     print ("There was an error playing the file")
                     kill = True
-            elif arg == "-h" or arg == "--help":
-                print ('Plays music in the "Music" \
-                    folder within the current directory\n')
+            elif arg == '-h' or arg == '--help':
+                print ("Plays music in the 'Music' \
+                    folder within the current directory\n")
                 print ("Usage: " + sys.argv[0] 
                        + " [-hvc] [-f <filepath>]")
                 print ("Options: ")
@@ -475,35 +475,35 @@ if kill:
 url = "benjaminurquhart.me" # This wasn't the original URL - replaced for privacy
 update = 0
 try:
-    log('Checking for updates...')
-    log('Getting info from ' + url)
-    ver = urllib2.urlopen('http://' + url + '/version.txt')
-    rev = urllib2.urlopen('http://' + url + '/rev.txt')
+    log("Checking for updates...")
+    log("Getting info from " + url)
+    ver = urllib2.urlopen("http://" + url + "/version.txt")
+    rev = urllib2.urlopen("http://" + url + "/rev.txt")
     ver = ver.read()
     rev = rev.read()
     if float(ver) > float(version):
-        log('Update found!')
+        log("Update found!")
         bcast("Python Music Player " + ver + " is availible")
         bcast("Type update at the prompt to download")
         update = 1
     elif float(ver) < float(version):
-        log('Indev vesion in use')
-        bcast('Indev version in use')
+        log("Indev vesion in use")
+        bcast("Indev version in use")
     elif int(rev) > int(revision) and float(ver) == float(version):
-        log('New revision found!')
-        bcast('Revision ' + str(rev) + ' is availible')
-        bcast('Type update at the prompt to download')
+        log("New revision found!")
+        bcast("Revision " + str(rev) + " is availible")
+        bcast("Type update at the prompt to download")
         update = 1
     elif float(ver) == float(version):
-        log('No update found')
-        bcast('No update found')
+        log("No update found")
+        bcast("No update found")
 except:
-    bcast('Failed to check for updates', True)
+    bcast("Failed to check for updates", True)
     LogErr()
-    log('Update check failed')
+    log("Update check failed")
 
 
-mkdir('Music')
+mkdir("Music")
 log("Player starting...")
 news()
 
@@ -522,7 +522,7 @@ except:
     console = True
 log("Player started")
 # Check the Music folder for tracks
-sound_data = os.listdir('./Music')
+sound_data = os.listdir("./Music")
 try:
     for i in sound_data:
         playlist.append(i)
@@ -530,14 +530,14 @@ try:
     amount = len(playlist)
     log(str(amount) + " Songs found")
     if amount == 0:
-        bcast('No music found!')
+        bcast("No music found!")
         shutdown()
     bcast("Number of songs: " + str(amount))
     
 # Play the music
     while i != amount:
         select = randint(0, amount - 1)
-        if option.lower() == "y":
+        if option.lower() == 'y':
             for i in song:
                current = i
             option = "n"
@@ -555,7 +555,7 @@ try:
             try:
                 log("Loading '" + current + "'")
                 pygame.mixer.music.load("./Music/" + current)
-                log('Now Playing: ' + current)
+                log("Now Playing: " + current)
             except:
                 bcast("Couldn't play " + current)
 
@@ -582,7 +582,7 @@ try:
             sleep(0.2)
             songNum = songNum + 1
     bcast("All songs have been played!")
-    log('All songs have been played')
+    log("All songs have been played")
     shutdown()
 except:
     LogErr()
