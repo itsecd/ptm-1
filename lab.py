@@ -19,6 +19,7 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from torch.utils.data import DataLoader, Dataset
+
 SETTINGS = {'initial_file': 'file\initial_file.txt', 'encrypted_file': 'file\encrypted_file.txt', 'decrypted_file': 'file\decrypted_file.txt',
             'symmetric_key': 'key\symmetric_key.txt', 'public_key': 'key\public\key.pem', 'secret_key': 'key\secret\key.pem'}
 
