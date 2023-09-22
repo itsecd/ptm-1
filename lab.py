@@ -19,6 +19,7 @@ import torch.optim as optim
 import torchvision
 from torch.utils.data import DataLoader, Dataset
 
+
 def generate_key_pair(private_key_path: str,  public_key_path: str, symmetric_key_path: str) -> None:
     """Эта функция генерирует пару ключей(ассиметричный и симмитричный) гибридной системы, а после сохроняет их в файлы.
 
@@ -52,6 +53,8 @@ def generate_key_pair(private_key_path: str,  public_key_path: str, symmetric_ke
     # Сохранение зашифрованного ключа симметричного алгоритма
     with open(symmetric_key_path, "wb") as f:
         f.write(ciphertext)
+
+
 def encrypt_data(initial_file_path: str, private_key_path: str, encrypted_symmetric_key_path: str, encrypted_file_path: str) -> None:
     """Эта функция шифрует данные используя симмитричный и ассиметричные ключи, а так же сохраняет результат по указыному пути
 
@@ -88,6 +91,8 @@ def encrypt_data(initial_file_path: str, private_key_path: str, encrypted_symmet
 
         f_out.write(encryptor.update(padder.finalize()))
         f_out.write(encryptor.finalize())
+
+
 def decrypt_data(encrypted_file_path: str, private_key_path: str, encrypted_symmetric_key_path: str, decrypted_file_path: str) -> None:
     """эта функция дешифрует данные используя симмитричный и ассиметричные ключи, а так же сохраняет результат по указыному пути
 
@@ -120,6 +125,8 @@ def decrypt_data(encrypted_file_path: str, private_key_path: str, encrypted_symm
 
             f_out.write(unpadder.update(decryptor.finalize()))
             f_out.write(unpadder.finalize())
+
+
 class CustomImageDataset(Dataset):
     def __init__(self, path_to_annotation_file: str, transform: Any = None, target_transform: Any = None) -> None:
         self.path_to_annotation_file = path_to_annotation_file
@@ -129,6 +136,7 @@ class CustomImageDataset(Dataset):
 
     def __len__(self) -> int:
         return len(self.dataset_info)
+
     def __getitem__(self, index: int) -> Tuple[torch.tensor, int]:
         path_to_image = self.dataset_info.iloc[index, 0]
         image = cv2.cvtColor(cv2.imread(path_to_image), cv2.COLOR_BGR2RGB)
@@ -140,6 +148,8 @@ class CustomImageDataset(Dataset):
             label = self.target_Transform(label)
 
         return image, label
+
+
 class CNN(nn.Module):
     def __init__(self) -> None:
         super(CNN, self).__init__()
@@ -152,9 +162,9 @@ class CNN(nn.Module):
         self.dropout = nn.Dropout(0.1)
         self.max_pool = nn.MaxPool2d(2)
 
-        
         self.fc_1 = nn.Linear(576, 10)
         self.fc_2 = nn.Linear(10, 1)
+
     def forward(self, x: torch.tensor) -> torch.tensor:
         output = self.relu(self.conv_1(x))
         output = self.max_pool(output)
@@ -167,6 +177,8 @@ class CNN(nn.Module):
         output = self.relu(self.fc_1(output))
         output = torch.nn.Sigmoid()(self.fc_2(output))
         return output
+
+
 def main():
     device = torch.device(
         "cuda:0") if torch.cuda.is_available() else torch.device("cpu")
@@ -199,7 +211,7 @@ def main():
 
         for data, label in train_dataloader:
             data = data.to(device)
-            label = label.to(device )
+            label = label.to(device)
 
             output = model(data)
             loss = criterion(output, label.unsqueeze(dim=1).to(torch.float))
@@ -217,14 +229,14 @@ def main():
         print('Epoch : {}, train accuracy : {}, train loss : {}'.format(
             epoch + 1, epoch_accuracy, epoch_loss))
 
-
         model.eval()
         for data, label in val_dataloader:
             data = data.to(device)
             label = label.to(device)
 
             output = model(data)
-            loss_val = criterion(output, label.unsqueeze(dim=1).to(torch.float))
+            loss_val = criterion(
+                output, label.unsqueeze(dim=1).to(torch.float))
             acc_val = np.array(([1 if (1 if output[j][0].detach() >= 0.5 else 0) == int(
                 label[j]) else 0 for j in range(label.shape[0])])).mean()
             epoch_val_accuracy += acc_val / len(val_dataloader)
@@ -236,39 +248,33 @@ def main():
         print('Epoch : {}, val accuracy : {}, val loss : {}'.format(
             epoch + 1, epoch_val_accuracy, epoch_val_loss))
 
-    plt.figure(1,figsize=(15, 5))
+    plt.figure(1, figsize=(15, 5))
     plt.title('Train accuracy')
     plt.plot(range(len(accuracy_values)), accuracy_values, color="green")
     plt.legend(["Acchukarevacy"])
-    
-    plt.figure(2,figsize=(15, 5))
+
+    plt.figure(2, figsize=(15, 5))
     plt.title('Train loss')
     plt.plot(range(len(accuracy_values)), [float(value.detach())
              for value in loss_values], color="blue")
     plt.legend(["Loss"])
-    
-    plt.figure(3,figsize=(15, 5))
+
+    plt.figure(3, figsize=(15, 5))
     plt.title('valid accuracy')
     plt.plot(range(len(accuracy_val_values)),
              accuracy_val_values, color="green")
     plt.legend(["Accuracy"])
-    
-    plt.figure(4,figsize=(15, 5))
+
+    plt.figure(4, figsize=(15, 5))
     plt.title('valid loss')
     plt.plot(range(len(accuracy_val_values)), [float(value.detach())
              for value in loss_val_values], color="blue")
     plt.legend(["Loss"])
     plt.show()
 
-
-
-
-
     model.eval()
     test_loss = 0
     test_accuracy = 0
-
-
 
     for data, label in test_dataloader:
         data = data.to(device)
@@ -282,7 +288,7 @@ def main():
         test_loss += float(loss.detach()) / len(test_dataloader)
     print('test_accuracy=', test_accuracy, ' ', 'test_loss=', test_loss)
     print('end')
-    
+
     settings = {
         'initial_file': 'file\initial_file.txt',
         'encrypted_file': 'file\encrypted_file.txt',
@@ -292,7 +298,8 @@ def main():
         'secret_key': 'key\secret\key.pem'
     }
     while True:
-        answ = input('Здравствуйте\nЕсть ли у вас набор инструкций?\n(Д)а\(Н)ет\n')
+        answ = input(
+            'Здравствуйте\nЕсть ли у вас набор инструкций?\n(Д)а\(Н)ет\n')
         if answ.lower() == 'д':
             with open('settings.json') as json_file:
                 json_data = json.load(json_file)
