@@ -88,3 +88,7 @@ def pars_shedule(url: str) -> str:
     for index in range(len(list_lessons)):
         result += f"{list_lessons_time[index]}\t{list_lessons[index]}\t{list_lessons_type[index]}\n"
     return result
+
+if __name__ == "__main__":
+    pars_all_group()
+    print(pars_shedule(find_schedule_url("6311-100503D", "5", "1")))

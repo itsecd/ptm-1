@@ -36,3 +36,10 @@ def pars_schedule_session(num_group: str) -> str:
     for item in list_session:
         result += f"---{item[1][0]}---\n\nДата и время: {item[0][0]} - {item[3][0]}\nПредмет: {item[2][0]}\n\n"
     return result
+
+
+if __name__ == "__main__":
+    try:
+        print(pars_schedule_session("6311-100503D"))
+    except:
+        print("Some Error")
