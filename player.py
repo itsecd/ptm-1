@@ -55,7 +55,9 @@ text = ''
 songNum = 1
 kill = False
 
-print ("Starting Python Music Player " + version + "." + revision) #
+print ("Starting Python Music Player " 
+       + version 
+       + "." + revision)
 
 
 def mkdir(directory):
@@ -98,7 +100,8 @@ def shutdown():
 def log(string):
     try:
         if debug:
-            print ("[Debug]: " + string)
+            print ("[Debug]: " 
+                   + string)
         log_file.write("[Logger]: ")
         log_file.write(string)
         log_file.write("\n")
@@ -109,11 +112,14 @@ def log(string):
 def LogErr():
     try:
         exc_type, exc_value, exc_traceback = sys.exc_info()
-        lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+        lines = traceback.format_exception(exc_type, 
+                                           exc_value, 
+                                           exc_traceback)
         log('')
         log(''.join(line for line in lines))
         if debug:
-            bcast("[Error]: " + ''.join(line for line in lines), True)
+            bcast("[Error]: " 
+                  + ''.join(line for line in lines), True)
     except:
         pass
 
@@ -148,7 +154,15 @@ def updater():
                 LogErr()
             if status == int(200):
                 try:
-                    filename = urllib.urlretrieve('http://' + url + '/python/downloads/player/music-player-' + str(ver) + '.tar.gz', 'music-player-' + str(ver) + '.tar.gz')
+                    filename = urllib.urlretrieve(
+                        'http://' 
+                        + url 
+                        + '/python/downloads\
+                        /player/music-player-' 
+                        + str(ver) 
+                        + '.tar.gz', 'music-player-' 
+                        + str(ver) 
+                        + '.tar.gz')
                 except:
                     LogErr()
                     raise IOError
@@ -157,7 +171,9 @@ def updater():
                 log('Will now attempt to install update')
                 try:
                     mkdir('update')
-                    os.rename("music-player-" + str(ver) + ".tar.gz", 'update/update.tar.gz')
+                    os.rename("music-player-" 
+                              + str(ver) 
+                              + ".tar.gz", 'update/update.tar.gz')
                     os.chdir('update')
                     tar = tarfile.open("update.tar.gz")
                     tar.extractall()
@@ -166,7 +182,9 @@ def updater():
                     os.chdir('..')
                     log('Success!')
                     bcast('Done!')
-                    bcast("Move 'player.py' from the folder 'update' to: " + os.path.dirname(os.getcwd()))
+                    bcast("Move 'player.py' \
+                          from the folder 'update' to: " 
+                          + os.path.dirname(os.getcwd()))
                 except:
                     LogErr()
                     bcast('Installation failed')
@@ -188,7 +206,10 @@ def server():
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.bind((HOST, PORT))
         except socket.error as msg:
-            print ('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
+            print ('Bind failed. Error Code : ' 
+                   + str(msg[0]) 
+                   + ' Message ' 
+                   + msg[1])
             LogErr()
             try:
                 s.close()
@@ -196,7 +217,8 @@ def server():
                 LogErr()
                 pass
         s.listen(2)
-        print ('Started control server on ' + HOST + ':' + str(PORT))
+        print ('Started control server on ' 
+               + HOST + ':' + str(PORT))
     except:
         print ("Couldn't create control server")
         LogErr()
@@ -273,7 +295,8 @@ def control2():
                         debug = False
                     else:
                         debug = True
-                if event.key == pygame.K_SPACE or event.key == pygame.K_F11:
+                if (event.key == pygame.K_SPACE or 
+                    event.key == pygame.K_F11):
                     bcast("Pause")
                     if pause == True:
                         pygame.mixer.music.play()
@@ -287,7 +310,8 @@ def control2():
                 if event.key == pygame.K_F12:
                     bcast("Skip")
                     pygame.mixer.music.stop()
-                if event.key == pygame.K_F10 or event.key == pygame.K_q:
+                if (event.key == pygame.K_F10 or 
+                    event.key == pygame.K_q):
                     bcast("Quit")
                     shutdown()
     except:
@@ -344,18 +368,29 @@ except ImportError:
         log('Pygame missing; getting installer')
         osv = sys.platform
         if osv == 'win32':
-            urllib.urlretrieve('https://pygame.org/ftp/pygame-1.9.1.win32-py2.7.msi', 'pygame-1.9.1.msi')
+            urllib.urlretrieve(
+                'https://pygame.org/ftp/\
+                pygame-1.9.1.win32-py2.7.msi', 
+                'pygame-1.9.1.msi')
         elif osv == 'darwin':
-            urllib.urlretrieve('https://pygame.org/ftp/pygame-1.9.1release-python.org-32bit-py2.7-macosx10.3.dmg', 'pygame-mac.dmg')
+            urllib.urlretrieve(
+                'https://pygame.org/ftp/\
+                pygame-1.9.1release-python.org-32bit-py2.\
+                7-macosx10.3.dmg', 
+                'pygame-mac.dmg')
             log('Success!')
         elif osv == 'linux2' or 'cygwin':
             print ('You are using linux or cygwin')
-            print ("Use the command 'sudo pip install pygame' to download\nthe nessasary modules")
+            print ("Use the command \
+                'sudo pip install pygame' to download\
+                    \nthe nessasary modules")
             log(osv + ' detected; pip installer recommended')
         else:
             print ('Unrecognized os: ' + osv)
         try:
-            urllib.urlretrieve('http://' + url + '/pygame.tar.gz', 'pygame.tar.gz')
+            urllib.urlretrieve('http://' + url 
+                               + '/pygame.tar.gz', 
+                               'pygame.tar.gz')
             tar = tarfile.open("pygame.tar.gz")
             tar.extractall()
             tar.close()
@@ -364,10 +399,13 @@ except ImportError:
             LogErr()
             print ("Failed to get assets")
             exit()
-        print ('Please run the installer that has been dropped into the ' + os.path.dirname(os.getcwd()) + ' folder')
+        print ('Please run the installer \
+            that has been dropped into the ' 
+               + os.path.dirname(os.getcwd()) + ' folder')
     except:
         print ('Failed to get assets')
-        print ("Please install the 'pygame' module manually at pygame.org")
+        print ("Please install the 'pygame' \
+            module manually at pygame.org")
         LogErr()
         shutdown()
     exit()
@@ -408,14 +446,22 @@ try:
                     print ("There was an error playing the file")
                     kill = True
             elif arg == "-h" or arg == "--help":
-                print ('Plays music in the "Music" folder within the current directory\n')
-                print ("Usage: " + sys.argv[0] + " [-hvc] [-f <filepath>]")
+                print ('Plays music in the "Music" \
+                    folder within the current directory\n')
+                print ("Usage: " + sys.argv[0] 
+                       + " [-hvc] [-f <filepath>]")
                 print ("Options: ")
-                print ("\t -h, --help\t Displays this help text")
-                print ("\t -v, --verbose\t Displays extra information")
-                print ("\t -c, --console\t Disables Pygame screen (text-only mode)")
-                print ("\t -f, --file\t Plays the file at the filepath specified")
-                print ("\nExamples: \n\t " + sys.argv[0] + " -v -c -f /sample/file/path/foo.bar")
+                print ("\t -h, --help\t \
+                    Displays this help text")
+                print ("\t -v, --verbose\t \
+                    Displays extra information")
+                print ("\t -c, --console\t \
+                    Disables Pygame screen (text-only mode)")
+                print ("\t -f, --file\t \
+                    Plays the file at the filepath specified")
+                print ("\nExamples: \n\t " 
+                       + sys.argv[0] 
+                       + " -v -c -f /sample/file/path/foo.bar")
                 print ("\t " + sys.argv[0] + " -f foo.bar")
                 kill = True
             i = i + 1
@@ -500,8 +546,12 @@ try:
         #current = current.replace("\n", "")
         if current not in played:
 # Try to load the track
-            bcast("Now Playing: " + current + " (" + str(songNum) + " out of " + str(amount) + ")")
-            log("Song " + str(songNum) + " out of " + str(amount))
+            bcast("Now Playing: " 
+                  + current + " (" 
+                  + str(songNum) + " out of " 
+                  + str(amount) + ")")
+            log("Song " + str(songNum) 
+                + " out of " + str(amount))
             try:
                 log("Loading '" + current + "'")
                 pygame.mixer.music.load("./Music/" + current)
