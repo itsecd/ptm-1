@@ -27,14 +27,14 @@ from threading import Thread as Process
 from time import sleep
 import urllib
 import urllib2
-#from multiprocessing import Process
+
 try:
     import traceback
     import requests
 except ImportError:
     pass
 
-#connUser = False
+
 threadUse = False
 stop = False
 skip = False
@@ -76,14 +76,6 @@ def shutdown():
         bcast("\n")
         bcast("Stopping...")
         pygame.mixer.music.stop()
-        """
-        try:
-            conn.close()
-            s.close()
-        except:
-            LogErr()
-            pass
-            """
         log("Shutdown success")
         log_file.close()
         pygame.quit()
@@ -130,9 +122,9 @@ def bcast(string, err=False):
             print (string)
         else:
             print ("[Player]: " + string)
-        #conn.send(string)
+        
         text = string
-        #display(string, background, screen)
+        
     except:
         pass
 
@@ -250,21 +242,15 @@ def control():
         option = option.lower()
         if option == 'quit' or option == 'stop':
             print ("Use Control-C to quit")
-            #stop = True
-            #shutdown()
         elif option == 'skip':
-            #skip = True
             pygame.mixer.music.stop()
         elif option == 'update':
-            #update = True
             updater()
         # Play/Pause indev
         elif option == 'pause':
-            #pause = True
             pygame.mixer.music.pause()
             bcast("Paused")
         elif option == 'play':
-            #play = True
             pygame.mixer.music.play()
         elif option == '':
             option = ''
@@ -328,22 +314,6 @@ except:
     bcast("Failed to create log")
 
 
-"""
-def text_objects(text, font):
-    textSurface = font.render(text, True, black)
-    return textSurface, textSurface.get_rect()
-######################################################
-def display(text):
-    screen.fill((225, 225, 225))
-    largeText = pygame.font.Font('freesansbold.ttf',115)
-    TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = ((width/2),(height/2))
-    screen.blit(TextSurf, TextRect)
-    pygame.display.update()
-    pygame.display.flip()
-"""
-
-
 def display(text, background, screen):
     font = pygame.font.Font("freesansbold", 36)
     out = font.render(text, 1, (10, 10, 10))
@@ -360,7 +330,6 @@ def display(text, background, screen):
 try:
     import pygame
     from pygame.locals import *
-    #import Screen
 except ImportError:
     LogErr()
     try:
@@ -415,7 +384,6 @@ except ImportError:
 try:
     pygame.init()
     pygame.mixer.init()
-    #pygame.font.init()
     log("Pygame initialized")
 except:
     bcast("Couldn't run pygame.init()", True)
@@ -521,6 +489,7 @@ except:
     LogErr()
     console = True
 log("Player started")
+
 # Check the Music folder for tracks
 sound_data = os.listdir("./Music")
 try:
@@ -543,7 +512,6 @@ try:
             option = "n"
         else:
             current = playlist[select]
-        #current = current.replace("\n", "")
         if current not in played:
 # Try to load the track
             bcast("Now Playing: " 
@@ -564,12 +532,7 @@ try:
 # Take user input for controlling player
             while pygame.mixer.music.get_busy():
                 if not console:
-                    #font = pygame.font.Font(None, 36)
-                    #out = font.render(text, 1, (10, 10, 10))
-                    #textpos = out.get_rect()
-                    ##textpos.centerx = background.get_rect().centerx
                     screen.blit(background, (0, 0))
-                    #pygame.display.flip()
                     control2()
                 else:
                     t = Process(None, control())
