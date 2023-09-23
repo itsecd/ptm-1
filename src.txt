@@ -1,0 +1,4 @@
+https://github.com/AlexPrib/lab1/blob/master/laba1.py
+https://github.com/Colnuwko/Laba_python/blob/master/main.py
+https://github.com/Colnuwko/Laba_python/blob/master/script_three.py
+https://github.com/Colnuwko/Laba_python/blob/master/script_two.py
