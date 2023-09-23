@@ -10,7 +10,6 @@ import runpy
 import speech_recognition as sr
 
 
-
 FACE_FILE_NAME = ''
 VOICE_FILE_NAME = ''
 CURRENT_NAME = ''
