@@ -149,11 +149,11 @@ def auth_button() -> None:
                                 wn5 = Tk()
                                 wn5.geometry('900x500')
                                 wn5.title("Личный кабинет")
-                                wn5.protocol('WM_DELETE_WINDOW', prin)
+                                wn5.protocol('WM_DELETE_WINDOW', print_timings)
                                 inic = Label(wn5, text="Добро пожаловать, " + current_name + ' ' + current_last_name,
                                              font=("Times New Roman", 18))
                                 inic.place(x=70, y=20)
-                                exit_btn = Button(wn5, text="Выход", font="15", command=prin)
+                                exit_btn = Button(wn5, text="Выход", font="15", command=print_timings)
                                 exit_btn.place(x='750', y='20', height=30, width=130)
                                 Label(wn5, text="Задачи", font=("Times New Roman", 20)).place(x=150, y=60)
                                 try:
