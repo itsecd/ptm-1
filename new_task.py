@@ -89,7 +89,7 @@ def auth_button() -> None:
             label.configure(text=delta)
             wn5.after(1000, update_clock)
 
-        def prin() -> None:
+        def print_timings() -> None:
             # print("h(",cur_h,") m(",cur_m,') s(',cur_s)
             if int(cur_h) >= 9 and int(str(cur_m)[:-1]) >= 0 and int(cur_s) >= 0:
                 f1.write("Опоздание: " + str(int(cur_h) - 9) + ":" + str(cur_m) + str(cur_s) + '\n')
