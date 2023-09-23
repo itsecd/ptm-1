@@ -16,6 +16,7 @@ CURRENT_LAST_NAME = ''
 CURRENT_FACE_FILE_NAME = ''
 CURRENT_VOICE_FILE_NAME = ''
 IS_FIRST = 0
+LABEL_4 = ''
 K = 0
 
 
@@ -28,7 +29,7 @@ def auth_button():
     def current_voice_btn_pressed():
         def start_voice():
             global IS_FIRST
-            global lbl4
+            global LABEL_4
 
             def end_voice():
                 global IS_FIRST
@@ -57,9 +58,9 @@ def auth_button():
 
             print(IS_FIRST)
             if IS_FIRST == 1:
-                lbl4.destroy()
-            lbl4 = Label(wn3, text=a, font=("Times New Roman", 20))
-            lbl4.place(x=200, y=200)
+                LABEL_4.destroy()
+            LABEL_4 = Label(wn3, text=a, font=("Times New Roman", 20))
+            LABEL_4.place(x=200, y=200)
 
             IS_FIRST = 1
             print(a)
