@@ -42,7 +42,7 @@ def auth_button():
                 with mic as source:
                     print("Говорите:")
                     audio = r.listen(source)
-            except:
+            except OSError:
                 mb.showerror("Ошибка", "Проверьте подключение микрофона!")
                 wn3.focus_force()
             try:
@@ -113,7 +113,7 @@ def auth_button():
                 txt1.insert(INSERT, "Нет уведомлений")
                 mb.showinfo("Удалено", "Оповещения успешно удалены!")
                 wn5.focus_force()
-            except:
+            except FileNotFoundError:
                 mb.showerror("Ошибка", "Активных уведомлений нет!")
                 wn5.focus_force()
 
@@ -128,7 +128,7 @@ def auth_button():
         k = 0
         try:
             f = open('db.txt', 'r')
-        except:
+        except FileNotFoundError:
             mb.showerror("Ошибка", "База данных отсутствует!")
             wn1.focus_force()
         for line in f:
@@ -163,7 +163,7 @@ def auth_button():
                                         var1[k] = Label(wn5, text=line, font=("Times New Roman", 14)).place(x=50,
                                                                                                             y=60 + k * 50)
                                     k = 0
-                                except:
+                                except FileNotFoundError:
                                     Label(wn5, text="Актуальные задания отсутствуют!",
                                           font=("Times New Roman", 14)).place(x=50, y=120)
                                 tasks = Label(wn5, text="Оповещения", font=("Times New Roman", 20))
@@ -179,7 +179,7 @@ def auth_button():
                                                                                                                 height=30,
                                                                                                                 width=130)
 
-                                except:
+                                except FileNotFoundError:
                                     txt1.insert(INSERT, "Нет уведомлений")
                                 lbll = Label(wn5, text="Время:", font=("Times New Roman", 20))
                                 lbll.place(x=60, y=450)
@@ -341,7 +341,7 @@ def btn3_button():
                     txt.delete(1.0, END)
                     mb.showinfo("Удалено", "Журнал успешно удален!")
                     wn6.focus_force()
-                except:
+                except IOError:
                     mb.showerror("Ошибка", "Невозможно удалить журнал!")
                     wn6.focus_force()
 
@@ -360,7 +360,7 @@ def btn3_button():
                 Button(wn6, text="Назад", font="15", command=back).place(x='40', y='520', height=25, width=130)
                 Button(wn6, text="Очистить журнал", font="15", command=clear_journal).place(x='500', y='520', height=25,
                                                                                             width=160)
-            except:
+            except FileNotFoundError:
                 mb.showerror("Ошибка", "Данные отсутствуют!")
                 wn8.focus_force()
 
