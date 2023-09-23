@@ -418,7 +418,7 @@ def btn3_button():
             btn5.place(x='300', y='144', height=25, width=100)
 
         def notice():
-            def ttt():
+            def write_notices():
                 if txt.get("1.0", 'end-1c') != '':
                     f1 = open('db-notice.txt', 'w')
                     f1.write(txt.get("1.0", 'end-1c'))
@@ -435,7 +435,7 @@ def btn3_button():
             Label(wnn, text="Создать оповещение", font=("Arial", 16)).place(x=120, y=30)
             txt = scrolledtext.ScrolledText(wnn, width=30, height=10, font=("Times New Roman", 18))
             txt.place(x='40', y='90')
-            btn5 = Button(wnn, text="Создать", font="15", command=ttt)
+            btn5 = Button(wnn, text="Создать", font="15", command=write_notices)
             btn5.place(x='180', y='400', height=25, width=100)
 
         if login_entry.get() == 'admin' and pass_entry.get() == 'admin':
