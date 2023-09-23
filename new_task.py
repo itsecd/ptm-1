@@ -20,18 +20,18 @@ LABEL_4 = ''
 K = 0
 
 
-def auth_button():
-    def current_face_btn_pressed():
+def auth_button() -> None:
+    def current_face_btn_pressed() -> None:
         global CURRENT_FACE_FILE_NAME
         CURRENT_FACE_FILE_NAME = fd.askopenfilename()
         wn1.focus_force()
 
-    def current_voice_btn_pressed():
-        def start_voice():
+    def current_voice_btn_pressed() -> None:
+        def start_voice() -> None:
             global IS_FIRST
             global LABEL_4
 
-            def end_voice():
+            def end_voice() -> None:
                 global IS_FIRST
                 wn3.destroy()
                 IS_FIRST = 0
@@ -79,8 +79,8 @@ def auth_button():
         start_btn.place(x='150', y='110', height=40, width=160)
         # wn1.focus_force()
 
-    def log_in():
-        def update_clock():
+    def log_in() -> None:
+        def update_clock() -> None:
             start = datetime.datetime(2021, 5, 10, int(cur_h), int(cur_m[:-1]), int(cur_s))
             end = datetime.datetime(2021, 5, 10, int(time.strftime("%H")), int(time.strftime("%M")),
                                     int(time.strftime("%S")))
@@ -89,7 +89,7 @@ def auth_button():
             label.configure(text=delta)
             wn5.after(1000, update_clock)
 
-        def prin():
+        def prin() -> None:
             # print("h(",cur_h,") m(",cur_m,') s(',cur_s)
             if int(cur_h) >= 9 and int(str(cur_m)[:-1]) >= 0 and int(cur_s) >= 0:
                 f1.write("Опоздание: " + str(int(cur_h) - 9) + ":" + str(cur_m) + str(cur_s) + '\n')
@@ -106,7 +106,7 @@ def auth_button():
             wn5.destroy()
             f1.close()
 
-        def clear_notice():
+        def clear_notice() -> None:
             try:
                 os.remove("db-notice.txt")
                 txt1.delete(1.0, END)
@@ -248,8 +248,8 @@ def auth_button():
     bt1.place(x='160', y='345', height=30, width=130)
 
 
-def btn2_button():
-    def reg_btn():
+def btn2_button() -> None:
+    def reg_btn() -> None:
         if len(name_entry.get()) <= 0 or len(last_name_entry.get()) <= 0 or len(login_entry.get()) <= 0 or len(
                 passw_entry.get()) <= 0 or FACE_FILE_NAME == '' or len(code_entry.get()) <= 0:
             mb.showerror("Ошибка", "Заполните все поля!")
@@ -271,13 +271,13 @@ def btn2_button():
             from_reg = True
             auth_button()
 
-    def face_btn_pressed():
+    def face_btn_pressed() -> None:
         global FACE_FILE_NAME
         FACE_FILE_NAME = fd.askopenfilename()
         print(FACE_FILE_NAME)
         wn2.focus_force()
 
-    def voice_btn_pressed():
+    def voice_btn_pressed() -> None:
         global VOICE_FILE_NAME
         VOICE_FILE_NAME = fd.askopenfilename()
         print(VOICE_FILE_NAME)
@@ -329,13 +329,13 @@ def btn2_button():
     reg.place(x='140', y='485', height=30, width=180)
 
 
-def btn3_button():
-    def main_panel():
-        def jornal():
-            def back():
+def btn3_button() -> None:
+    def main_panel() -> None:
+        def jornal() -> None:
+            def back() -> None:
                 wn6.destroy()
 
-            def clear_journal():
+            def clear_journal() -> None:
                 try:
                     os.remove("db-time.txt")
                     txt.delete(1.0, END)
@@ -364,17 +364,17 @@ def btn3_button():
                 mb.showerror("Ошибка", "Данные отсутствуют!")
                 wn8.focus_force()
 
-        def tasks():
+        def tasks() -> None:
             global last_x
             last_x = 0
 
-            def make_tsk():
+            def make_tsk() -> None:
                 btn5['state'] = 'disabled'
                 global last_x
                 var = {}
                 entry_name = ['1', '2', '3', '4', '5']
 
-                def command():
+                def command() -> None:
                     a = []
                     for i in range(int(spin.get())):
                         if var[i].get() == "":
@@ -389,7 +389,7 @@ def btn3_button():
                     f1.close()
                     wn7.destroy()
 
-                def clear():
+                def clear() -> None:
                     btn5['state'] = 'normal'
                     for i in range(4):
                         var[i].destroy()
@@ -417,8 +417,8 @@ def btn3_button():
             btn5 = Button(wn7, text="Создать", font="15", command=make_tsk)
             btn5.place(x='300', y='144', height=25, width=100)
 
-        def notice():
-            def write_notices():
+        def notice() -> None:
+            def write_notices() -> None:
                 if txt.get("1.0", 'end-1c') != '':
                     f1 = open('db-notice.txt', 'w')
                     f1.write(txt.get("1.0", 'end-1c'))
