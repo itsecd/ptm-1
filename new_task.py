@@ -138,7 +138,7 @@ def auth_button():
                     image_1 = Image.open(string[4])
                     image_2 = Image.open(CURRENT_FACE_FILE_NAME)
                     result = ImageChops.difference(image_1, image_2)
-                    if result.getbbox() == None:
+                    if result.getbbox() is None:
                         if CURRENT_VOICE_FILE_NAME == '':
                             if str.lower(string[5][:-1]) != CURRENT_VOICE_FILE_NAME:
                                 current_name = string[1]
