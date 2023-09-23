@@ -179,9 +179,9 @@ def auth_button() -> None:
                                 wn5.geometry('900x500')
                                 wn5.title("Личный кабинет")
                                 wn5.protocol('WM_DELETE_WINDOW', print_timings)
-                                inic = Label(wn5, text="Добро пожаловать, " + current_name + ' ' + current_last_name,
-                                             font=("Times New Roman", 18))
-                                inic.place(x=70, y=20)
+                                welcome_label = Label(wn5, text="Добро пожаловать, " + current_name + ' ' + current_last_name,
+                                                      font=("Times New Roman", 18))
+                                welcome_label.place(x=70, y=20)
                                 exit_btn = Button(wn5, text="Выход", font="15", command=print_timings)
                                 exit_btn.place(x='750', y='20', height=30, width=130)
                                 Label(wn5, text="Задачи", font=("Times New Roman", 20)).place(x=150, y=60)
@@ -210,8 +210,8 @@ def auth_button() -> None:
 
                                 except FileNotFoundError:
                                     txt1.insert(INSERT, "Нет уведомлений")
-                                lbll = Label(wn5, text="Время:", font=("Times New Roman", 20))
-                                lbll.place(x=60, y=450)
+                                time_label = Label(wn5, text="Время:", font=("Times New Roman", 20))
+                                time_label.place(x=60, y=450)
                                 label = Label(wn5, text="", font=('Times New Roman', 20), fg='green')
                                 label.place(x=170, y=450)
                                 f1 = open('db-time.txt', 'a')
@@ -249,15 +249,15 @@ def auth_button() -> None:
     wn1 = Tk()
     wn1.geometry('450x400')
     wn1.title("Авторизация")
-    lbl = Label(wn1, text="Авторизация", font=("Arial", 25))
-    lbl.place(x=120, y=35)
+    auth_label = Label(wn1, text="Авторизация", font=("Arial", 25))
+    auth_label.place(x=120, y=35)
 
-    lbl1 = Label(wn1, text="Логин", font=("Times New Roman", 14))
-    lbl1.place(x=70, y=107)
+    login_label = Label(wn1, text="Логин", font=("Times New Roman", 14))
+    login_label.place(x=70, y=107)
     login_entry = Entry(wn1, width=25, textvariable=StringVar())
     login_entry.place(x=225, y=120, anchor="c")
-    lbl1 = Label(wn1, text="Пароль", font=("Times New Roman", 14))
-    lbl1.place(x=70, y=137)
+    login_label = Label(wn1, text="Пароль", font=("Times New Roman", 14))
+    login_label.place(x=70, y=137)
     pass_entry = Entry(wn1, width=25, textvariable=StringVar())
     pass_entry.place(x=225, y=150, anchor="c")
 
@@ -332,8 +332,8 @@ def btn2_button() -> None:
     wn2 = Tk()
     wn2.geometry('455x580')
     wn2.title("Регистрация")
-    lbl = Label(wn2, text="Регистрация", font=("Times New Roman", 25))
-    lbl.place(x=130, y=30)
+    registration_label = Label(wn2, text="Регистрация", font=("Times New Roman", 25))
+    registration_label.place(x=130, y=30)
 
     last_name = Label(wn2, text="Фамилия:", font=("Times New Roman", 14))
     last_name.place(x=90, y=110)
@@ -407,8 +407,8 @@ def btn3_button() -> None:
                 wn6 = Tk()
                 wn6.geometry('685x580')
                 wn6.title("Журнал посещений")
-                lbl11 = Label(wn6, text="Журнал", font=("Times New Roman", 25))
-                lbl11.place(x=295, y=30)
+                journal_label = Label(wn6, text="Журнал", font=("Times New Roman", 25))
+                journal_label.place(x=295, y=30)
                 txt = scrolledtext.ScrolledText(wn6, width=50, height=10, font=("Times New Roman", 18))
                 txt.place(x='40', y='90')
                 for line in f:
@@ -442,7 +442,7 @@ def btn3_button() -> None:
                         Adds entered tasks to the tasks file, shows an error if any task field is empty, and closes task creation window.
                     """
                     a = []
-                    for i in range(int(spin.get())):
+                    for i in range(int(task_count_spinbox.get())):
                         if var[i].get() == "":
                             mb.showerror("Ошибка", "Заполните все поля!")
                             wn7.focus_force()
@@ -463,7 +463,7 @@ def btn3_button() -> None:
                     for i in range(4):
                         var[i].destroy()
 
-                for x in range(int(spin.get())):
+                for x in range(int(task_count_spinbox.get())):
                     txt = Label(wn7, text=x)
                     var[x] = Entry(wn7, width=80)
                     var[x].place(x=110, y=200 + int(x) * 50)
@@ -477,12 +477,12 @@ def btn3_button() -> None:
             wn7 = Tk()
             wn7.geometry('685x580')
             wn7.title("Задания")
-            lbl = Label(wn7, text="Задачи для работников", font=("Arial", 25))
-            lbl.place(x=180, y=35)
-            lbl1 = Label(wn7, text="Количество задач:", font=("Times New Roman", 18))
-            lbl1.place(x=200, y=100)
-            spin = Spinbox(wn7, from_=1, to=4, width=10)
-            spin.place(x=405, y=109)
+            tasks_label = Label(wn7, text="Задачи для работников", font=("Arial", 25))
+            tasks_label.place(x=180, y=35)
+            task_count_label = Label(wn7, text="Количество задач:", font=("Times New Roman", 18))
+            task_count_label.place(x=200, y=100)
+            task_count_spinbox = Spinbox(wn7, from_=1, to=4, width=10)
+            task_count_spinbox.place(x=405, y=109)
             btn5 = Button(wn7, text="Создать", font="15", command=make_tsk)
             btn5.place(x='300', y='144', height=25, width=100)
 
@@ -518,8 +518,8 @@ def btn3_button() -> None:
             wn8 = Tk()
             wn8.geometry('500x250')
             wn8.title("Панель Администратора")
-            lbl = Label(wn8, text="Панель администратора", font=("Arial", 18))
-            lbl.place(x=120, y=50)
+            admin_panel_label = Label(wn8, text="Панель администратора", font=("Arial", 18))
+            admin_panel_label.place(x=120, y=50)
             btn4 = Button(wn8, text="Журнал", font="15", command=jornal)
             btn4.place(x='40', y='120', height=30, width=120)
             btn5 = Button(wn8, text="Задачи", font="15", command=tasks)
@@ -533,15 +533,15 @@ def btn3_button() -> None:
     wn1 = Tk()
     wn1.geometry('450x250')
     wn1.title("Панель Администратора")
-    lbl = Label(wn1, text="Панель администратора", font=("Times New Roman", 18))
-    lbl.place(x=110, y=50)
+    admin_panel_label = Label(wn1, text="Панель администратора", font=("Times New Roman", 18))
+    admin_panel_label.place(x=110, y=50)
 
-    lbl1 = Label(wn1, text="Логин", font=("Times New Roman", 14))
-    lbl1.place(x=70, y=107)
+    login_label = Label(wn1, text="Логин", font=("Times New Roman", 14))
+    login_label.place(x=70, y=107)
     login_entry = Entry(wn1, width=25, textvariable=StringVar())
     login_entry.place(x=225, y=120, anchor="c")
-    lbl1 = Label(wn1, text="Пароль", font=("Times New Roman", 14))
-    lbl1.place(x=70, y=137)
+    login_label = Label(wn1, text="Пароль", font=("Times New Roman", 14))
+    login_label.place(x=70, y=137)
     pass_entry = Entry(wn1, width=25, textvariable=StringVar())
     pass_entry.place(x=225, y=150, anchor="c")
     bt1 = Button(wn1, text="Ввод", font="15", command=main_panel)
