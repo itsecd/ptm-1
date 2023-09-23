@@ -318,7 +318,7 @@ def btn2_button():
 
 
 def btn3_button():
-    def mainpanel():
+    def main_panel():
         def jornal():
             def back():
                 wn6.destroy()
@@ -452,7 +452,7 @@ def btn3_button():
     lbl1.place(x=70,y=137)
     pass_entry = Entry(wn1,width = 25,textvariable=StringVar())
     pass_entry.place(x=225, y=150, anchor="c")
-    bt1 = Button(wn1,text="Ввод", font="15",command =mainpanel )
+    bt1 = Button(wn1, text="Ввод", font="15", command =main_panel)
     bt1.place(x='160',y='185', height =30, width=130)
 window = Tk()
 window.geometry('900x500')
