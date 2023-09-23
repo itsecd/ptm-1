@@ -25,10 +25,12 @@ def auth_button():
         global CURRENT_FACE_FILE_NAME
         CURRENT_FACE_FILE_NAME = fd.askopenfilename()
         wn1.focus_force()
+
     def current_voice_btn_pressed():
         def start_voice():
             global IS_FIRST
             global lbl4
+
             def end_voice():
                 global IS_FIRST
                 wn3.destroy()
@@ -74,6 +76,7 @@ def auth_button():
         start_btn = Button(wn3,text="Начать", font="18",command = start_voice)
         start_btn.place(x='150',y='110', height =40, width=160)
         #wn1.focus_force()
+
     def log_in():
         def update_clock():
             start = datetime.datetime(2021,5,10,int(cur_h),int(cur_m[:-1]),int(cur_s))
@@ -98,6 +101,7 @@ def auth_button():
             print(str(delta))
             wn5.destroy()
             f1.close()
+
         def clear_notice():
             try:
                 os.remove("db-notice.txt")
@@ -260,6 +264,7 @@ def btn2_button():
         FACE_FILE_NAME = fd.askopenfilename()
         print(FACE_FILE_NAME)
         wn2.focus_force()
+
     def voice_btn_pressed():
         global VOICE_FILE_NAME
         VOICE_FILE_NAME = fd.askopenfilename()
@@ -310,11 +315,14 @@ def btn2_button():
 
     reg = Button(wn2,text="Зарегистрироваться", font="15" ,command = reg_btn)
     reg.place(x='140',y='485', height =30, width=180)
+
+
 def btn3_button():
     def mainpanel():
         def jornal():
             def back():
                 wn6.destroy()
+
             def clear_journal():
                 try:
                     os.remove("db-time.txt")
@@ -341,14 +349,17 @@ def btn3_button():
             except:
                 mb.showerror("Ошибка","Данные отсутствуют!")
                 wn8.focus_force()
+
         def tasks():
             global last_x
             last_x = 0
+
             def make_tsk():
                 btn5['state'] = 'disabled'
                 global last_x
                 var = {}
                 entry_name = ['1','2','3', '4', '5']
+
                 def command():
                     a = []
                     for i in range(int(spin.get())):
@@ -363,6 +374,7 @@ def btn3_button():
                         f1.write(i+'\n')
                     f1.close()
                     wn7.destroy()
+
                 def clear():
                     btn5['state'] = 'normal'
                     for i in range(4):
@@ -388,6 +400,7 @@ def btn3_button():
             spin.place(x=405,y = 109)
             btn5 = Button(wn7,text="Создать", font="15",command = make_tsk)
             btn5.place(x='300',y='144', height =25, width=100)
+
         def notice():
             def ttt():
                 if txt.get("1.0", 'end-1c') != '':
