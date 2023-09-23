@@ -1,9 +1,12 @@
+import re
+import sys
+import tempfile
+
 import sublime
 import sublime_plugin
+
 from os import path
-import tempfile
-import sys
-import re
+
 
 PACKAGE_SETTINGS = "ExportHtml.sublime-settings"
 
