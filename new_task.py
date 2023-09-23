@@ -2,11 +2,13 @@ import os
 import time
 import datetime
 
-from tkinter import Tk, Label, Button, Entry, StringVar, Spinbox, filedialog, messagebox, scrolledtext
+from tkinter import Tk, Label, Button, Entry, StringVar, Spinbox, \
+    filedialog as fd, messagebox as mb, scrolledtext
 from PIL import ImageTk, Image, ImageChops
 
 import runpy
 import speech_recognition as sr
+
 
 
 FACE_FILE_NAME = ''
