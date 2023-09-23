@@ -9,28 +9,29 @@ import runpy
 import speech_recognition as sr
 
 
+FACE_FILE_NAME = ''
+VOICE_FILE_NAME = ''
+CURRENT_NAME = ''
+CURRENT_LAST_NAME = ''
+CURRENT_FACE_FILE_NAME = ''
+CURRENT_VOICE_FILE_NAME = ''
+IS_FIRST = 0
+K = 0
 
-face_file_name = ''
-voice_file_name = ''
-current_name =''
-current_last_name = ''
-current_face_file_name = ''
-current_voice_file_name = ''
-is_first = 0
-k=0
+
 def auth_button():
     def current_face_btn_pressed():
-        global current_face_file_name
-        current_face_file_name = fd.askopenfilename()
+        global CURRENT_FACE_FILE_NAME
+        CURRENT_FACE_FILE_NAME = fd.askopenfilename()
         wn1.focus_force()
     def current_voice_btn_pressed():
         def start_voice():
-            global is_first
+            global IS_FIRST
             global lbl4
             def end_voice():
-                global is_first
+                global IS_FIRST
                 wn3.destroy()
-                is_first = 0
+                IS_FIRST = 0
             try:
                 mic = sr.Microphone(device_index=1)
                 r = sr.Recognizer()
@@ -51,17 +52,17 @@ def auth_button():
             lbl3 = Label(wn3, text="Ваше слово:",font=("Times New Roman", 14))
             lbl3.place(x=60,y=170)
 
-            print(is_first)
-            if is_first == 1:
+            print(IS_FIRST)
+            if IS_FIRST == 1:
                 lbl4.destroy()
             lbl4 = Label(wn3, text=a,font=("Times New Roman", 20))
             lbl4.place(x=200,y=200)
 
-            is_first = 1
+            IS_FIRST = 1
             print(a)
-            global current_voice_file_name
-            current_voice_file_name = str.lower(a)
-            print(current_voice_file_name)
+            global CURRENT_VOICE_FILE_NAME
+            CURRENT_VOICE_FILE_NAME = str.lower(a)
+            print(CURRENT_VOICE_FILE_NAME)
             dal_btn = Button(wn3,text="Продолжить", font="18",command =end_voice )
             dal_btn.place(x='150',y='310', height =40, width=160)
         wn3 = Tk()
@@ -124,13 +125,13 @@ def auth_button():
             string = line.split("`")
             if login_entry.get() == string[2] and pass_entry.get() == string[3]:
                 is_find = 1
-                if current_face_file_name != '':
+                if CURRENT_FACE_FILE_NAME != '':
                     image_1=Image.open(string[4])
-                    image_2=Image.open(current_face_file_name)
+                    image_2=Image.open(CURRENT_FACE_FILE_NAME)
                     result=ImageChops.difference(image_1, image_2)
                     if result.getbbox() == None:
-                        if current_voice_file_name == '':
-                            if str.lower(string[5][:-1]) != current_voice_file_name:
+                        if CURRENT_VOICE_FILE_NAME == '':
+                            if str.lower(string[5][:-1]) != CURRENT_VOICE_FILE_NAME:
                                 current_name = string[1]
                                 current_last_name = string[0]
                                 mb.showinfo("Успешно!","Вы успешно авторизировались!")
@@ -197,8 +198,8 @@ def auth_button():
         if is_find == 0:
             mb.showerror("Ошибка","Введите все данные!")
             wn1.focus_force()
-    global k
-    k=k+1
+    global K
+    K= K + 1
     wn1 = Tk()
     wn1.geometry('450x400')
     wn1.title("Авторизация")
@@ -233,7 +234,7 @@ def auth_button():
 
 def btn2_button():
     def reg_btn():
-        if len(name_entry.get())<=0 or len(last_name_entry.get())<=0 or len(login_entry.get())<=0 or len(passw_entry.get())<=0 or face_file_name == '' or  len(code_entry.get())<=0 :
+        if len(name_entry.get())<=0 or len(last_name_entry.get())<=0 or len(login_entry.get())<=0 or len(passw_entry.get())<=0 or FACE_FILE_NAME == '' or  len(code_entry.get())<=0 :
             mb.showerror("Ошибка","Заполните все поля!")
             wn2.focus_force()
         else:
@@ -242,7 +243,7 @@ def btn2_button():
             f.write(name_entry.get()+'`')
             f.write(login_entry.get()+'`')
             f.write(passw_entry.get()+'`')
-            f.write(face_file_name+'`')
+            f.write(FACE_FILE_NAME + '`')
             f.write(code_entry.get())
             f.write("\n")
             f.close()
@@ -254,14 +255,14 @@ def btn2_button():
             auth_button()
 
     def face_btn_pressed():
-        global face_file_name
-        face_file_name = fd.askopenfilename()
-        print(face_file_name)
+        global FACE_FILE_NAME
+        FACE_FILE_NAME = fd.askopenfilename()
+        print(FACE_FILE_NAME)
         wn2.focus_force()
     def voice_btn_pressed():
-        global voice_file_name
-        voice_file_name = fd.askopenfilename()
-        print(voice_file_name)
+        global VOICE_FILE_NAME
+        VOICE_FILE_NAME = fd.askopenfilename()
+        print(VOICE_FILE_NAME)
 
     field_last_name = StringVar()
     field_name = StringVar()
