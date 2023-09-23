@@ -21,17 +21,33 @@ K = 0
 
 
 def auth_button() -> None:
+    """
+        Opens the user authentication window.
+    """
     def current_face_btn_pressed() -> None:
+        """
+            Handles the face data selection for authentication.
+        """
         global CURRENT_FACE_FILE_NAME
         CURRENT_FACE_FILE_NAME = fd.askopenfilename()
         wn1.focus_force()
 
     def current_voice_btn_pressed() -> None:
+        """
+            Opens the voice input window and handles voice data selection for authentication.
+        """
         def start_voice() -> None:
+            """
+                Starts voice recognition process for user authentication.
+            """
+
             global IS_FIRST
             global LABEL_4
 
             def end_voice() -> None:
+                """
+                    Ends voice recognition process for user authentication.
+                """
                 global IS_FIRST
                 wn3.destroy()
                 IS_FIRST = 0
@@ -80,7 +96,13 @@ def auth_button() -> None:
         # wn1.focus_force()
 
     def log_in() -> None:
+        """
+            Validates the user's credentials for successful login and opens user's personal cabinet.
+        """
         def update_clock() -> None:
+            """
+                Updates the displayed time spent by the user.
+            """
             start = datetime.datetime(2021, 5, 10, int(cur_h), int(cur_m[:-1]), int(cur_s))
             end = datetime.datetime(2021, 5, 10, int(time.strftime("%H")), int(time.strftime("%M")),
                                     int(time.strftime("%S")))
@@ -90,6 +112,9 @@ def auth_button() -> None:
             wn5.after(1000, update_clock)
 
         def print_timings() -> None:
+            """
+                Calculates and prints the user's timings, and destroys the timing window upon exit.
+            """
             # print("h(",cur_h,") m(",cur_m,') s(',cur_s)
             if int(cur_h) >= 9 and int(str(cur_m)[:-1]) >= 0 and int(cur_s) >= 0:
                 f1.write("Опоздание: " + str(int(cur_h) - 9) + ":" + str(cur_m) + str(cur_s) + '\n')
@@ -107,6 +132,10 @@ def auth_button() -> None:
             f1.close()
 
         def clear_notice() -> None:
+            """
+                Clears active notices and refreshes the notice text field.
+                Handles FileNotFoundError by displaying an error message.
+            """
             try:
                 os.remove("db-notice.txt")
                 txt1.delete(1.0, END)
@@ -249,7 +278,14 @@ def auth_button() -> None:
 
 
 def btn2_button() -> None:
+    """
+        Opens the user registration window with fields to enter required information for registration.
+    """
     def reg_btn() -> None:
+        """
+            Handles user registration by saving the input information to a file.
+            Shows an error if any fields are empty.
+        """
         if len(name_entry.get()) <= 0 or len(last_name_entry.get()) <= 0 or len(login_entry.get()) <= 0 or len(
                 passw_entry.get()) <= 0 or FACE_FILE_NAME == '' or len(code_entry.get()) <= 0:
             mb.showerror("Ошибка", "Заполните все поля!")
@@ -272,12 +308,18 @@ def btn2_button() -> None:
             auth_button()
 
     def face_btn_pressed() -> None:
+        """
+            Opens a file dialog to select an image file, and sets the selected file name to FACE_FILE_NAME.
+        """
         global FACE_FILE_NAME
         FACE_FILE_NAME = fd.askopenfilename()
         print(FACE_FILE_NAME)
         wn2.focus_force()
 
     def voice_btn_pressed() -> None:
+        """
+            Opens a file dialog to select a voice file, and sets the selected file name to VOICE_FILE_NAME.
+        """
         global VOICE_FILE_NAME
         VOICE_FILE_NAME = fd.askopenfilename()
         print(VOICE_FILE_NAME)
@@ -330,12 +372,27 @@ def btn2_button() -> None:
 
 
 def btn3_button() -> None:
+    """
+        Opens the administration panel with login and password input fields if the provided credentials as admin are valid.
+    """
     def main_panel() -> None:
+        """
+            Opens the main panel with options to access the visit journal and create tasks for workers.
+        """
         def jornal() -> None:
+            """
+                Opens the visit journal, allows to view its content, clear the journal and navigate back to the main panel.
+            """
             def back() -> None:
+                """
+                    Closes the visit journal window.
+                """
                 wn6.destroy()
 
             def clear_journal() -> None:
+                """
+                    Clears the visit journal and notifies the user with a success or error message.
+                """
                 try:
                     os.remove("db-time.txt")
                     txt.delete(1.0, END)
@@ -365,16 +422,25 @@ def btn3_button() -> None:
                 wn8.focus_force()
 
         def tasks() -> None:
+            """
+                Opens the tasks window, allowing the user to create tasks for workers and manage them.
+            """
             global last_x
             last_x = 0
 
             def make_tsk() -> None:
+                """
+                    Creates a task entry based on the given number of tasks and handles task management.
+                """
                 btn5['state'] = 'disabled'
                 global last_x
                 var = {}
                 entry_name = ['1', '2', '3', '4', '5']
 
                 def command() -> None:
+                    """
+                        Adds entered tasks to the tasks file, shows an error if any task field is empty, and closes task creation window.
+                    """
                     a = []
                     for i in range(int(spin.get())):
                         if var[i].get() == "":
@@ -390,6 +456,9 @@ def btn3_button() -> None:
                     wn7.destroy()
 
                 def clear() -> None:
+                    """
+                        Removes displayed task entries and enables the create button.
+                    """
                     btn5['state'] = 'normal'
                     for i in range(4):
                         var[i].destroy()
@@ -418,7 +487,13 @@ def btn3_button() -> None:
             btn5.place(x='300', y='144', height=25, width=100)
 
         def notice() -> None:
+            """
+                Opens a window to create a notice, allows user to enter notice text, and saves the text to a file.
+            """
             def write_notices() -> None:
+                """
+                    Writes the entered notice to a file or shows an error message if the text field is empty.
+                """
                 if txt.get("1.0", 'end-1c') != '':
                     f1 = open('db-notice.txt', 'w')
                     f1.write(txt.get("1.0", 'end-1c'))
