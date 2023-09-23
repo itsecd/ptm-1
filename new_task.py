@@ -203,10 +203,10 @@ def auth_button() -> None:
                                     f1 = open('db-notice.txt', 'r')
                                     txt1.insert(INSERT, f1.read())
                                     f1.close()
-                                    clrnr = Button(wn5, text="Очистить", font="15", command=clear_notice).place(x='700',
-                                                                                                                y='450',
-                                                                                                                height=30,
-                                                                                                                width=130)
+                                    clear_notice_button = Button(wn5, text="Очистить", font="15", command=clear_notice).place(x='700',
+                                                                                                                              y='450',
+                                                                                                                              height=30,
+                                                                                                                              width=130)
 
                                 except FileNotFoundError:
                                     txt1.insert(INSERT, "Нет уведомлений")
