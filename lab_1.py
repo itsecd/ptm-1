@@ -146,24 +146,22 @@ def create_dataframe(path_of_csv: str) -> pd.DataFrame:
 
 
 class Encryptor:
-    def cryptWord(self, word) -> str:
+    def crypt_word(self, word) -> str:
         """Шифрование слова
-              :arg:
-              word (str) : слово
-              :return:
-              new_word (str) : зашифрованное слово
+            :arg:
+            word (str) : слово
+            :return:
+            new_word (str) : зашифрованное слово
           """
         if " " not in word:
             new_word = ""
             for i in range(len(word)):
                 char_value = ord(word[i])
                 new_word += chr(char_value + 2)
-
             return new_word
-
         raise ValueError()
 
-    def cryptWordToNumbers(self, word) -> str:
+    def crypt_word_to_numbers(self, word) -> str:
         """Шифрование слова в числа
             :arg:
             word (str) : слово
@@ -172,15 +170,13 @@ class Encryptor:
         """
         if " " in word:
             raise ValueError()
-
         new_word = ""
         for i in range(len(word)):
             char_value = ord(word[i])
             new_word += str(char_value + 2)
-
         return new_word
 
-    def cryptWordWithCharsToReplace(self, word, chars_to_replace) -> str:
+    def crypt_word_with_chars_to_replace(self, word, chars_to_replace) -> str:
         """ Шифрование слова с заменой символов
             :arg:
             word (str) : слово
@@ -198,7 +194,7 @@ class Encryptor:
                     result[i] = chr(char_value + 2)
         return "".join(result)
 
-    def cryptSentence(self, sentence) -> str:
+    def crypt_sentence(self, sentence) -> str:
         """ Шифрование предложения
             :arg:
             sentence (str) : предложение
@@ -209,10 +205,9 @@ class Encryptor:
         for i in range(len(sentence)):
             char_value = ord(sentence[i])
             new_word += chr(char_value + 2)
-
         return new_word
 
-    def getWords(self, sentence) -> list:
+    def get_words(self, sentence) -> list:
         """ Получение списка слов из предложения
             :arg:
             sentence (str) : предложение
@@ -221,7 +216,11 @@ class Encryptor:
         """
         return sentence.split()
 
-    def printWords(self, sentence):
-        words = self.getWords(sentence)
+    def print_words(self, sentence) -> None:
+        """ Вывод слов из предложения
+            :arg:
+            sentence (str) : предложение
+        """
+        words = self.get_words(sentence)
         for word in words:
-            print("<%s>" % word)
+            print(word)
