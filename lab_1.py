@@ -156,10 +156,83 @@ def create_dataframe(path_of_csv: str) -> pd.DataFrame:
     return df
 
 
-if __name__ == '__main__':
-    path_to_csv = "../Laba2/dataset_csv_first.csv"
-    # create_dataframe(path_to_csv)
-    # filter_dataframe_mark_class(create_dataframe(path_to_csv), "Num_class", "0")
-    # filter_dataframe_wight_and_height_and_mark(create_dataframe(path_to_csv), "Image_width", "Image_hight", "Num_class", 400, 400, "0")
-    # group_dataframe_pixel(create_dataframe(path_to_csv))
-    create_histogram(create_dataframe(path_to_csv), "0")
+class Encryptor:
+    def cryptWord(self, word) -> str:
+        """Шифрование слова
+              :arg:
+              word (str) : слово
+              :return:
+              new_word (str) : зашифрованное слово
+          """
+        if " " not in word:
+            new_word = "";
+            for i in range(len(word)):
+                char_value = ord(word[i])
+                new_word += chr(char_value + 2)
+
+            return new_word
+
+        raise ValueError()
+
+    def cryptWordToNumbers(self, word) -> str:
+        """Шифрование слова в числа
+            :arg:
+            word (str) : слово
+            :return:
+            new_word (str) : зашифрованное слово
+        """
+        if " " in word:
+            raise ValueError()
+
+        new_word = "";
+        for i in range(len(word)):
+            char_value = ord(word[i])
+            new_word += str(char_value + 2)
+
+        return new_word
+
+    def cryptWordWithCharsToReplace(self, word, chars_to_replace) -> str:
+        """ Шифрование слова с заменой символов
+            :arg:
+            word (str) : слово
+            chars_to_replace (list) : список символов для замены
+            :return:
+            new_word (str) : зашифрованное слово
+        """
+        if " " in word:
+            raise ValueError()
+        result = list(word)
+        for i in range(len(word)):
+            for j in range(len(chars_to_replace)):
+                if chars_to_replace[j] == word[i]:
+                    char_value = ord(word[i])
+                    result[i] = chr(char_value + 2)
+        return "".join(result)
+
+    def cryptSentence(self, sentence) -> str:
+        """ Шифрование предложения
+            :arg:
+            sentence (str) : предложение
+            :return:
+            new_word (str) : зашифрованное предложение
+        """
+        new_word = "";
+        for i in range(len(sentence)):
+            char_value = ord(sentence[i])
+            new_word += chr(char_value + 2)
+
+        return new_word
+
+    def getWords(self, sentence) -> list:
+        """ Получение списка слов из предложения
+            :arg:
+            sentence (str) : предложение
+            :return:
+            words (list) : список слов
+        """
+        return sentence.split()
+
+    def printWords(self, sentence):
+        words = self.getWords(sentence)
+        for word in words:
+            print("<%s>" % word)
