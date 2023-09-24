@@ -19,7 +19,6 @@ def random_copy(class_name):
                 file_writer.writerow([get_path.get_absolute_way(class_name, i, "download"), get_path.random_relative_way(rand_number), class_name])
 
 
-
 def main():
         print("Start")
         if not os.path.isdir("dataset/random_dataset"):

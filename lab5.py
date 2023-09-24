@@ -30,7 +30,6 @@ class CustomImageDataset(Dataset):
     return image, label
   
 
-
 class CNN(nn.Module):
     def __init__(self) -> None:
         super(CNN, self).__init__()
