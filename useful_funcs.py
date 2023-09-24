@@ -70,7 +70,7 @@ def search(initial, processes):
             for result in p.map(partial(checking_hash, int(b), initial), range(1000000)):
                 if result:
                     logging.info('we have found ' + result + ' and have terminated pool')
-                    p.terminate()
+                    p.terminate() 
                     f = 1
                     logging.info('Найденная карта лежит по пути ' + initial["found_card"])
                     data = {}
