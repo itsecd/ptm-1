@@ -28,19 +28,12 @@ if DEVICE =='cuda':
     torch.cuda.manual_seed_all(1234)
 
 
+def create_df(file_path = 'dataset.csv'):
+    df = pd.read_csv(file_path, sep = ' ')
+    df = df.rename(columns={'Absolute_way': 'absolute_way'})
+    df = df.rename(columns={'Class': 'class_img'})
+    return df
 
-df = pd.read_csv('dataset.csv', sep = ' ')
-df = df.rename(columns={'Absolute_way': 'absolute_way'})
-df = df.rename(columns={'Class': 'class_img'})
-
-if not os.path.isdir(TRAIN_PATH):
-    os.mkdir(TRAIN_PATH)
-
-if not os.path.isdir(TEST_PATH):
-    os.mkdir(TEST_PATH)
-
-if not os.path.isdir(VAL_PATH):
-    os.mkdir(VAL_PATH)
 
 def load_train(df: pd.core.frame.DataFrame, path: str, i: int) -> None:
     '''
@@ -71,41 +64,10 @@ def load_test(df: pd.core.frame.DataFrame, path: str, i: int) -> None:
     cv2.imwrite(os.path.join(path, f'{i}.jpg'), image)
 
 
-for i in range(840):
-    load_train(df, TRAIN_PATH, i)
-
-for i in range(840, 945):
-    load_test(df, TEST_PATH, i)
-
-for i in range(945, 1050):
-    load_train(df, VAL_PATH, i)
-
-for i in range(1050, 1890):
-    load_train(df, TRAIN_PATH, i)
-
-for i in range(1890, 1995):
-    load_test(df, TEST_PATH, i)
-
-for i in range(1995, 2100):
-    load_train(df, VAL_PATH, i)
     
 
-train_list = glob.glob(os.path.join(TRAIN_PATH,'*.jpg'))
-test_list = glob.glob(os.path.join(TEST_PATH, '*.jpg'))
 
-train_list, val_list = train_test_split(train_list, test_size=0.1)
 
-random_idx = np.random.randint(1,200,size=10)
-
-fig = plt.figure()
-i=1
-for idx in random_idx:
-    ax = fig.add_subplot(2,5,i)
-    img = cv2.imread(train_list[idx])
-    plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-    i+=1
-
-plt.show()
 
 class ConvNet(nn.Module):
     def __init__(self):
@@ -151,28 +113,42 @@ class ConvNet(nn.Module):
 model = ConvNet().to(DEVICE)
 model.train()
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
+OPTIMIZER = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
-train_transforms =  transforms.Compose([
+def data_preparation():
+    train_list = glob.glob(os.path.join(TRAIN_PATH,'*.jpg'))
+    test_list = glob.glob(os.path.join(TEST_PATH, '*.jpg'))
+
+    train_list, val_list = train_test_split(train_list, test_size=0.1)
+    train_transforms =  transforms.Compose([
+            transforms.Resize((224, 224)),
+            transforms.RandomResizedCrop(224),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+        ])
+
+    val_transforms = transforms.Compose([
+            transforms.Resize((224, 224)),
+            transforms.RandomResizedCrop(224),
+            transforms.RandomHorizontalFlip(),
+            transforms.ToTensor(),
+        ])
+
+    test_transforms = transforms.Compose([   
         transforms.Resize((224, 224)),
         transforms.RandomResizedCrop(224),
         transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
-    ])
+        transforms.ToTensor()
+        ])
+    
+    train_data = dataset(train_list, transform=train_transforms)
+    test_data = dataset(test_list, transform=test_transforms)
+    val_data = dataset(val_list, transform=val_transforms)
 
-val_transforms = transforms.Compose([
-        transforms.Resize((224, 224)),
-        transforms.RandomResizedCrop(224),
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
-    ])
-
-test_transforms = transforms.Compose([   
-    transforms.Resize((224, 224)),
-    transforms.RandomResizedCrop(224),
-    transforms.RandomHorizontalFlip(),
-    transforms.ToTensor()
-    ])
+    train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=BATCH_SIZE, shuffle=True )
+    test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=BATCH_SIZE, shuffle=True)
+    val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=BATCH_SIZE, shuffle=True)
+    return train_loader, test_loader, val_loader
 
 
 
@@ -199,22 +175,13 @@ class dataset(torch.utils.data.Dataset):
         return img_transformed,label
 
 
-train_data = dataset(train_list, transform=train_transforms)
-test_data = dataset(test_list, transform=test_transforms)
-val_data = dataset(val_list, transform=val_transforms)
 
-train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=10, shuffle=True )
-test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=10, shuffle=True)
-val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=10, shuffle=True)
 
-print('Learning rate: 0.001, Batch size: 10')
 
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-criterion = nn.CrossEntropyLoss()
 
-train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=10, shuffle=True )
-test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=10, shuffle=True)
-val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=10, shuffle=True)
+
+
+
 
 def train_loop (train_loader, val_loader, epochs):
     val_loss_list = []
@@ -232,11 +199,11 @@ def train_loop (train_loader, val_loader, epochs):
             label = label.to(DEVICE)
             
             output = model(data)
-            loss = criterion(output, label)
+            loss = nn.CrossEntropyLoss(output, label)
             
-            optimizer.zero_grad()
+            OPTIMIZER.zero_grad()
             loss.backward()
-            optimizer.step()
+            OPTIMIZER.step()
             
             acc = ((output.argmax(dim=1) == label).float().mean())
             epoch_accuracy += acc/len(train_loader)
@@ -257,7 +224,7 @@ def train_loop (train_loader, val_loader, epochs):
                 label = label.to(DEVICE)
                 
                 val_output = model(data)
-                val_loss = criterion(val_output,label)
+                val_loss = nn.CrossEntropyLoss(val_output,label)
                 
                 acc = ((val_output.argmax(dim=1) == label).float().mean())
                 epoch_val_accuracy += acc/ len(val_loader)
@@ -294,118 +261,82 @@ def train_loop (train_loader, val_loader, epochs):
     plt.plot(num_epochs, val_accuracy_list, 'go', label = 'accuracy')
     plt.legend(loc=2, prop={'size': 20}) 
 
-train_loop(train_loader, val_loader, EPOCHS)
 
-print('Learning rate: 0.0005, Batch size: 10')
 
-optimizer = torch.optim.Adam(model.parameters(), lr=0.0005)
 
-train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=10, shuffle=True )
-test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=10, shuffle=True)
-val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=10, shuffle=True)
 
-train_loop(train_loader, val_loader, EPOCHS)
+def show_work(test_loader):
+    polarbears_probs = []
+    model.eval()
+    with torch.no_grad():
+        for images, labels in test_loader:
+            images = images.to(DEVICE)
+            preds = model(images)
+            preds_list = F.softmax(preds, dim=1)[:, 1].tolist()
+            polarbears_probs += list(zip(labels, preds_list))
 
-print('Learning rate: 0.0007, Batch size: 10')
+    polarbears_probs.sort(key = lambda x : int(x[0])) #new      
+    idx = list(map(lambda x: x[0],polarbears_probs))
+    prob = list(map(lambda x: x[1],polarbears_probs))
 
-optimizer = torch.optim.Adam(model.parameters(), lr=0.0007)
+    submission = pd.DataFrame({'id':idx,'label':prob})
 
-train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=10, shuffle=True )
-test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=10, shuffle=True)
-val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=10, shuffle=True)
+    class_ = {0: 'brownbear', 1: 'polarbear'}
 
-train_loop(train_loader, val_loader, EPOCHS)
+    fig, axes = plt.subplots(2, 5, figsize=(20, 12), facecolor='w')
 
-print('Learning rate: 0.001, Batch size: 20')
-
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-
-train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=20, shuffle=True )
-test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=20, shuffle=True)
-val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=20, shuffle=True)
-
-train_loop(train_loader, val_loader, EPOCHS)
-
-print('Learning rate: 0.001, Batch size: 20')
-
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-
-train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=20, shuffle=True )
-test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=20, shuffle=True)
-val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=20, shuffle=True)
-
-train_loop(train_loader, val_loader, EPOCHS)
-
-polarbears_probs = []
-model.eval()
-with torch.no_grad():
-    for images, labels in test_loader:
-        images = images.to(DEVICE)
-        preds = model(images)
-        preds_list = F.softmax(preds, dim=1)[:, 1].tolist()
-        polarbears_probs += list(zip(labels, preds_list))
-
-polarbears_probs.sort(key = lambda x : int(x[0])) #new      
-idx = list(map(lambda x: x[0],polarbears_probs))
-prob = list(map(lambda x: x[1],polarbears_probs))
-
-submission = pd.DataFrame({'id':idx,'label':prob})
-
-class_ = {0: 'brownbear', 1: 'polarbear'}
-
-fig, axes = plt.subplots(2, 5, figsize=(20, 12), facecolor='w')
-
-for ax in axes.ravel():
-    
-    i = random.choice(submission['id'].values)
-    
-    label = submission.loc[submission['id'] == i, 'label'].values[0]
-    if label > 0.5:
-        label = 1
-    else:
-        label = 0
+    for ax in axes.ravel():
         
-    img_path = os.path.join(TEST_PATH, f'{i}.jpg')
-    img = Image.open(img_path)
-    
-    ax.set_title(class_[label])
-    ax.imshow(img)
-
-    torch.save(model.state_dict(), 'ConvNetModel.pth')
-
-loaded_model = ConvNet().to(DEVICE)
-loaded_model.load_state_dict(torch.load('ConvNetModel.pth'))
-loaded_model.eval()
-
-brownbears_probs = []
-with torch.no_grad():
-    for images, labels in test_loader:
-        images = images.to(DEVICE)
-        preds = loaded_model(images)
-        preds_list = F.softmax(preds, dim=1)[:, 1].tolist()
-        brownbears_probs += list(zip(labels, preds_list))
+        i = random.choice(submission['id'].values)
         
-idx = list(map(lambda x: x[0],brownbears_probs))
-prob = list(map(lambda x: x[1],brownbears_probs))
-
-submission = pd.DataFrame({'id':idx,'label':prob})
-
-class_ = {0: 'brownbear', 1: 'polarbear'}
-
-fig, axes = plt.subplots(2, 5, figsize=(20, 12), facecolor='w')
-
-for ax in axes.ravel():
-    
-    i = random.choice(submission['id'].values)
-    
-    label = submission.loc[submission['id'] == i, 'label'].values[0]
-    if label > 0.5:
-        label = 1
-    else:
-        label = 0
+        label = submission.loc[submission['id'] == i, 'label'].values[0]
+        if label > 0.5:
+            label = 1
+        else:
+            label = 0
+            
+        img_path = os.path.join(TEST_PATH, f'{i}.jpg')
+        img = Image.open(img_path)
         
-    img_path = os.path.join(TEST_PATH, f'{i}.jpg')
-    img = Image.open(img_path)
-    
-    ax.set_title(class_[label])
-    ax.imshow(img)
+        ax.set_title(class_[label])
+        ax.imshow(img)
+
+def save_and_test(test_loader, path = 'ConvNetModel.pth'):
+    torch.save(model.state_dict(), path)
+
+    loaded_model = ConvNet().to(DEVICE)
+    loaded_model.load_state_dict(torch.load(path))
+    loaded_model.eval()
+
+    brownbears_probs = []
+    with torch.no_grad():
+        for images, labels in test_loader:
+            images = images.to(DEVICE)
+            preds = loaded_model(images)
+            preds_list = F.softmax(preds, dim=1)[:, 1].tolist()
+            brownbears_probs += list(zip(labels, preds_list))
+            
+    idx = list(map(lambda x: x[0],brownbears_probs))
+    prob = list(map(lambda x: x[1],brownbears_probs))
+
+    submission = pd.DataFrame({'id':idx,'label':prob})
+
+    class_ = {0: 'brownbear', 1: 'polarbear'}
+
+    fig, axes = plt.subplots(2, 5, figsize=(20, 12), facecolor='w')
+
+    for ax in axes.ravel():
+        
+        i = random.choice(submission['id'].values)
+        
+        label = submission.loc[submission['id'] == i, 'label'].values[0]
+        if label > 0.5:
+            label = 1
+        else:
+            label = 0
+            
+        img_path = os.path.join(TEST_PATH, f'{i}.jpg')
+        img = Image.open(img_path)
+        
+        ax.set_title(class_[label])
+        ax.imshow(img)
