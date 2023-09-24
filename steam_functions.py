@@ -27,6 +27,7 @@ sellhistcountgoodcoef=None
 steamclientfilenameforrelogin=None
 steamclient=None
 
+
 def loginsteam(steamclientfilename='steamclient.pkl',accountfilename='account.json',steamguardfilename='steamguard.json'):
     log('steamf: loginsteam')
     projectdirectorypath=getprojectdirectorypath()
@@ -49,6 +50,7 @@ def loginsteam(steamclientfilename='steamclient.pkl',accountfilename='account.js
         pickle.dump(steamclient,f)
         encryptfile(steamclientfilename)
 
+
 def reloginsteam(accountfilename='account.json',steamguardfilename='steamguard.json'):
     log('steamf: reloginsteam')
     while True:
@@ -59,6 +61,7 @@ def reloginsteam(accountfilename='account.json',steamguardfilename='steamguard.j
             log('steamf: проблема в функции reloginsteam')
             log(err)
         sleep(5)
+
 
 def initializecoefsforgetitemsactualprice():
     global sellhistcountcoefforgraphicdrop
@@ -90,6 +93,7 @@ def initializecoefsforgetitemsactualprice():
     sellhistcountbadcoef=0.05
     sellhistcountgoodcoef=0.07
 
+
 def getsteampriceforeveryiteminlist(itemslistforsteam,coef):
     log('steamf: getsteampriceforeveryiteminlist')
     initializecoefsforgetitemsactualprice()
@@ -104,6 +108,7 @@ def getsteampriceforeveryiteminlist(itemslistforsteam,coef):
         item.steamprice=itemprice
         item.tmprice=round(itemprice*0.87/coef*10)
         log(f'{item.getname()}: {item.steamprice} : {item.tmprice}\n')
+
 
 def getitemactualprice(item):
     log('steamf: getitemactualprice')
@@ -135,6 +140,7 @@ def getitemactualprice(item):
             return int(round(max(pricegraphic,minsellorder)*100))
         return int(round(pricehistogram*100))
 
+
 def getpricehistory(itemname,gameoption=GameOptions.CS):
     log('steamf: getpricehistory')
     while True:
@@ -150,6 +156,7 @@ def getpricehistory(itemname,gameoption=GameOptions.CS):
 
             sleep(1)
 
+
 def getitemhistogram(item):
     log('steamf: getitemhistogram')
     while True:
@@ -163,6 +170,7 @@ def getitemhistogram(item):
             if not steamclient.is_session_alive():
                 reloginsteam()
             sleep(2)
+
 
 def getitempricegraphic(prices):
     log('steamf: getitempricegraphic')
@@ -186,6 +194,7 @@ def getitempricegraphic(prices):
             return price12h
     return price2days
 
+
 def calculateavgpriceandmore(prices,time2,time1=0):
     log('steamf: calculateavgpriceandmore')
     res=0
@@ -205,6 +214,7 @@ def calculateavgpriceandmore(prices,time2,time1=0):
         return res/count
     return priceaverage
 
+
 def checkgraphicdrop(prices):
     log('steamf: checkgraphicdrop')
     price1=calculateavgpriceandmore(prices,168,48)
@@ -221,6 +231,7 @@ def checkgraphicdrop(prices):
         return True
     return False
 
+
 def checkgraphicboost(prices):
     log('steamf: checkgraphicboost')
     price7days=calculateavgpriceandmore(prices,168,72)
@@ -229,6 +240,7 @@ def checkgraphicboost(prices):
     if price2days/price3days>=coefboost48h72h and price2days/price7days>=coefboost48h168h:
         return True
     return False
+
 
 def getitempricehistogram(prices,histogram):
     log('steamf: getitempricehistogram')
@@ -303,6 +315,7 @@ def getitempricehistogram(prices,histogram):
     else:
         return sellpricebad
 
+
 def getitemsellorderslist(histogram):
     log('steamf: getitemsellorderslist')
     sellorders=histogram['sellordergraph']
@@ -316,12 +329,14 @@ def getitemsellorderslist(histogram):
         reslist.append(resobject)
     return reslist
 
+
 def calculateitemsellcount(prices,time2,time1=0):
     log('steamf: calculateitemsellcount')
     count=0
     for i in range(time1,time2):
         count+=int(prices[-1-i][2])
     return count
+
 
 def getcountofpriceorhigherinhistory24_12_6_3(prices,price):
     log('steamf: getcountofpriceorhigherinhistory24_12_6_3')
@@ -330,6 +345,7 @@ def getcountofpriceorhigherinhistory24_12_6_3(prices,price):
     count3h6h=parsecountofpriceorhigherinhistory(prices,price,6,3)
     count3h=parsecountofpriceorhigherinhistory(prices,price,3)
     return count12h24h,count6h12h,count3h6h,count3h
+
 
 def parsecountofpriceorhigherinhistory(prices,price,time2,time1=0):
     log('steamf: parsecountofpriceorhigherinhistory')
