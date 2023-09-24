@@ -21,12 +21,10 @@ class CustomImageDataset(Dataset):
     path_to_image = self.dataset_info.iloc[index, 0]
     image = cv2.cvtColor(cv2.imread(path_to_image), cv2.COLOR_BGR2RGB)
     label = self.dataset_info.iloc[index, 1]
-
     if self.transform:
       image = self.transform(image)
     if self.target_transform:
       label = self.target_Transform(label)
-      
     return image, label
   
 
@@ -56,14 +54,12 @@ class CNN(nn.Module):
 
 
 def main():
-
     device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
     model = CNN().to(device)
     custom_transforms = torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
                                                         torchvision.transforms.Resize(
                                                             (224, 224)),
                                                         torchvision.transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
-
     train_dataset = CustomImageDataset('annotation.csv', custom_transforms)
     print('end')
 

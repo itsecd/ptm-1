@@ -123,7 +123,6 @@ def create()-> None:
             depth.append(image.shape[2])
         except:
             pass
-
     dataframe["hight"] = pd.Series(hight)
     dataframe["width"] = pd.Series(width)
     dataframe["depth"] = pd.Series(depth)
