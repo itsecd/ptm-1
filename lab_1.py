@@ -165,7 +165,7 @@ class Encryptor:
               new_word (str) : зашифрованное слово
           """
         if " " not in word:
-            new_word = "";
+            new_word = ""
             for i in range(len(word)):
                 char_value = ord(word[i])
                 new_word += chr(char_value + 2)
@@ -184,7 +184,7 @@ class Encryptor:
         if " " in word:
             raise ValueError()
 
-        new_word = "";
+        new_word = ""
         for i in range(len(word)):
             char_value = ord(word[i])
             new_word += str(char_value + 2)
@@ -216,7 +216,7 @@ class Encryptor:
             :return:
             new_word (str) : зашифрованное предложение
         """
-        new_word = "";
+        new_word = ""
         for i in range(len(sentence)):
             char_value = ord(sentence[i])
             new_word += chr(char_value + 2)
