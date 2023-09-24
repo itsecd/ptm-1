@@ -7,7 +7,11 @@ import cv2
 
 
 def create_histogram(df: pd.DataFrame, mark_class: int) -> None:
-
+    """ Создание гистограммы по метке класса и ее вывод
+        :arg :
+            df (pd.DataFrame) : массив данных
+            mark_class (int) : метка класса
+    """
     path_image_list = filter_dataframe_mark_class(df, "Num_class", mark_class)
     i = random.randint(0, len(path_image_list))
     path_way = path_image_list.iloc[i, 0]
@@ -25,7 +29,13 @@ def create_histogram(df: pd.DataFrame, mark_class: int) -> None:
 
 
 def read_csv(name_of_csv: str, num_of_columns: int):
-
+    """ Чтение csv файла по колонкам
+        :arg :
+            name_of_csv (str) : название csv файла
+            num_of_columns (int) : номер колонки
+        :return
+            list of lists
+    """
     with open(name_of_csv, 'r') as file:
         reader = csv.reader(file, delimiter='\t')
         read_list = []
@@ -40,7 +50,13 @@ def read_csv(name_of_csv: str, num_of_columns: int):
 
 
 def filter_dataframe_mark_class(df: pd.DataFrame, column: str, value: int) -> pd.DataFrame:
-
+    """Фильтрация по метке класса
+        :arg :
+            df (pd.DataFrame) : массив данных
+            column (str) : название колонки
+            value (int) : метка класса
+        :return: df (pd.DataFrame) : массив данных
+    """
     df = df[df[column] == value]
     print(df)
     # save dataframe to csv file
@@ -50,7 +66,18 @@ def filter_dataframe_mark_class(df: pd.DataFrame, column: str, value: int) -> pd
 
 def filter_dataframe_wight_and_height_and_mark(df: pd.DataFrame, column1: str, column2: str, column3: str, value1: int,
                                                value2: int, value3: int) -> pd.DataFrame:
-
+    """ Фильтрация по ширине, высоте и метке класса
+        :arg:
+            df (pd.DataFrame) : массив данных
+            column1 (str) : название колонки 1
+            column2 (str) : название колонки 2
+            column3 (str) : название колонки 3
+            value1 (int) : граница фильтрации 1
+            value2 (int) : граница фильтрации 2
+            value3 (int) : граница фильтрации 3
+        :return:
+            df (pd.DataFrame) : массив данных
+    """
     df = df[(df[column1] <= value1) & (df[column2] <= value2) & (df[column3] == value3)]
     print(df)
     # save dataframe to csv file
@@ -58,8 +85,13 @@ def filter_dataframe_wight_and_height_and_mark(df: pd.DataFrame, column1: str, c
     return df
 
 
-def group_dataframe_pixel(df: pd.DataFrame) -> pd.DataFrame :
-
+def group_dataframe_pixel(df: pd.DataFrame) -> pd.DataFrame:
+    """Группировка по количеству пикселей
+        :arg:
+            df (pd.DataFrame) : массив данных
+        :return:
+            df (pd.DataFrame) : массив данных
+    """
     # copy dataframe
     df1 = df.copy()
     # rename column
@@ -76,7 +108,12 @@ def group_dataframe_pixel(df: pd.DataFrame) -> pd.DataFrame :
 
 
 def create_dataframe(path_of_csv: str) -> pd.DataFrame:
-
+    """Создание dataframe из csv файла
+        :arg:
+            path_of_csv (str): путь к файлу csv
+        :return:
+            df (pd.DataFrame) : массив данных
+    """
     list_abs_way = read_csv(path_of_csv, 1)
     list_name_class = read_csv(path_of_csv, 3)
     list_mark = ["Num_class"]
