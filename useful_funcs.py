@@ -8,7 +8,7 @@ from time import time
 
 cores = mp.cpu_count()
 
-def serialisationto_Json(filename, key):
+def serialisation_to_json(filename, key):
 
 
     with open(filename, "w") as f:
@@ -24,19 +24,19 @@ def luhn(init):
     except FileNotFoundError:
           logging.error(f"{init['found_card']} not found")
     logging.info(data)
-    NMBr = str(data["card_number"])
-    NMBr = list(map(int, NMBr))
-    if len(NMBr) != 16:
-
+    number = str(data["card_number"])
+    number = list(map(int, number))
+    if len(number) != 16:
+         
 
          logging.info("Номер не корректен")
          data["luhn_check"] = "no result"
     else:
 
 
-        last = NMBr[15]
-        NMBr.pop()
-        for n in NMBr:
+        last = number[15]
+        number.pop()
+        for n in number:
             i = n * 2
             if i > 9:
                 res += i % 10 + i // 10
@@ -62,7 +62,7 @@ def luhn(init):
           logging.error(f"{init['found_card']} not found")
 
 def search(initial, processes):
-    f = 0
+    flag = 0
     with mp.Pool(processes) as p:
         for b in initial["first_digits"]:
             logging.info(b)
@@ -71,31 +71,31 @@ def search(initial, processes):
                 if result:
                     logging.info('we have found ' + result + ' and have terminated pool')
                     p.terminate()
-                    f = 1
+                    flag = 1
                     logging.info('Найденная карта лежит по пути ' + initial["found_card"])
                     data = {}
                     data["card_number"] = f"{result}"
                     data["luhn_check"] = "no result"
                     try:
                         with open(initial["found_card"], 'w') as f:
-
+                                
 
                                 json.dump(data, f)
                     except FileNotFoundError:
                         logging.error(f"{initial['found_card']} not found")
                     break
-            if f == 1:
+            if flag == 1:
                 break
-    if f == 0:
+    if flag == 0:
         logging.info('Карта не найдена')    
 
-def cH(bin, initial, number):
+def checking_hash(bin, initial, number):
 
     if hashlib.sha3_224(f'{bin}{number:06d}{initial["last_digits"]}'.encode()).hexdigest() == initial["hash"]:
         return f'{bin}{number:06d}{initial["last_digits"]}'
-
-def sS(initial: dict):
-
+    
+def save_stat(initial: dict):
+   
     time_ = []
     for i in range(int(initial["processes_amount"])):
             start = time()
