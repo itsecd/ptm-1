@@ -1,9 +1,9 @@
-import os
-import get_path
-import shutil
 import csv
+import os
 import random
+import shutil
 
+import get_path
 
 
 def random_copy(class_name):

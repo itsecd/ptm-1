@@ -2,8 +2,8 @@ import csv
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-import random
 import pandas as pd
+import random
 
 
 def class_filter(dataframe: pd.DataFrame, class_mark: int)-> pd.DataFrame:

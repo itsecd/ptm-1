@@ -1,13 +1,10 @@
-from typing import Any, Tuple
 import cv2
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
+from typing import Any, Tuple
 import torch
 import torch.nn as nn
-import torch.optim as optim
 import torchvision
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import Dataset
 
 
 class CustomImageDataset(Dataset):
