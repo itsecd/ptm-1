@@ -15,33 +15,32 @@ from torchvision import transforms
 
 
 
-
-learning_rate = 0.001
-batch_size = 10
-epochs = 10
-
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
+TRAIN_PATH = 'E:\dataset\\train'
+TEST_PATH = 'E:\dataset\\test'
+VAL_PATH = 'E:\dataset\\val'
+LEARNING_RATE = 0.001
+BATCH_SIZE = 10
+EPOCHS = 10
+DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 torch.manual_seed(1234)
-if device =='cuda':
+if DEVICE =='cuda':
     torch.cuda.manual_seed_all(1234)
 
-train_path = 'E:\dataset\\train'
-test_path = 'E:\dataset\\test'
-val_path = 'E:\dataset\\val'
+
 
 df = pd.read_csv('dataset.csv', sep = ' ')
 df = df.rename(columns={'Absolute_way': 'absolute_way'})
 df = df.rename(columns={'Class': 'class_img'})
 
-if not os.path.isdir(train_path):
-    os.mkdir(train_path)
+if not os.path.isdir(TRAIN_PATH):
+    os.mkdir(TRAIN_PATH)
 
-if not os.path.isdir(test_path):
-    os.mkdir(test_path)
+if not os.path.isdir(TEST_PATH):
+    os.mkdir(TEST_PATH)
 
-if not os.path.isdir(val_path):
-    os.mkdir(val_path)
+if not os.path.isdir(VAL_PATH):
+    os.mkdir(VAL_PATH)
 
 def load_train(df: pd.core.frame.DataFrame, path: str, i: int) -> None:
     '''
@@ -73,26 +72,26 @@ def load_test(df: pd.core.frame.DataFrame, path: str, i: int) -> None:
 
 
 for i in range(840):
-    load_train(df, train_path, i)
+    load_train(df, TRAIN_PATH, i)
 
 for i in range(840, 945):
-    load_test(df, test_path, i)
+    load_test(df, TEST_PATH, i)
 
 for i in range(945, 1050):
-    load_train(df, val_path, i)
+    load_train(df, VAL_PATH, i)
 
 for i in range(1050, 1890):
-    load_train(df, train_path, i)
+    load_train(df, TRAIN_PATH, i)
 
 for i in range(1890, 1995):
-    load_test(df, test_path, i)
+    load_test(df, TEST_PATH, i)
 
 for i in range(1995, 2100):
-    load_train(df, val_path, i)
+    load_train(df, VAL_PATH, i)
     
 
-train_list = glob.glob(os.path.join(train_path,'*.jpg'))
-test_list = glob.glob(os.path.join(test_path, '*.jpg'))
+train_list = glob.glob(os.path.join(TRAIN_PATH,'*.jpg'))
+test_list = glob.glob(os.path.join(TEST_PATH, '*.jpg'))
 
 train_list, val_list = train_test_split(train_list, test_size=0.1)
 
@@ -149,10 +148,10 @@ class ConvNet(nn.Module):
         out = self.fc2(out)
         return out
 
-model = ConvNet().to(device)
+model = ConvNet().to(DEVICE)
 model.train()
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 train_transforms =  transforms.Compose([
         transforms.Resize((224, 224)),
@@ -217,7 +216,6 @@ train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=10, 
 test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=10, shuffle=True)
 val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=10, shuffle=True)
 
-epochs = 10
 def train_loop (train_loader, val_loader, epochs):
     val_loss_list = []
     val_accuracy_list = []
@@ -230,8 +228,8 @@ def train_loop (train_loader, val_loader, epochs):
         epoch_accuracy = 0
 
         for data, label in train_loader:
-            data = data.to(device)
-            label = label.to(device)
+            data = data.to(DEVICE)
+            label = label.to(DEVICE)
             
             output = model(data)
             loss = criterion(output, label)
@@ -255,8 +253,8 @@ def train_loop (train_loader, val_loader, epochs):
             epoch_val_loss =0
 
             for data, label in val_loader:
-                data = data.to(device)
-                label = label.to(device)
+                data = data.to(DEVICE)
+                label = label.to(DEVICE)
                 
                 val_output = model(data)
                 val_loss = criterion(val_output,label)
@@ -296,7 +294,7 @@ def train_loop (train_loader, val_loader, epochs):
     plt.plot(num_epochs, val_accuracy_list, 'go', label = 'accuracy')
     plt.legend(loc=2, prop={'size': 20}) 
 
-train_loop(train_loader, val_loader, epochs)
+train_loop(train_loader, val_loader, EPOCHS)
 
 print('Learning rate: 0.0005, Batch size: 10')
 
@@ -306,7 +304,7 @@ train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=10, 
 test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=10, shuffle=True)
 val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=10, shuffle=True)
 
-train_loop(train_loader, val_loader, epochs)
+train_loop(train_loader, val_loader, EPOCHS)
 
 print('Learning rate: 0.0007, Batch size: 10')
 
@@ -316,7 +314,7 @@ train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=10, 
 test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=10, shuffle=True)
 val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=10, shuffle=True)
 
-train_loop(train_loader, val_loader, epochs)
+train_loop(train_loader, val_loader, EPOCHS)
 
 print('Learning rate: 0.001, Batch size: 20')
 
@@ -326,7 +324,7 @@ train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=20, 
 test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=20, shuffle=True)
 val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=20, shuffle=True)
 
-train_loop(train_loader, val_loader, epochs)
+train_loop(train_loader, val_loader, EPOCHS)
 
 print('Learning rate: 0.001, Batch size: 20')
 
@@ -336,13 +334,13 @@ train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=20, 
 test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=20, shuffle=True)
 val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=20, shuffle=True)
 
-train_loop(train_loader, val_loader, epochs)
+train_loop(train_loader, val_loader, EPOCHS)
 
 polarbears_probs = []
 model.eval()
 with torch.no_grad():
     for images, labels in test_loader:
-        images = images.to(device)
+        images = images.to(DEVICE)
         preds = model(images)
         preds_list = F.softmax(preds, dim=1)[:, 1].tolist()
         polarbears_probs += list(zip(labels, preds_list))
@@ -367,7 +365,7 @@ for ax in axes.ravel():
     else:
         label = 0
         
-    img_path = os.path.join(test_path, f'{i}.jpg')
+    img_path = os.path.join(TEST_PATH, f'{i}.jpg')
     img = Image.open(img_path)
     
     ax.set_title(class_[label])
@@ -375,14 +373,14 @@ for ax in axes.ravel():
 
     torch.save(model.state_dict(), 'ConvNetModel.pth')
 
-loaded_model = ConvNet().to(device)
+loaded_model = ConvNet().to(DEVICE)
 loaded_model.load_state_dict(torch.load('ConvNetModel.pth'))
 loaded_model.eval()
 
 brownbears_probs = []
 with torch.no_grad():
     for images, labels in test_loader:
-        images = images.to(device)
+        images = images.to(DEVICE)
         preds = loaded_model(images)
         preds_list = F.softmax(preds, dim=1)[:, 1].tolist()
         brownbears_probs += list(zip(labels, preds_list))
@@ -406,7 +404,7 @@ for ax in axes.ravel():
     else:
         label = 0
         
-    img_path = os.path.join(test_path, f'{i}.jpg')
+    img_path = os.path.join(TEST_PATH, f'{i}.jpg')
     img = Image.open(img_path)
     
     ax.set_title(class_[label])
