@@ -37,7 +37,7 @@ class dataset(torch.utils.data.Dataset):
 
         self.file_list = file_list
         self.transform = transform
-        
+
     def __len__(self) -> int:
         '''
         Возвращает количество данных.
@@ -47,7 +47,7 @@ class dataset(torch.utils.data.Dataset):
 
         self.filelength = len(self.file_list)
         return self.filelength
-    
+
     def __getitem__(self, idx: int) -> tuple:
         '''
         Производит предобработку выбранного файла.
@@ -56,7 +56,7 @@ class dataset(torch.utils.data.Dataset):
         Возвращаемое значение:
             img_transformed, label: кортеж из преобразованной картинки и её метки
         '''
-        
+
         img_path = self.file_list[idx]
         img = Image.open(img_path)
         img_transformed = self.transform(img)
@@ -65,7 +65,7 @@ class dataset(torch.utils.data.Dataset):
             label = 1
         elif label == 'brownbears':
             label = 0
-        return img_transformed,label
+        return img_transformed, label
 
 
 def create_df(file_path: str) -> pd.core.frame.DataFrame:
@@ -77,7 +77,7 @@ def create_df(file_path: str) -> pd.core.frame.DataFrame:
         df(pd.core.frame.DataFrame): полученный датафрейм
     '''
 
-    df = pd.read_csv(file_path, sep = ' ')
+    df = pd.read_csv(file_path, sep=' ')
     df = df.rename(columns={'Absolute_way': 'absolute_way'})
     df = df.rename(columns={'Class': 'class_img'})
     return df
@@ -108,10 +108,10 @@ def load_test(df: pd.core.frame.DataFrame, path: str, i: int) -> None:
 
     image_path = df.absolute_way[i]
     image = cv2.imread(image_path)
-    if i - 840 > 104: 
+    if i - 840 > 104:
         i = i - 1785
     else:
-        i = i -840
+        i = i - 840
     cv2.imwrite(os.path.join(path, f'{i}.jpg'), image)
 
 
@@ -123,39 +123,43 @@ def data_preparation() -> tuple:
     '''
 
     torch.manual_seed(1234)
-    if DEVICE =='cuda':
+    if DEVICE == 'cuda':
         torch.cuda.manual_seed_all(1234)
-    train_list = glob.glob(os.path.join(TRAIN_PATH,'*.jpg'))
+    train_list = glob.glob(os.path.join(TRAIN_PATH, '*.jpg'))
     test_list = glob.glob(os.path.join(TEST_PATH, '*.jpg'))
     train_list, val_list = train_test_split(train_list, test_size=0.1)
-    train_transforms =  transforms.Compose([
-            transforms.Resize((224, 224)),
-            transforms.RandomResizedCrop(224),
-            transforms.RandomHorizontalFlip(),
-            transforms.ToTensor(),
-        ])
+    train_transforms = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ])
     val_transforms = transforms.Compose([
-            transforms.Resize((224, 224)),
-            transforms.RandomResizedCrop(224),
-            transforms.RandomHorizontalFlip(),
-            transforms.ToTensor(),
-        ])
-    test_transforms = transforms.Compose([   
+        transforms.Resize((224, 224)),
+        transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ])
+    test_transforms = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.RandomResizedCrop(224),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor()
-        ])
+    ])
     train_data = dataset(train_list, transform=train_transforms)
     test_data = dataset(test_list, transform=test_transforms)
     val_data = dataset(val_list, transform=val_transforms)
-    train_loader = torch.utils.data.DataLoader(dataset = train_data, batch_size=BATCH_SIZE, shuffle=True )
-    test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=BATCH_SIZE, shuffle=True)
-    val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=BATCH_SIZE, shuffle=True)
+    train_loader = torch.utils.data.DataLoader(
+        dataset=train_data, batch_size=BATCH_SIZE, shuffle=True)
+    test_loader = torch.utils.data.DataLoader(
+        dataset=test_data, batch_size=BATCH_SIZE, shuffle=True)
+    val_loader = torch.utils.data.DataLoader(
+        dataset=val_data, batch_size=BATCH_SIZE, shuffle=True)
     return train_loader, test_loader, val_loader
 
 
-def train_loop (train_loader: torch.utils.data.Dataset, val_loader: torch.utils.data.Dataset, epochs: int) -> None:
+def train_loop(train_loader: torch.utils.data.Dataset, 
+               val_loader: torch.utils.data.Dataset, epochs: int) -> None:
     '''
     Цикл обучения модели.
     Аргументы:
@@ -184,24 +188,27 @@ def train_loop (train_loader: torch.utils.data.Dataset, val_loader: torch.utils.
             epoch_loss += loss/len(train_loader)
         loss_list.append(epoch_loss.item())
         accuracy_list.append(epoch_accuracy.item())
-        print('Epoch : {}, train accuracy : {}, train loss : {}'.format(epoch+1, epoch_accuracy,epoch_loss))
+        print('Epoch : {}, train accuracy : {}, train loss : {}'.format(
+            epoch+1, epoch_accuracy, epoch_loss))
         with torch.no_grad():
-            epoch_val_accuracy=0
-            epoch_val_loss =0
+            epoch_val_accuracy = 0
+            epoch_val_loss = 0
             for data, label in val_loader:
                 data = data.to(DEVICE)
                 label = label.to(DEVICE)
                 val_output = MODEL(data)
-                val_loss = nn.CrossEntropyLoss(val_output,label)
+                val_loss = nn.CrossEntropyLoss(val_output, label)
                 acc = ((val_output.argmax(dim=1) == label).float().mean())
-                epoch_val_accuracy += acc/ len(val_loader)
-                epoch_val_loss += val_loss/ len(val_loader)
+                epoch_val_accuracy += acc / len(val_loader)
+                epoch_val_loss += val_loss / len(val_loader)
             val_loss_list.append(epoch_val_loss.item())
             val_accuracy_list.append(epoch_val_accuracy.item())
-            print('Epoch : {}, val_accuracy : {}, val_loss : {}'.format(epoch+1, epoch_val_accuracy,epoch_val_loss))
-    
+            print('Epoch : {}, val_accuracy : {}, val_loss : {}'.format(
+                epoch+1, epoch_val_accuracy, epoch_val_loss))
 
-def show_results(epochs: int, loss_list: list, accuracy_list: list, val_loss_list: list, val_accuracy_list: list) -> None:
+
+def show_results(epochs: int, loss_list: list, accuracy_list: list, 
+                 val_loss_list: list, val_accuracy_list: list) -> None:
     '''
     Выводит результаты обучения на графиках.
     Аргументы:
@@ -217,22 +224,22 @@ def show_results(epochs: int, loss_list: list, accuracy_list: list, val_loss_lis
     plt.title('Plots for train')
     plt.xlabel('Epochs')
     plt.ylabel('Value')
-    fig.add_subplot(1,2,1)
-    plt.plot(num_epochs, loss_list, 'ro', label = 'loss')
-    plt.legend(loc=2, prop={'size': 20}) 
-    fig.add_subplot(1,2,2)
-    plt.plot(num_epochs, accuracy_list, 'go', label = 'accuracy')
-    plt.legend(loc=2, prop={'size': 20}) 
+    fig.add_subplot(1, 2, 1)
+    plt.plot(num_epochs, loss_list, 'ro', label='loss')
+    plt.legend(loc=2, prop={'size': 20})
+    fig.add_subplot(1, 2, 2)
+    plt.plot(num_epochs, accuracy_list, 'go', label='accuracy')
+    plt.legend(loc=2, prop={'size': 20})
     fig = plt.figure(figsize=(30, 5))
     plt.title('Plots for valid')
     plt.xlabel('Epochs')
     plt.ylabel('Value')
-    fig.add_subplot(1,2,1)
-    plt.plot(num_epochs, val_loss_list, 'ro', label = 'loss')
-    plt.legend(loc=2, prop={'size': 20}) 
-    fig.add_subplot(1,2,2)
-    plt.plot(num_epochs, val_accuracy_list, 'go', label = 'accuracy')
-    plt.legend(loc=2, prop={'size': 20}) 
+    fig.add_subplot(1, 2, 1)
+    plt.plot(num_epochs, val_loss_list, 'ro', label='loss')
+    plt.legend(loc=2, prop={'size': 20})
+    fig.add_subplot(1, 2, 2)
+    plt.plot(num_epochs, val_accuracy_list, 'go', label='accuracy')
+    plt.legend(loc=2, prop={'size': 20})
 
 
 def show_work(test_loader: torch.utils.data.Dataset) -> None:
@@ -250,19 +257,19 @@ def show_work(test_loader: torch.utils.data.Dataset) -> None:
             preds = MODEL(images)
             preds_list = F.softmax(preds, dim=1)[:, 1].tolist()
             polarbears_probs += list(zip(labels, preds_list))
-    polarbears_probs.sort(key = lambda x : int(x[0]))  
-    idx = list(map(lambda x: x[0],polarbears_probs))
-    prob = list(map(lambda x: x[1],polarbears_probs))
-    submission = pd.DataFrame({'id':idx,'label':prob})
+    polarbears_probs.sort(key=lambda x: int(x[0]))
+    idx = list(map(lambda x: x[0], polarbears_probs))
+    prob = list(map(lambda x: x[1], polarbears_probs))
+    submission = pd.DataFrame({'id': idx, 'label': prob})
     class_ = {0: 'brownbear', 1: 'polarbear'}
     _, axes = plt.subplots(2, 5, figsize=(20, 12), facecolor='w')
-    for ax in axes.ravel():   
+    for ax in axes.ravel():
         i = random.choice(submission['id'].values)
         label = submission.loc[submission['id'] == i, 'label'].values[0]
         if label > 0.5:
             label = 1
         else:
-            label = 0    
+            label = 0
         img_path = os.path.join(TEST_PATH, f'{i}.jpg')
         img = Image.open(img_path)
         ax.set_title(class_[label])
@@ -287,13 +294,13 @@ def save_and_test(test_loader: torch.utils.data.Dataset, path: str) -> None:
             images = images.to(DEVICE)
             preds = loaded_model(images)
             preds_list = F.softmax(preds, dim=1)[:, 1].tolist()
-            brownbears_probs += list(zip(labels, preds_list))          
-    idx = list(map(lambda x: x[0],brownbears_probs))
-    prob = list(map(lambda x: x[1],brownbears_probs))
-    submission = pd.DataFrame({'id':idx,'label':prob})
+            brownbears_probs += list(zip(labels, preds_list))
+    idx = list(map(lambda x: x[0], brownbears_probs))
+    prob = list(map(lambda x: x[1], brownbears_probs))
+    submission = pd.DataFrame({'id': idx, 'label': prob})
     class_ = {0: 'brownbear', 1: 'polarbear'}
     _, axes = plt.subplots(2, 5, figsize=(20, 12), facecolor='w')
-    for ax in axes.ravel():  
+    for ax in axes.ravel():
         i = random.choice(submission['id'].values)
         label = submission.loc[submission['id'] == i, 'label'].values[0]
         if label > 0.5:

@@ -3,7 +3,7 @@ import torch.nn as nn
 
 
 class ConvNet(nn.Module):
-    def __init__(self) -> None: 
+    def __init__(self) -> None:
         '''
         Инициализация параметров модели нейронной сети.
         '''
@@ -40,7 +40,7 @@ class ConvNet(nn.Module):
         Возвращаемое значение:
             out(torch.tensor): финальное предсказание
         '''
-        
+
         out = self.layer1(x)
         out = self.layer2(out)
         out = self.layer3(out)
