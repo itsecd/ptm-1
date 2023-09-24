@@ -7,9 +7,16 @@ from progress.bar import IncrementalBar
 from tqdm import trange
 
 
-def read_cicle(filename: str, Solder: bool):
+def read_cicle(filename: str, solder: bool) -> list:
+    """
+    Функция формирует список словарей с данными о студентах
+    Функция возвращает этот самый список
 
-    information = []  # список информации о студентах
+    filename - путь к excel-файлу
+    solder - флаг, указывающий принадлежность таблицы
+             (с данными о солдатах или об офицерах)
+    """
+    students_inform = []
     column_names = [
         "ФГОО ВО в котором обучается студент",  # 1
         "ФГОО ВО при которой создан ВУЦ",  # 2
@@ -56,107 +63,136 @@ def read_cicle(filename: str, Solder: bool):
         "Приказ о отчислении",  # 43
         "Причина отчисления"  # 44
     ]
-    if Solder:
+    if solder:
         column_names.insert(2, "Код должности")
     wb = op.load_workbook(filename, data_only=True)
     sheet = wb.active
     bar = IncrementalBar(" ", max=sheet.max_row - 4)
-    for student_number in range(5, sheet.max_row + 1):
-
-        column_students = []  # список значений студента в этих столбцах
-        for i in range(1, sheet.max_column + 1):
-            column_students.append(sheet.cell(row=student_number, column=i).value)
-        tmp = dict(zip(column_names, column_students))
-        if Solder and str(tmp['Код должности']) != '256':
-            tmp_vuc = tmp['Код должности']
-            tmp['Код должности'] = '256'
-            tmp['ВУС'] = tmp_vuc
-
-        information.append(tmp)  # создаем из списка имён столбцов и список значений студента словарик  и добавляем каждый словарик в список information
-
+    for student in range(5, sheet.max_row + 1):
+        """
+        Создаем из списка имён столбцов column_names и
+        списка значений студента student_data словарик и
+        добавляем каждый словарик в список students_inform
+        """
+        student_data = []
+        for data in range(1, sheet.max_column + 1):
+            student_data.append(sheet.cell(row=student, column=data).value)
+        tmp = dict(zip(column_names, student_data))
+        if solder and str(tmp["Код должности"]) != "256":
+            tmp_vuc = tmp["Код должности"]
+            tmp["Код должности"] = "256"
+            tmp["ВУС"] = tmp_vuc
+        students_inform.append(tmp)
         bar.next()
-    return information
+    return students_inform
 
 
-def read_excel(filename: str):  # функция принимающая имя эксель таблицы
+def read_excel(filename: str) -> list:
+    """
+    Функция формирует список словарей с данными о студентах
+    Функция возвращает этот самый список
+
+    filename - путь к excel-файлу
+    """
     wb = op.load_workbook(filename, data_only=True)
     sheet = wb.active
     if sheet.cell(row=1, column=4).value == "Код должности":
         return read_cicle(filename, True)
     if sheet.cell(row=1, column=4).value == "ОВУ":
         return read_cicle(filename, False)
-
-    information = []  # список информации о студентах
-    column_names = []  # список имён столбцов
+    students_inform = []
+    column_names = []
     for i in range(1, sheet.max_column + 1):
         column_names.append(sheet.cell(row=1, column=i).value)
-
-    for student_number in trange(2, sheet.max_row + 1):  # бежим по каждой строчке
-        column_students = []  # список значений студента в этих столбцах
-        for i in range(1, sheet.max_column + 1):  # бежим по каждому столбцу
-            column_students.append(sheet.cell(row=student_number, column=i).value)  # добавляем в список значений студента текущее значение студента
-        tmp = dict(zip(column_names, column_students))
+    for student in trange(2, sheet.max_row + 1):
+        """
+        Создаем из списка имён столбцов column_names и
+        списка значений студента student_data словарик и
+        добавляем каждый словарик в список students_inform
+        """
+        student_data = []
+        for data in range(1, sheet.max_column + 1):
+            student_data.append(sheet.cell(row=student, column=data).value)
+        tmp = dict(zip(column_names, student_data))
         for elem in tmp.values():
-            if str(elem)[:5] == 'солда' or str(elem)[:5] == 'рядов':
-                if 'Код должности' in tmp.keys() and 'ВУС' in tmp.keys() != '256':
-                    tmp_vuc = tmp['Код должности']
-                    tmp['Код должности'] = '256'
-                    tmp['ВУС'] = tmp_vuc
-
-        information.append(tmp)  # создаем из списка имён столбцов и список значений студента словарик  и добавляем каждый словарик в список information
-    return information  # вовзращаем список из словарей
-
-
-def sum(list1, list2):  # функция сложения двух списков из двух эксель таблиц
-
-    list1 = uniq_list(list1)
-    list2 = uniq_list(list2)
-    bar = IncrementalBar(" ", max=len(list1))
-
-    tmp2 = list2
-    for elem1 in list1:  # для каждого элемента из первой таблицы
-        for elem2 in list2:  # для каждого элемента из второйтаблицы
-            # теперь проверяем есть ли среди двух таблиц повторяющийся студент
-
-            if str(elem1.get("Фамилия")).lower().strip() == str(elem2.get("Фамилия")).lower().strip():  # если даты равны то затем фамилии,
-                if str(elem1.get("Отчество")).lower().strip() == str(elem2.get("Отчество")).lower().strip():
-                    if str(elem1.get("Имя")).lower().strip() == str(elem2.get("Имя")).lower().strip():  # ну если и имена равны то это явно один и тот же человек
-                        value = set(elem2) - set(elem1)  # смотрим разницу между словарями. получитс список ключей второго словаря, которых нет в первом
-                        for new_key in list(value):  # для каждого такого ключа добавляем занчение  в первый словарь
-                            elem1[new_key] = elem2.get(new_key)
-                        tmp2.remove(elem2)  # удаляем значения одинаковых студентов из копии списка2
-        bar.next()  # для отображения прогресса в консоли
-    return list1+tmp2  # возвращаем дополненный первый список
+            if str(elem)[:5] == "солда" or str(elem)[:5] == "рядов":
+                if ("Код должности" in tmp.keys()
+                        and "ВУС" in tmp.keys() != "256"):
+                    tmp_vuc = tmp["Код должности"]
+                    tmp["Код должности"] = "256"
+                    tmp["ВУС"] = tmp_vuc
+        students_inform.append(tmp)
+    return students_inform
 
 
-def uniq_list(information):
-    list1 = []
+def sum(list_one: list, list_two: list) -> list:
+    """
+    Функция сложения двух списков из двух эксель-таблиц
+    Функция возвращает результирующий список
+
+    list_one - первый список
+    list_two - второй список
+    """
+    list_one = uniq_list(list_one)
+    list_two = uniq_list(list_two)
+    bar = IncrementalBar(" ", max=len(list_one))
+
+    tmp = list_two
+    for one in list_one:
+        for two in list_two:
+            if (str(one.get("Фамилия")).lower().strip()
+                    == str(two.get("Фамилия")).lower().strip()):
+                if (str(one.get("Отчество")).lower().strip()
+                        == str(two.get("Отчество")).lower().strip()):
+                    if (str(one.get("Имя")).lower().strip()
+                            == str(two.get("Имя")).lower().strip()):
+                        value = set(two) - set(one)
+                        for new_key in list(value):
+                            one[new_key] = two.get(new_key)
+                        tmp.remove(two)
+        bar.next()
+    return list_one+tmp
+
+
+def uniq_list(information: list) -> list:
+    """
+    Функция отбора уникальных параметров для одного человека
+    Функция возвращает список словарей
+
+    information - список с "разбросанными" параметрами
+    """
+    result = []
     for elem in information:
-        tmp = {key: val for key, val in elem.items() if val and val != ''}
+        tmp = {key: val for key, val in elem.items() if val and val != ""}
         if (len(tmp)) != 0:
-            list1.append(tmp)  # удаляем значения у словарей где None
-    tmp = []  # для индексов дубликатов
-    for i in range(len(list1)-1):
-        for j in range(i+1, len(list1)-2):
+            result.append(tmp)
+    index_dublicate = []
+    for i in range(len(result)-1):
+        for j in range(i+1, len(result)-2):
+            if (str(result[i].get("Имя")).lower().strip()
+                    == str(result[j].get("Имя")).lower().strip()):
+                if (str(result[i].get("Фамилия")).lower().strip()
+                        == str(result[j].get("Фамилия")).lower().strip()):
+                    if (str(result[i].get("Отчество")).lower().strip()
+                            == str(result[j].get("Отчество")).lower().strip()):
+                        if len(result[i]) <= len(result[j]):
+                            value = set(result[j]) - set(result[i])
+                            for new_key in list(value):
+                                result[i][new_key] = result[j].get(new_key)
+                        index_dublicate.append(j)
+    index_dublicate = sorted(index_dublicate)
+    for i in range(len(index_dublicate), 0):
+        result.pop(index_dublicate[i]-i)
+    return result
 
-            if str(list1[i].get("Имя")).lower().strip() == str(list1[j].get("Имя")).lower().strip():
-                if str(list1[i].get("Фамилия")).lower().strip() == str(list1[j].get("Фамилия")).lower().strip():
-                    if str(list1[i].get("Отчество")).lower().strip() == str(list1[j].get("Отчество")).lower().strip():
-                        if len(list1[i]) <= len(list1[j]):
-                            value = set(list1[j]) - set(list1[i])  # смотрим разницу между словарями. получитс список ключей второго словаря, которых нет в первом
-                            for new_key in list(value):  # для каждого такого ключа добавляем занчение  в первый словарь
-                                list1[i][new_key] = list1[j].get(new_key)
-                        tmp.append(j)
-    tmp = sorted(tmp)
 
-    for i in range(len(tmp), 0):
-        list1.pop(tmp[i]-i)
+def write_excel(information: list, number: int) -> None:
+    """
+    Функция записывает данные в excel-таблицу
 
-    return list1
-# для суммирования вспомогаюзая
-
-
-def write_excel(information, number):
+    information - список словарей
+    number - номер опции
+    """
     if number == 1:
         name_column = [
             "ФГОО ВО в котором обучается студент",  # 1
@@ -195,7 +231,8 @@ def write_excel(information, number):
             "Семейное положение",  # 34
             "Количество детей",  # 35
             "Военный комиссариат (по месту жительства)",  # 36
-            "Военный комиссариат (в который будет направлено личное дело)",  # 37
+            "Военный комиссариат"
+            " (в который будет направлено личное дело)",  # 37
             "По призыву",  # 38
             "По контракту",  # 39
             "Примечание",  # 40
@@ -204,23 +241,28 @@ def write_excel(information, number):
             "Приказ о отчислении",  # 43
             "Причина отчисления"  # 44
         ]
-        shutil.copyfile('workprogram/'+'Не трогать!(Шаблон офицеров).xlsx', 'Итоговые таблицы/(Итог)Офицеры.xlsx')
-        wb = op.load_workbook('Итоговые таблицы/(Итог)Офицеры.xlsx', data_only=True)
+        shutil.copyfile(
+            "workprogram/"+"Не трогать!(Шаблон офицеров).xlsx",
+            "Итоговые таблицы/(Итог)Офицеры.xlsx"
+        )
+        wb = op.load_workbook(
+            "Итоговые таблицы/(Итог)Офицеры.xlsx",
+            data_only=True
+        )
         sheet = wb.active
         id = 0
         for j in range(len(information)):
-            vuc = str(information[j].get('ВУС'))
-            program_pdgotovki = str(information[j].get('Программа военной подготовки'))
-            if program_pdgotovki[:2] == 'оф' or vuc == '461000' or vuc == '461100' or vuc == '461200' or vuc == '461300':
-
+            vuc = str(information[j].get("ВУС"))
+            training = str(information[j].get("Программа военной подготовки"))
+            if (training[:2] == "оф" or vuc == "461000"
+                    or vuc == "461100" or vuc == "461200" or vuc == "461300"):
                 for i in range(1, len(name_column)+1):
-                    tmp = ''
+                    tmp = ""
                     if name_column[i-1] in information[j].keys():
                         tmp = information[j][name_column[i-1]]
                     sheet.cell(row=id+5, column=i, value=tmp)
                 id += 1
-        wb.save('Итоговые таблицы/(Итог)Офицеры.xlsx')
-
+        wb.save("Итоговые таблицы/(Итог)Офицеры.xlsx")
     elif number == 2:
         name_column = [
             "ФГОО ВО в котором обучается студент",  # 1
@@ -260,7 +302,8 @@ def write_excel(information, number):
             "Семейное положение",  # 34
             "Количество детей",  # 35
             "Военный комиссариат (по месту жительства)",  # 36
-            "Военный комиссариат (в который будет направлено личное дело)",  # 37
+            "Военный комиссариат"
+            " (в который будет направлено личное дело)",  # 37
             "По призыву",  # 38
             "По контракту",  # 39
             "Примечание",  # 40
@@ -269,96 +312,111 @@ def write_excel(information, number):
             "Приказ о отчислении",  # 43
             "Причина отчисления"  # 44
         ]
-        shutil.copyfile('workprogram/'+'Не трогать!(Шаблон солдат).xlsx', 'Итоговые таблицы/(Итог)Солдаты.xlsx')
-        wb = op.load_workbook('Итоговые таблицы/(Итог)Солдаты.xlsx', data_only=True)
+        shutil.copyfile(
+            "workprogram/"+"Не трогать!(Шаблон солдат).xlsx",
+            "Итоговые таблицы/(Итог)Солдаты.xlsx"
+        )
+        wb = op.load_workbook(
+            "Итоговые таблицы/(Итог)Солдаты.xlsx",
+            data_only=True
+        )
         sheet = wb.active
         id = 0
         for j in range(len(information)):
-            vuc = str(information[j].get('ВУС'))
-            program_pdgotovki = str(information[j].get('Программа военной подготовки'))
-            if program_pdgotovki[:2] == 'со' or program_pdgotovki[:2] == 'ря' or vuc == '220' or vuc == '233' or vuc == '250' or vuc == '262':
+            vuc = str(information[j].get("ВУС"))
+            training = str(information[j].get("Программа военной подготовки"))
+            if (training[:2] == "со" or training[:2] == "ря" or vuc == "220"
+                    or vuc == "233" or vuc == "250" or vuc == "262"):
                 for i in range(1, len(name_column)+1):
-                    tmp = ''
+                    tmp = ""
                     if name_column[i-1] in information[j].keys():
                         tmp = information[j][name_column[i-1]]
                     sheet.cell(row=id+5, column=i, value=tmp)
                 id += 1
-        wb.save('Итоговые таблицы/(Итог)Солдаты.xlsx')
+        wb.save("Итоговые таблицы/(Итог)Солдаты.xlsx")
     elif number == 3:
-        print('своя таблица')
+        print("своя таблица")
     else:
         name_column = []
         for elem in information:
             name_column = name_column + list(elem.keys())
         name_column = list(set(name_column))
-
-        name_column.remove('Фамилия')
-        name_column.remove('Имя')
-        name_column.remove('Отчество')
-        name_column.insert(0, 'Фамилия')
-        name_column.insert(1, 'Имя')
-        name_column.insert(2, 'Отчество')
-
+        name_column.remove("Фамилия")
+        name_column.remove("Имя")
+        name_column.remove("Отчество")
+        name_column.insert(0, "Фамилия")
+        name_column.insert(1, "Имя")
+        name_column.insert(2, "Отчество")
         wb = Workbook()
         ws = wb.active
-
-        # Код, который выводит в первый столбец инфу с первого массива. Нужно сделать +- то же самое для остальных и все по сути.
         for i in range(1, len(name_column)+1):
+            """
+            Код, который выводит в первый столбец инфу с первого массива.
+            Нужно сделать +- то же самое для остальных и все, по сути
+            """
             ws.cell(row=1, column=i, value=name_column[i-1])
-
         for j in range(len(information)):
             for i in range(1, len(name_column)+1):
-                tmp = ''
+                tmp = ""
                 if name_column[i-1] in information[j].keys():
                     tmp = information[j][name_column[i-1]]
                 ws.cell(row=j+2, column=i, value=tmp)
-
         wb.save("Итоговые таблицы/Все данные.xlsx")
 
 
 if __name__ == "__main__":
-    all_files = listdir(getcwd()+'/Таблицы откуда берём информацию')
+    all_files = listdir(getcwd()+"/Таблицы откуда берём информацию")
     excel_name = []
     for elem in all_files:
         filename, file_extension = path.splitext(elem)
-        if file_extension == '.xlsx':
+        if file_extension == ".xlsx":
             excel_name.append(elem)
-
     print("Программа увидела следующие таблицы:")
     for elem in excel_name:
         print(elem)
-    chose = input("------------------------------------------------------------------------------\nПродожить? \n1)Да ")
-    if chose == '1':
+    choose = input(
+        "-------------------------------------------------"
+        "-----------------------------\nПродожить? \n1)Да "
+    )
+    if choose == "1":
         information_list = []
         for elem in excel_name:
-            print('\nЧитаем файл   '+str(elem))
-            information_list.append(read_excel('Таблицы откуда берём информацию/'+elem))
+            print("\nЧитаем файл   "+str(elem))
+            information_list.append(
+                read_excel("Таблицы откуда берём информацию/"+elem)
+            )
         print("\n" * 100)
-        print('Данные успешно собраны')
-        print('Совмещаем данные')
-
+        print("Данные успешно собраны")
+        print("Совмещаем данные")
         if len(information_list) == 1:
             tmp = uniq_list(information_list[0])
             information_list.append(tmp)
             print(len(information_list))
             information_list.pop(0)
-
         while len(information_list) > 1:
             tmp = sum(information_list[0], information_list[1])
             information_list.pop(1)
             information_list.pop(0)
-
             information_list.append(tmp)
         print("\n" * 100)
-        print('Данные совмещены')
+        print("Данные совмещены")
         while True:
-            tmp = input('Какую таблицу создаём?\n1)Две таблицы: Солдаты, Офицеры\n2)Выгрузить все данные в произвольную таблицу ')
-            if tmp == '1':
+            tmp = input(
+                "Какую таблицу создаём?\n1)Две таблицы: Солдаты, Офицеры\n"
+                "2)Выгрузить все данные в произвольную таблицу "
+            )
+            if tmp == "1":
                 write_excel(information_list[0], 1)
                 write_excel(information_list[0], 2)
-                input('Успешно, создали "(Итог)Офицеры.xlsx" и "(Итог)Солдаты.xlsx"  в папке "Итоговые таблицы"')
+                input(
+                    "Успешно, создали '(Итог)Офицеры.xlsx' и "
+                    "'(Итог)Солдаты.xlsx'  в папке 'Итоговые таблицы'"
+                )
             elif tmp == '2':
                 write_excel(information_list[0], 4)
-                input('Успешно,  создали "Все данные.xlsx"  в папке "Итоговые таблицы"')
+                input(
+                    "Успешно,  создали 'Все данные.xlsx' "
+                    "в папке 'Итоговые таблицы'"
+                )
             else:
-                input('Нет такого варианта..')
+                input("Нет такого варианта...")
