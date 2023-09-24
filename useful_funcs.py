@@ -16,8 +16,11 @@ def serialisation_to_json(filename: str, key: bytes)->None:
         filename (str): имя файла в который сериализуется str
         key (bytes): объект, который сериализуется в json
     '''
-    with open(filename, "w") as f:
-        json.dump(list(key), f)
+    try:
+        with open(filename, "w") as f:
+            json.dump(list(key), f)
+    except FileNotFoundError:
+        logging.error(f"{filename} not found")
 
 def luhn(init: dict)->bool:
     """
