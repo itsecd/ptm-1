@@ -57,9 +57,9 @@ def main():
     device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
     model = CNN().to(device)
     custom_transforms = torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
-                                                        torchvision.transforms.Resize(
-                                                            (224, 224)),
-                                                        torchvision.transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+                                                        torchvision.transforms.Resize((224, 224)),
+                                                        torchvision.transforms.Normalize(
+                                                            (0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
     train_dataset = CustomImageDataset('annotation.csv', custom_transforms)
     print('end')
 

@@ -20,8 +20,10 @@ def random_copy(class_name:str)-> None:
             if (os.path.isfile(get_path.get_absolute_way(class_name, i, "download")) == True):
                 while(os.path.isfile(get_path.get_absolute_way(class_name, rand_number, "random")) == True):
                     rand_number = random.randint(0, 10000)
-                shutil.copyfile(get_path.get_absolute_way(class_name, i, "download"), get_path.get_absolute_way(class_name, rand_number, "random"))
-                file_writer.writerow([get_path.get_absolute_way(class_name, i, "download"), get_path.random_relative_way(rand_number), class_name])
+                shutil.copyfile(get_path.get_absolute_way(class_name, i, "download"),
+                                get_path.get_absolute_way(class_name, rand_number, "random"))
+                file_writer.writerow([get_path.get_absolute_way(class_name, i, "download"),
+                                      get_path.random_relative_way(rand_number), class_name])
 
 
 def main():
