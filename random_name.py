@@ -4,7 +4,7 @@ import os
 import shutil
 import csv
 
-from task2 import create_dir
+from copy_dataset import create_dir
 
 
 def get_element(class_name: str) -> generator:
@@ -32,6 +32,6 @@ def create_randomname_file(annotation_name: str, dir_copy: str, dataset_path: st
             counter += 1
 
 
-def run3(annotation_name: str, dir_copy: str) -> None:
+def randomname_file_executer(annotation_name: str, dir_copy: str) -> None:
     """ This function call previous to run it in main"""
     create_randomname_file(annotation_name, dir_copy)

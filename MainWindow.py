@@ -3,10 +3,10 @@ import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
-from task1 import create_csv_annotation
-from task2 import create_copy_dataset
-from task3 import create_randomname_file
-from task5 import IteratorTask1
+from annotation import create_csv_annotation
+from copy_dataset import create_copy_dataset
+from random_name import create_randomname_file
+from iterator import IteratorTask1
 
 
 class Ui_MainWindow(object):

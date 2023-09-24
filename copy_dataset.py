@@ -25,6 +25,6 @@ def create_copy_dataset(dataset_path: str, dir_copy: str, annotation_name: str) 
                     [f"{dataset_item}_{file_name}", dataset_item])
 
 
-def run2(dir_copy: str, annotation_name: str) -> None:
+def copy_dataset_executer(dir_copy: str, annotation_name: str) -> None:
     """ This function call previous to run it in main"""
     create_copy_dataset(dir_copy, annotation_name)
