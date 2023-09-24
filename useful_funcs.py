@@ -8,7 +8,7 @@ from time import time
 
 cores = mp.cpu_count()
 
-def serialisation_to_json(filename, key):
+def serialisation_to_json(filename: str, key: bytes)->None:
     '''
     str сериализуется в json файл
 
@@ -21,7 +21,7 @@ def serialisation_to_json(filename, key):
         json.dump(list(key), f)
 
 
-def luhn(init):
+def luhn(init: dict)->bool:
     """
     Проверяет номер на корректность алгоритмом Луна
     args:
@@ -73,7 +73,7 @@ def luhn(init):
     except FileNotFoundError:
           logging.error(f"{init['found_card']} not found")
 
-def search(initial, processes):
+def search(initial: dict, processes: int)->None:
     """
     Подбирает номер карточки
 
@@ -105,7 +105,7 @@ def search(initial, processes):
     if flag == 0:
         logging.info('Карта не найдена')    
 
-def checking_hash(bin, initial, number):
+def checking_hash(bin: int, initial:dict, number: int)->int:
     """
     Сравнивает хэш полученной карты с уже существующим
 

@@ -10,7 +10,7 @@ from cryptography.hazmat.primitives import padding as sym_padding
 
 
 
-def encrypting(settings, pbar):
+def encrypting(settings: dict, pbar)->None:
     """
     Текст шифруется симметричным шифрованием и зашифрованный текст записывается в файл по заданному пути
 

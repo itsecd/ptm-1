@@ -10,7 +10,7 @@ from cryptography.hazmat.primitives.serialization import load_pem_public_key
 
 
 
-def generating_keys(settings, pbar):
+def generating_keys(settings: dict, pbar)->None:
     """
     Генерируются ключи и записываются в файл по указанному пути
 

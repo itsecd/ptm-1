@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding as sym_padding
 
 
-def decrypting(settings, pbar):
+def decrypting(settings: dict, pbar)->None:
 
     """
     Текст дешифруется и записывается в файл по заданному пути
