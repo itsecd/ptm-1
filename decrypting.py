@@ -10,7 +10,13 @@ from cryptography.hazmat.primitives import padding as sym_padding
 
 def decrypting(settings, pbar):
 
+    """
+    Текст дешифруется и записывается в файл по заданному пути
 
+    Args:
+        settings (dict): пути к файлам
+        pbar: информация о процессе выпонения
+    """
     try:
         with open(settings['private_key'], 'rb') as pem_in:
             private_bytes = pem_in.read()

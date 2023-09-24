@@ -11,7 +11,13 @@ from cryptography.hazmat.primitives.serialization import load_pem_public_key
 
 
 def generating_keys(settings, pbar):
+    """
+    Генерируются ключи и записываются в файл по указанному пути
 
+    Args:
+        settings (dict): пути к файлам
+        pbar: информация о процессе выпонения
+    """
     key = os.urandom(16)
     stj.serialisation_to_json(settings['symmetric_key'],key)
     print(key)

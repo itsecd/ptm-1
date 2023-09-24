@@ -9,14 +9,26 @@ from time import time
 cores = mp.cpu_count()
 
 def serialisation_to_json(filename, key):
+    '''
+    str сериализуется в json файл
 
+    Args:
+        filename (str): имя файла в который сериализуется str
+        key (bytes): объект, который сериализуется в json
+    '''
 
     with open(filename, "w") as f:
         json.dump(list(key), f)
 
 
 def luhn(init):
-
+    """
+    Проверяет номер на корректность алгоритмом Луна
+    args:
+        init(dict): входные данные
+    return:
+        (bool): True, если все сошлось, иначе - False
+    """
     res = 0
     try:
         with open(init["found_card"]) as f:
@@ -62,6 +74,10 @@ def luhn(init):
           logging.error(f"{init['found_card']} not found")
 
 def search(initial, processes):
+    """
+    Подбирает номер карточки
+
+    """
     flag = 0
     with mp.Pool(processes) as p:
         for b in initial["first_digits"]:
@@ -90,12 +106,23 @@ def search(initial, processes):
         logging.info('Карта не найдена')    
 
 def checking_hash(bin, initial, number):
+    """
+    Сравнивает хэш полученной карты с уже существующим
 
+    args:
+    number(int): сгенерированные цифры карты
+    return:
+    (int): номер, если хэш совпал, иначе False
+    """
     if hashlib.sha3_224(f'{bin}{number:06d}{initial["last_digits"]}'.encode()).hexdigest() == initial["hash"]:
         return f'{bin}{number:06d}{initial["last_digits"]}'
     
 def save_stat(initial: dict):
-   
+    """
+    Сохраняет зависимость времени поиска коллизии хэша от кол-ва процессов
+    args:
+        init(dict): входные данные
+    """
     time_ = []
     for i in range(int(initial["processes_amount"])):
             start = time()
