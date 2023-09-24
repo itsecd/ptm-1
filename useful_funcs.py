@@ -16,10 +16,8 @@ def serialisation_to_json(filename: str, key: bytes)->None:
         filename (str): имя файла в который сериализуется str
         key (bytes): объект, который сериализуется в json
     '''
-
     with open(filename, "w") as f:
         json.dump(list(key), f)
-
 
 def luhn(init: dict)->bool:
     """
@@ -30,22 +28,21 @@ def luhn(init: dict)->bool:
         (bool): True, если все сошлось, иначе - False
     """
     res = 0
+
     try:
         with open(init["found_card"]) as f:
             data = json.load(f)
     except FileNotFoundError:
           logging.error(f"{init['found_card']} not found")
+
     logging.info(data)
     number = str(data["card_number"])
     number = list(map(int, number))
-    if len(number) != 16:
-         
 
+    if len(number) != 16:
          logging.info("Номер не корректен")
          data["luhn_check"] = "no result"
     else:
-
-
         last = number[15]
         number.pop()
         for n in number:
@@ -56,17 +53,17 @@ def luhn(init: dict)->bool:
                 res += i
 
         res = 10 - res % 10
-
-
-
         logging.info(res)
+
         if res == last:
             logging.info("Карточка корректна")
             data["luhn_check"] = "true"
         else:
             logging.info("Карточка не корректна")
             data["luhn_check"] = "false"
+
     logging.info(f"Результат сохранен по пути {init['found_card']}")
+
     try:
         with open(init["found_card"], 'w') as f:
             json.dump(data, f)
@@ -76,13 +73,12 @@ def luhn(init: dict)->bool:
 def search(initial: dict, processes: int)->None:
     """
     Подбирает номер карточки
-
     """
     flag = 0
+
     with mp.Pool(processes) as p:
         for b in initial["first_digits"]:
             logging.info(b)
-
             for result in p.map(partial(checking_hash, int(b), initial), range(1000000)):
                 if result:
                     logging.info('we have found ' + result + ' and have terminated pool')
@@ -94,9 +90,7 @@ def search(initial: dict, processes: int)->None:
                     data["luhn_check"] = "no result"
                     try:
                         with open(initial["found_card"], 'w') as f:
-                                
-
-                                json.dump(data, f)
+                            json.dump(data, f)
                     except FileNotFoundError:
                         logging.error(f"{initial['found_card']} not found")
                     break
@@ -124,12 +118,11 @@ def save_stat(initial: dict):
         init(dict): входные данные
     """
     time_ = []
+
     for i in range(int(initial["processes_amount"])):
             start = time()
             logging.info(f'количество процессов: {i+1}\n')
             search(initial, i+1)
-
-
             time_.append(time()-start)
 
     fig=plt.figure(figsize=(30, 17))

@@ -7,9 +7,7 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding as sym_padding
 
-
 def decrypting(settings: dict, pbar)->None:
-
     """
     Текст дешифруется и записывается в файл по заданному пути
 
@@ -33,8 +31,6 @@ def decrypting(settings: dict, pbar)->None:
     unpadder = sym_padding.PKCS7(128).unpadder()
     decryptor = cipher.decryptor()
 
-
-
     try:
         with open(settings['encrypted_file'], 'rb') as f, open(settings['decrypted_file'], 'wb') as f2:
             while chunk := f.read(128):
@@ -44,7 +40,5 @@ def decrypting(settings: dict, pbar)->None:
             f2.write(unpadder.finalize())
     except FileNotFoundError:
         logging.error(f"{settings['encrypted_file']} not found") if os.path.isfile(settings['decrypted_file']) else logging.error(f"{settings['decrypted_file']} not found")
-
-
 
     pbar.update(1)

@@ -7,9 +7,6 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding as sym_padding
 
-
-
-
 def encrypting(settings: dict, pbar)->None:
     """
     Текст шифруется симметричным шифрованием и зашифрованный текст записывается в файл по заданному пути

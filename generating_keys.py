@@ -7,9 +7,6 @@ from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.serialization import load_pem_public_key
 
-
-
-
 def generating_keys(settings: dict, pbar)->None:
     """
     Генерируются ключи и записываются в файл по указанному пути
@@ -24,7 +21,6 @@ def generating_keys(settings: dict, pbar)->None:
     keys = rsa.generate_privateKey(
     public_exponent=65537,
     key_size=2048)
-
     private_key = keys
     public_key = keys.public_key()
     pbar.update(1)
@@ -54,10 +50,6 @@ def generating_keys(settings: dict, pbar)->None:
             public_bytes = pem_in.read()
     except FileNotFoundError:
         logging.error(f"{settings['public_key']} not found")
-    
-
-
-
     
     d_public_key = load_pem_public_key(public_bytes)
     c_sym_key = d_public_key.encrypt(sym_key, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),algorithm=hashes.SHA256(),label=None))
