@@ -1,21 +1,20 @@
-import torch
-import torch.nn as nn
-import torch
-import torch.optim as optim
-import torch.nn.functional as F
+import glob
+import os
+import random
 
-from torchvision import datasets, models, transforms
-from torch.utils.data import DataLoader, Dataset
-
-from sklearn.model_selection import train_test_split
-
+import cv2
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import cv2
-import os
-import glob
-import random
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from PIL import Image
+from sklearn.model_selection import train_test_split
+from torchvision import transforms
+
+
+
 
 learning_rate = 0.001
 batch_size = 10
@@ -176,7 +175,7 @@ test_transforms = transforms.Compose([
     transforms.ToTensor()
     ])
 
-from PIL import Image
+
 
 class dataset(torch.utils.data.Dataset):
     def __init__(self,file_list,transform=None):
@@ -338,6 +337,21 @@ test_loader = torch.utils.data.DataLoader(dataset = test_data, batch_size=20, sh
 val_loader = torch.utils.data.DataLoader(dataset = val_data, batch_size=20, shuffle=True)
 
 train_loop(train_loader, val_loader, epochs)
+
+polarbears_probs = []
+model.eval()
+with torch.no_grad():
+    for images, labels in test_loader:
+        images = images.to(device)
+        preds = model(images)
+        preds_list = F.softmax(preds, dim=1)[:, 1].tolist()
+        polarbears_probs += list(zip(labels, preds_list))
+
+polarbears_probs.sort(key = lambda x : int(x[0])) #new      
+idx = list(map(lambda x: x[0],polarbears_probs))
+prob = list(map(lambda x: x[1],polarbears_probs))
+
+submission = pd.DataFrame({'id':idx,'label':prob})
 
 class_ = {0: 'brownbear', 1: 'polarbear'}
 
