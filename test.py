@@ -27,15 +27,36 @@ OPTIMIZER = torch.optim.Adam(MODEL.parameters(), lr=LEARNING_RATE)
 
 
 class dataset(torch.utils.data.Dataset):
-    def __init__(self,file_list,transform=None):
+    def __init__(self, file_list: list, transform=None) -> None:
+        '''
+        Инициализирует объект класса.
+        Аргументы:
+            file_list(list): список данных
+            transform: пайплайн предобработки данных
+        '''
+
         self.file_list = file_list
         self.transform = transform
         
-    def __len__(self):
+    def __len__(self) -> int:
+        '''
+        Возвращает количество данных.
+        Возвращаемое значение: 
+            self.filelength(int): количество данных
+        '''
+
         self.filelength = len(self.file_list)
         return self.filelength
     
-    def __getitem__(self,idx):
+    def __getitem__(self, idx: int) -> tuple:
+        '''
+        Производит предобработку выбранного файла.
+        Аргументы:
+            idx(int): порядок файла
+        Возвращаемое значение:
+            img_transformed, label: кортеж из преобразованной картинки и её метки
+        '''
+        
         img_path = self.file_list[idx]
         img = Image.open(img_path)
         img_transformed = self.transform(img)
@@ -47,13 +68,13 @@ class dataset(torch.utils.data.Dataset):
         return img_transformed,label
 
 
-def create_df(file_path = 'dataset.csv'):
+def create_df(file_path: str) -> pd.core.frame.DataFrame:
     '''
     Создаёт датафрейм из исходного файла.
     Аргументы:
-        file_path: путь исходного файла
+        file_path(str): путь исходного файла
     Возвращаемое значение:
-        df: полученный датафрейм
+        df(pd.core.frame.DataFrame): полученный датафрейм
     '''
 
     df = pd.read_csv(file_path, sep = ' ')
@@ -94,7 +115,7 @@ def load_test(df: pd.core.frame.DataFrame, path: str, i: int) -> None:
     cv2.imwrite(os.path.join(path, f'{i}.jpg'), image)
 
 
-def data_preparation():
+def data_preparation() -> tuple:
     '''
     Производит подготовку данных для обучения.
     Возвращаемое значение:
@@ -134,13 +155,13 @@ def data_preparation():
     return train_loader, test_loader, val_loader
 
 
-def train_loop (train_loader, val_loader, epochs):
+def train_loop (train_loader: torch.utils.data.Dataset, val_loader: torch.utils.data.Dataset, epochs: int) -> None:
     '''
     Цикл обучения модели.
     Аргументы:
-        train_loader: обучаемая выборка
-        val_loader: проверочная выборка
-        epochs: количество эпох
+        train_loader(torch.utils.data.Dataset): обучаемая выборка
+        val_loader(torch.utils.data.Dataset): проверочная выборка
+        epochs(int): количество эпох
     '''
 
     val_loss_list = []
@@ -180,15 +201,15 @@ def train_loop (train_loader, val_loader, epochs):
             print('Epoch : {}, val_accuracy : {}, val_loss : {}'.format(epoch+1, epoch_val_accuracy,epoch_val_loss))
     
 
-def show_results(epochs, loss_list, accuracy_list, val_loss_list, val_accuracy_list):
+def show_results(epochs: int, loss_list: list, accuracy_list: list, val_loss_list: list, val_accuracy_list: list) -> None:
     '''
     Выводит результаты обучения на графиках.
     Аргументы:
-        epochs: количество эпох
-        loss_list: данные ошибок
-        accuracy_list: данные точности 
-        val_lost_list: данные ошибок валидационной выборки
-        val_accuracy_list:данные точности валидационной выборки
+        epochs(int): количество эпох
+        loss_list(list): данные ошибок
+        accuracy_list(list): данные точности 
+        val_lost_list(list): данные ошибок валидационной выборки
+        val_accuracy_list(list): данные точности валидационной выборки
     '''
 
     num_epochs = [i+1 for i in range(epochs)]
@@ -214,11 +235,11 @@ def show_results(epochs, loss_list, accuracy_list, val_loss_list, val_accuracy_l
     plt.legend(loc=2, prop={'size': 20}) 
 
 
-def show_work(test_loader):
+def show_work(test_loader: torch.utils.data.Dataset) -> None:
     '''
     Демонстрирует работу на тестовой выборке и выводит результат.
     Аргументы:
-        test_loader: тестовая выборка
+        test_loader(torch.utils.data.Dataset): тестовая выборка
     '''
 
     polarbears_probs = []
@@ -248,14 +269,14 @@ def show_work(test_loader):
         ax.imshow(img)
 
 
-def save_and_test(test_loader, path = 'ConvNetModel.pth'):
+def save_and_test(test_loader: torch.utils.data.Dataset, path: str) -> None:
     '''
     Сохраняет обученную модель нейронной сети и демонстрирует работу на тестовой выборке.
     Аргументы: 
-        test_loader: тестовая выборка данных
-        path: путь сохранения модели нейронки 
+        test_loader(torch.utils.data.Dataset): тестовая выборка данных
+        path(str): путь сохранения модели нейронки 
     '''
-    
+
     torch.save(MODEL.state_dict(), path)
     loaded_model = ConvNet().to(DEVICE)
     loaded_model.load_state_dict(torch.load(path))
