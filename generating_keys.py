@@ -17,7 +17,7 @@ def GK(settings, pbar):
     print(y)
     ys = rsa.generate_privateKey(
     publicExponent=65537,
-    key_size=2048 
+    key_size=2048
     )
     private_key = ys
     publicKey = ys.public_key()
