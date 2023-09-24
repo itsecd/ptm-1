@@ -6,7 +6,12 @@ import shutil
 import get_path
 
 
-def random_copy(class_name):
+def random_copy(class_name:str)-> None:
+    """записывает фотографии в файл с рандомными номерами
+
+    Args:
+        class_name (str): название класса
+    """
     with open("random_annotation.csv", mode="a", encoding='utf-8') as w_file:
         file_writer = csv.writer(w_file, delimiter = ";", lineterminator="\r")
         file_writer.writerow(["Абсолютный путь", "Относительный путь", "Класс"])
