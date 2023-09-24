@@ -8,24 +8,24 @@ from torch.utils.data import Dataset
 
 
 class CustomImageDataset(Dataset):
-  def __init__(self, path_to_annotation_file: str, transform: Any=None, target_transform: Any=None) -> None:
-    self.path_to_annotation_file = path_to_annotation_file
-    self.dataset_info = pd.read_csv(path_to_annotation_file, sep=';', header=1)
-    self.transform = transform
-    self.target_transform = target_transform
+    def __init__(self, path_to_annotation_file: str, transform: Any=None, target_transform: Any=None) -> None:
+        self.path_to_annotation_file = path_to_annotation_file
+        self.dataset_info = pd.read_csv(path_to_annotation_file, sep=';', header=1)
+        self.transform = transform
+        self.target_transform = target_transform
 
-  def __len__(self) -> int:
-    return len(self.dataset_info)
+    def __len__(self) -> int:
+        return len(self.dataset_info)
 
-  def __getitem__(self, index: int) -> Tuple[torch.tensor, int]:
-    path_to_image = self.dataset_info.iloc[index, 0]
-    image = cv2.cvtColor(cv2.imread(path_to_image), cv2.COLOR_BGR2RGB)
-    label = self.dataset_info.iloc[index, 1]
-    if self.transform:
-      image = self.transform(image)
-    if self.target_transform:
-      label = self.target_Transform(label)
-    return image, label
+    def __getitem__(self, index: int) -> Tuple[torch.tensor, int]:
+        path_to_image = self.dataset_info.iloc[index, 0]
+        image = cv2.cvtColor(cv2.imread(path_to_image), cv2.COLOR_BGR2RGB)
+        label = self.dataset_info.iloc[index, 1]
+        if self.transform:
+            image = self.transform(image)
+        if self.target_transform:
+            label = self.target_Transform(label)
+        return image, label
   
 
 class CNN(nn.Module):

@@ -25,15 +25,15 @@ def random_copy(class_name:str)-> None:
 
 
 def main():
-        print("Start")
-        if not os.path.isdir("dataset/random_dataset"):
-            os.mkdir("dataset/random_dataset")
-        class_name = "rose"
-        random_copy(class_name)
-        class_name = "tulip"
-        random_copy(class_name)
-        print("The end")
+    print("Start")
+    if not os.path.isdir("dataset/random_dataset"):
+        os.mkdir("dataset/random_dataset")
+    class_name = "rose"
+    random_copy(class_name)
+    class_name = "tulip"
+    random_copy(class_name)
+    print("The end")
         
     
 if __name__ == "__main__":
-        main()
+    main()
