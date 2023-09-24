@@ -6,351 +6,351 @@ from time import sleep
 
 import requests
 
-from helpfiles.filemanagment import getaccountfilespath, getprojectdirectorypath
-from helpfiles.crypto import decryptfile, encryptfile
-from helpfiles.logger import log
-from myapifiles.item import Item
-from mysteampymodified.client import SteamClient
-from mysteampymodified.utils import GameOptions
+from help_files.filemanagment import get_account_files_path, get_project_directory_path
+from help_files.crypto import decrypt_file, encrypt_file
+from help_files.logger import log
+from my_api_files.item import Item
+from my_steampy_modified.client import SteamClient
+from my_steampy_modified.utils import GameOptions
 
-coefdrop48h168h = 1.05
-coefdrop24h72h = 1.04
-coefdrop12h36h = 1.03
-coefboost48h72h = 1.03
-coefboost48h168h = 1.04
-coefboost24h48h = 1.02
-coefboost3h24h = 1.01
-sellhistcountcoefforgraphicdrop = None
-sellhistcountcoefforgraphicboost = None
-sellhistcountbadcoef = None
-sellhistcountgoodcoef = None
-steamclientfilenameforrelogin = None
-steamclient = None
+coef_drop_48h_168h = 1.05
+coef_drop_24h_72h = 1.04
+coef_drop_12h_36h = 1.03
+coef_boost_48h_72h = 1.03
+coef_boost_48h_168h = 1.04
+coef_boost_24h_48h = 1.02
+coef_boost_3h_24h = 1.01
+sell_hist_count_coef_for_graphic_drop = None
+sell_hist_count_coef_for_graphic_boost = None
+sell_hist_count_bad_coef = None
+sell_hist_count_good_coef = None
+steam_client_file_name_for_relogin = None
+steam_client = None
 
 
-def loginsteam(steamclientfilename='steamclient.pkl', accountfilename='account.json', steamguardfilename='steamguard.json'):
-    log('steamf: loginsteam')
-    projectdirectorypath = getprojectdirectorypath()
-    accountfilespath = projectdirectorypath + getaccountfilespath()
-    global steamclientfilenameforrelogin
-    steamclientfilenameforrelogin = steamclientfilename
-    steamclientfilename = accountfilespath + steamclientfilename
-    accountfilename = accountfilespath + accountfilename
-    steamguardfilename = accountfilespath + steamguardfilename
-    global steamclient
-    if os.path.isfile(steamclientfilename):
-        steamclient = decryptfile(steamclientfilename)
-    if steamclient.issessionalive():
+def login_steam(steam_client_file_name='steam_client.pkl', account_file_name='account.json', steam_guard_file_name='steam_guard.json'):
+    log('steam_f: login_steam')
+    project_directory_path = get_project_directory_path()
+    account_files_path = project_directory_path + get_account_files_path()
+    global steam_client_file_name_for_relogin
+    steam_client_file_name_for_relogin = steam_client_file_name
+    steam_client_file_name = account_files_path + steam_client_file_name
+    account_file_name = account_files_path + account_file_name
+    steam_guard_file_name = account_files_path + steam_guard_file_name
+    global steam_client
+    if os.path.isfile(steam_client_file_name):
+        steam_client = decrypt_file(steam_client_file_name)
+    if steam_client.is_session_alive():
         return
-    account = decryptfile(accountfilename)
-    steamguard = decryptfile(steamguardfilename)
-    steamclient = SteamClient(account['apikey'])
-    steamclient.login(account['steamlogin'], account['steampassword'], steamguard)
-    with open(steamclientfilename, 'wb') as f:
-        pickle.dump(steamclient, f)
-        encryptfile(steamclientfilename)
+    account = decrypt_file(account_file_name)
+    steam_guard = decrypt_file(steam_guard_file_name)
+    steam_client = SteamClient(account['apikey'])
+    steam_client.login(account['steam_login'], account['steam_password'], steam_guard)
+    with open(steam_client_file_name, 'wb') as f:
+        pickle.dump(steam_client, f)
+        encrypt_file(steam_client_file_name)
 
 
-def reloginsteam(accountfilename='account.json', steamguardfilename='steamguard.json'):
-    log('steamf: reloginsteam')
+def relogin_steam(account_file_name='account.json', steam_guard_file_name='steam_guard.json'):
+    log('steam_f: relogin_steam')
     while True:
         try:
-            loginsteam(steamclientfilenameforrelogin, accountfilename, steamguardfilename)
+            login_steam(steam_client_file_name_for_relogin, account_file_name, steam_guard_file_name)
             break
         except Exception as err:
-            log('steamf: проблема в функции reloginsteam')
+            log('steam_f: проблема в функции relogin_steam')
             log(err)
         sleep(5)
 
 
-def initializecoefsforgetitemsactualprice():
-    global sellhistcountcoefforgraphicdrop
-    global sellhistcountcoefforgraphicboost
-    global sellhistcountbadcoef
-    global sellhistcountgoodcoef
-    curtime = time.gmtime()
-    if curtime.tm_wday == 1:
-        sellhistcountcoefforgraphicdrop = 0.02
-        sellhistcountcoefforgraphicboost = 0.02
-        sellhistcountbadcoef = 0.04
-        sellhistcountgoodcoef = 0.06
+def initialize_coefs_for_get_items_actual_price():
+    global sell_hist_count_coef_for_graphic_drop
+    global sell_hist_count_coef_for_graphic_boost
+    global sell_hist_count_bad_coef
+    global sell_hist_count_good_coef
+    cur_time = time.gmtime()
+    if cur_time.tm_wday == 1:
+        sell_hist_count_coef_for_graphic_drop = 0.02
+        sell_hist_count_coef_for_graphic_boost = 0.02
+        sell_hist_count_bad_coef = 0.04
+        sell_hist_count_good_coef = 0.06
         return
-    if curtime.tm_wday == 2:
-        sellhistcountcoefforgraphicdrop = 0.01
-        sellhistcountcoefforgraphicboost = 0.01
-        sellhistcountbadcoef = 0.03
-        sellhistcountgoodcoef = 0.05
+    if cur_time.tm_wday == 2:
+        sell_hist_count_coef_for_graphic_drop = 0.01
+        sell_hist_count_coef_for_graphic_boost = 0.01
+        sell_hist_count_bad_coef = 0.03
+        sell_hist_count_good_coef = 0.05
         return
-    if curtime.tm_wday == 3:
-        if curtime.tm_hour < 8:
-            sellhistcountcoefforgraphicdrop = 0.01
-            sellhistcountcoefforgraphicboost = 0.01
-            sellhistcountbadcoef = 0.03
-            sellhistcountgoodcoef = 0.05
+    if cur_time.tm_wday == 3:
+        if cur_time.tm_hour < 8:
+            sell_hist_count_coef_for_graphic_drop = 0.01
+            sell_hist_count_coef_for_graphic_boost = 0.01
+            sell_hist_count_bad_coef = 0.03
+            sell_hist_count_good_coef = 0.05
             return
-    sellhistcountcoefforgraphicdrop = 0.03
-    sellhistcountcoefforgraphicboost = 0.03
-    sellhistcountbadcoef = 0.05
-    sellhistcountgoodcoef = 0.07
+    sell_hist_count_coef_for_graphic_drop = 0.03
+    sell_hist_count_coef_for_graphic_boost = 0.03
+    sell_hist_count_bad_coef = 0.05
+    sell_hist_count_good_coef = 0.07
 
 
-def getsteampriceforeveryiteminlist(itemslistforsteam, coef):
-    log('steamf: getsteampriceforeveryiteminlist')
-    initializecoefsforgetitemsactualprice()
-    for item in itemslistforsteam:
+def get_steam_price_for_every_item_in_list(items_list_for_steam, coef):
+    log('steam_f: get_steam_price_for_every_item_in_list')
+    initialize_coefs_for_get_items_actual_price()
+    for item in items_list_for_steam:
         while True:
             try:
-                itemprice = getitemactualprice(item)
+                item_price = get_item_actual_price(item)
                 break
             except Exception as err:
-                log('проблема в функции getsteampriceforeveryiteminlist')
+                log('проблема в функции get_steam_price_for_every_item_in_list')
                 log(err)
-        item.steamprice = itemprice
-        item.tmprice = round(itemprice * 0.87 / coef * 10)
-        log(f'{item.getname()}: {item.steamprice} : {item.tmprice}\n')
+        item.steam_price = item_price
+        item.tm_price = round(item_price * 0.87 / coef * 10)
+        log(f'{item.get_name()}: {item.steam_price} : {item.tm_price}\n')
 
 
-def getitemactualprice(item):
-    log('steamf: getitemactualprice')
-    history = getpricehistory(item.getname())
-    histogram = getitemhistogram(item)
-    pricegraphic = round(getitempricegraphic(history), 2)
-    pricehistogram = round(getitempricehistogram(history, histogram), 2)
-    maxbuyorder = float(histogram['highest_buy_order']) / 100
-    minsellorder = float(histogram['lowest_sell_order']) / 100
-    if pricegraphic == pricehistogram:
-        return int(round(pricegraphic * 100))
-    count24_12histogram, count12_6histogram, count6_3histogram, count3_0histogram = getcountofpriceorhigherinhistory24_12_6_3(history, pricehistogram - 0.005)
-    if count24_12histogram == 0 and count12_6histogram == 0 and count6_3histogram == 0 and count3_0histogram == 0:
-        return int(round(max(pricegraphic, minsellorder) * 100))
-    if checkgraphicdrop(history) or checkgraphicboost(history):
-        if pricegraphic < pricehistogram:
-            return int(round(max(pricegraphic, minsellorder) * 100))
-        return int(round(pricehistogram * 100))
+def get_item_actual_price(item):
+    log('steam_f: get_item_actual_price')
+    history = get_price_history(item.get_name())
+    histogram = get_item_histogram(item)
+    price_graphic = round(get_item_price_graphic(history), 2)
+    price_histogram = round(get_item_price_histogram(history, histogram), 2)
+    max_buy_order = float(histogram['highest_buy_order']) / 100
+    min_sell_order = float(histogram['lowest_sell_order']) / 100
+    if price_graphic == price_histogram:
+        return int(round(price_graphic * 100))
+    count_24_12_histogram, count_12_6_histogram, count_6_3_histogram, count_3_0_histogram = get_count_of_price_or_higher_in_history_24_12_6_3(history, price_histogram - 0.005)
+    if count_24_12_histogram == 0 and count_12_6_histogram == 0 and count_6_3_histogram == 0 and count_3_0_histogram == 0:
+        return int(round(max(price_graphic, min_sell_order) * 100))
+    if check_graphic_drop(history) or check_graphic_boost(history):
+        if price_graphic < price_histogram:
+            return int(round(max(price_graphic, min_sell_order) * 100))
+        return int(round(price_histogram * 100))
     else:
-        if pricegraphic > pricehistogram and pricehistogram <= maxbuyorder:
-            return int(round(max(pricegraphic, minsellorder) * 100))
+        if price_graphic > price_histogram and price_histogram <= max_buy_order:
+            return int(round(max(price_graphic, min_sell_order) * 100))
 
-        if pricehistogram > pricegraphic and pricegraphic <= maxbuyorder:
-            return int(round(pricehistogram * 100))
-    if pricegraphic/pricehistogram >= 1.07 or pricehistogram / pricegraphic >= 1.07:
-        return int(round(min(pricehistogram, max(pricegraphic, minsellorder)) * 100))
+        if price_histogram > price_graphic and price_graphic <= max_buy_order:
+            return int(round(price_histogram * 100))
+    if price_graphic/price_histogram >= 1.07 or price_histogram / price_graphic >= 1.07:
+        return int(round(min(price_histogram, max(price_graphic, min_sell_order)) * 100))
     else:
-        if pricegraphic > pricehistogram:
-            return int(round(max(pricegraphic, minsellorder) * 100))
-        return int(round(pricehistogram * 100))
+        if price_graphic > price_histogram:
+            return int(round(max(price_graphic, min_sell_order) * 100))
+        return int(round(price_histogram * 100))
 
 
-def getpricehistory(itemname, gameoption=GameOptions.CS):
-    log('steamf: getpricehistory')
+def get_price_history(item_name, game_option=GameOptions.CS):
+    log('steam_f: get_price_history')
     while True:
         try:
-            tmp = steamclient.market.fetch_price_history(itemname, game=gameoption)
+            tmp = steam_client.market.fetch_price_history(item_name, game=game_option)
             if tmp["success"]:
                 return tmp["prices"]
         except Exception as err:
-            log('steamf: проблема в функции getpricehistory')
+            log('steam_f: проблема в функции get_price_history')
             log(err)
-            if not steamclient.is_session_alive():
-                reloginsteam()
+            if not steam_client.is_session_alive():
+                relogin_steam()
 
             sleep(1)
 
 
-def getitemhistogram(item):
-    log('steamf: getitemhistogram')
+def get_item_histogram(item):
+    log('steam_f: get_item_histogram')
     while True:
         try:
-            histogram = steamclient.market.get_item_histogram(item)
+            histogram = steam_client.market.get_item_histogram(item)
             if histogram['success']:
                 return histogram
         except Exception as err:
-            log('steamf: проблема в функции getitemhistogram')
+            log('steam_f: проблема в функции get_item_histogram')
             log(err)
-            if not steamclient.is_session_alive():
-                reloginsteam()
+            if not steam_client.is_session_alive():
+                relogin_steam()
             sleep(2)
 
 
-def getitempricegraphic(prices):
-    log('steamf: getitempricegraphic')
-    if checkgraphicdrop(prices):
-        price2h = calculateavgpriceandmore(prices, 2)
-        return price2h
-    price7days = calculateavgpriceandmore(prices, 168, 72)
-    price3days = calculateavgpriceandmore(prices,72, 48)
-    price2days = calculateavgpriceandmore(prices, 48)
-    if price2days / price3days >= coefboost48h72h and price2days / price7days >= coefboost48h168h:
-        price1day = calculateavgpriceandmore(prices, 24)
-        if price1day / price2days >= coefboost24h48h:
-            price3hrs = calculateavgpriceandmore(prices, 3)
-            if price3hrs/price1day >= coefboost3h24h:
-                return price3hrs
+def get_item_price_graphic(prices):
+    log('steam_f: get_item_price_graphic')
+    if check_graphic_drop(prices):
+        price_2h = calculate_avg_price_and_more(prices, 2)
+        return price_2h
+    price_7_days = calculate_avg_price_and_more(prices, 168, 72)
+    price_3_days = calculate_avg_price_and_more(prices,72, 48)
+    price_2_days = calculate_avg_price_and_more(prices, 48)
+    if price_2_days / price_3_days >= coef_boost_48h_72h and price_2_days / price_7_days >= coef_boost_48h_168h:
+        price_1_day = calculate_avg_price_and_more(prices, 24)
+        if price_1_day / price_2_days >= coef_boost_24h_48h:
+            price_3_hrs = calculate_avg_price_and_more(prices, 3)
+            if price_3_hrs/price_1_day >= coef_boost_3h_24h:
+                return price_3_hrs
             else:
-                price2hrs = calculateavgpriceandmore(prices, 2)
-                return price2hrs
+                price_2_hrs = calculate_avg_price_and_more(prices, 2)
+                return price_2_hrs
         else:
-            price12h = calculateavgpriceandmore(prices, 12)
-            return price12h
-    return price2days
+            price_12h = calculate_avg_price_and_more(prices, 12)
+            return price_12h
+    return price_2_days
 
 
-def calculateavgpriceandmore(prices, time2, time1=0):
-    log('steamf: calculateavgpriceandmore')
+def calculate_avg_price_and_more(prices, time_2,  time_1=0):
+    log('steam_f: calculate_avg_price_and_more')
     res = 0
     count = 0
-    for i in range(time1, time2):
+    for i in range(time_1, time_2):
         res += prices[-1 - i][1] * int(prices[-1 - i][2])
         count += int(prices[-1 - i][2])
-    priceaverage = res/count
+    price_average = res / count
     res = 0
     count = 0
-    highestpricecoef = 1.2
-    for i in range(time1, time2):
-        if priceaverage <= prices[-1 - i][1] <= priceaverage * highestpricecoef:
+    highest_price_coef = 1.2
+    for i in range(time_1, time_2):
+        if price_average <= prices[-1 - i][1] <= price_average * highest_price_coef:
             res += prices[-1 - i][1] * int(prices[-1 - i][2])
             count += int(prices[-1 - i][2])
     if count > 0:
         return res / count
-    return priceaverage
+    return price_average
 
 
-def checkgraphicdrop(prices):
-    log('steamf: checkgraphicdrop')
-    price1 = calculateavgpriceandmore(prices, 168, 48)
-    price2 = calculateavgpriceandmore(prices, 48)
-    if price1 / price2 >= coefdrop48h168h:
+def check_graphic_drop(prices):
+    log('steam_f: check_graphic_drop')
+    price1 = calculate_avg_price_and_more(prices, 168, 48)
+    price2 = calculate_avg_price_and_more(prices, 48)
+    if price1 / price2 >= coef_drop_48h_168h:
         return True
-    price1 = calculateavgpriceandmore(prices, 72, 24)
-    price2 = calculateavgpriceandmore(prices, 24)
-    if price1 / price2 >= coefdrop24h72h:
+    price1 = calculate_avg_price_and_more(prices, 72, 24)
+    price2 = calculate_avg_price_and_more(prices, 24)
+    if price1 / price2 >= coef_drop_24h_72h:
         return True
-    price1 = calculateavgpriceandmore(prices, 36, 12)
-    price2 = calculateavgpriceandmore(prices, 12)
-    if price1 / price2 >= coefdrop12h36h:
-        return True
-    return False
-
-
-def checkgraphicboost(prices):
-    log('steamf: checkgraphicboost')
-    price7days = calculateavgpriceandmore(prices, 168, 72)
-    price3days = calculateavgpriceandmore(prices, 72, 48)
-    price2days = calculateavgpriceandmore(prices, 48)
-    if price2days / price3days >= coefboost48h72h and price2days / price7days >= coefboost48h168h:
+    price1 = calculate_avg_price_and_more(prices, 36, 12)
+    price2 = calculate_avg_price_and_more(prices, 12)
+    if price1 / price2 >= coef_drop_12h_36h:
         return True
     return False
 
 
-def getitempricehistogram(prices, histogram):
-    log('steamf: getitempricehistogram')
-    sellorderslist = getitemsellorderslist(histogram)
-    itemsellcountforweek = calculateitemsellcount(prices, 168)
-    itemsellcountforday = int(itemsellcountforweek / 7)
-    if checkgraphicdrop(prices):
-        sellcountfordropcoef = int(sellhistcountcoefforgraphicdrop * itemsellcountforday)
+def check_graphic_boost(prices):
+    log('steam_f: check_graphic_boost')
+    price_7_days = calculate_avg_price_and_more(prices, 168, 72)
+    price_3_days = calculate_avg_price_and_more(prices, 72, 48)
+    price_2_days = calculate_avg_price_and_more(prices, 48)
+    if price_2_days / price_3_days >= coef_boost_48h_72h and price_2_days / price_7_days >= coef_boost_48h_168h:
+        return True
+    return False
+
+
+def get_item_price_histogram(prices, histogram):
+    log('steam_f: get_item_price_histogram')
+    sell_orders_list = get_item_sell_orders_list(histogram)
+    item_sell_count_for_week = calculate_item_sell_count(prices, 168)
+    item_sell_count_for_day = int(item_sell_count_for_week / 7)
+    if check_graphic_drop(prices):
+        sell_count_for_drop_coef = int(sell_hist_count_coef_for_graphic_drop * item_sell_count_for_day)
         counter = 0
-        for i in range(len(sellorderslist)):
-            curcounter = sellorderslist[i]['count']
-            counter += curcounter
-            if counter >= sellcountfordropcoef:
+        for i in range(len(sell_orders_list)):
+            cur_counter = sell_orders_list[i]['count']
+            counter += cur_counter
+            if counter >= sell_count_for_drop_coef:
                 if i == 0:
-                    if counter > sellcountfordropcoef:
-                        return sellorderslist[i]['price'] - 0.01
+                    if counter > sell_count_for_drop_coef:
+                        return sell_orders_list[i]['price'] - 0.01
                     else:
-                        return sellorderslist[i]['price']
+                        return sell_orders_list[i]['price']
                 else:
-                    return sellorderslist[i - 1]['price']
-    if checkgraphicboost(prices):
-        sellcountforboostcoef = int(sellhistcountcoefforgraphicboost * itemsellcountforday)
+                    return sell_orders_list[i - 1]['price']
+    if check_graphic_boost(prices):
+        sell_count_for_boost_coef = int(sell_hist_count_coef_for_graphic_boost * item_sell_count_for_day)
         counter = 0
-        for i in range(len(sellorderslist)):
-            curcounter = sellorderslist[i]['count']
-            counter += curcounter
-            if counter >= sellcountforboostcoef:
+        for i in range(len(sell_orders_list)):
+            cur_counter = sell_orders_list[i]['count']
+            counter += cur_counter
+            if counter >= sell_count_for_boost_coef:
                 if i == 0:
-                    if counter > sellcountforboostcoef:
-                        return sellorderslist[i]['price'] - 0.01
+                    if counter > sell_count_for_boost_coef:
+                        return sell_orders_list[i]['price'] - 0.01
                     else:
-                        return sellorderslist[i]['price']
+                        return sell_orders_list[i]['price']
                 else:
-                    return sellorderslist[i - 1]['price']
-    maxbuyorder = int(histogram['highest_buy_order']) / 100
-    sellpricebad = 0
-    sellpricegood = 0
-    sellcountbad = int(sellhistcountbadcoef * itemsellcountforday)
-    sellcountgood = int(sellhistcountgoodcoef * itemsellcountforday)
+                    return sell_orders_list[i - 1]['price']
+    max_buy_order = int(histogram['highest_buy_order']) / 100
+    sell_price_bad = 0
+    sell_price_good = 0
+    sell_count_bad = int(sell_hist_count_bad_coef * item_sell_count_for_day)
+    sell_count_good = int(sell_hist_count_good_coef * item_sell_count_for_day)
     counter = 0
-    for i in range(len(sellorderslist)):
-        curcounter = sellorderslist[i]['count']
-        counter += curcounter
-        if counter >= sellcountbad:
+    for i in range(len(sell_orders_list)):
+        cur_counter = sell_orders_list[i]['count']
+        counter += cur_counter
+        if counter >= sell_count_bad:
             if i == 0:
-                if counter > sellcountbad:
-                    sellpricebad = sellorderslist[i]['price'] - 0.01
+                if counter > sell_count_bad:
+                    sell_price_bad = sell_orders_list[i]['price'] - 0.01
                     break
                 else:
-                    sellpricebad = sellorderslist[i]['price']
+                    sell_price_bad = sell_orders_list[i]['price']
                     break
             else:
-                sellpricebad = sellorderslist[i - 1]['price']
+                sell_price_bad = sell_orders_list[i - 1]['price']
                 break
     counter = 0
-    for i in range(len(sellorderslist)):
-        curcounter = sellorderslist[i]['count']
-        counter += curcounter
-        if counter >= sellcountgood:
+    for i in range(len(sell_orders_list)):
+        cur_counter = sell_orders_list[i]['count']
+        counter += cur_counter
+        if counter >= sell_count_good:
             if i == 0:
-                if counter > sellcountgood:
-                    sellpricegood = sellorderslist[i]['price'] - 0.01
+                if counter > sell_count_good:
+                    sell_price_good = sell_orders_list[i]['price'] - 0.01
                     break
                 else:
-                    sellpricegood = sellorderslist[i]['price']
+                    sell_price_good = sell_orders_list[i]['price']
                     break
             else:
-                sellpricegood = sellorderslist[i - 1]['price']
+                sell_price_good = sell_orders_list[i - 1]['price']
                 break
-    if sellpricebad / maxbuyorder < 1.04 and sellpricegood / maxbuyorder < 1.06:
-        return sellpricegood
+    if sell_price_bad / max_buy_order < 1.04 and sell_price_good / max_buy_order < 1.06:
+        return sell_price_good
     else:
-        return sellpricebad
+        return sell_price_bad
 
 
-def getitemsellorderslist(histogram):
-    log('steamf: getitemsellorderslist')
-    sellorders = histogram['sellordergraph']
-    reslist = list()
-    precount = 0
-    for itemsellorders in sellorders:
-        count = itemsellorders[1]
-        rescount = count - precount
-        precount = count
-        resobject = {'price': itemsellorders[0], 'count': rescount}
-        reslist.append(resobject)
-    return reslist
+def get_item_sell_orders_list(histogram):
+    log('steam_f: get_item_sell_orders_list')
+    sell_orders = histogram['sell_order_graph']
+    res_list = list()
+    pre_count = 0
+    for item_sell_orders in sell_orders:
+        count = item_sell_orders[1]
+        res_count = count - pre_count
+        pre_count = count
+        res_object = {'price': item_sell_orders[0], 'count': res_count}
+        res_list.append(res_object)
+    return res_list
 
 
-def calculateitemsellcount(prices, time2, time1=0):
-    log('steamf: calculateitemsellcount')
+def calculate_item_sell_count(prices, time_2,  time_1=0):
+    log('steam_f: calculate_item_sell_count')
     count = 0
-    for i in range(time1, time2):
+    for i in range(time_1, time_2):
         count += int(prices[-1 - i][2])
     return count
 
 
-def getcountofpriceorhigherinhistory24_12_6_3(prices, price):
-    log('steamf: getcountofpriceorhigherinhistory24_12_6_3')
-    count12h24h = parsecountofpriceorhigherinhistory(prices, price, 24, 12)
-    count6h12h = parsecountofpriceorhigherinhistory(prices, price, 12, 6)
-    count3h6h = parsecountofpriceorhigherinhistory(prices, price, 6, 3)
-    count3h = parsecountofpriceorhigherinhistory(prices, price, 3)
-    return count12h24h, count6h12h, count3h6h, count3h
+def get_count_of_price_or_higher_in_history_24_12_6_3(prices, price):
+    log('steam_f: get_count_of_price_or_higher_in_history_24_12_6_3')
+    count_12h_24h = parse_count_of_price_or_higher_in_history(prices, price, 24, 12)
+    count_6h_12h = parse_count_of_price_or_higher_in_history(prices, price, 12, 6)
+    count_3h_6h = parse_count_of_price_or_higher_in_history(prices, price, 6, 3)
+    count_3h = parse_count_of_price_or_higher_in_history(prices, price, 3)
+    return count_12h_24h, count_6h_12h, count_3h_6h, count_3h
 
 
-def parsecountofpriceorhigherinhistory(prices, price, time2, time1=0):
-    log('steamf: parsecountofpriceorhigherinhistory')
+def parse_count_of_price_or_higher_in_history(prices, price, time_2,  time_1=0):
+    log('steam_f: parse_count_of_price_or_higher_in_history')
     count = 0
-    for i in range(time1, time2):
+    for i in range(time_1, time_2):
         if prices[-1 - i][1] >= price:
             count += int(prices[-1 - i][2])
     return count
