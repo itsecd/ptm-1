@@ -28,7 +28,8 @@ steam_client_file_name_for_relogin = None
 steam_client = None
 
 
-def login_steam(steam_client_file_name='steam_client.pkl', account_file_name='account.json', steam_guard_file_name='steam_guard.json'):
+def login_steam(steam_client_file_name='steam_client.pkl', account_file_name='account.json',
+                steam_guard_file_name='steam_guard.json'):
     log('steam_f: login_steam')
     project_directory_path = get_project_directory_path()
     account_files_path = project_directory_path + get_account_files_path()
@@ -120,8 +121,10 @@ def get_item_actual_price(item):
     min_sell_order = float(histogram['lowest_sell_order']) / 100
     if price_graphic == price_histogram:
         return int(round(price_graphic * 100))
-    count_24_12_histogram, count_12_6_histogram, count_6_3_histogram, count_3_0_histogram = get_count_of_price_or_higher_in_history_24_12_6_3(history, price_histogram - 0.005)
-    if count_24_12_histogram == 0 and count_12_6_histogram == 0 and count_6_3_histogram == 0 and count_3_0_histogram == 0:
+    (count_24_12_histogram, count_12_6_histogram, count_6_3_histogram,
+     count_3_0_histogram) = get_count_of_price_or_higher_in_history_24_12_6_3(history, price_histogram - 0.005)
+    if (count_24_12_histogram == 0 and count_12_6_histogram == 0
+            and count_6_3_histogram == 0 and count_3_0_histogram == 0):
         return int(round(max(price_graphic, min_sell_order) * 100))
     if check_graphic_drop(history) or check_graphic_boost(history):
         if price_graphic < price_histogram:
