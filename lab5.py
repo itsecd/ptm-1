@@ -33,16 +33,12 @@ class CustomImageDataset(Dataset):
 class CNN(nn.Module):
     def __init__(self) -> None:
         super(CNN, self).__init__()
-
         self.conv_1 = nn.Conv2d(3, 16, kernel_size=3, padding=0, stride=2)
         self.conv_2 = nn.Conv2d(16, 32, kernel_size=3, padding=0, stride=2)
         self.conv_3 = nn.Conv2d(32, 64, kernel_size=3, padding=0, stride=2)
-
         self.relu = nn.ReLU()
         self.dropout = nn.Dropout(0.1)
         self.max_pool = nn.MaxPool2d(2)
-
-        # 43264 - пока что определяем экспериментальным путем (:
         self.fc_1 = nn.Linear(576, 10)
         self.fc_2 = nn.Linear(10, 1)
 
@@ -53,9 +49,6 @@ class CNN(nn.Module):
         output = self.max_pool(output)
         output = self.relu(self.conv_3(output))
         output = self.max_pool(output)
-
-        # print(torch.nn.Flatten()(output).shape) - определить можно, распечатав вот это
-
         output = torch.nn.Flatten()(output)
         output = self.relu(self.fc_1(output))
         output = torch.nn.Sigmoid()(self.fc_2(output))
@@ -66,18 +59,14 @@ def main():
 
     device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
     model = CNN().to(device)
-
     custom_transforms = torchvision.transforms.Compose([torchvision.transforms.ToTensor(),
                                                         torchvision.transforms.Resize(
                                                             (224, 224)),
                                                         torchvision.transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
-
-
-
     train_dataset = CustomImageDataset('annotation.csv', custom_transforms)
-    
     print('end')
+
 
 if __name__ == "__main__":
     main()

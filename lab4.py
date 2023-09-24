@@ -106,18 +106,14 @@ def create()-> None:
             absolute_way[0]:  pd.array(absolute_way[1:]),
         }
     )
-
     dataframe = dataframe.rename(
         columns={class_name[0]: "class_name",
                  absolute_way[0]: "absolute_way"}
     )
-
     dataframe["class_mark"] = pd.array(class_mark[1:])
-
     hight = []
     width = []
     depth = []
-
     for path in absolute_way:
         try:
             image = cv2.imdecode(np.fromfile(
@@ -131,24 +127,18 @@ def create()-> None:
     dataframe["hight"] = pd.Series(hight)
     dataframe["width"] = pd.Series(width)
     dataframe["depth"] = pd.Series(depth)
-
     print("\n Images hight statistic: \n")
     print(dataframe["hight"]. describe())
-
     print("\n Images width statistic: \n")
     print(dataframe["width"]. describe())
-
     print("\n Images depth statistic: \n")
     print(dataframe["depth"]. describe())
-
     print("\n Filtrated dataframe(class): \n")
     print(class_filter(dataframe, 0))
-
     print("\n Filtrated dataframe(size and class): \n")
     print(size_filter(dataframe, 1, 400, 400))
 
     number_of_pixels = []
-
     for path in absolute_way:
         try:
             image = cv2.imdecode(np.fromfile(
@@ -156,21 +146,16 @@ def create()-> None:
             number_of_pixels.append(image.size)
         except:
             pass
-
+        
     dataframe["number_of_pixels"] = pd.Series(number_of_pixels)
-
     print(" \n Minimum number of pixels: \n ")
     print(dataframe.groupby("class_mark").number_of_pixels.min())
-
     print(" \n Maximum number of pixels: \n ")
     print(dataframe.groupby("class_mark").number_of_pixels.max())
-
     print(" \n The average value of the number of pixels: \n ")
     print(dataframe.groupby("class_mark").number_of_pixels.mean())
-
     print(dataframe.columns)
     print(dataframe)
-
     draw_histogram(create_histogram(dataframe, 0))
 
 
