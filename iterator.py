@@ -15,10 +15,8 @@ class Iterator:
                     self.rows.append(row[0] + ';' + row[2])
                     self.limit += 1
 
-
     def __iter__(self):
         return self
-
 
     def __next__(self):
         if self.counter < self.limit:
