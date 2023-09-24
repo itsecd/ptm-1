@@ -48,6 +48,14 @@ class dataset(torch.utils.data.Dataset):
 
 
 def create_df(file_path = 'dataset.csv'):
+    '''
+    Создаёт датафрейм из исходного файла.
+    Аргументы:
+        file_path: путь исходного файла
+    Возвращаемое значение:
+        df: полученный датафрейм
+    '''
+
     df = pd.read_csv(file_path, sep = ' ')
     df = df.rename(columns={'Absolute_way': 'absolute_way'})
     df = df.rename(columns={'Class': 'class_img'})
@@ -56,7 +64,7 @@ def create_df(file_path = 'dataset.csv'):
 
 def load_train(df: pd.core.frame.DataFrame, path: str, i: int) -> None:
     '''
-    Загружает i-ую картинку из датафрейма по заданному пути path
+    Загружает i-ую картинку из датафрейма по заданному пути path.
     Ключевые аргументы:
         df(pd.core.frame.DataFrame): датафрейм с картинками 
         path(str): путь загрузки картинок
@@ -70,7 +78,7 @@ def load_train(df: pd.core.frame.DataFrame, path: str, i: int) -> None:
 
 def load_test(df: pd.core.frame.DataFrame, path: str, i: int) -> None:
     '''
-    Загружает i-ую картинку из датафрейма по заданному пути path
+    Загружает i-ую картинку из датафрейма по заданному пути path.
     Ключевые аргументы:
         df(pd.core.frame.DataFrame): датафрейм с картинками 
         path(str): путь загрузки картинок
@@ -87,6 +95,12 @@ def load_test(df: pd.core.frame.DataFrame, path: str, i: int) -> None:
 
 
 def data_preparation():
+    '''
+    Производит подготовку данных для обучения.
+    Возвращаемое значение:
+        train_loader, test_loader, val_loader: кортеж из подготовленных выборок
+    '''
+
     torch.manual_seed(1234)
     if DEVICE =='cuda':
         torch.cuda.manual_seed_all(1234)
@@ -121,6 +135,14 @@ def data_preparation():
 
 
 def train_loop (train_loader, val_loader, epochs):
+    '''
+    Цикл обучения модели.
+    Аргументы:
+        train_loader: обучаемая выборка
+        val_loader: проверочная выборка
+        epochs: количество эпох
+    '''
+
     val_loss_list = []
     val_accuracy_list = []
     loss_list = []
@@ -159,6 +181,16 @@ def train_loop (train_loader, val_loader, epochs):
     
 
 def show_results(epochs, loss_list, accuracy_list, val_loss_list, val_accuracy_list):
+    '''
+    Выводит результаты обучения на графиках.
+    Аргументы:
+        epochs: количество эпох
+        loss_list: данные ошибок
+        accuracy_list: данные точности 
+        val_lost_list: данные ошибок валидационной выборки
+        val_accuracy_list:данные точности валидационной выборки
+    '''
+
     num_epochs = [i+1 for i in range(epochs)]
     fig = plt.figure(figsize=(30, 5))
     plt.title('Plots for train')
@@ -183,6 +215,12 @@ def show_results(epochs, loss_list, accuracy_list, val_loss_list, val_accuracy_l
 
 
 def show_work(test_loader):
+    '''
+    Демонстрирует работу на тестовой выборке и выводит результат.
+    Аргументы:
+        test_loader: тестовая выборка
+    '''
+
     polarbears_probs = []
     MODEL.eval()
     with torch.no_grad():
@@ -211,6 +249,13 @@ def show_work(test_loader):
 
 
 def save_and_test(test_loader, path = 'ConvNetModel.pth'):
+    '''
+    Сохраняет обученную модель нейронной сети и демонстрирует работу на тестовой выборке.
+    Аргументы: 
+        test_loader: тестовая выборка данных
+        path: путь сохранения модели нейронки 
+    '''
+    
     torch.save(MODEL.state_dict(), path)
     loaded_model = ConvNet().to(DEVICE)
     loaded_model.load_state_dict(torch.load(path))
@@ -238,4 +283,3 @@ def save_and_test(test_loader, path = 'ConvNetModel.pth'):
         img = Image.open(img_path)
         ax.set_title(class_[label])
         ax.imshow(img)
-        
