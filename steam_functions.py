@@ -28,8 +28,15 @@ steam_client_file_name_for_relogin = None
 steam_client = None
 
 
-def login_steam(steam_client_file_name='steam_client.pkl', account_file_name='account.json',
-                steam_guard_file_name='steam_guard.json'):
+def login_steam(steam_client_file_name: str = 'steam_client.pkl', account_file_name: str = 'account.json',
+                steam_guard_file_name: str = 'steam_guard.json') -> None:
+    """
+    осуществляет вход в аккаунт стим
+    :param steam_client_file_name: название файла с текущей сессией
+    :param account_file_name: название файла с данными от аккаунта
+    :param steam_guard_file_name: название файла с данными для steam guard
+    :return: ничего
+    """
     log('steam_f: login_steam')
     project_directory_path = get_project_directory_path()
     account_files_path = project_directory_path + get_account_files_path()
@@ -52,7 +59,13 @@ def login_steam(steam_client_file_name='steam_client.pkl', account_file_name='ac
         encrypt_file(steam_client_file_name)
 
 
-def relogin_steam(account_file_name='account.json', steam_guard_file_name='steam_guard.json'):
+def relogin_steam(account_file_name: str = 'account.json', steam_guard_file_name: str = 'steam_guard.json') -> None:
+    """
+    осуществляет перезаход в аккаунт стим
+    :param account_file_name: название файла с данными от аккаунта
+    :param steam_guard_file_name: название файла с данными для steam guard
+    :return: ничего
+    """
     log('steam_f: relogin_steam')
     while True:
         try:
@@ -64,7 +77,11 @@ def relogin_steam(account_file_name='account.json', steam_guard_file_name='steam
         sleep(5)
 
 
-def initialize_coefs_for_get_items_actual_price():
+def initialize_coefs_for_get_items_actual_price() -> None:
+    """
+    выставляет коэффициенты для цен
+    :return: ничего
+    """
     global sell_hist_count_coef_for_graphic_drop
     global sell_hist_count_coef_for_graphic_boost
     global sell_hist_count_bad_coef
@@ -95,7 +112,13 @@ def initialize_coefs_for_get_items_actual_price():
     sell_hist_count_good_coef = 0.07
 
 
-def get_steam_price_for_every_item_in_list(items_list_for_steam, coef):
+def get_steam_price_for_every_item_in_list(items_list_for_steam: list, coef: float) -> None:
+    """
+    вычисляет цену по которой можно продать все предметы из заданного списка
+    :param items_list_for_steam: список предметов на продажу
+    :param coef: коэффициент цены
+    :return: ничего
+    """
     log('steam_f: get_steam_price_for_every_item_in_list')
     initialize_coefs_for_get_items_actual_price()
     for item in items_list_for_steam:
@@ -111,7 +134,12 @@ def get_steam_price_for_every_item_in_list(items_list_for_steam, coef):
         log(f'{item.get_name()}: {item.steam_price} : {item.tm_price}\n')
 
 
-def get_item_actual_price(item):
+def get_item_actual_price(item: Item) -> int:
+    """
+    возвращает цену, по которой этот предмет нужно продавать прямо сейчас
+    :param item: предмет
+    :return: цена, по которой этот предмет нужно продавать прямо сейчас
+    """
     log('steam_f: get_item_actual_price')
     history = get_price_history(item.get_name())
     histogram = get_item_histogram(item)
@@ -144,7 +172,13 @@ def get_item_actual_price(item):
         return int(round(price_histogram * 100))
 
 
-def get_price_history(item_name, game_option=GameOptions.CS):
+def get_price_history(item_name: str, game_option: int = GameOptions.CS) -> list:
+    """
+    возвращает список цен, из которых состоит график предмета
+    :param item_name: название предмета
+    :param game_option: код игры
+    :return: список цен, из которых состоит график предмета
+    """
     log('steam_f: get_price_history')
     while True:
         try:
@@ -160,7 +194,12 @@ def get_price_history(item_name, game_option=GameOptions.CS):
             sleep(1)
 
 
-def get_item_histogram(item):
+def get_item_histogram(item: Item) -> dict:
+    """
+    возвращает гистограмму предмета
+    :param item: предмет
+    :return: гистограмму предмета
+    """
     log('steam_f: get_item_histogram')
     while True:
         try:
@@ -175,7 +214,13 @@ def get_item_histogram(item):
             sleep(2)
 
 
-def get_item_price_graphic(prices):
+def get_item_price_graphic(prices: list) -> float:
+    """
+    проверяет есть ли дроп графика(тогда возвращает  цену за последние 2 часа), есть ли буст графика(тогда возвращает
+    цену для буста), если нет дропа или буста - возвращает цену за 2 дня
+    :param prices: график цен на предмет
+    :return: актуальную цену предмета по графику
+    """
     log('steam_f: get_item_price_graphic')
     if check_graphic_drop(prices):
         price_2h = calculate_avg_price_and_more(prices, 2)
@@ -198,7 +243,15 @@ def get_item_price_graphic(prices):
     return price_2_days
 
 
-def calculate_avg_price_and_more(prices, time_2,  time_1=0):
+def calculate_avg_price_and_more(prices: list, time_2: int,  time_1: int = 0) -> float:
+    """
+    считает среднюю цену в промежутке от time_1 до time_2, после этого считает среднюю цену в промежутке от time_1 до
+    time_2, но включает только те точки, которые принадлежат от price_average до price_average * highest_price_coef
+    :param prices: график цен на предмет
+    :param time_2: конец промежутка времени
+    :param time_1: начало промежутка времени
+    :return: цена предмета по графику
+    """
     log('steam_f: calculate_avg_price_and_more')
     res = 0
     count = 0
@@ -218,7 +271,12 @@ def calculate_avg_price_and_more(prices, time_2,  time_1=0):
     return price_average
 
 
-def check_graphic_drop(prices):
+def check_graphic_drop(prices: list) -> bool:
+    """
+    проверяет график на дроп цены
+    :param prices: график цен на предмет
+    :return: есть дроп графика или нет
+    """
     log('steam_f: check_graphic_drop')
     price1 = calculate_avg_price_and_more(prices, 168, 48)
     price2 = calculate_avg_price_and_more(prices, 48)
@@ -235,7 +293,12 @@ def check_graphic_drop(prices):
     return False
 
 
-def check_graphic_boost(prices):
+def check_graphic_boost(prices: list) -> bool:
+    """
+    проверяет график на буст цены
+    :param prices: график цен на предмет
+    :return: есть буст графика или нет
+    """
     log('steam_f: check_graphic_boost')
     price_7_days = calculate_avg_price_and_more(prices, 168, 72)
     price_3_days = calculate_avg_price_and_more(prices, 72, 48)
@@ -245,7 +308,14 @@ def check_graphic_boost(prices):
     return False
 
 
-def get_item_price_histogram(prices, histogram):
+def get_item_price_histogram(prices: list, histogram: dict):
+    """
+    проверяет дроп графика(если он есть, то возвращает цену из гистограммы для дропа графика), иначе возвращает цену
+    из гистограммы, по которой можно продать предмет
+    :param prices: график цен на предмет
+    :param histogram: гистограмма предмета
+    :return: цену, по которой можно продать предмет, если судить по гистограмме
+    """
     log('steam_f: get_item_price_histogram')
     sell_orders_list = get_item_sell_orders_list(histogram)
     item_sell_count_for_week = calculate_item_sell_count(prices, 168)
@@ -319,7 +389,12 @@ def get_item_price_histogram(prices, histogram):
         return sell_price_bad
 
 
-def get_item_sell_orders_list(histogram):
+def get_item_sell_orders_list(histogram: dict) -> list:
+    """
+    возвращает лист запросов на продажу
+    :param histogram: гистограмма предмета
+    :return: список, каждый элемент которого содержит цену и кол-во предметов, проданых по этой цене
+    """
     log('steam_f: get_item_sell_orders_list')
     sell_orders = histogram['sell_order_graph']
     res_list = list()
@@ -333,7 +408,14 @@ def get_item_sell_orders_list(histogram):
     return res_list
 
 
-def calculate_item_sell_count(prices, time_2,  time_1=0):
+def calculate_item_sell_count(prices: list, time_2: int,  time_1: int = 0) -> int:
+    """
+    возвращает кол-во продаж по графику за время от time_1 до time_2
+    :param prices: график цен на предмет
+    :param time_2: конец промежутка времени
+    :param time_1: начало промежутка времени
+    :return: кол-во продаж за время от time_1 до time_2
+    """
     log('steam_f: calculate_item_sell_count')
     count = 0
     for i in range(time_1, time_2):
@@ -341,7 +423,14 @@ def calculate_item_sell_count(prices, time_2,  time_1=0):
     return count
 
 
-def get_count_of_price_or_higher_in_history_24_12_6_3(prices, price):
+def get_count_of_price_or_higher_in_history_24_12_6_3(prices: list, price: float) -> tuple:
+    """
+    вызывает функцию parse_count_of_price_or_higher_in_history для промежутков времени с 12 до 24 часов,
+    с 6 до 12, с 3 до 6 часов и с до 3 часов и возвращает значение этой функции для каждого промежутка времени
+    :param prices: график цен на предмет
+    :param price: заданная цена
+    :return: кортеж из количества продаж предмета
+    """
     log('steam_f: get_count_of_price_or_higher_in_history_24_12_6_3')
     count_12h_24h = parse_count_of_price_or_higher_in_history(prices, price, 24, 12)
     count_6h_12h = parse_count_of_price_or_higher_in_history(prices, price, 12, 6)
@@ -350,7 +439,15 @@ def get_count_of_price_or_higher_in_history_24_12_6_3(prices, price):
     return count_12h_24h, count_6h_12h, count_3h_6h, count_3h
 
 
-def parse_count_of_price_or_higher_in_history(prices, price, time_2,  time_1=0):
+def parse_count_of_price_or_higher_in_history(prices: list, price: float, time_2: int,  time_1: int = 0) -> int:
+    """
+    возвращает кол-во продаж на графике по цене >= заданной
+    :param prices: график цен на предмет
+    :param price: заданная цена
+    :param time_2: конец промежутка времени
+    :param time_1: начало промежутка времени
+    :return: кол-во продаж на графике по цене >= заданной
+    """
     log('steam_f: parse_count_of_price_or_higher_in_history')
     count = 0
     for i in range(time_1, time_2):
