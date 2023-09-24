@@ -21,7 +21,6 @@ def create_histogram(df: pd.DataFrame, mark_class: int) -> None:
         histr = cv2.calcHist([img], [i], None, [256], [0, 256])
         plt.plot(histr, color=col)
         plt.xlim([0, 256])
-
     plt.ylabel('Number of pixels')
     plt.xlabel('Pixel value')
     plt.title('Histogram')
@@ -59,7 +58,6 @@ def filter_dataframe_mark_class(df: pd.DataFrame, column: str, value: int) -> pd
     """
     df = df[df[column] == value]
     print(df)
-    # save dataframe to csv file
     df.to_csv("filter_dataframe_mark_class.csv", sep='\t', encoding='utf-8')
     return df
 
@@ -80,7 +78,6 @@ def filter_dataframe_wight_and_height_and_mark(df: pd.DataFrame, column1: str, c
     """
     df = df[(df[column1] <= value1) & (df[column2] <= value2) & (df[column3] == value3)]
     print(df)
-    # save dataframe to csv file
     df.to_csv("filter_dataframe_wight_and_height.csv", sep='\t', encoding='utf-8')
     return df
 
@@ -92,18 +89,12 @@ def group_dataframe_pixel(df: pd.DataFrame) -> pd.DataFrame:
         :return:
             df (pd.DataFrame) : массив данных
     """
-    # copy dataframe
     df1 = df.copy()
-    # rename column
     df1.rename(columns={'Number_of_pixels': 'Min_pixel'}, inplace=True)
-    # copy column
     df1['Max_pixel'] = df1['Min_pixel']
     df1['Mean_pixel'] = df1['Min_pixel']
-
-    # group dataframe by column
     df1 = df1.groupby(['Class']).agg({'Min_pixel': 'min', 'Max_pixel': 'max', 'Mean_pixel': 'mean'})
     print(df1)
-
     df1.to_csv("group_dataframe_pixel.csv", sep='\t', encoding='utf-8')
 
 
@@ -126,7 +117,6 @@ def create_dataframe(path_of_csv: str) -> pd.DataFrame:
             list_mark.append("0")
         if row == "leopard":
             list_mark.append("1")
-
     for row in list_abs_way:
         if row == "Absolute way":
             continue
@@ -136,13 +126,12 @@ def create_dataframe(path_of_csv: str) -> pd.DataFrame:
             list_image_height.append(image.shape[1])
             list_image_depth.append(image.shape[2])
             list_image_pix.append(image.size)
-
     for i in range(1, len(list_abs_way)):
         try:
             list_abs_way[i] = os.path.abspath(list_abs_way[i])
+
         except:
             pass
-
     data = {
         list_abs_way[0]: list_abs_way[1:],
         list_name_class[0]: list_name_class[1:],
