@@ -4,7 +4,6 @@ import random
 
 import cv2
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import torch
 import torch.nn as nn
@@ -12,6 +11,8 @@ import torch.nn.functional as F
 from PIL import Image
 from sklearn.model_selection import train_test_split
 from torchvision import transforms
+
+from CNN import ConvNet
 
 
 
@@ -22,11 +23,35 @@ LEARNING_RATE = 0.001
 BATCH_SIZE = 10
 EPOCHS = 10
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+MODEL = ConvNet().to(DEVICE)
+MODEL.train()
 
-torch.manual_seed(1234)
-if DEVICE =='cuda':
-    torch.cuda.manual_seed_all(1234)
 
+
+
+OPTIMIZER = torch.optim.Adam(MODEL.parameters(), lr=LEARNING_RATE)
+
+class dataset(torch.utils.data.Dataset):
+    def __init__(self,file_list,transform=None):
+        self.file_list = file_list
+        self.transform = transform
+        
+    def __len__(self):
+        self.filelength = len(self.file_list)
+        return self.filelength
+    
+    def __getitem__(self,idx):
+        img_path = self.file_list[idx]
+        img = Image.open(img_path)
+        img_transformed = self.transform(img)
+        
+        label = img_path.split('\\')[-1].split('.')[0]
+        if label == 'polarbears':
+            label = 1
+        elif label == 'brownbears':
+            label = 0
+            
+        return img_transformed,label
 
 def create_df(file_path = 'dataset.csv'):
     df = pd.read_csv(file_path, sep = ' ')
@@ -69,53 +94,13 @@ def load_test(df: pd.core.frame.DataFrame, path: str, i: int) -> None:
 
 
 
-class ConvNet(nn.Module):
-    def __init__(self):
-        super(ConvNet,self).__init__()
-        
-        self.layer1 = nn.Sequential(
-            nn.Conv2d(3,16,kernel_size=3, padding=0,stride=2),
-            nn.BatchNorm2d(16),
-            nn.ReLU(),
-            nn.MaxPool2d(2)
-        )
-        
-        self.layer2 = nn.Sequential(
-            nn.Conv2d(16,32, kernel_size=3, padding=0, stride=2),
-            nn.BatchNorm2d(32),
-            nn.ReLU(),
-            nn.MaxPool2d(2)
-            )
-        
-        self.layer3 = nn.Sequential(
-            nn.Conv2d(32,64, kernel_size=3, padding=0, stride=2),
-            nn.BatchNorm2d(64),
-            nn.ReLU(),
-            nn.MaxPool2d(2)
-        )
-        
-        
-        self.fc1 = nn.Linear(3*3*64,10)
-        self.dropout = nn.Dropout(0.5)
-        self.fc2 = nn.Linear(10,2)
-        self.relu = nn.ReLU()
-        
-        
-    def forward(self,x):
-        out = self.layer1(x)
-        out = self.layer2(out)
-        out = self.layer3(out)
-        out = out.view(out.size(0),-1)
-        out = self.relu(self.fc1(out))
-        out = self.fc2(out)
-        return out
 
-model = ConvNet().to(DEVICE)
-model.train()
-criterion = nn.CrossEntropyLoss()
-OPTIMIZER = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 def data_preparation():
+    torch.manual_seed(1234)
+    if DEVICE =='cuda':
+        torch.cuda.manual_seed_all(1234)
+
     train_list = glob.glob(os.path.join(TRAIN_PATH,'*.jpg'))
     test_list = glob.glob(os.path.join(TEST_PATH, '*.jpg'))
 
@@ -152,27 +137,7 @@ def data_preparation():
 
 
 
-class dataset(torch.utils.data.Dataset):
-    def __init__(self,file_list,transform=None):
-        self.file_list = file_list
-        self.transform = transform
-        
-    def __len__(self):
-        self.filelength = len(self.file_list)
-        return self.filelength
-    
-    def __getitem__(self,idx):
-        img_path = self.file_list[idx]
-        img = Image.open(img_path)
-        img_transformed = self.transform(img)
-        
-        label = img_path.split('\\')[-1].split('.')[0]
-        if label == 'polarbears':
-            label = 1
-        elif label == 'brownbears':
-            label = 0
-            
-        return img_transformed,label
+
 
 
 
@@ -198,7 +163,7 @@ def train_loop (train_loader, val_loader, epochs):
             data = data.to(DEVICE)
             label = label.to(DEVICE)
             
-            output = model(data)
+            output = MODEL(data)
             loss = nn.CrossEntropyLoss(output, label)
             
             OPTIMIZER.zero_grad()
@@ -223,7 +188,7 @@ def train_loop (train_loader, val_loader, epochs):
                 data = data.to(DEVICE)
                 label = label.to(DEVICE)
                 
-                val_output = model(data)
+                val_output = MODEL(data)
                 val_loss = nn.CrossEntropyLoss(val_output,label)
                 
                 acc = ((val_output.argmax(dim=1) == label).float().mean())
@@ -237,6 +202,7 @@ def train_loop (train_loader, val_loader, epochs):
             print('Epoch : {}, val_accuracy : {}, val_loss : {}'.format(epoch+1, epoch_val_accuracy,epoch_val_loss))
     
 
+def show_results(epochs, loss_list, accuracy_list, val_loss_list, val_accuracy_list):
     num_epochs = [i+1 for i in range(epochs)]
 
     fig = plt.figure(figsize=(30, 5))
@@ -267,11 +233,11 @@ def train_loop (train_loader, val_loader, epochs):
 
 def show_work(test_loader):
     polarbears_probs = []
-    model.eval()
+    MODEL.eval()
     with torch.no_grad():
         for images, labels in test_loader:
             images = images.to(DEVICE)
-            preds = model(images)
+            preds = MODEL(images)
             preds_list = F.softmax(preds, dim=1)[:, 1].tolist()
             polarbears_probs += list(zip(labels, preds_list))
 
@@ -283,7 +249,7 @@ def show_work(test_loader):
 
     class_ = {0: 'brownbear', 1: 'polarbear'}
 
-    fig, axes = plt.subplots(2, 5, figsize=(20, 12), facecolor='w')
+    _, axes = plt.subplots(2, 5, figsize=(20, 12), facecolor='w')
 
     for ax in axes.ravel():
         
@@ -302,7 +268,7 @@ def show_work(test_loader):
         ax.imshow(img)
 
 def save_and_test(test_loader, path = 'ConvNetModel.pth'):
-    torch.save(model.state_dict(), path)
+    torch.save(MODEL.state_dict(), path)
 
     loaded_model = ConvNet().to(DEVICE)
     loaded_model.load_state_dict(torch.load(path))
@@ -323,7 +289,7 @@ def save_and_test(test_loader, path = 'ConvNetModel.pth'):
 
     class_ = {0: 'brownbear', 1: 'polarbear'}
 
-    fig, axes = plt.subplots(2, 5, figsize=(20, 12), facecolor='w')
+    _, axes = plt.subplots(2, 5, figsize=(20, 12), facecolor='w')
 
     for ax in axes.ravel():
         
