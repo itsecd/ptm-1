@@ -25,10 +25,6 @@ EPOCHS = 10
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 MODEL = ConvNet().to(DEVICE)
 MODEL.train()
-
-
-
-
 OPTIMIZER = torch.optim.Adam(MODEL.parameters(), lr=LEARNING_RATE)
 
 class dataset(torch.utils.data.Dataset):
