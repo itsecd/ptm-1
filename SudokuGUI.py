@@ -9,7 +9,7 @@ pygame.init()
 
 
 class Board:
-    def __init__(self, window):
+    def __init__(self, window) -> None:
         """
         Инициализирует объект Board.
         :param window: Объект окна Pygame.
@@ -47,7 +47,7 @@ class Board:
         pygame.draw.line(self.window, (0, 0, 0), (0, (i + 1) // 3 * 180),
                          (540, (i + 1) // 3 * 180), 4)
 
-    def deselect(self, tile):
+    def deselect(self, tile) -> None:
         """
         Отменяет выбор всех плиток, кроме данной плитки.
         :param tile: Плитка, которая должна оставаться выделенной.
@@ -58,7 +58,7 @@ class Board:
                 if self.tiles[i][j] != tile:
                     self.tiles[i][j].selected = False
 
-    def redraw(self, keys: dict, wrong: int, time: int):
+    def redraw(self, keys: dict, wrong: int, time: int) -> None:
         """
         Перерисовывает доску судоку в окне игры, выделяя выбранные,
         правильные и неправильные плитки,отображая текущий неправильный счетчик и время,
@@ -105,7 +105,7 @@ class Board:
         self.window.blit(text, (388, 542))
         pygame.display.flip()
 
-    def visual_solve(self, wrong: int, time: int):
+    def visual_solve(self, wrong: int, time: int) -> bool:
         """
         Рекурсивно решает доску судоку визуально, выделяя правильные
         и неправильные плитки по мере их заполнения.
@@ -138,7 +138,7 @@ class Board:
                 pygame.time.delay(63)
                 self.redraw({}, wrong, time)
 
-    def hint(self, keys: dict):
+    def hint(self, keys: dict) -> bool:
         """
         Предоставляет подсказку, заполняя случайную пустую плитку правильным номером.
         :param keys: Словарь, содержащий (x, y) в качестве ключей и потенциальных значений
@@ -160,7 +160,7 @@ class Board:
 
 
 class Tile:
-    def __init__(self, value: int, window: pygame.Surface, x1: int, y1: int):
+    def __init__(self, value: int, window: pygame.Surface, x1: int, y1: int) -> None:
         """
         Инициализирует объект Tile.
         :param value: Значение, которое будет отображаться на плитке.
@@ -175,7 +175,7 @@ class Tile:
         self.correct = False
         self.incorrect = False
 
-    def draw(self, color: tuple[int, int, int], thickness: int):
+    def draw(self, color: tuple[int, int, int], thickness: int) -> None:
         """
         Рисовать плитку в окне с цветной рамкой.
         :param color: Значение цвета RGB границы.
@@ -184,7 +184,7 @@ class Tile:
         """
         pygame.draw.rect(self.window, color, self.rect, thickness)
 
-    def display(self, value: int, position: tuple[int, int], color: tuple[int, int, int]):
+    def display(self, value: int, position: tuple[int, int], color: tuple[int, int, int]) -> None:
         """
         Отображает значение плитки в центре плитки.
         :param value: Значение, которое будет отображаться.
@@ -196,7 +196,7 @@ class Tile:
         text = font.render(str(value), True, color)
         self.window.blit(text, position)
 
-    def clicked(self, mousePos: tuple[int, int]):
+    def clicked(self, mousePos: tuple[int, int]) -> bool:
         """
         Проверяет, щелкнута ли мышью по плитке.
         :param mousePos: Координаты (x, y) мыши.
@@ -207,7 +207,7 @@ class Tile:
         return self.selected
 
 
-def main():
+def main() -> None:
     # Настройте окно pygame
     screen = pygame.display.set_mode((540, 590))
     screen.fill((255, 255, 255))

@@ -1,7 +1,7 @@
 from random import randint, shuffle
 
 
-def print_board(board: list[list[int]]):
+def print_board(board: list[list[int]]) -> None:
     """
     Распечать доску судоку.
     :param board: Доска судоку 9x9, представленная в виде списка целых чисел.
@@ -20,7 +20,7 @@ def print_board(board: list[list[int]]):
     print(board_string)
 
 
-def find_empty(board: list[list[int]]):
+def find_empty(board: list[list[int]]) -> None:
     """
     Найти пустую ячейку на доске судоку.
     :param board: Доска судоку 9x9, представленная в виде списка целых чисел.
@@ -34,7 +34,7 @@ def find_empty(board: list[list[int]]):
     return None
 
 
-def valid(board: list[list[int]], pos: tuple[int, int], num: int):
+def valid(board: list[list[int]], pos: tuple[int, int], num: int) -> bool:
     """
     Проверяет, допустимо ли число в ячейке доски судоку.
     :param board: Доска судоку 9x9, представленная в виде списка целых чисел.
@@ -57,7 +57,7 @@ def valid(board: list[list[int]], pos: tuple[int, int], num: int):
     return True
 
 
-def solve(board: list[list[int]]):
+def solve(board: list[list[int]]) -> bool:
     """
     Решает доску судоку, используя алгоритм возврата.
     :param board: Доска судоку 9x9, представленная в виде списка целых чисел.
@@ -77,7 +77,7 @@ def solve(board: list[list[int]]):
     return False
 
 
-def generate_board():
+def generate_board() -> list[list[int]]:
     """
     Генерирует случайную доску судоку с меньшим количеством начальных чисел.
     :return: (list[list[int]]) Доска судоку 9x9, представленная в виде списка целых чисел.
@@ -92,7 +92,7 @@ def generate_board():
                 boards[i + row][i + col] = nums.pop()
 
     # заполните оставшиеся ячейки возвратом
-    def fill_cells(board: list[list[int]], row: int, col: int):
+    def fill_cells(board: list[list[int]], row: int, col: int) -> bool:
         """
         Заполняет оставшиеся ячейки доски судоку с возвратом.
         :param board: Доска судоку 9x9, представленная в виде списка целых чисел.
