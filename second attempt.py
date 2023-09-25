@@ -78,7 +78,7 @@ class ExportBbcode(object):
     def __init__(self, view) -> None:
         self.view = view
 
-    def process_inputs(self, **kwargs) -> Dict[str, Any]:
+    def process_inputs(self, **kwargs) -> dict:
         return {
             "numbers": bool(kwargs.get("numbers", False)),
             "color_scheme": kwargs.get("color_scheme", None),
@@ -183,7 +183,6 @@ class ExportBbcode(object):
                             pass
                     general_settings_read = True
                     continue
-
                 try:
                     settings["settings"]["foreground"] = filter_color(settings["settings"]["foreground"])
                 except:
