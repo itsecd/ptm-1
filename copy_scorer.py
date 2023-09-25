@@ -31,7 +31,7 @@ def get_score():
 
 
 def lookup_weather(location=None, days_forward=None):
-    location = location or (59.3293, 18.0686)  # default to Stockholm
+    location = location or (59.3293, 18.0686) 
     days_forward = days_forward or 0
     params = {
         "latitude": location[0], "longitude": location[1], "days_forward": days_forward}
@@ -50,7 +50,6 @@ def update_selection():
     score = get_score()
     if score > 5:
         global flavour
-        # placeholder implementation - real version would use machine learning to predict sales
         flavour = random.choice(
             [IceCream.Strawberry, IceCream.Chocolate, IceCream.Vanilla])
 
@@ -59,6 +58,5 @@ def get_sales_forecast():
     forecasts = {
         IceCream.Strawberry: 9,
         IceCream.Vanilla: 11,
-        IceCream.Chocolate: 3
-    }
+        IceCream.Chocolate: 3}
     return forecasts[flavour]
