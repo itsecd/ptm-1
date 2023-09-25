@@ -4,7 +4,7 @@ import scorer
 from scorer import IceCream
 
 
-def print_sales_forecasts():
+def print_sales_forecasts() -> None:
     names = ["Steve", "Julie", "Francis"]
     now = datetime.datetime.now()
     print(f"Forecast at time {now}")

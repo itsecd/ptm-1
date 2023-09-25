@@ -19,18 +19,18 @@ sample_leaderboard2 = Leaderboard(races=[race4, race5, race6])
 
 class LeaderboardTest(unittest.TestCase):
 
-    def test_winner(self):
+    def test_winner(self) -> None:
         self.assertEquals("Lewis Hamilton",
                           sample_leaderboard1.driver_rankings()[0])
 
-    def test_driver_points(self):
+    def test_driver_points(self) -> None:
         self.assertEquals(
             18+18+25, sample_leaderboard1.driver_points()["Lewis Hamilton"])
 
 
 class RaceTest(unittest.TestCase):
 
-    def test_driver_points(self):
+    def test_driver_points(self) -> None:
         self.assertEquals(25, race1.points(driver1))
         self.assertEquals(18, race1.points(driver2))
         self.assertEquals(15, race1.points(driver3))

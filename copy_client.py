@@ -9,24 +9,24 @@ class TelemetryClient(object):
     '''
     DIAGNOSTIC_MESSAGE = "AT#UD"
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._online_status = False
         self._diagnosticMessageJustSent = False
 
     @property
-    def online_status(self):
+    def online_status(self) -> bool:
         return self._online_status
 
-    def connect(self, telemetry_server_connection_string):
+    def connect(self, telemetry_server_connection_string: str) -> None:
         if (telemetry_server_connection_string is None or telemetry_server_connection_string == ""):
             raise Exception()
         success = random.randint(1, 10) <= 2
         self._online_status = success
 
-    def disconnect(self):
+    def disconnect(self) -> None:
         self._online_status = False
 
-    def send(self, message):
+    def send(self, message: str) -> None:
         if (message is None or message == ""):
             raise Exception()
         if (message == TelemetryClient.DIAGNOSTIC_MESSAGE):
@@ -34,7 +34,7 @@ class TelemetryClient(object):
         else:
             self._diagnosticMessageJustSent = False
 
-    def receive(self):
+    def receive(self) -> str:
         if (self._diagnosticMessageJustSent):
             message = """\
 LAST TX rate................ 100 MBPS\r\n

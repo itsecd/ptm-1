@@ -4,7 +4,7 @@ import scorer
 from scorer import IceCream
 
 
-def long_range_forecast(quarter: str):
+def long_range_forecast(quarter: str) -> dict: 
     result = {}
     if quarter == "Q1" or quarter == "Q4":
         for flavour in IceCream:

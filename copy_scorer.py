@@ -13,7 +13,7 @@ class IceCream(enum.Enum):
 flavour = None
 
 
-def get_score():
+def get_score() -> int:
     sunny_today = lookup_weather()
     if flavour == IceCream.Strawberry:
         if sunny_today:
@@ -31,7 +31,7 @@ def get_score():
         return -1
 
 
-def lookup_weather(location=None, days_forward=None):
+def lookup_weather(location = None, days_forward = None) -> bool:
     location = location or (59.3293, 18.0686) 
     days_forward = days_forward or 0
     params = {
@@ -47,7 +47,7 @@ def lookup_weather(location=None, days_forward=None):
     return bool(forecast["weather"]["main"] == "Sunny")
 
 
-def update_selection():
+def update_selection() -> None:
     score = get_score()
     if score > 5:
         global flavour
@@ -55,7 +55,7 @@ def update_selection():
             [IceCream.Strawberry, IceCream.Chocolate, IceCream.Vanilla])
 
 
-def get_sales_forecast():
+def get_sales_forecast() -> dict:
     forecasts = {
         IceCream.Strawberry: 9,
         IceCream.Vanilla: 11,
