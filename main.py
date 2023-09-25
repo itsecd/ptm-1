@@ -1,8 +1,8 @@
-from os import listdir, getcwd, path
 import shutil
+from os import listdir, getcwd, path
 
-from openpyxl import Workbook
 import openpyxl as op
+from openpyxl import Workbook
 from progress.bar import IncrementalBar
 from tqdm import trange
 
