@@ -5,16 +5,18 @@ import tempfile
 import sublime
 import sublime_plugin
 
-from ExportHtmlLib.rgba.rgba import RGBA
 from os import path
 from plistlib import readPlist
+from ExportHtmlLib.rgba.rgba import RGBA
 
 
 PACKAGE_SETTINGS = "ExportHtml.sublime-settings"
 
 if sublime.platform() == "linux":
     # Try and load Linux Python2.6 lib.  Default path is for Ubuntu.
-    linux_lib = sublime.load_settings(PACKAGE_SETTINGS).get("linux_python2.6_lib", "/usr/lib/python2.6/lib-dynload")
+    linux_lib = sublime.load_settings(PACKAGE_SETTINGS).get(
+        "linux_python2.6_lib", "/usr/lib/python2.6/lib-dynload"
+    )
     if not linux_lib in sys.path and path.exists(linux_lib):
         sys.path.append(linux_lib)
 
@@ -34,18 +36,22 @@ POST_START = '[pre=%(bg_color)s]'
 
 POST_END = '[/pre]\n'
 
-BBCODE_MATCH = re.compile(r"""(\[/?)((?:code|pre|table|tr|td|th|b|i|u|sup|color|url|img|list|trac|center|quote|size|li|ul|ol|youtube|gvideo)(?:=[^\]]+)?)(\])""")
+BBCODE_MATCH = re.compile(
+    r"""(\[/?)((?:code|pre|table|tr|td|th|b|i|u|sup|color|url|img|list|trac|center|quote|size|li|ul|ol|youtube|gvideo)(?:=[^\]]+)?)(\])"""
+)
 
-FILTER_MATCH = re.compile(r'^(?:(brightness|saturation|hue|colorize)\((-?[\d]+|[\d]*\.[\d]+)\)|(sepia|grayscale|invert))$')
+FILTER_MATCH = re.compile(
+    r'^(?:(brightness|saturation|hue|colorize)\((-?[\d]+|[\d]*\.[\d]+)\)|(sepia|grayscale|invert))$'
+)
 
 class ExportBbcodePanelCommand(sublime_plugin.WindowCommand):
-    def execute(self, value):
+    def execute(self, value) -> None:
         if value >= 0:
             view = self.window.active_view()
             if view != None:
                 ExportBbcode(view).run(**self.args[value])
 
-    def run(self):
+    def run(self) -> None:
         options = sublime.load_settings(PACKAGE_SETTINGS).get("bbcode_panel", {})
         menu = []
         self.args = []
@@ -60,17 +66,19 @@ class ExportBbcodePanelCommand(sublime_plugin.WindowCommand):
                 self.execute
             )
 
+
 class ExportBbcodeCommand(sublime_plugin.WindowCommand):
-    def run(self, **kwargs):
+    def run(self, **kwargs) -> None:
         view = self.window.active_view()
         if view != None:
             ExportBbcode(view).run(**kwargs)
 
+
 class ExportBbcode(object):
-    def __init__(self, view):
+    def __init__(self, view) -> None:
         self.view = view
 
-    def process_inputs(self, **kwargs):
+    def process_inputs(self, **kwargs) -> Dict[str, Any]:
         return {
             "numbers": bool(kwargs.get("numbers", False)),
             "color_scheme": kwargs.get("color_scheme", None),
@@ -80,7 +88,7 @@ class ExportBbcode(object):
             "filter": kwargs.get("filter", "")
         }
 
-    def setup(self, **kwargs):
+    def setup(self, **kwargs) -> None:
         path_packages = sublime.packages_path()
         # Get get general document preferences from sublime preferences
         settings = sublime.load_settings('Preferences.sublime-settings')
@@ -139,12 +147,11 @@ class ExportBbcode(object):
                     for s in item['settings']['fontStyle'].split(' '):
                         if s == "bold" or s == "italic":  # or s == "underline":
                             style.append(s)
-
             if scope != None and colour != None:
                 self.colours[scope] = {"color": self.strip_transparency(colour), "style": style}
 
-    def apply_filters(self, tmtheme):
-        def filter_color(color):
+    def apply_filters(self, tmtheme) -> list:
+        def filter_color(color) -> str:
             rgba = RGBA(color)
             for f in self.filter:
                 name = f[0]
@@ -187,7 +194,7 @@ class ExportBbcode(object):
                     pass
         return tmtheme
 
-    def strip_transparency(self, color, track_darkness=False, simple_strip=False):
+    def strip_transparency(self, color, track_darkness=False, simple_strip=False) -> str:
         if color is None:
             return color
         rgba = RGBA(color.replace(" ", ""))
@@ -195,7 +202,7 @@ class ExportBbcode(object):
             rgba.apply_alpha(self.bground if self.bground != "" else "#FFFFFF")
         return rgba.get_rgb()
 
-    def setup_print_block(self, curr_sel, multi=False):
+    def setup_print_block(self, curr_sel, multi=False) -> None:
         # Determine start and end points and whether to parse whole file or selection
         if not multi and (curr_sel.empty() or curr_sel.size() <= self.char_limit):
             self.size = self.view.size()
@@ -211,7 +218,7 @@ class ExportBbcode(object):
 
         self.gutter_pad = len(str(self.view.rowcol(self.size)[0])) + 1
 
-    def check_sel(self):
+    def check_sel(self) -> bool:
         multi = False
         for sel in self.view.sel():
             if not sel.empty() and sel.size() >= self.char_limit:
@@ -219,7 +226,7 @@ class ExportBbcode(object):
                 self.sels.append(sel)
         return multi
 
-    def guess_colour(self, the_key):
+    def guess_colour(self, the_key) -> str:
         the_colour = None
         the_style = None
         if the_key in self.colours:
@@ -235,7 +242,7 @@ class ExportBbcode(object):
             self.colours[the_key] = {"color": the_colour, "style": the_style}
         return the_colour, the_style
 
-    def print_line(self, line, num):
+    def print_line(self, line, num) -> int:
         if self.numbers:
             bbcode_line = NUMBERED_BBCODE_LINE % {
                 "color": self.gfground,
@@ -244,10 +251,9 @@ class ExportBbcode(object):
             }
         else:
             bbcode_line = BBCODE_LINE % {"code": line}
-
         return bbcode_line
 
-    def convert_view_to_bbcode(self, the_bbcode):
+    def convert_view_to_bbcode(self, the_bbcode) -> None:
         for line in self.view.split_by_newlines(sublime.Region(self.end, self.size)):
             self.empty_space = None
             self.size = line.end()
@@ -255,7 +261,7 @@ class ExportBbcode(object):
             the_bbcode.write(self.print_line(line, self.curr_row))
             self.curr_row += 1
 
-    def repl(self, m, the_colour):
+    def repl(self, m, the_colour) -> str:
         return m.group(1) + (
             BBCODE_ESCAPE % {
                 "color_open": the_colour,
@@ -264,7 +270,7 @@ class ExportBbcode(object):
             }
         ) + m.group(3)
 
-    def format_text(self, line, text, the_colour, the_style):
+    def format_text(self, line, text, the_colour, the_style) -> None:
         text = text.replace('\t', ' ' * self.tab_size).replace('\n', '')
         if self.empty_space != None:
             text = self.empty_space + text
@@ -288,7 +294,7 @@ class ExportBbcode(object):
                 code = (BBCODE_BOLD % {"color": the_colour, "content": code})
             line.append(code)
 
-    def convert_line_to_bbcode(self):
+    def convert_line_to_bbcode(self) -> str:
         line = []
         while self.end <= self.size:
             # Get text of like scope up to a highlight
@@ -306,7 +312,7 @@ class ExportBbcode(object):
         # Join line segments
         return ''.join(line)
 
-    def write_body(self, the_bbcode):
+    def write_body(self, the_bbcode) -> None:
         the_bbcode.write(POST_START % {"bg_color": self.bground})
 
         # Convert view to HTML
@@ -326,7 +332,7 @@ class ExportBbcode(object):
 
         the_bbcode.write(POST_END)
 
-    def run(self, **kwargs):
+    def run(self, **kwargs) -> None:
         inputs = self.process_inputs(**kwargs)
         self.setup(**inputs)
         delete = False if inputs["view_open"] else True
