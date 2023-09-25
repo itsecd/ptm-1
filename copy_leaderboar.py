@@ -16,7 +16,7 @@ class Leaderboard(object):
 
     def driver_rankings(self) -> list:
         rankings = sorted(self.driver_points().items(),
-                          key=lambda x: x[1], reverse=True)
+                          key=lambda x: x[1], reverse = True)
         return [name for (name, points) in rankings]
 
 

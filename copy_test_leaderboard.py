@@ -2,10 +2,10 @@ import unittest
 
 from leaderboard import *
 
-driver1 = Driver(name="Nico Rosberg", country="DE")
-driver2 = Driver(name="Lewis Hamilton", country="UK")
-driver3 = Driver(name="Sebastian Vettel", country="DE")
-driver4 = SelfDrivingCar(algorithm_version="1.2", company="Acme")
+driver1 = Driver(name = "Nico Rosberg", country = "DE")
+driver2 = Driver(name = "Lewis Hamilton", country = "UK")
+driver3 = Driver(name = "Sebastian Vettel", country = "DE")
+driver4 = SelfDrivingCar(algorithm_version = "1.2", company = "Acme")
 race1 = Race("Australian Grand Prix", [driver1, driver2, driver3])
 race2 = Race("Malaysian Grand Prix", [driver3, driver2, driver1])
 race3 = Race("Chinese Grand Prix", [driver2, driver1, driver3])
@@ -13,8 +13,8 @@ race4 = Race("Fictional Grand Prix", [driver1, driver2, driver4])
 race5 = Race("Fictional Grand Prix", [driver4, driver2, driver1])
 driver4.algorithm_version = "1.3"
 race6 = Race("Fictional Grand Prix", [driver2, driver1, driver4])
-sample_leaderboard1 = Leaderboard(races=[race1, race2, race3])
-sample_leaderboard2 = Leaderboard(races=[race4, race5, race6])
+sample_leaderboard1 = Leaderboard(races = [race1, race2, race3])
+sample_leaderboard2 = Leaderboard(races = [race4, race5, race6])
 
 
 class LeaderboardTest(unittest.TestCase):
