@@ -1,6 +1,8 @@
+import datetime
+
 import scorer
 from scorer import IceCream
-import datetime
+
 
 def long_range_forecast(quarter: str):
     result = {}

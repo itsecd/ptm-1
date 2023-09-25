@@ -2,7 +2,6 @@ import unittest
 
 from leaderboard import *
 
-
 driver1 = Driver(name="Nico Rosberg", country="DE")
 driver2 = Driver(name="Lewis Hamilton", country="UK")
 driver3 = Driver(name="Sebastian Vettel", country="DE")
