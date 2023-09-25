@@ -1,9 +1,10 @@
-import pandas as pd
 import csv
 import os
-import matplotlib.pyplot as plt
 import random
+
 import cv2
+import matplotlib.pyplot as plt
+import pandas as pd
 
 
 def create_histogram(df: pd.DataFrame, mark_class: int) -> None:
@@ -62,7 +63,8 @@ def filter_dataframe_mark_class(df: pd.DataFrame, column: str, value: int) -> pd
     return df
 
 
-def filter_dataframe_wight_and_height_and_mark(df: pd.DataFrame, column1: str, column2: str, column3: str, value1: int,
+def filter_dataframe_wight_and_height_and_mark(df: pd.DataFrame, column1: str, column2: str,
+                                               column3: str, value1: int,
                                                value2: int, value3: int) -> pd.DataFrame:
     """ Фильтрация по ширине, высоте и метке класса
         :arg:
