@@ -5,7 +5,9 @@ import tempfile
 import sublime
 import sublime_plugin
 
+from ExportHtmlLib.rgba.rgba import RGBA
 from os import path
+from plistlib import readPlist
 
 
 PACKAGE_SETTINGS = "ExportHtml.sublime-settings"
@@ -15,29 +17,26 @@ if sublime.platform() == "linux":
     linux_lib = sublime.load_settings(PACKAGE_SETTINGS).get("linux_python2.6_lib", "/usr/lib/python2.6/lib-dynload")
     if not linux_lib in sys.path and path.exists(linux_lib):
         sys.path.append(linux_lib)
-from plistlib import readPlist
-from ExportHtmlLib.rgba.rgba import RGBA
 
 NUMBERED_BBCODE_LINE = '[color=%(color)s]%(line)s [/color]%(code)s\n'
 
-BBCODE_LINE='%(code)s\n'
+BBCODE_LINE = '%(code)s\n'
 
-BBCODE_CODE='[color=%(color)s]%(content)s[/color]'
+BBCODE_CODE = '[color=%(color)s]%(content)s[/color]'
 
-BBCODE_ESCAPE='[/color][color=%(color_open)s]%(content)s[/color][color=%(color_close)s]'
+BBCODE_ESCAPE = '[/color][color=%(color_open)s]%(content)s[/color][color=%(color_close)s]'
 
-BBCODE_BOLD='[b]%(content)s[/b]'
+BBCODE_BOLD = '[b]%(content)s[/b]'
 
-BBCODE_ITALIC='[i]%(content)s[/i]'
+BBCODE_ITALIC = '[i]%(content)s[/i]'
 
-POST_START='[pre=%(bg_color)s]'
+POST_START = '[pre=%(bg_color)s]'
 
-POST_END='[/pre]\n'
+POST_END = '[/pre]\n'
 
-BBCODE_MATCH=re.compile(r"""(\[/?)((?:code|pre|table|tr|td|th|b|i|u|sup|color|url|img|list|trac|center|quote|size|li|ul|ol|youtube|gvideo)(?:=[^\]]+)?)(\])""")
+BBCODE_MATCH = re.compile(r"""(\[/?)((?:code|pre|table|tr|td|th|b|i|u|sup|color|url|img|list|trac|center|quote|size|li|ul|ol|youtube|gvideo)(?:=[^\]]+)?)(\])""")
 
-FILTER_MATCH=re.compile(r'^(?:(brightness|saturation|hue|colorize)\((-?[\d]+|[\d]*\.[\d]+)\)|(sepia|grayscale|invert))$')
-
+FILTER_MATCH = re.compile(r'^(?:(brightness|saturation|hue|colorize)\((-?[\d]+|[\d]*\.[\d]+)\)|(sepia|grayscale|invert))$')
 
 class ExportBbcodePanelCommand(sublime_plugin.WindowCommand):
     def execute(self, value):
@@ -61,13 +60,11 @@ class ExportBbcodePanelCommand(sublime_plugin.WindowCommand):
                 self.execute
             )
 
-
 class ExportBbcodeCommand(sublime_plugin.WindowCommand):
     def run(self, **kwargs):
         view = self.window.active_view()
         if view != None:
             ExportBbcode(view).run(**kwargs)
-
 
 class ExportBbcode(object):
     def __init__(self, view):
@@ -146,7 +143,6 @@ class ExportBbcode(object):
             if scope != None and colour != None:
                 self.colours[scope] = {"color": self.strip_transparency(colour), "style": style}
 
-
     def apply_filters(self, tmtheme):
         def filter_color(color):
             rgba = RGBA(color)
@@ -191,7 +187,6 @@ class ExportBbcode(object):
                     pass
         return tmtheme
 
-
     def strip_transparency(self, color, track_darkness=False, simple_strip=False):
         if color is None:
             return color
@@ -199,7 +194,6 @@ class ExportBbcode(object):
         if not simple_strip:
             rgba.apply_alpha(self.bground if self.bground != "" else "#FFFFFF")
         return rgba.get_rgb()
-
 
     def setup_print_block(self, curr_sel, multi=False):
         # Determine start and end points and whether to parse whole file or selection
@@ -217,7 +211,6 @@ class ExportBbcode(object):
 
         self.gutter_pad = len(str(self.view.rowcol(self.size)[0])) + 1
 
-
     def check_sel(self):
         multi = False
         for sel in self.view.sel():
@@ -225,7 +218,6 @@ class ExportBbcode(object):
                 multi = True
                 self.sels.append(sel)
         return multi
-
 
     def guess_colour(self, the_key):
         the_colour = None
@@ -243,7 +235,6 @@ class ExportBbcode(object):
             self.colours[the_key] = {"color": the_colour, "style": the_style}
         return the_colour, the_style
 
-
     def print_line(self, line, num):
         if self.numbers:
             bbcode_line = NUMBERED_BBCODE_LINE % {
@@ -256,7 +247,6 @@ class ExportBbcode(object):
 
         return bbcode_line
 
-
     def convert_view_to_bbcode(self, the_bbcode):
         for line in self.view.split_by_newlines(sublime.Region(self.end, self.size)):
             self.empty_space = None
@@ -264,7 +254,6 @@ class ExportBbcode(object):
             line = self.convert_line_to_bbcode()
             the_bbcode.write(self.print_line(line, self.curr_row))
             self.curr_row += 1
-
 
     def repl(self, m, the_colour):
         return m.group(1) + (
@@ -274,7 +263,6 @@ class ExportBbcode(object):
                 "content": m.group(2)
             }
         ) + m.group(3)
-
 
     def format_text(self, line, text, the_colour, the_style):
         text = text.replace('\t', ' ' * self.tab_size).replace('\n', '')
@@ -300,7 +288,6 @@ class ExportBbcode(object):
                 code = (BBCODE_BOLD % {"color": the_colour, "content": code})
             line.append(code)
 
-
     def convert_line_to_bbcode(self):
         line = []
         while self.end <= self.size:
@@ -319,7 +306,6 @@ class ExportBbcode(object):
         # Join line segments
         return ''.join(line)
 
-
     def write_body(self, the_bbcode):
         the_bbcode.write(POST_START % {"bg_color": self.bground})
 
@@ -328,7 +314,7 @@ class ExportBbcode(object):
             count = 0
             total = len(self.sels)
             for sel in self.sels:
-                self.setup_print_block(sel, multi=True)
+                self.setup_print_block(sel, multi = True)
                 self.convert_view_to_bbcode(the_bbcode)
                 count += 1
 
@@ -340,12 +326,11 @@ class ExportBbcode(object):
 
         the_bbcode.write(POST_END)
 
-
     def run(self, **kwargs):
         inputs = self.process_inputs(**kwargs)
         self.setup(**inputs)
         delete = False if inputs["view_open"] else True
-        with tempfile.NamedTemporaryFile(delete=delete, suffix='.txt') as the_bbcode:
+        with tempfile.NamedTemporaryFile(delete = delete, suffix = '.txt') as the_bbcode:
             self.write_body(the_bbcode)
             if inputs["clipboard_copy"]:
                 the_bbcode.seek(0)
