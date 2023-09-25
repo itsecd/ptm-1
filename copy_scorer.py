@@ -11,6 +11,7 @@ class IceCream(enum.Enum):
 
 flavour = None
 
+
 def get_score():
     sunny_today = lookup_weather()
     if flavour == IceCream.Strawberry:
@@ -32,7 +33,8 @@ def get_score():
 def lookup_weather(location=None, days_forward=None):
     location = location or (59.3293, 18.0686)  # default to Stockholm
     days_forward = days_forward or 0
-    params = {"latitude": location[0], "longitude": location[1], "days_forward": days_forward}
+    params = {
+        "latitude": location[0], "longitude": location[1], "days_forward": days_forward}
     weather_app = "http://127.0.0.1:3005"
     try:
         response = requests.get(weather_app + "/forecast", params=params)
@@ -44,13 +46,13 @@ def lookup_weather(location=None, days_forward=None):
     return bool(forecast["weather"]["main"] == "Sunny")
 
 
-
 def update_selection():
     score = get_score()
     if score > 5:
         global flavour
         # placeholder implementation - real version would use machine learning to predict sales
-        flavour = random.choice([IceCream.Strawberry, IceCream.Chocolate, IceCream.Vanilla])
+        flavour = random.choice(
+            [IceCream.Strawberry, IceCream.Chocolate, IceCream.Vanilla])
 
 
 def get_sales_forecast():

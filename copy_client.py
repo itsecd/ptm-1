@@ -1,5 +1,6 @@
 import random
 
+
 class TelemetryClient(object):
 
     # The communication with the server is simulated in this implementation.
@@ -38,7 +39,6 @@ class TelemetryClient(object):
         else:
             self._diagnosticMessageJustSent = False
 
-
     def receive(self):
         if (self._diagnosticMessageJustSent):
             # Simulate the reception of the diagnostic message
@@ -63,7 +63,7 @@ Remote Rtrn Count........... 00"""
             message = ""
             messageLength = random.randint(0, 50) + 60
             i = messageLength
-            while(i >= 0):
+            while (i >= 0):
                 message += chr((random.randint(0, 40) + 86))
                 i -= 1
 
