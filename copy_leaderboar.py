@@ -3,7 +3,7 @@ from collections import defaultdict
 
 class Leaderboard(object):
 
-    def __init__(self, races) -> None:
+    def __init__(self, races: list) -> None:
         self.races = races
 
     def driver_points(self) -> list:

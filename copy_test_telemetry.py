@@ -4,7 +4,7 @@ from telemetry import *
 
 
 class TelemetryDiagnosticControlsTest(unittest.TestCase):
-    def test_foo(self):
+    def test_foo(self) -> None:
         diagnostics = TelemetryDiagnostics()
         self.assertEqual("foo", diagnostics.diagnostic_info)
 

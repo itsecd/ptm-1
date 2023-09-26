@@ -31,7 +31,7 @@ def get_score() -> int:
         return -1
 
 
-def lookup_weather(location = None, days_forward = None) -> bool:
+def lookup_weather(location: list = None, days_forward: list = None) -> bool:
     location = location or (59.3293, 18.0686) 
     days_forward = days_forward or 0
     params = {
