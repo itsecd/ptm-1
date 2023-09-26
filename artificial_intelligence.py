@@ -9,27 +9,49 @@ from torch.utils.data import Dataset
 
 class CustomImageDataset(Dataset):
     def __init__(self, path_to_annotation_file: str, transform: Any=None, target_transform: Any=None) -> None:
+        """конструктор
+
+        Args:
+            path_to_annotation_file (str): путь к файлу аннотации
+            transform (Any, optional): настройки стандарта изображения. Defaults to None.
+            target_transform (Any, optional): настройки определенного выбранного участка изображения. Defaults to None.
+        """
         self.path_to_annotation_file = path_to_annotation_file
         self.dataset_info = pd.read_csv(path_to_annotation_file, sep=';', header=1)
         self.transform = transform
         self.target_transform = target_transform
 
     def __len__(self) -> int:
+        """получение длины датасета
+
+        Returns:
+            int: длина датасета
+        """
         return len(self.dataset_info)
 
     def __getitem__(self, index: int) -> Tuple[torch.tensor, int]:
+        """получение фотографии с меткой
+
+        Args:
+            index (int): индекс получаемого фото
+
+        Returns:
+            Tuple[torch.tensor, int]: кортеж изображения и метку класса
+        """
         path_to_image = self.dataset_info.iloc[index, 0]
         image = cv2.cvtColor(cv2.imread(path_to_image), cv2.COLOR_BGR2RGB)
         label = self.dataset_info.iloc[index, 1]
         if self.transform:
             image = self.transform(image)
         if self.target_transform:
-            label = self.target_Transform(label)
+            label = self.target_transform(label)
         return image, label
   
 
 class CNN(nn.Module):
     def __init__(self) -> None:
+        """конструктор
+        """
         super(CNN, self).__init__()
         self.conv_1 = nn.Conv2d(3, 16, kernel_size=3, padding=0, stride=2)
         self.conv_2 = nn.Conv2d(16, 32, kernel_size=3, padding=0, stride=2)
@@ -41,6 +63,14 @@ class CNN(nn.Module):
         self.fc_2 = nn.Linear(10, 1)
 
     def forward(self, x: torch.tensor) -> torch.tensor:
+        """обучение модели 
+
+        Args:
+            x (torch.tensor): данные проходящие через модель
+
+        Returns:
+            torch.tensor: выходные данные
+        """
         output = self.relu(self.conv_1(x))
         output = self.max_pool(output)
         output = self.relu(self.conv_2(output))
