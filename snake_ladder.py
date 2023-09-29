@@ -77,6 +77,7 @@ ladder_jump = [
 
 
 def welcome_msg():
+    """printing a welcome message"""
     msg = """
     Welcome to Snake and Ladder Game.
     Version: 1.0.0
@@ -96,6 +97,11 @@ def welcome_msg():
 
 
 def get_player_names():
+    """entering the player's name
+
+    Returns:
+        str
+    """
     player1_name = None
     while not player1_name:
         player1_name = input("Please enter a valid name for first player: ").strip()
@@ -109,6 +115,11 @@ def get_player_names():
 
 
 def get_dice_value():
+    """random assignment of the value of the dice
+
+    Returns:
+        int
+    """
     time.sleep(SLEEP_BETWEEN_ACTIONS)
     dice_value = random.randint(1, DICE_FACE)
     print("Its a " + str(dice_value))
@@ -116,18 +127,42 @@ def get_dice_value():
 
 
 def got_snake_bite(old_value, current_value, player_name):
+    """taking damage from a snake
+
+    Args:
+        old_value (int)
+        current_value (int)
+        player_name (str)
+    """
     print("\n" + random.choice(snake_bite).upper() + " ~~~~~~~~>")
     print("\n" + player_name + " got a snake bite. Down from " + \
         str(old_value) + " to " + str(current_value))
 
 
 def got_ladder_jump(old_value, current_value, player_name):
+    """random value climbing the stairs
+
+    Args:
+        old_value (int)
+        current_value (int)
+        player_name (str)
+    """
     print("\n" + random.choice(ladder_jump).upper() + " ########")
     print("\n" + player_name + " climbed the ladder from " + \
         str(old_value) + " to " + str(current_value))
 
 
 def snake_ladder(player_name, current_value, dice_value):
+    """checking your winnings
+
+    Args:
+        player_name (str)
+        current_value (int)
+        dice_value (int)
+
+    Returns:
+        int
+    """
     time.sleep(SLEEP_BETWEEN_ACTIONS)
     old_value = current_value
     current_value = current_value + dice_value
@@ -152,6 +187,12 @@ def snake_ladder(player_name, current_value, dice_value):
 
 
 def check_win(player_name, position):
+    """announcement of the winner
+
+    Args:
+        player_name (str)
+        position (int)
+    """
     time.sleep(SLEEP_BETWEEN_ACTIONS)
     if MAX_VAL == position:
         print("\n\n\nThats it.\n\n" + player_name + " won the game.")
@@ -161,6 +202,7 @@ def check_win(player_name, position):
 
 
 def start():
+    """game"""
     welcome_msg()
     time.sleep(SLEEP_BETWEEN_ACTIONS)
     player1_name, player2_name = get_player_names()

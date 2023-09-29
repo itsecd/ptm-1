@@ -9,6 +9,7 @@ import sys
 
 
 def usage():
+    """printing a message"""
     msg = """
         
         usage:
@@ -22,6 +23,11 @@ def usage():
 
 
 def get_cc_number():
+    """returns the first command line argument
+
+    Returns:
+        str
+    """
     if len(sys.argv) < 2:
         usage()
         sys.exit(1)
@@ -30,6 +36,14 @@ def get_cc_number():
 
 
 def sum_digits(digit):
+    """counting the sum of values
+
+    Args:
+        digit (int)
+
+    Returns:
+        int
+    """
     if digit < 10:
         return digit
     else:
@@ -38,6 +52,14 @@ def sum_digits(digit):
 
 
 def validate(cc_num):
+    """checking the correctness of the card number
+
+    Args:
+        cc_num (str)
+
+    Returns:
+        bool: 
+    """
     # reverse the credit card number
     cc_num = cc_num[::-1]
     # convert to integer list

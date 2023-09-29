@@ -9,6 +9,7 @@ import time
 import sys
 
 def clear():
+    """clearing the console"""
     os.system('cls' if os.name=='nt' else 'clear')
 
 happy_to_play = True

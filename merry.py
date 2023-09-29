@@ -8,6 +8,16 @@ from random import randint
 
 
 def create_rectangle(turtle, color, x, y, width, height):
+    """creating a rectangle
+
+    Args:
+        turtle (turtle): _description_
+        color (color): _description_
+        x (int): _description_
+        y (int): _description_
+        width (int): _description_
+        height (int): _description_
+    """
     turtle.penup()
     turtle.color(color)
     turtle.fillcolor(color)
@@ -31,6 +41,15 @@ def create_rectangle(turtle, color, x, y, width, height):
 
 
 def create_circle(turtle, x, y, radius, color):
+    """creating a circle
+
+    Args:
+        turtle (turtle)
+        x (int)
+        y (int)
+        radius (int)
+        color (color)
+    """
     oogway.penup()
     oogway.color(color)
     oogway.fillcolor(color)
