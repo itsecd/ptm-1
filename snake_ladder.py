@@ -1,10 +1,5 @@
 #!/usr/bin/env python
-
-#
-# Text based snake and ladder game
 # Author - https://www.pythoncircle.com
-#
-
 import random
 import sys
 import time
