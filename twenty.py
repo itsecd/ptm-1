@@ -73,7 +73,8 @@ while happy_to_play:
                         else:
                             animal = animal
 
-                        print("Thanks! Now, give me a new question that will be true for a", animal, " , but not for a ", q[curr][branch])
+                        print("Thanks! Now, give me a new question that will be true for a", animal, \
+                            " , but not for a ", q[curr][branch])
                         question = input()
                         # add in this new question
                         q.append([question, animal, guess])
