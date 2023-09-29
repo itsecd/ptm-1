@@ -3,17 +3,16 @@
 # Python script to wish Merry Christmas using turtle.
 # Author - Anurag Rana
 # 
-from turtle import *
+import turtle
 from random import randint
 
-
-def create_rectangle(turtle: any, color: color, x: int, y: int,\
+def create_rectangle(turtle: any, color: str, x: int, y: int,\
                      width: int, height: int) -> None:
     """creating a rectangle
 
     Args:
         turtle (any): _description_
-        color (color): _description_
+        color (str): _description_
         x (int): _description_
         y (int): _description_
         width (int): _description_
@@ -41,7 +40,7 @@ def create_rectangle(turtle: any, color: color, x: int, y: int,\
     turtle.setheading(0)
 
 
-def create_circle(turtle: any, x: int, y: int, radius: int, color: color) -> None:
+def create_circle(turtle: any, x: int, y: int, radius: int, color: str) -> None:
     """creating a circle
 
     Args:
@@ -49,7 +48,7 @@ def create_circle(turtle: any, x: int, y: int, radius: int, color: color) -> Non
         x (int)
         y (int)
         radius (int)
-        color (color)
+        color (str)
     """
     oogway.penup()
     oogway.color(color)
@@ -65,7 +64,7 @@ BG_COLOR = "#0080ff"
 
 # "Yesterday is history, tomorrow is a mystery, but today is a gift. That is why it is called the present.”
 # 	                                                    — Oogway to Po under the peach tree, Kung Fu Panda
-oogway = Turtle()
+oogway = turtle.Turtle()
 # set turtle speed
 oogway.speed(2)
 screen = oogway.getscreen()

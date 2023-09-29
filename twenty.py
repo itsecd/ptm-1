@@ -5,8 +5,8 @@
 
 import json
 import os
-import time
 import sys
+import time
 
 def clear() -> None:
     """clearing the console"""

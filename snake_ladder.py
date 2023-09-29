@@ -5,9 +5,9 @@
 # Author - https://www.pythoncircle.com
 #
 
-import time
 import random
 import sys
+import time
 
 # just of effects. add a delay of 1 second before performing any action
 SLEEP_BETWEEN_ACTIONS = 1
