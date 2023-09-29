@@ -9,12 +9,12 @@ import random
 import sys
 import time
 
-# just of effects. add a delay of 1 second before performing any action
+# Just of effects. add a delay of 1 second before performing any action
 SLEEP_BETWEEN_ACTIONS = 1
 MAX_VAL = 100
 DICE_FACE = 6
 
-# snake takes you down from 'key' to 'value'
+# Snake takes you down from 'key' to 'value'
 snakes = {
     8: 4,
     18: 1,
@@ -33,7 +33,7 @@ snakes = {
     99: 63
 }
 
-# ladder takes you up from 'key' to 'value'
+# Ladder takes you up from 'key' to 'value'
 ladders = {
     3: 20,
     6: 14,
@@ -47,7 +47,7 @@ ladders = {
     61: 78,
     73: 86,
     81: 98,
-    88: 91
+    88: 91,
 }
 
 player_turn_text = [
@@ -72,7 +72,7 @@ ladder_jump = [
     "woww",
     "nailed it",
     "oh my God...",
-    "yaayyy"
+    "yaayyy",
 ]
 
 

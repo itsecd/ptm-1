@@ -2,7 +2,7 @@
 #
 # Python script to wish Merry Christmas using turtle.
 # Author - Anurag Rana
-# 
+
 import turtle
 from random import randint
 
@@ -34,7 +34,7 @@ def create_rectangle(turtle: any, color: str, x: int, y: int,\
     turtle.forward(height)
     turtle.left(90)
 
-    # fill the above shape
+    # Fill the above shape
     turtle.end_fill()
     # Reset the orientation of the turtle
     turtle.setheading(0)
@@ -73,7 +73,7 @@ screen.bgcolor(BG_COLOR)
 # set tile of screen
 screen.title("Merry Christmas")
 # maximize the screen
-screen.setup(width=1.0, height=1.0)
+screen.setup(width = 1.0, height = 1.0)
 
 y = -100
 # create tree trunk
@@ -93,7 +93,7 @@ while width > 10:
 oogway.speed(1)
 oogway.penup()
 oogway.color('yellow')
-oogway.goto(-20, y+10)
+oogway.goto(-20, y + 10)
 oogway.begin_fill()
 oogway.pendown()
 for i in range(5):
@@ -111,12 +111,12 @@ create_circle(oogway, 220, 180, 60, BG_COLOR)
 
 # now add few stars in sky
 oogway.speed(10)
-number_of_stars = randint(20,30)
+number_of_stars = randint(20, 30)
 # print(number_of_stars)
-for _ in range(0,number_of_stars):
-    x_star = randint(-(screen.window_width()//2),screen.window_width()//2)
-    y_star = randint(tree_height, screen.window_height()//2)
-    size = randint(5,20)
+for _ in range(0, number_of_stars):
+    x_star = randint(-(screen.window_width() // 2), screen.window_width() // 2)
+    y_star = randint(tree_height, screen.window_height() // 2)
+    size = randint(5, 20)
     oogway.penup()
     oogway.color('white')
     oogway.goto(x_star, y_star)
@@ -127,14 +127,14 @@ for _ in range(0,number_of_stars):
         oogway.right(144)
     oogway.end_fill()
 
-# print greeting message
+# Print greeting message
 oogway.speed(1)
 oogway.penup()
 msg = "Merry Christmas from ThePythonDjango.Com"
 oogway.goto(0, -200)  # y is in minus because tree trunk was below x axis
 oogway.color("white")
 oogway.pendown()
-oogway.write(msg, move=False, align="center", font=("Arial", 15, "bold"))
+oogway.write(msg, move = False, align = "center", font = ("Arial", 15, "bold"))
 
 oogway.hideturtle()
 screen.mainloop()
