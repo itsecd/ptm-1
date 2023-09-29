@@ -7,11 +7,12 @@ from turtle import *
 from random import randint
 
 
-def create_rectangle(turtle, color, x, y, width, height):
+def create_rectangle(turtle: any, color: color, x: int, y: int,\
+                     width: int, height: int) -> None:
     """creating a rectangle
 
     Args:
-        turtle (turtle): _description_
+        turtle (any): _description_
         color (color): _description_
         x (int): _description_
         y (int): _description_
@@ -40,11 +41,11 @@ def create_rectangle(turtle, color, x, y, width, height):
     turtle.setheading(0)
 
 
-def create_circle(turtle, x, y, radius, color):
+def create_circle(turtle: any, x: int, y: int, radius: int, color: color) -> None:
     """creating a circle
 
     Args:
-        turtle (turtle)
+        turtle (any)
         x (int)
         y (int)
         radius (int)

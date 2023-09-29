@@ -8,7 +8,7 @@ import os
 import time
 import sys
 
-def clear():
+def clear() -> None:
     """clearing the console"""
     os.system('cls' if os.name=='nt' else 'clear')
 

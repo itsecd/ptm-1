@@ -76,7 +76,7 @@ ladder_jump = [
 ]
 
 
-def welcome_msg():
+def welcome_msg() -> None:
     """printing a welcome message"""
     msg = """
     Welcome to Snake and Ladder Game.
@@ -96,7 +96,7 @@ def welcome_msg():
     print(msg)
 
 
-def get_player_names():
+def get_player_names() -> None:
     """entering the player's name
 
     Returns:
@@ -114,7 +114,7 @@ def get_player_names():
     return player1_name, player2_name
 
 
-def get_dice_value():
+def get_dice_value() -> int:
     """random assignment of the value of the dice
 
     Returns:
@@ -126,7 +126,7 @@ def get_dice_value():
     return dice_value
 
 
-def got_snake_bite(old_value, current_value, player_name):
+def got_snake_bite(old_value: int, current_value: int, player_name: str) -> None:
     """taking damage from a snake
 
     Args:
@@ -139,7 +139,7 @@ def got_snake_bite(old_value, current_value, player_name):
         str(old_value) + " to " + str(current_value))
 
 
-def got_ladder_jump(old_value, current_value, player_name):
+def got_ladder_jump(old_value: int, current_value: int, player_name: str) -> None:
     """random value climbing the stairs
 
     Args:
@@ -152,7 +152,7 @@ def got_ladder_jump(old_value, current_value, player_name):
         str(old_value) + " to " + str(current_value))
 
 
-def snake_ladder(player_name, current_value, dice_value):
+def snake_ladder(player_name: str, current_value: int, dice_value: int) -> int:
     """checking your winnings
 
     Args:
@@ -186,7 +186,7 @@ def snake_ladder(player_name, current_value, dice_value):
     return final_value
 
 
-def check_win(player_name, position):
+def check_win(player_name: str, position: int) -> None:
     """announcement of the winner
 
     Args:
@@ -201,7 +201,7 @@ def check_win(player_name, position):
         sys.exit(1)
 
 
-def start():
+def start() -> None:
     """game"""
     welcome_msg()
     time.sleep(SLEEP_BETWEEN_ACTIONS)
