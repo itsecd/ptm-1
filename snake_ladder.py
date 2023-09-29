@@ -45,7 +45,7 @@ ladders = {
     88: 91,
 }
 
-player_turn_text = [
+player_turn_texts = [
     "Your turn.",
     "Go.",
     "Please proceed.",
@@ -54,7 +54,7 @@ player_turn_text = [
     "",
 ]
 
-snake_bite = [
+snake_bites = [
     "boohoo",
     "bummer",
     "snake bite",
@@ -62,7 +62,7 @@ snake_bite = [
     "dang"
 ]
 
-ladder_jump = [
+ladder_jumps = [
     "woohoo",
     "woww",
     "nailed it",
@@ -129,7 +129,7 @@ def got_snake_bite(old_value: int, current_value: int, player_name: str) -> None
         current_value (int)
         player_name (str)
     """
-    print("\n" + random.choice(snake_bite).upper() + " ~~~~~~~~>")
+    print("\n" + random.choice(snake_bites).upper() + " ~~~~~~~~>")
     print("\n" + player_name + " got a snake bite. Down from " + \
         str(old_value) + " to " + str(current_value))
 
@@ -142,7 +142,7 @@ def got_ladder_jump(old_value: int, current_value: int, player_name: str) -> Non
         current_value (int)
         player_name (str)
     """
-    print("\n" + random.choice(ladder_jump).upper() + " ########")
+    print("\n" + random.choice(ladder_jumps).upper() + " ########")
     print("\n" + player_name + " climbed the ladder from " + \
         str(old_value) + " to " + str(current_value))
 
@@ -208,7 +208,7 @@ def start() -> None:
 
     while True:
         time.sleep(SLEEP_BETWEEN_ACTIONS)
-        input_1 = input("\n" + player1_name + ": " + random.choice(player_turn_text) + \
+        input_1 = input("\n" + player1_name + ": " + random.choice(player_turn_texts) + \
             " Hit the enter to roll dice: ")
         print("\nRolling dice...")
         dice_value = get_dice_value()
@@ -218,7 +218,7 @@ def start() -> None:
 
         check_win(player1_name, player1_current_position)
 
-        input_2 = input("\n" + player2_name + ": " + random.choice(player_turn_text) + \
+        input_2 = input("\n" + player2_name + ": " + random.choice(player_turn_texts) + \
             " Hit the enter to roll dice: ")
         print("\nRolling dice...")
         dice_value = get_dice_value()

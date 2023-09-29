@@ -15,37 +15,37 @@ while happy_to_play:
     print("This is a little game. I will guess the creature that")
     print("you are thinking of in 20 questions or less!")
     print(" ")
-    q = []
+    list_phrases = []
     if not os.path.exists("20q.txt") or "--new" in sys.argv:
         print("No saved data 20q.txt file found, so creating a new database...")
         print()
-        q.append(["Does it quack?", "duck", "pig"])
+        list_phrases.append(["Does it quack?", "duck", "pig"])
         with open('20q.txt', 'w') as outfile:
-            json.dump(q, outfile)
+            json.dump(list_phrases, outfile)
     else:
         print("Using existing database 20q.txt\n")
         with open('20q.txt') as data_file:
-             q = json.load(data_file)
+             list_phrases = json.load(data_file)
 
-    curr = 0
-    questions = 0
+    current = 0
+    question = 0
     not_there_yet = True
     happy_to_play = True
 
     while not_there_yet:
-            questions = questions + 1
-            print(q[curr][0], " - answer Y or N")
+            question = question + 1
+            print(list_phrases[current][0], " - answer Y or N")
             ans = input().upper()
             if ans == "Y":
                     branch = 1
             else:
                     branch = 2
-            if isinstance (q[curr][branch], str):
-                guess = str(q[curr][branch])
+            if isinstance (list_phrases[current][branch], str):
+                guess = str(list_phrases[current][branch])
                 print("I guess, a", guess, "- am I right? (Y or N)")
                 ans = input().upper()
                 if ans == "Y":
-                    print("Yah! I got your animal in ", questions, " questions.\n\n\n")
+                    print("Yah! I got your animal in ", question, " questions.\n\n\n")
                     not_there_yet = False
                 elif ans == "N":
                     print("What is it?")
@@ -58,19 +58,19 @@ while happy_to_play:
                         animal = animal
 
                     print("Thanks! Now, give me a new question that will be true for a", animal, \
-                        " , but not for a ", q[curr][branch])
+                        " , but not for a ", list_phrases[current][branch])
                     question = input()
-                    q.append([question, animal, guess])
-                    [curr][branch] = len(q)-1
+                    list_phrases.append([question, animal, guess])
+                    [current][branch] = len(list_phrases)-1
 
                     with open('20q.txt', 'w') as outfile:
-                        json.dump(q, outfile)
+                        json.dump(list_phrases, outfile)
                 else:
                         not_there_yet = False
                         print("Quitting...")
                 not_there_yet = False
-                questions = 0
-                curr = 0
+                question = 0
+                current = 0
                 print("\n\n\nThanks! Now, do you want to play again? (Y or N)")
                 ans = input().upper()
                 if ans == "N":
@@ -79,7 +79,7 @@ while happy_to_play:
                     print("Cool! We will restart in a second...")
                     time.sleep(2)
             else:                           
-                type(q[curr][branch])
-                curr = int(q[curr][branch])
+                type(list_phrases[current][branch])
+                current = int(list_phrases[current][branch])
 print("OK, bye!")
 exit()

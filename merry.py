@@ -4,6 +4,8 @@
 import turtle
 from random import randint
 
+BG_COLOR = "#0080ff"
+
 def create_rectangle(turtle: any, color: str, x: int, y: int,\
                      width: int, height: int) -> None:
     """creating a rectangle
@@ -54,9 +56,6 @@ def create_circle(turtle: any, x: int, y: int, radius: int, color: str) -> None:
     oogway.begin_fill()
     oogway.circle(radius)
     oogway.end_fill()
-
-
-BG_COLOR = "#0080ff"
 
 oogway = turtle.Turtle()
 oogway.speed(2)
