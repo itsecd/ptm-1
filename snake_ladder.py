@@ -76,7 +76,7 @@ ladder_jump = [
 ]
 
 
-def welcome_msg() -> None:
+def print_welcome_msg() -> None:
     """printing a welcome message"""
     msg = """
     Welcome to Snake and Ladder Game.
@@ -152,7 +152,7 @@ def got_ladder_jump(old_value: int, current_value: int, player_name: str) -> Non
         str(old_value) + " to " + str(current_value))
 
 
-def snake_ladder(player_name: str, current_value: int, dice_value: int) -> int:
+def move_snake_ladder(player_name: str, current_value: int, dice_value: int) -> int:
     """checking your winnings
 
     Args:
@@ -203,7 +203,7 @@ def check_win(player_name: str, position: int) -> None:
 
 def start() -> None:
     """game"""
-    welcome_msg()
+    print_welcome_msg()
     time.sleep(SLEEP_BETWEEN_ACTIONS)
     player1_name, player2_name = get_player_names()
     time.sleep(SLEEP_BETWEEN_ACTIONS)
@@ -219,7 +219,7 @@ def start() -> None:
         dice_value = get_dice_value()
         time.sleep(SLEEP_BETWEEN_ACTIONS)
         print(player1_name + " moving....")
-        player1_current_position = snake_ladder(player1_name, player1_current_position, dice_value)
+        player1_current_position = move_snake_ladder(player1_name, player1_current_position, dice_value)
 
         check_win(player1_name, player1_current_position)
 
@@ -229,7 +229,7 @@ def start() -> None:
         dice_value = get_dice_value()
         time.sleep(SLEEP_BETWEEN_ACTIONS)
         print(player2_name + " moving....")
-        player2_current_position = snake_ladder(player2_name, player2_current_position, dice_value)
+        player2_current_position = move_snake_ladder(player2_name, player2_current_position, dice_value)
 
         check_win(player2_name, player2_current_position)
 
