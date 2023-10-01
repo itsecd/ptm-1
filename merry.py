@@ -17,12 +17,12 @@ def create_rectangle(turtle: any, color: str, x: int, y: int,\
     """creating a rectangle
 
     Args:
-        turtle (any): _description_
-        color (str): _description_
-        x (int): _description_
-        y (int): _description_
-        width (int): _description_
-        height (int): _description_
+        turtle (any)
+        color (str)
+        x (int)
+        y (int)
+        width (int)
+        height (int)
     """
     turtle.penup()
     turtle.color(color)
