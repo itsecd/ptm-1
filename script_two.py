@@ -6,23 +6,23 @@ from os.path import relpath
 from tqdm.notebook import tqdm_notebook
 
 
-file_name = "test_csv.csv"
-file_name_two = "test_csv_two.csv"
+FILE_NAME = "test_csv.csv"
+SECOND_FILE_NAME = "test_csv_two.csv"
 
 
 def script_two(path_dir: str) -> str:
     out_directory = os.path.dirname(__file__)
     os.chdir(path_dir)
-    with open(file_name_two, mode="w") as w_file:
+    with open(SECOND_FILE_NAME, mode="w") as w_file:
         writer = csv.writer(w_file, dialect='excel', delimiter=",", lineterminator="\r")
         writer.writerow(("absolut path", "relativ path", "quote"))
-    if not os.path.isfile(file_name):   first_script.first_script(path_dir)
-    with open("test_csv.csv", "r") as fh:
-        reader = csv.reader(fh)
-        spisok = list(reader)
+    if not os.path.isfile(FILE_NAME):   first_script.first_script(path_dir)
+    with open("test_csv.csv", "r") as csv_file:
+        reader = csv.reader(csv_file)
+        list = list(reader)
         if not os.path.isdir("dataset_two"):
             os.makedirs("dataset_two")
-        pbar = tqdm(spisok, ncols=100, colour='green')
+        pbar = tqdm(list, ncols=100, colour='green')
         content = False
         for element in pbar:
             if content:
@@ -34,7 +34,7 @@ def script_two(path_dir: str) -> str:
                 os.chdir(path_dir)
                 with open(os.path.join("dataset_two", element[2] + "_" + namefile[2]), "wb") as f:
                     f.write(text)
-                with open(file_name_two, mode="a") as w_file:
+                with open(SECOND_FILE_NAME, mode="a") as w_file:
                     writer = csv.writer(w_file, dialect='excel', delimiter=",", lineterminator="\r")
                     writer.writerow([path_dir + "/dataset_two/" + element[2] + "_" + namefile[2],
                                      path_dir + "dataset_two/" + element[2] + "_" + namefile[2], element[2]])

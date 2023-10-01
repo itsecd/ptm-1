@@ -3,100 +3,98 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def years_change(year, url):
+def change_years(year, url):
     url = url.replace(str(year - 1), str(year))
     return url
 
 
-def days_redact(output):
+def redact_days(output):
     if (int(output[0]) < 10):
         return ('0' + output[0])
     else:
         return (output[0])
 
 
-def months_redact(month):
+def redact_days(month):
     if (month < 10):
         return ('0' + str(month))
     else:
         return (str(month))
 
 
-def month_chek(url):
+def check_month(url):
     month = 1
-    f = 0
-    while f == 0:
+    while True:
         html_text = requests.get(url, headers={"User-Agent": "Windows 10"}).text
         parse = BeautifulSoup(html_text, "lxml")
-        errorelement = parse.find("div", class_="grey digit")
-        if errorelement:
-            f = 1
+        is_error_element = parse.find("div", class_="grey digit")
+        if is_error_element:
             month -= 1
+            break
         else:
             month += 1
             url = url[0:39] + "/" + str(month) + "/"
     return month
 
 
-def months_change(url:str, month, flag):
+def change_months(url:str, month, change_type):
     """замена месяца в ссылке"""
-    if flag == 2:
+    if change_type == 2:
         url = url[0:39] + "/1/"
-    elif flag == 1:
+    else:
         url = url[0:39] + "/" + str(month) + "/"
     return url
 
 
 url = "https://www.gismeteo.ru/diary/4618/2008/1/"
 year = 2008
-MaxYear = year
-linktmp = url
-f = 0
-while f == 0:
-    html_text = requests.get(linktmp, headers={"User-Agent": "Windows 10"}).text
+max_year = year
+current_url = url
+while True:
+    html_text = requests.get(current_url, headers={"User-Agent": "Windows 10"}).text
     parse = BeautifulSoup(html_text, "lxml")
-    errorelement = parse.find("div", class_="grey digit")
-    if errorelement:
-        f = 1
-        MaxYear -= 1
+    is_error_element = parse.find("div", class_="grey digit")
+    if is_error_element:
+        max_year -= 1
+        break
     else:
-        MaxYear += 1
-        linktmp = linktmp.replace(str(MaxYear - 1), str(MaxYear))
-linktmp = linktmp.replace(str(MaxYear + 1), str(MaxYear))
-MMonth = month_chek(linktmp)
-for i in range(year, MaxYear + 1):
-    url = years_change(i, url)
+        max_year += 1
+        current_url = current_url.replace(str(max_year - 1), str(max_year))
+current_url = current_url.replace(str(max_year + 1), str(max_year))
+last_month = check_month(current_url)
+for current_year in range(year, max_year + 1):
+    url = change_years(current_year, url)
     max_month = 12
-    if i == MaxYear:
-        max_month = MMonth
-    for j in range(1, max_month + 1):
-        flag = 0
-        if j == max_month:
-            url = months_change(url, j, 1)
-            flag = 1
+    if current_year == max_year:
+        max_month = last_month
+    for current_month in range(1, max_month + 1):
+        is_last_month = 0
+        if current_month == max_month:
+            url = change_months(url, current_month, 1)
+            is_last_month = 1
         else:
-            url = months_change(url, j, 1)
+            url = change_months(url, current_month, 1)
         html_text = requests.get(url, headers={"User-Agent": "Windows 10"}).text
         soup = BeautifulSoup(html_text, "lxml")
         rows = soup.find_all("tr", align="center")
-        for k in range(len(rows)):
-            data = rows[k].find_all("td")
-            MData = []
+        for i in range(len(rows)):
+            data = rows[i].find_all("td")
+            output = []
             numbers = [0, 1, 2, 5, 6, 7, 10]
-            for v in numbers:
-                MData.append(data[v].text)
+            for j in numbers:
+                output.append(data[j].text)
             with open("dataset.csv", "a", encoding="utf-8") as csvfile:
                 writer = csv.writer(csvfile, lineterminator='\n')
                 writer.writerow(
                     (
-                        str(i) + '-' + months_redact(j) + '-' + days_redact(MData),
-                        MData[1],
-                        MData[2],
-                        MData[3],
-                        MData[4],
-                        MData[5],
-                        MData[6],
+                        str(current_year) + '-' + redact_days(current_month) + '-' + redact_days(output),
+                        output[1],
+                        output[2],
+                        output[3],
+                        output[4],
+                        output[5],
+                        output[6],
                     )
                 )
-        if flag == 1:
-            url = months_change(url, j, 2)
+        if is_last_month == 1:
+            url = change_months(url, current_month, 2)
