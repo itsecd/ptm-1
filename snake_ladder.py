@@ -125,9 +125,9 @@ def got_snake_bite(old_value: int, current_value: int, player_name: str) -> None
     """taking damage from a snake
 
     Args:
-        old_value (int)
-        current_value (int)
-        player_name (str)
+        old_value (int): previous value
+        current_value (int): current value
+        player_name (str): the name of the player who takes damage
     """
     print("\n" + random.choice(snake_bites).upper() + " ~~~~~~~~>")
     print("\n" + player_name + " got a snake bite. Down from " + \
@@ -138,9 +138,9 @@ def got_ladder_jump(old_value: int, current_value: int, player_name: str) -> Non
     """random value climbing the stairs
 
     Args:
-        old_value (int)
-        current_value (int)
-        player_name (str)
+         old_value (int): the previous value of the player 
+        current_value (int): the current value of the player
+        player_name (str): the name of the player who climbing the stairs
     """
     print("\n" + random.choice(ladder_jumps).upper() + " ########")
     print("\n" + player_name + " climbed the ladder from " + \
@@ -151,9 +151,9 @@ def move_snake_ladder(player_name: str, current_value: int, dice_value: int) -> 
     """checking your winnings
 
     Args:
-        player_name (str)
-        current_value (int)
-        dice_value (int)
+        player_name (str): the name of the player who is being tested for victory
+        current_value (int): the current value of the player
+        dice_value (int): the value of the dice
 
     Returns:
         int
@@ -185,8 +185,8 @@ def check_win(player_name: str, position: int) -> None:
     """announcement of the winner
 
     Args:
-        player_name (str)
-        position (int)
+        player_name (str): name of the player who won
+        position (int): the value of the win
     """
     time.sleep(SLEEP_BETWEEN_ACTIONS)
     if MAX_VAL == position:

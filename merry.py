@@ -17,12 +17,12 @@ def create_rectangle(turtle: any, color: str, x: int, y: int,\
     """creating a rectangle
 
     Args:
-        turtle (any)
-        color (str)
-        x (int)
-        y (int)
-        width (int)
-        height (int)
+        turtle (any): class object
+        color (str): rectangle color
+        x (int): coordinate x
+        y (int): coordinate y
+        width (int): rectangle width
+        height (int): rectangle height
     """
     turtle.penup()
     turtle.color(color)
@@ -48,11 +48,11 @@ def create_circle(turtle: any, x: int, y: int, radius: int, color: str) -> None:
     """creating a circle
 
     Args:
-        turtle (any)
-        x (int)
-        y (int)
-        radius (int)
-        color (str)
+        turtle (any): class object
+        x (int): coordinate x
+        y (int): coordinate y
+        radius (int): circle radius
+        color (str): circle color
     """
     oogway.penup()
     oogway.color(color)
