@@ -1,9 +1,8 @@
 import os
-from bs4 import BeautifulSoup
 import requests
 import time
 import random
-
+from bs4 import BeautifulSoup
 
 
 headers = {
@@ -22,7 +21,6 @@ def main():
     url = 'https://www.livelib.ru/reviews'
     second_url = 'https://www.livelib.ru'
     number_elem = 3300
-    
     number_page = 125
     quotes_1 = 76
     quotes_2 = 108
@@ -45,11 +43,13 @@ def main():
             sec_soup = BeautifulSoup(sec_response.text, 'lxml')
             quotes = sec_soup.find_all(class_="lenta-card__mymark")
             names = sec_soup.find_all(class_="lenta-card__book-title")
-            texts = sec_soup.find_all("div", {"id": "lenta-card__text-review-full"})
+            texts = sec_soup.find_all(
+                "div", {"id": "lenta-card__text-review-full"})
             authors = sec_soup.find_all(class_="lenta-card__author")
             new_quotes = []
             for quote in quotes:
-                new_quotes.append(str((quote.text.replace(" ", "")).replace("\n", "")))
+                new_quotes.append(
+                    str((quote.text.replace(" ", "")).replace("\n", "")))
             y = min(len(authors), len(names), len(texts), len(new_quotes))
             if y == 0:
                 continue
@@ -101,7 +101,8 @@ def main():
                                authors[0].text + '\n' + 'Рецензия:' + '\n' + texts[0].text)
                 number_elem = number_elem + 1
         number_page = number_page + 1
-        url = 'https://www.livelib.ru/reviews' + '~' + str(number_page) + '#reviews'
+        url = 'https://www.livelib.ru/reviews' + \
+            '~' + str(number_page) + '#reviews'
 
 
 if __name__ == "__main__":

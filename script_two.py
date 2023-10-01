@@ -1,12 +1,13 @@
 import csv
 import os
+import first_script
 from tqdm import tqdm
 from os.path import relpath
-import first_script
+from tqdm.notebook import tqdm_notebook
+
 
 file_name = "test_csv.csv"
 file_name_two = "test_csv_two.csv"
-from tqdm.notebook import tqdm_notebook
 
 
 def script_two(path_dir: str) -> str:

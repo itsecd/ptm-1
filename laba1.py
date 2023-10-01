@@ -1,36 +1,20 @@
-from bs4 import BeautifulSoup
 import csv
 import requests
+from bs4 import BeautifulSoup
+
 
 url = "https://www.gismeteo.ru/diary/4618/2008/1/"
 year = 2008
-
-MaxYear = year
-linktmp = url
-f = 0
-while f == 0:
-    html_text = requests.get(linktmp, headers={"User-Agent": "Windows 10"}).text
-    parse = BeautifulSoup(html_text, "lxml")
-    errorelement = parse.find("div", class_="grey digit")
-    if errorelement:
-        f = 1
-        MaxYear -= 1
-
-    else:
-        MaxYear += 1
-        linktmp = linktmp.replace(str(MaxYear - 1), str(MaxYear))
-
-linktmp = linktmp.replace(str(MaxYear + 1), str(MaxYear))
 
 
 def years_change(year, url):
     url = url.replace(str(year - 1), str(year))
     return url
 
+
 def days_redact(output):
     if (int(output[0]) < 10):
         return ('0' + output[0])
-
     else:
         return (output[0])
 
@@ -38,7 +22,6 @@ def days_redact(output):
 def months_redact(month):
     if (month < 10):
         return ('0' + str(month))
-
     else:
         return (str(month))
 
@@ -50,7 +33,6 @@ def month_chek(url):
         html_text = requests.get(url, headers={"User-Agent": "Windows 10"}).text
         parse = BeautifulSoup(html_text, "lxml")
         errorelement = parse.find("div", class_="grey digit")
-
         if errorelement:
             f = 1
             month -= 1
@@ -68,9 +50,21 @@ def months_change(url:str, month, flag):
         url = url[0:39] + "/" + str(month) + "/"
     return url
 
-
+MaxYear = year
+linktmp = url
+f = 0
+while f == 0:
+    html_text = requests.get(linktmp, headers={"User-Agent": "Windows 10"}).text
+    parse = BeautifulSoup(html_text, "lxml")
+    errorelement = parse.find("div", class_="grey digit")
+    if errorelement:
+        f = 1
+        MaxYear -= 1
+    else:
+        MaxYear += 1
+        linktmp = linktmp.replace(str(MaxYear - 1), str(MaxYear))
+linktmp = linktmp.replace(str(MaxYear + 1), str(MaxYear))
 MMonth = month_chek(linktmp)
-
 for i in range(year, MaxYear + 1):
     url = years_change(i, url)
     max_month = 12
@@ -83,11 +77,9 @@ for i in range(year, MaxYear + 1):
             flag = 1
         else:
             url = months_change(url, j, 1)
-
         html_text = requests.get(url, headers={"User-Agent": "Windows 10"}).text
         soup = BeautifulSoup(html_text, "lxml")
         rows = soup.find_all("tr", align="center")
-
         for k in range(len(rows)):
             data = rows[k].find_all("td")
             MData = []

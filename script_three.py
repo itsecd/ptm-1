@@ -1,9 +1,8 @@
 import csv
 import os
 import random
-from tqdm import tqdm
-
 import script_two
+from tqdm import tqdm
 
 
 def script_three(path_dir: str) -> str:
