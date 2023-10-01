@@ -63,13 +63,18 @@ def generation(symmetric_k, public_k, secret_k):
 
     # сериализация открытого ключа в файл
     with open(public_k, 'wb') as public_out:
-        public_out.write(public_key.public_bytes(encoding=serialization.Encoding.PEM,
-                                                 format=serialization.PublicFormat.SubjectPublicKeyInfo))
+        public_out.write(
+            public_key.public_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PublicFormat.SubjectPublicKeyInfo
+                    ))
     # сериализация закрытого ключа в файл
     with open(secret_k, 'wb') as secret_out:
-        secret_out.write(secret_key.private_bytes(encoding=serialization.Encoding.PEM,
-                                                  format=serialization.PrivateFormat.TraditionalOpenSSL,
-                                                  encryption_algorithm=serialization.NoEncryption()))
+        secret_out.write(
+            secret_key.private_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PrivateFormat.TraditionalOpenSSL,
+                encryption_algorithm=serialization.NoEncryption()))
 
     # открываем файл с симметричным ключом
     with open(symmetric_k, 'rb') as key_file:
@@ -89,7 +94,8 @@ def generation(symmetric_k, public_k, secret_k):
         key_file.write(c_text)
 
     print(
-        f'Ключи асимметричного шифрования сериализованы по адресу: {public_k}\t{secret_k}')
+        'Ключи асимметричного шифрования сериализованы по адресу: ' 
+        f'{public_k}\t{secret_k}')
     print(f"Ключ симметричного шифрования:\t{symmetric_k}")
     pass
 
@@ -137,8 +143,11 @@ def decrypting(encrypted_f, secret_k, symmetric_k, decrypted_file, vec_init):
         symmetric_bytes = key.read()
     from cryptography.hazmat.primitives.asymmetric import padding
     d_key = private_key.decrypt(symmetric_bytes,
-                                padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(),
-                                             label=None))
+                                padding.OAEP(
+                                    mgf=padding.MGF1(
+                                        algorithm=hashes.SHA256()),
+                                    algorithm=hashes.SHA256(),
+                                    label=None))
     with open(encrypted_f, 'rb') as e_text:
         text = e_text.read()
     # дешифрование и депаддинг текста симметричным алгоритмом
@@ -181,17 +190,22 @@ def main():
                 settings_data = json.load(json_file)
             if not os.path.exists('file.txt'):
                 print('Отсутствует файл с исходным текстом, скачивание с git')
-                url = 'https://github.com/MagGoldi/isb-3/blob/main/files/file.txt'
+                url = '://github.com/MagGoldi'
+                '/isb-3/blob/main/files/file.txt'
                 wget.download(url, os.getcwd())
                 print('\n')
             if not os.path.exists(settings_data['secret_key']):
                 print('Не найден закрытый ключ. Используйте сначала режим gen')
                 break
             if not os.path.exists(settings_data['symmetric_key']):
-                print('Не найден симметричный ключ. Используйте сначала режим gen')
+                print(
+                    'Не найден симметричный ключ. '
+                    'Используйте сначала режим gen')
                 break
-            encrypting(settings_data['initial_file'], settings_data['secret_key'],
-                       settings_data['symmetric_key'], settings_data['encrypted_file'], settings_data['vec_init'])
+            encrypting(
+                settings_data['initial_file'], settings_data['secret_key'],
+                settings_data['symmetric_key'],
+                settings_data['encrypted_file'], settings_data['vec_init'])
             break
         elif args.mode == 'dec':
             print_info('Запущен режим дешифрования')
@@ -202,20 +216,26 @@ def main():
                 settings_data = json.load(json_file)
             if not os.path.exists('file.txt'):
                 print('Отсутствует файл с исходным текстом, скачивание с git')
-                url = 'https://github.com/MagGoldi/isb-3/blob/main/files/file.txt'
+                url = 'https://github.com/'
+                'MagGoldi/isb-3/blob/main/files/file.txt'
                 wget.download(url, os.getcwd())
                 print('\n')
             if not os.path.exists(settings_data['secret_key']):
                 print('Не найден закрытый ключ. Используйте сначала режим gen')
                 break
             if not os.path.exists(settings_data['symmetric_key']):
-                print('Не найден симметричный ключ. Используйте сначала режим gen')
+                print('Не найден симметричный ключ.'
+                      'Используйте сначала режим gen')
                 break
             if not os.path.exists(settings_data['encrypted_file']):
-                print('Не найден зашифрованный файл. Используйте сначала режим enc')
+                print('Не найден зашифрованный файл.'
+                      'Используйте сначала режим enc')
                 break
-            decrypting(settings_data['encrypted_file'], settings_data['secret_key'],
-                       settings_data['symmetric_key'], settings_data['decrypted_file'], settings_data['vec_init'])
+            decrypting(
+                settings_data['encrypted_file'], settings_data['secret_key'],
+                settings_data['symmetric_key'],
+                settings_data['decrypted_file'],
+                settings_data['vec_init'])
             break
         else:
             print('что то не то...')

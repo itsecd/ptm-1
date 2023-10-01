@@ -113,6 +113,8 @@ def parse_pages(max_num_of_requests, least_num_of_marks):
     three = 0
     four = 0
     five = 0
+    my_key = "Пожалуйста, подождите пару секунд,"
+    " идет перенаправление на сайт..."
     for i in range(1, max_num_of_requests):
         print(f"Страница: {i}")
         soup = get_page(url + "~" + str(i) + "#reviews")
@@ -120,7 +122,7 @@ def parse_pages(max_num_of_requests, least_num_of_marks):
             continue
         if (
             soup.find("h1").text
-            == "Пожалуйста, подождите пару секунд, идет перенаправление на сайт..."
+            == my_key
         ):
             print("Вылезла капча")
             sleep(10)
@@ -161,7 +163,8 @@ def parse_pages(max_num_of_requests, least_num_of_marks):
                 five += 1
             dataset.append(condidate)
         print(
-            f"One = {one}, Two = {two}, three = {three}, Four = {four}, Five = {five}"
+            f"One={
+                one}, Two={two}, three={three}, Four={four}, Five={five}"
         )
         if (
             one >= least_num_of_marks
@@ -173,6 +176,8 @@ def parse_pages(max_num_of_requests, least_num_of_marks):
             i = max_num_of_requests
             break
     return dataset
+    
+    
 if __name__ == "__main__":
     url = "https://www.livelib.ru/reviews/"
     least_num_of_marks = 1000
@@ -182,11 +187,14 @@ if __name__ == "__main__":
     # dataset.sort(key = lambda comment: comment.mark)
     one_data = [el for el in dataset if el.get_mark() < 2.0]
     save_comments(one_data, "dataset\\1")
-    two_data = [el for el in dataset if el.get_mark() < 3.0 and el.get_mark() >= 2.0]
+    two_data = [
+        el for el in dataset if el.get_mark() < 3.0 and el.get_mark() >= 2.0]
     save_comments(two_data, "dataset\\2")
-    three_data = [el for el in dataset if el.get_mark() < 4.0 and el.get_mark() >= 3.0]
+    three_data = [
+        el for el in dataset if el.get_mark() < 4.0 and el.get_mark() >= 3.0]
     save_comments(three_data, "dataset\\3")
-    four_data = [el for el in dataset if el.get_mark() < 5.0 and el.get_mark() >= 4.0]
+    four_data = [
+        el for el in dataset if el.get_mark() < 5.0 and el.get_mark() >= 4.0]
     save_comments(four_data, "dataset\\4")
     five_data = [el for el in dataset if el.get_mark() == 5.0]
     save_comments(five_data, "dataset\\5")
