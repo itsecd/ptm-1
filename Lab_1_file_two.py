@@ -9,6 +9,9 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.primitives.asymmetric import padding
 
 
 settings = {
@@ -106,7 +109,6 @@ def encrypting(inital_f, secret_k, symmetric_k, encrypted_f, vec_init):
     private_key = load_pem_private_key(private_bytes, password=None, )
     with open(symmetric_k, 'rb') as key:
         symmetric_bytes = key.read()
-    from cryptography.hazmat.primitives.asymmetric import padding
     d_key = private_key.decrypt(
         symmetric_bytes,
         padding.OAEP(
@@ -118,7 +120,6 @@ def encrypting(inital_f, secret_k, symmetric_k, encrypted_f, vec_init):
 
     with open(inital_f, 'rb') as o_text:
         text = o_text.read()
-    from cryptography.hazmat.primitives import padding
     pad = padding.ANSIX923(64).padder()
     padded_text = pad.update(text) + pad.finalize()
     # случайное значение для инициализации блочного режима, должно быть
@@ -141,7 +142,6 @@ def decrypting(encrypted_f, secret_k, symmetric_k, decrypted_file, vec_init):
     private_key = load_pem_private_key(private_bytes, password=None, )
     with open(symmetric_k, 'rb') as key:
         symmetric_bytes = key.read()
-    from cryptography.hazmat.primitives.asymmetric import padding
     d_key = private_key.decrypt(symmetric_bytes,
                                 padding.OAEP(
                                     mgf=padding.MGF1(
@@ -155,7 +155,6 @@ def decrypting(encrypted_f, secret_k, symmetric_k, decrypted_file, vec_init):
         iv = iv_file.read()
     cipher = Cipher(algorithms.Blowfish(d_key), modes.CBC(iv))
     decrypter = cipher.decryptor()
-    from cryptography.hazmat.primitives import padding
     unpadded = padding.ANSIX923(64).unpadder()
     d_text = unpadded.update(decrypter.update(
         text) + decrypter.finalize()) + unpadded.finalize()
