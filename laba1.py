@@ -3,10 +3,6 @@ import requests
 from bs4 import BeautifulSoup
 
 
-url = "https://www.gismeteo.ru/diary/4618/2008/1/"
-year = 2008
-
-
 def years_change(year, url):
     url = url.replace(str(year - 1), str(year))
     return url
@@ -50,6 +46,9 @@ def months_change(url:str, month, flag):
         url = url[0:39] + "/" + str(month) + "/"
     return url
 
+
+url = "https://www.gismeteo.ru/diary/4618/2008/1/"
+year = 2008
 MaxYear = year
 linktmp = url
 f = 0
