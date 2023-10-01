@@ -5,7 +5,7 @@ import requests
 url = "https://www.gismeteo.ru/diary/4618/2008/1/"
 year = 2008
 
-MaxYear = year  # нахождение максимального года
+MaxYear = year
 linktmp = url
 f = 0
 while f == 0:
@@ -22,7 +22,7 @@ while f == 0:
 
 linktmp = linktmp.replace(str(MaxYear + 1), str(MaxYear))
 
-# замена года в ссылке
+
 def years_change(year, url):
     url = url.replace(str(year - 1), str(year))
     return url
@@ -42,7 +42,7 @@ def months_redact(month):
     else:
         return (str(month))
 
-# нахождение максимального месяца
+
 def month_chek(url):
     month = 1
     f = 0
@@ -69,7 +69,7 @@ def months_change(url:str, month, flag):
     return url
 
 
-MMonth = month_chek(linktmp)  # запись максимального месяца в Mmonth
+MMonth = month_chek(linktmp)
 
 for i in range(year, MaxYear + 1):
     url = years_change(i, url)
@@ -86,10 +86,10 @@ for i in range(year, MaxYear + 1):
 
         html_text = requests.get(url, headers={"User-Agent": "Windows 10"}).text
         soup = BeautifulSoup(html_text, "lxml")
-        rows = soup.find_all("tr", align="center")  # нахождение всех строк
+        rows = soup.find_all("tr", align="center")
 
         for k in range(len(rows)):
-            data = rows[k].find_all("td")  # нахождение всех нужных значений
+            data = rows[k].find_all("td")
             MData = []
             numbers = [0, 1, 2, 5, 6, 7, 10]
             for v in numbers:

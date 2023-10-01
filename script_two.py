@@ -14,19 +14,17 @@ def script_two(path_dir: str) -> str:
     os.chdir(path_dir)
     with open(file_name_two, mode="w") as w_file:
         writer = csv.writer(w_file, dialect='excel', delimiter=",", lineterminator="\r")
-        writer.writerow(("absolut path", "relativ path", "quote"))  # Заголовки столбца
+        writer.writerow(("absolut path", "relativ path", "quote"))
     if not os.path.isfile(file_name):   first_script.first_script(path_dir)
     with open("test_csv.csv", "r") as fh:
         reader = csv.reader(fh)
-        spisok = list(reader)  # надо сделать приведение к list, так как сsv вернет итератор
+        spisok = list(reader)
         if not os.path.isdir("dataset_two"):
             os.makedirs("dataset_two")
         pbar = tqdm(spisok, ncols=100, colour='green')
         content = False
         for element in pbar:
             if content:
-                #element2 = element[1].split("/")
-                #element2 = element2[1] + element2[2]
                 print(element[0])
                 os.chdir(out_directory)
                 with open(element[1], "rb") as f:

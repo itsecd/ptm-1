@@ -17,11 +17,11 @@ def script_three(path_dir: str) -> str:
         script_two.script_two(path_dir)
     with open(file_name, mode="w") as w_file:
         writer = csv.writer(w_file, dialect='excel', delimiter=",", lineterminator="\r")
-        writer.writerow(("absolut path", "relativ path", "quote"))  # Заголовки столбца
+        writer.writerow(("absolut path", "relativ path", "quote"))
         pbar = tqdm(os.listdir("dataset_two"), ncols=100, colour='green')
         for element in pbar:
             name = random.choice(names)
-            names.remove(name)  # удаляем выбранное имя из списка имен
+            names.remove(name)
             with open(os.path.join("dataset_two", element), "rb") as f:
                 text = f.read()
             with open(os.path.join("dataset_three", str(name) + ".txt"), "wb") as f:
