@@ -17,10 +17,13 @@ class Comment:
         self.comment = comment
         if mark <= 5 and mark >= 0:
             self.mark = mark
+            
     def get_mark(self):
         return self.mark
+        
     def get_name(self):
         return self.name
+        
     def get_comment(self):
         return self.comment
         
@@ -29,6 +32,8 @@ def create_repo():
     mkdir("dataset")
     for i in range(1, 6):
         mkdir("dataset/" + str(i))
+        
+        
 headers = {"User-Agent": "Mozilla/5.0"}
 
 
