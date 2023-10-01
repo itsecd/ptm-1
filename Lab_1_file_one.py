@@ -8,10 +8,10 @@ class Comment:
     def __init__(self, name, comment, mark):
         if name != "":
             self.name = name
-        if name == None:
+        if name is None:
             print("Некорректное название")
             exit()
-        if comment == None:
+        if comment is None:
             print("Некоррректное содержимое комментария")
             exit()
         self.comment = comment
