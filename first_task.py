@@ -1,5 +1,8 @@
 import csv
+
 from the_fourth_task import search_X_Y_csv
+
+
 def new_csv(w_file, str_date):
     ' Принимает dataset и разбивает на Х и Y'
     with open("X.csv", "w+", encoding='utf-8') as w_file_x:
