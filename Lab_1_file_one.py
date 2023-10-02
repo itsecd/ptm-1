@@ -142,15 +142,12 @@ def parse_pages(max_num_of_requests, least_num_of_marks):
             print('Не удалось загрузить страницу')
             continue
 
-        # marks
         marks = get_marks(articles)
         if marks == -1:
             continue
-        # names
         names = get_names(articles)
         if names == -1:
             continue
-        # texts
         comments_texts = get_comments_texts(articles)
         if comments_texts == -1:
             continue

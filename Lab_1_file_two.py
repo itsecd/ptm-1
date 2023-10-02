@@ -15,17 +15,15 @@ from cryptography.hazmat.primitives.asymmetric import padding
 
 
 settings = {
-    'initial_file': 'file.txt',  # путь к исходному файлу
-    'encrypted_file': 'encrypted_file.txt',  # путь к зашифрованному файлу
-    'decrypted_file': 'decrypted_file.txt',  # путь к расшифрованному файлу
-    'symmetric_key': 'symmetric_key.txt',  # путь к симметричному ключу
-    'public_key': 'public_key.pem',  # путь к открытому ключу
-    'secret_key': 'secret_key.pem',  # путь к закрытому ключу
+    'initial_file': 'file.txt',
+    'encrypted_file': 'encrypted_file.txt',
+    'decrypted_file': 'decrypted_file.txt',
+    'symmetric_key': 'symmetric_key.txt',
+    'public_key': 'public_key.pem',
+    'secret_key': 'secret_key.pem',
     'vec_init': 'iv.txt'
 }
-# python main.py gen  = Запускает режим генерации ключей
-# python main.py enc  = Запускает режим шифрования
-# python main.py dec  = Запускает режим дешифрования
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('mode', help='Режим работы')
@@ -43,20 +41,23 @@ def print_info(text):
 
 
 def generation(symmetric_k, public_k, secret_k):
+    '''
+    генерация ключей симметричного и
+    ассиметричного шифрования
+    '''
     print('Длина ключа от 32 до 448 бит с шагом 8 бит')
     key_len = int(input('Введите желаемую длину ключа: '))
 
     while True:
-        # проверка правильности введенной желаемой длины ключа
+        
         if key_len % 8 != 0 or key_len < 32 or key_len > 448:
             key_len = int(input('Введите желаемую длину ключа: '))
         else:
             break
-    key = os.urandom(key_len)  # генерация ключа с длиной key_len
+    key = os.urandom(key_len)  
     with open(symmetric_k, 'wb') as key_file:
         key_file.write(key)
 
-    # генерация пары ключей для асимметричного алгоритма шифрования
     keys = rsa.generate_private_key(
         public_exponent=65537,
         key_size=2048
@@ -64,14 +65,12 @@ def generation(symmetric_k, public_k, secret_k):
     secret_key = keys
     public_key = keys.public_key()
 
-    # сериализация открытого ключа в файл
     with open(public_k, 'wb') as public_out:
         public_out.write(
             public_key.public_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PublicFormat.SubjectPublicKeyInfo
                     ))
-    # сериализация закрытого ключа в файл
     with open(secret_k, 'wb') as secret_out:
         secret_out.write(
             secret_key.private_bytes(
@@ -79,9 +78,8 @@ def generation(symmetric_k, public_k, secret_k):
                 format=serialization.PrivateFormat.TraditionalOpenSSL,
                 encryption_algorithm=serialization.NoEncryption()))
 
-    # открываем файл с симметричным ключом
     with open(symmetric_k, 'rb') as key_file:
-        key = key_file  # забираем его содержимое в переменную key
+        key = key_file
     text = bytes(str(key), 'UTF-8')
     c_text = public_key.encrypt(
         text,
@@ -91,8 +89,6 @@ def generation(symmetric_k, public_k, secret_k):
             algorithm=hashes.SHA256(),
             label=None))
 
-    # перезаписываем в файл с симметричным ключом зашифрованный симметричный
-    # ключ
     with open(symmetric_k, 'wb') as key_file:
         key_file.write(c_text)
 
@@ -104,6 +100,7 @@ def generation(symmetric_k, public_k, secret_k):
 
 
 def encrypting(inital_f, secret_k, symmetric_k, encrypted_f, vec_init):
+    '''зашифровка текста'''
     with open(secret_k, 'rb') as pem_in:
         private_bytes = pem_in.read()
     private_key = load_pem_private_key(private_bytes, password=None, )
@@ -122,8 +119,6 @@ def encrypting(inital_f, secret_k, symmetric_k, encrypted_f, vec_init):
         text = o_text.read()
     pad = padding.ANSIX923(64).padder()
     padded_text = pad.update(text) + pad.finalize()
-    # случайное значение для инициализации блочного режима, должно быть
-    # размером с блок и каждый раз новым
     iv = os.urandom(8)
     with open(vec_init, 'wb') as iv_file:
         iv_file.write(iv)
@@ -137,6 +132,7 @@ def encrypting(inital_f, secret_k, symmetric_k, encrypted_f, vec_init):
 
 
 def decrypting(encrypted_f, secret_k, symmetric_k, decrypted_file, vec_init):
+    '''расшифровка зашифрованного текста'''
     with open(secret_k, 'rb') as pem_in:
         private_bytes = pem_in.read()
     private_key = load_pem_private_key(private_bytes, password=None, )
@@ -150,7 +146,6 @@ def decrypting(encrypted_f, secret_k, symmetric_k, decrypted_file, vec_init):
                                     label=None))
     with open(encrypted_f, 'rb') as e_text:
         text = e_text.read()
-    # дешифрование и депаддинг текста симметричным алгоритмом
     with open(vec_init, 'rb') as iv_file:
         iv = iv_file.read()
     cipher = Cipher(algorithms.Blowfish(d_key), modes.CBC(iv))
