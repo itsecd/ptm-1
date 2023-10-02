@@ -3,6 +3,13 @@ from time import sleep
 import requests
 from bs4 import BeautifulSoup as BS
 
+HEADERS = {"User-Agent": "Mozilla/5.0"}
+
+URL = "https://www.livelib.ru/reviews/"
+LEAST_NUM_OF_MARKS = 1000
+MAX_NUM_OF_REQUESTS = 9000
+
+
 
 class Comment:
     def __init__(self, name, comment, mark):
@@ -34,12 +41,9 @@ def create_repo():
         mkdir("dataset/" + str(i))
 
 
-headers = {"User-Agent": "Mozilla/5.0"}
-
-
-def get_page(url):
+def get_page(URL):
     try:
-        r = requests.get(url, headers=headers)
+        r = requests.get(URL, HEADERS=HEADERS)
         sleep(2)
         if r.status_code == 200:
             return BS(r.content, "html.parser")
@@ -111,7 +115,7 @@ def save_comments(data, filename):
         file.close
 
 
-def parse_pages(max_num_of_requests, least_num_of_marks):
+def parse_pages(MAX_NUM_OF_REQUESTS, LEAST_NUM_OF_MARKS):
     dataset = list()
     one = 0
     two = 0
@@ -120,9 +124,9 @@ def parse_pages(max_num_of_requests, least_num_of_marks):
     five = 0
     my_key = "Пожалуйста, подождите пару секунд,"
     " идет перенаправление на сайт..."
-    for i in range(1, max_num_of_requests):
+    for i in range(1, MAX_NUM_OF_REQUESTS):
         print(f"Страница: {i}")
-        soup = get_page(url + "~" + str(i) + "#reviews")
+        soup = get_page(URL + "~" + str(i) + "#reviews")
         if soup == -1:
             continue
         if (
@@ -169,22 +173,19 @@ def parse_pages(max_num_of_requests, least_num_of_marks):
                 one}, Two={two}, three={three}, Four={four}, Five={five}"
         )
         if (
-            one >= least_num_of_marks
-            and two >= least_num_of_marks
-            and three >= least_num_of_marks
-            and four >= least_num_of_marks
-            and five >= least_num_of_marks
+            one >= LEAST_NUM_OF_MARKS
+            and two >= LEAST_NUM_OF_MARKS
+            and three >= LEAST_NUM_OF_MARKS
+            and four >= LEAST_NUM_OF_MARKS
+            and five >= LEAST_NUM_OF_MARKS
         ):
-            i = max_num_of_requests
+            i = MAX_NUM_OF_REQUESTS
             break
     return dataset
 
 
 if __name__ == "__main__":
-    url = "https://www.livelib.ru/reviews/"
-    least_num_of_marks = 1000
-    max_num_of_requests = 9000
-    dataset = parse_pages(max_num_of_requests, least_num_of_marks)
+    dataset = parse_pages(MAX_NUM_OF_REQUESTS, LEAST_NUM_OF_MARKS)
     create_repo()
     # dataset.sort(key = lambda comment: comment.mark)
     one_data = [el for el in dataset if el.get_mark() < 2.0]
