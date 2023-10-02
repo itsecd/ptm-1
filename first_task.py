@@ -1,6 +1,5 @@
 import csv
-
-from the_fourth_task import search_X_Y_csv
+from the_fourth_task import search_x_y_csv
 
 
 def new_csv(w_file, str_date):
@@ -14,6 +13,6 @@ def new_csv(w_file, str_date):
                 a = row.split(',')
                 file_writer_Y.writerow([a[1]])
                 file_writer_X.writerow([a[0]])
-            search_X_Y_csv(w_file_y, w_file_x, str_date)
+            search_x_y_csv(w_file_y, w_file_x, str_date)
 
 

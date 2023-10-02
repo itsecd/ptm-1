@@ -9,7 +9,7 @@ from the_third_task import Week_csv
 from the_fourth_task import search_dataset_csv
 
 
-def main():
+if __name__ == "__main__":
     data = requests.get("https://www.cbr-xml-daily.ru/daily_json.js").json()
     print("за сколько дней вы хотите увидеть курс доллара?:")
     count = 1
@@ -46,7 +46,3 @@ def main():
             count += 1
         new_csv(w_file, str_date)
         search_dataset_csv(str_date, w_file)
-
-
-if __name__ == "__main__":
-    main()
