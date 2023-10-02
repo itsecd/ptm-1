@@ -2,7 +2,7 @@ import datetime
 import csv
 
 
-def search_dataset_csv(str_date, w_file):
+def search_dataset_csv(str_date, w_file) -> None:
     search_date = datetime.datetime.fromisoformat(str_date)
     reader = csv.DictReader(w_file)
     w_file.seek(0)
@@ -12,7 +12,7 @@ def search_dataset_csv(str_date, w_file):
             search_tuple(search)
 
 
-def search_x_y_csv(w_file_y, w_file_x, str_date):
+def search_x_y_csv(w_file_y, w_file_x, str_date) -> None:
     search_date = datetime.datetime.fromisoformat(str_date)
     reader_X = csv.DictReader(w_file_x)
     reader_Y = csv.DictReader(w_file_y)
@@ -29,7 +29,7 @@ def search_x_y_csv(w_file_y, w_file_x, str_date):
         count += 1
 
 
-def search_tuple(search):
+def search_tuple(search) -> None:
     search_all = tuple()
     search_all += search
     print("Comon", search)

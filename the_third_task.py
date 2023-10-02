@@ -2,7 +2,7 @@ import datetime
 import csv
 
 
-def Week_csv(w_file, week_start, week_end):
+def Week_csv(w_file, week_start, week_end) -> None:
     start = datetime.datetime.strftime(week_start, '%Y%m%d')
     end = datetime.datetime.strftime(week_end, '%Y%m%d')
     with open((start + '_' + end) + ".csv", "w", encoding='utf-8') as w_file_week:

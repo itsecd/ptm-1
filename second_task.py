@@ -2,7 +2,7 @@ import csv
 import datetime
 
 
-def Year_csv(w_file, start_date, end_date):
+def Year_csv(w_file, start_date, end_date) -> None:
     'Принимает на вход данные за год и создает csv файл с этими данными'
     start = datetime.datetime.strftime(start_date, '%Y%m%d')
     end = datetime.datetime.strftime(end_date, '%Y%m%d')
