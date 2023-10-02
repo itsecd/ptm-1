@@ -18,5 +18,3 @@ def new_csv(w_file, str_date) -> None:
                 file_writer_Y.writerow([a[1]])
                 file_writer_X.writerow([a[0]])
             search_x_y_csv(w_file_y, w_file_x, str_date)
-
-

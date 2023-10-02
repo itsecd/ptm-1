@@ -20,4 +20,3 @@ def year_csv(w_file, start_date, end_date) -> None:
             if row['Дата'] >= end_date.strftime('%Y-%m-%d'):
                 if row['Дата'] <= start_date.strftime('%Y-%m-%d'):
                     file_writer_month.writerow([row['Дата'], row['Курс Доллара']])
-
