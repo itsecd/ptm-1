@@ -4,8 +4,8 @@ import datetime
 
 from pprint import pprint
 from first_task import new_csv
-from second_task import Year_csv
-from the_third_task import Week_csv
+from second_task import year_csv
+from the_third_task import week_csv
 from the_fourth_task import search_dataset_csv
 
 
@@ -33,13 +33,13 @@ if __name__ == "__main__":
             if start_date.month != Date.month:
                 end_date = data['Date']
                 end_date = datetime.datetime.fromisoformat(end_date)
-                Year_csv(w_file, start_date, end_date)
+                year_csv(w_file, start_date, end_date)
                 start_date = Date
             week_count += 1
             if week_count == 7:
                 week_end = data['Date']
                 week_end = datetime.datetime.fromisoformat(week_end)
-                Week_csv(w_file, week_start, week_end)
+                week_csv(w_file, week_start, week_end)
                 week_start = Date
                 week_count = 1
             data = requests.get('https:' + data['PreviousURL']).json()

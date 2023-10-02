@@ -3,7 +3,11 @@ from the_fourth_task import search_x_y_csv
 
 
 def new_csv(w_file, str_date) -> None:
-    ' Принимает dataset и разбивает на Х и Y'
+    """
+    Принимает на фход файл и разбивает на x и y.
+    :param w_file: Входные данные.
+    :param str_date: Дата.
+    """
     with open("X.csv", "w+", encoding='utf-8') as w_file_x:
         with open("Y.csv", "w+", encoding='utf-8') as w_file_y:
             file_writer_X = csv.writer(w_file_x, delimiter=",", lineterminator="\r")

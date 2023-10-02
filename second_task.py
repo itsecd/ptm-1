@@ -2,8 +2,13 @@ import csv
 import datetime
 
 
-def Year_csv(w_file, start_date, end_date) -> None:
-    'Принимает на вход данные за год и создает csv файл с этими данными'
+def year_csv(w_file, start_date, end_date) -> None:
+    """
+    Принимает на вход данные за год и создает csv файл с этими данными
+    :param w_file: Входные данные.
+    :param start_date: Начальная дата.
+    :param end_date: Конечная дата.
+    """
     start = datetime.datetime.strftime(start_date, '%Y%m%d')
     end = datetime.datetime.strftime(end_date, '%Y%m%d')
     with open((start + '_' + end)+".csv", "w", encoding='utf-8') as w_file_month:
