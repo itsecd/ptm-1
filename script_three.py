@@ -25,9 +25,9 @@ def script_three(path_dir: str) -> str:
     if not os.path.isdir("dataset_two"):
         script_two.script_two(path_dir)
     with open(file_name, mode="w") as w_file:
-        writer = csv.writer(w_file, dialect='excel', delimiter=",", lineterminator="\r")
+        writer = csv.writer(w_file, dialect="excel", delimiter=",", lineterminator="\r")
         writer.writerow(("absolut path", "relativ path", "quote"))
-        pbar = tqdm(os.listdir("dataset_two"), ncols=100, colour='green')
+        pbar = tqdm(os.listdir("dataset_two"), ncols=100, colour="green")
         for element in pbar:
             name = random.choice(names)
             names.remove(name)

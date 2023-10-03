@@ -27,7 +27,7 @@ def redact_days(output: list[str]) -> str:
         str: String that contains day's number.
     """
     if (int(output[0]) < 10):
-        return ('0' + output[0])
+        return ("0" + output[0])
     else:
         return (output[0])
 
@@ -42,7 +42,7 @@ def month_num_to_str(month: int) -> str:
         str: The number of the month converted to a string.
     """
     if (month < 10):
-        return ('0' + str(month))
+        return ("0" + str(month))
     else:
         return (str(month))
 
@@ -127,8 +127,8 @@ for current_year in range(year, max_year + 1):
                 writer = csv.writer(csvfile, lineterminator='\n')
                 writer.writerow(
                     (
-                        str(current_year) + '-' 
-                        + month_num_to_str(current_month) + '-' 
+                        str(current_year) + "-" 
+                        + month_num_to_str(current_month) + "-" 
                         + redact_days(output),
                         output[1],
                         output[2],
