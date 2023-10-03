@@ -2,8 +2,6 @@ import csv
 
 
 class SimpleIterator:
-    """Класс итератор - задается итерируемый объект и файл"""
-
     def __init__(self, label: str, file_name: str):
         self.label = label
         self.file_name = file_name

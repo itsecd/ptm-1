@@ -2,8 +2,6 @@ import os
 
 
 class SimpleIterator:
-    """Класс итератор - задается итерируемый объект и dataset"""
-
     def __init__(self, label: str, dataset_name: str):
         self.label = label
         self.dataset_name = dataset_name

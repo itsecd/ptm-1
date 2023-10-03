@@ -4,30 +4,29 @@ import random
 import shutil
 
 
-def copy_random(path: str, label: str) -> None:
+def create_file_paths(path: str, label: str) -> None:
     """Функция принимает путь: path и метку класса: label"""
     if not os.path.isdir("dataset_copy_random"):
         os.mkdir("dataset_copy_random")
     data = []
-    info = os.listdir(path)
-    for i in info:
-        control = True
-        while control:
-            rand_temp = random.randint(0, 10000)
-            rand = str(rand_temp)
-            control = os.path.exists("dataset_copy_random/" + rand + ".jpg")
-        shutil.copy(os.path.join(path, i), os.path.join("dataset_copy_random/", rand + ".jpg"))
-        absolute = os.path.abspath("dataset_copy_random/" + rand + ".jpg")
-        relative = os.path.relpath("dataset_copy_random/" + rand + ".jpg")
-        data.append([absolute, relative, label])
+    images = os.listdir(path)
+    for i in images:
+        is_path = True
+        while is_path:
+            number = str(random.randint(0, 10000))
+            is_path = os.path.exists("dataset_copy_random/" + number + ".jpg")
+        shutil.copy(os.path.join(path, i), os.path.join("dataset_copy_random/", number + ".jpg"))
+        absolute_path = os.path.abspath("dataset_copy_random/" + number + ".jpg")
+        relative_path = os.path.relpath("dataset_copy_random/" + number + ".jpg")
+        data.append([absolute_path, relative_path, label])
     with open("data_copy.csv", "a+", newline="") as file:
         writer = csv.writer(file, delimiter=";")
         writer.writerows(data)
 
 
 def main():
-    copy_random("dataset/tiger", "tiger")
-    copy_random("dataset/leopard", "leopard")
+    create_file_paths("dataset/tiger", "tiger")
+    create_file_paths("dataset/leopard", "leopard")
 
 
 if __name__ == "__main__":

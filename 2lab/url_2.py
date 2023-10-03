@@ -1,7 +1,7 @@
 import os
 
 
-def path(label: str, dataset_name: str) -> list:
+def sort_by_label(label: str, dataset_name: str) -> list:
     """Функция принимает метку класса: label и имя файла: file_name"""
     data = []
     array = os.listdir(dataset_name)
@@ -13,7 +13,7 @@ def path(label: str, dataset_name: str) -> list:
 
 
 def main():
-    data = path("tiger", "dataset_copy")
+    data = sort_by_label("tiger", "dataset_copy")
     for i in range(10):
         print(data[i])
 
