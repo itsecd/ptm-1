@@ -1,7 +1,7 @@
-import os
-import shutil
-import random
 import csv
+import os
+import random
+import shutil
 
 
 def copy_random(path: str, label: str) -> None:

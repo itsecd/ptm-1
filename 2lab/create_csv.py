@@ -1,5 +1,6 @@
-import os
 import csv
+import os
+
 
 
 def create_csv(path: str) -> None:

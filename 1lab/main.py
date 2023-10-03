@@ -1,9 +1,9 @@
-import requests
+import cv2
 import os
+import requests
+import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
-import time
-import cv2
 
 def scraping(url):
     if not os.path.isdir("dataset"):
