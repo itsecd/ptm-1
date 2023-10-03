@@ -1,7 +1,5 @@
 import os
 import csv
-import random
-from array import array
 
 
 def create_csv(path: str) -> None:

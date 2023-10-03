@@ -1,6 +1,5 @@
 import requests
 import os
-from array import array
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
