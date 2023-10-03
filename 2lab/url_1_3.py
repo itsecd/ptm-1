@@ -18,7 +18,7 @@ def path(label: str, file_name: str) -> list:
         file_reader = csv.reader(r_file, delimiter=";")
         for i in file_reader:
             path = url(i[0], i[2], label)
-            if path != None:
+            if path:
                 data.append(path)
     return data
 
