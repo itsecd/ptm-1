@@ -10,14 +10,11 @@ FILE_NAME = "test_csv.csv"
 SECOND_FILE_NAME = "test_csv_two.csv"
 
 
-def script_two(path_dir: str) -> str:
+def script_two(path_dir: str) -> None:
     """The function is designed to process a CSV file.
 
     Args:
         path_dir (str): Path to the directory.
-
-    Returns:
-        str: None.
     """
     out_directory = os.path.dirname(__file__)
     os.chdir(path_dir)

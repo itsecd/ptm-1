@@ -5,16 +5,13 @@ import script_two
 from tqdm import tqdm
 
 
-def script_three(path_dir: str) -> str:
+def script_three(path_dir: str) -> None:
     """The function creates new files in the "dataset_three" directory
      based on files from "dataset_two",
      and also writes information about the created files to a CSV file.
 
     Args:
         path_dir (str): Path to the directory.
-
-    Returns:
-        str: None.
     """
     os.chdir(path_dir)
     file_name = "test_csv_three.csv"
