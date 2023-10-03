@@ -3,7 +3,12 @@ import shutil
 
 
 def copy_files(path: str, label: str) -> None:
-    """Функция принимает путь к файлам: path и метку класса: label"""
+    """Function creates a directory with the name in order 
+    
+    Args:
+        path (str): path to folder
+        label (str): name folder
+    """
     if not os.path.isdir("dataset_copy"):
         os.mkdir("dataset_copy")
     data = os.listdir(path)

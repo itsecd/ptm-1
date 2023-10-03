@@ -2,9 +2,13 @@ import csv
 
 
 def compare_label(path: str, name: str, label: str):
-    """Функция принимает путь к фалу: path
-    метку класса по этому пути: name
-    метку с которой нужжно сравнить: label"""
+    """Function compares two labels
+    
+    Args:
+        path (str): path to file
+        name(str): path label
+        label (str): label to compare with
+    """
     if name == label:
         return path
     else:
@@ -12,7 +16,15 @@ def compare_label(path: str, name: str, label: str):
 
 
 def sort_by_label(label: str, file_name: str) -> list:
-    """Функция принимает метку класса: label и имя файла: file_name"""
+    """Function sorts csv file by label
+    
+    Args:
+        label (str): sort label
+        file_name(str): sort file
+
+    Returns:
+        list[str]: sorted list
+    """
     data = []
     with open(file_name) as r_file:
         file_reader = csv.reader(r_file, delimiter=";")

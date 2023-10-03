@@ -5,7 +5,13 @@ import shutil
 
 
 def create_file_paths(path: str, label: str) -> None:
-    """Функция принимает путь: path и метку класса: label"""
+    """Function creates a directory with random names and 
+    creates csv file
+    
+    Args:
+        path (str): path to folder
+        label (str): name folder
+    """
     if not os.path.isdir("dataset_copy_random"):
         os.mkdir("dataset_copy_random")
     data = []

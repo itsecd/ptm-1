@@ -2,7 +2,15 @@ import os
 
 
 def sort_by_label(label: str, dataset_name: str) -> list:
-    """Функция принимает метку класса: label и имя файла: file_name"""
+    """Function sorts the directory by label
+    
+    Args:
+        label (str): sort label
+        dataset_name(str): sort folder
+
+    Returns:
+        list[str]: sorted list
+    """
     data = []
     array = os.listdir(dataset_name)
     for i in array:

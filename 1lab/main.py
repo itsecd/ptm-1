@@ -6,7 +6,12 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 
-def parse_photo(label):
+def parse_photo(label: str) -> None:
+    """Function parses and saves photos
+
+    Args:
+        label (str): name photo
+    """
     if not os.path.isdir("dataset"):
         os.mkdir("dataset")
     if not os.path.isdir("dataset/" + label):
@@ -48,6 +53,11 @@ def parse_photo(label):
 
 
 def create_jpg_format(label):
+    """Function resaves the image as jpg
+    
+    Args:
+        label (str): name folder
+    """
     if not os.path.isdir("dataset1"):
         os.mkdir("dataset1")
     if not os.path.isdir("dataset1/" + label):
