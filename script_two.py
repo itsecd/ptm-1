@@ -11,6 +11,14 @@ SECOND_FILE_NAME = "test_csv_two.csv"
 
 
 def script_two(path_dir: str) -> str:
+    """The function is designed to process a CSV file.
+
+    Args:
+        path_dir (str): Path to the directory.
+
+    Returns:
+        str: None.
+    """
     out_directory = os.path.dirname(__file__)
     os.chdir(path_dir)
     with open(SECOND_FILE_NAME, mode="w") as w_file:

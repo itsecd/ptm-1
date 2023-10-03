@@ -3,26 +3,58 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def change_years(year, url):
+def change_years(year: int, url: str) -> str:
+    """Function that changes the year in the url.
+
+    Args:
+        year (int): The year that need to change in the url.
+        url (str): Site url.
+
+    Returns:
+        str: Changed url.
+    """
     url = url.replace(str(year - 1), str(year))
     return url
 
 
-def redact_days(output):
+def redact_days(output: list[str]) -> str:
+    """A function that edits the day number in the output array.
+
+    Args:
+        output (list[str]): List that contains output information.
+
+    Returns:
+        str: String that contains day's number.
+    """
     if (int(output[0]) < 10):
         return ('0' + output[0])
     else:
         return (output[0])
 
 
-def redact_days(month):
+def month_num_to_str(month: int) -> str:
+    """A function that returns the month number in the desired format for output to a csv file.
+
+    Args:
+        month (int): The number of the month.
+
+    Returns:
+        str: The number of the month converted to a string.
+    """
     if (month < 10):
         return ('0' + str(month))
     else:
         return (str(month))
 
 
-def check_month(url):
+def check_month(url: str) -> int:
+    """A function that returns the maximum month of the current year.
+
+    Args:
+        url (str): Url site.
+    Returns:
+        int: Max month number.
+    """
     month = 1
     while True:
         html_text = requests.get(url, headers={"User-Agent": "Windows 10"}).text
@@ -37,8 +69,16 @@ def check_month(url):
     return month
 
 
-def change_months(url:str, month, change_type):
-    """замена месяца в ссылке"""
+def change_months(url:str, month: int, change_type: int) -> str:
+    """A function that replaces the month value in the url.
+
+    Args:
+        url (str): Url site.
+        month (int): Month.
+        change_type (int): Type of change.
+    Returns:
+        str: Changed url.
+    """
     if change_type == 2:
         url = url[0:39] + "/1/"
     else:
@@ -87,7 +127,9 @@ for current_year in range(year, max_year + 1):
                 writer = csv.writer(csvfile, lineterminator='\n')
                 writer.writerow(
                     (
-                        str(current_year) + '-' + redact_days(current_month) + '-' + redact_days(output),
+                        str(current_year) + '-' 
+                        + month_num_to_str(current_month) + '-' 
+                        + redact_days(output),
                         output[1],
                         output[2],
                         output[3],
