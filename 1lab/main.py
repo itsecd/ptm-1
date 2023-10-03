@@ -5,6 +5,7 @@ import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
+
 def scraping(url):
     if not os.path.isdir("dataset"):
         os.mkdir("dataset")
@@ -37,13 +38,13 @@ def scraping(url):
             resp_3 = resp_2.find("a", class_="serp-item__link")
             url_img = resp_3.find("img", class_="serp-item__thumb justifier__thumb").get("src")
             if not url_img in array:
-                array.append(url_img)  
+                array.append(url_img)
                 print(array[i])
                 img = requests.get("https:" + array[i]).content
                 print(index)
                 a = str(index)
                 ul = "dataset/" + url + "/" + a.zfill(4) + ".jpg"
-                with open(ul,"wb") as handler:
+                with open(ul, "wb") as handler:
                     handler.write(img)
                 index += 1
     except Exception as ex:
@@ -51,6 +52,7 @@ def scraping(url):
     finally:
         driver.close()
         driver.quit()
+
 
 def jpg(url):
     if not os.path.isdir("dataset1"):
@@ -62,10 +64,14 @@ def jpg(url):
         filename = str("dataset/" + url + "/" + a.zfill(4) + ".jpg")
         image = cv2.imread(filename)
         filewrite = str("dataset1/" + url + "/" + a.zfill(4) + ".jpg")
-        cv2.imwrite(filewrite,image)
+        cv2.imwrite(filewrite, image)
 
 
-scraping("tiger")
-jpg("leopard")
-jpg("tiger")
+def main():
+    scraping("tiger")
+    jpg("leopard")
+    jpg("tiger")
 
+
+if __name__ == "__main__":
+    main()

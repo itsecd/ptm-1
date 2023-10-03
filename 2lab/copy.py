@@ -8,9 +8,7 @@ def copy(path: str, label: str) -> None:
         os.mkdir("dataset_copy")
     info = os.listdir(path)
     for i in info:
-        shutil.copy(
-            os.path.join(path, i), os.path.join("dataset_copy/", label + "_" + i)
-        )
+        shutil.copy(os.path.join(path, i), os.path.join("dataset_copy/", label + "_" + i))
 
 
 def main():

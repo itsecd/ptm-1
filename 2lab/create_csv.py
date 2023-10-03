@@ -2,7 +2,6 @@ import csv
 import os
 
 
-
 def create_csv(path: str) -> None:
     """Функция принимает путь к файлам: path"""
     info = os.listdir(path)

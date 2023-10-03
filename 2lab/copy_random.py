@@ -16,9 +16,7 @@ def copy_random(path: str, label: str) -> None:
             rand_temp = random.randint(0, 10000)
             rand = str(rand_temp)
             control = os.path.exists("dataset_copy_random/" + rand + ".jpg")
-        shutil.copy(
-            os.path.join(path, i), os.path.join("dataset_copy_random/", rand + ".jpg")
-        )
+        shutil.copy(os.path.join(path, i), os.path.join("dataset_copy_random/", rand + ".jpg"))
         absolute = os.path.abspath("dataset_copy_random/" + rand + ".jpg")
         relative = os.path.relpath("dataset_copy_random/" + rand + ".jpg")
         data.append([absolute, relative, label])
