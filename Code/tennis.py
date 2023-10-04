@@ -135,19 +135,19 @@ class TennisGameDefactored2:
             result = "Win for " + self.player2Name
         return result
     
-    def SetP1Score(self, number):
+    def set_p_1_score(self, number):
         for i in range(number):
             self.P1Score()
     
-    def SetP2Score(self, number):
+    def set_p_2_score(self, number):
         for i in range(number):
             self.P2Score()
     
-    def P1Score(self):
+    def p_1_score(self):
         self.p1points +=1
     
     
-    def P2Score(self):
+    def p_2_score(self):
         self.p2points +=1
         
 class TennisGameDefactored3:
