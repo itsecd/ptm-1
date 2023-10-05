@@ -25,7 +25,6 @@ def get_data(input_file: str, date: datetime.date) -> Union[numpy.float64, None]
 def get_data_xy(input_file_x: str, input_file_y: str,
                 date: datetime.date) -> Union[numpy.float64, None]:
     if os.path.exists(input_file_x) and os.path.exists(input_file_y):
-
         df_x = pd.read_csv(input_file_x)
         df_y = pd.read_csv(input_file_y)
         index = -1
