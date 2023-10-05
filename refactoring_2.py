@@ -64,10 +64,9 @@ def get_data_from_week_and_years(input_directory: str, date: datetime.date) -> U
     raise FileNotFoundError
 
 
-def tuple_for_next_data() -> tuple:
-    input_file = "C:/Users/artyo/Desktop/dataset.csv"
-    if os.path.exists(input_file):
-        df = pd.read_csv(input_file)
+def tuple_for_next_data(input_directory: str) -> tuple:
+    if os.path.exists(input_directory):
+        df = pd.read_csv(input_directory)
         for data in df["Day"]:
             i = df.index[df["Day"] == data]
             yield data, *df.loc[i]["Exchange rate"].values
