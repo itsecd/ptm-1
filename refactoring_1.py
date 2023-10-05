@@ -36,7 +36,6 @@ def get_data_xy(input_file_x: str, input_file_y: str,
         if index >= 0:
             return df_y.iloc[index]["Exchange rate"]
         return None
-
     raise FileNotFoundError
 
 
@@ -44,9 +43,7 @@ def get_data_from_week_and_years(input_directory: str, date: datetime.date) -> U
     if os.path.exists(input_directory):
         for root, dirs, files in os.walk(input_directory):
             for filename in files[0: -1:]:
-
                 df = pd.read_csv(os.path.join(root, filename))
-
                 for i in range(0, df.shape[0], 1):
                     if df["Day"].iloc[i].replace("-", "") == str(date).replace("-", ""):
                         return df.iloc[i]["Exchange rate"]

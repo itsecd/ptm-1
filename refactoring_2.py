@@ -35,7 +35,6 @@ def get_data_xy(input_file_x: str, input_file_y: str,
         if index >= 0:
             return df_y.iloc[index]["Exchange rate"]
         return None
-
     raise FileNotFoundError
 
 
