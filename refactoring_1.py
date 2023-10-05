@@ -2,6 +2,7 @@ import datetime
 import numpy
 import os
 import pandas as pd
+import time
 from typing import Union
 
 
@@ -89,7 +90,6 @@ if __name__ == "__main__":
         #
         # print(get_data_xy(file_x, file_y, existing_date))
         # print(get_data_xy(file_x, file_y, nonexistent_date))
-        import time
         t1 = time.time()
         print(get_data_from_week_and_years_new(directory_for_weeks, existing_date))
         t2 = time.time()
