@@ -75,17 +75,6 @@ if __name__ == "__main__":
         directory_for_years = "C:/Users/artyo/PycharmProjects/labs/lab2/2/"
         existing_date = datetime.date(2022, 9, 15)
         nonexistent_date = datetime.date(1991, 5, 12)
-        # print(get_data(file, existing_date))
-        # print(get_data(file, nonexistent_date))
-        #
-        # print(get_data_xy(file_x, file_y, existing_date))
-        # print(get_data_xy(file_x, file_y, nonexistent_date))
-        #
-        # print(get_data_from_week_and_years(directory_for_weeks, existing_date))
-        # print(get_data_from_week_and_years(directory_for_weeks, nonexistent_date))
-        #
-        # print(get_data_from_week_and_years(directory_for_years, existing_date))
-        # print(get_data_from_week_and_years(directory_for_years, nonexistent_date))
         it = tuple_for_next_data()
         while True:
             print(next(it))
