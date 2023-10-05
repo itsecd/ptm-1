@@ -1,6 +1,8 @@
 import pandas as pd
 
 
+FILE = "C:/Users/artyo/Desktop/dataset.csv"
+
 def formatted_file(input_file: str) -> pd.DataFrame:
     df = pd.read_csv(input_file)
     df["Day"] = pd.to_datetime(df.Day, format="%Y-%m-%d")
@@ -58,5 +60,4 @@ def write_to_file(input_file: str) -> None:
 
 
 if __name__ == "__main__":
-    file = "C:/Users/artyo/Desktop/dataset.csv"
-    write_to_file(file)
+    write_to_file(FILE)

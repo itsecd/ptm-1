@@ -6,6 +6,14 @@ import time
 from typing import Union
 
 
+FILE = "C:/Users/artyo/Desktop/dataset.csv"
+FILE_X = "C:/Users/artyo/PycharmProjects/labs/lab2/1/X.csv"
+FILE_Y = "C:/Users/artyo/PycharmProjects/labs/lab2/1/Y.csv"
+DIRECTORY_FOR_WEEKS = "C:/Users/artyo/PycharmProjects/labs/lab2/3/"
+DIRECTORY_FOR_YEARS = "C:/Users/artyo/PycharmProjects/labs/lab2/2/"
+EXISTING_DATE = datetime.date(2022, 9, 15)
+NONEXISTENT_DATE = datetime.date(1991, 5, 12)
+
 def formatted_file(input_file: str) -> pd.DataFrame:
     df = pd.read_csv(input_file)
     df["Day"] = pd.to_datetime(df.Day, format="%Y-%m-%d")
@@ -78,20 +86,25 @@ def tuple_for_next_data() -> tuple:
 
 if __name__ == "__main__":
     try:
-        file = "C:/Users/artyo/Desktop/dataset.csv"
-        file_x = "C:/Users/artyo/PycharmProjects/labs/lab2/1/X.csv"
-        file_y = "C:/Users/artyo/PycharmProjects/labs/lab2/1/Y.csv"
-        directory_for_weeks = "C:/Users/artyo/PycharmProjects/labs/lab2/3/"
-        directory_for_years = "C:/Users/artyo/PycharmProjects/labs/lab2/2/"
-        existing_date = datetime.date(2022, 9, 15)
-        nonexistent_date = datetime.date(1991, 5, 12)
+        print(get_data(FILE, EXISTING_DATE))
+        print(get_data(FILE, NONEXISTENT_DATE))
+        print(get_data_xy(FILE_X, FILE_Y, EXISTING_DATE))
+        print(get_data_xy(FILE_X, FILE_Y, NONEXISTENT_DATE))
         t1 = time.time()
-        print(get_data_from_week_and_years_new(directory_for_weeks, existing_date))
+        print(get_data_from_week_and_years_new(DIRECTORY_FOR_WEEKS, EXISTING_DATE))
         t2 = time.time()
-        print(get_data_from_week_and_years(directory_for_weeks, existing_date))
+        print(get_data_from_week_and_years(DIRECTORY_FOR_WEEKS, EXISTING_DATE))
         t3 = time.time()
         dt1 = t3-t2
         dt2 = t2-t1
         print(dt1, dt2, dt1/dt2)
+        print(get_data_from_week_and_years(DIRECTORY_FOR_WEEKS, NONEXISTENT_DATE))
+        
+        print(get_data_from_week_and_years(DIRECTORY_FOR_YEARS, EXISTING_DATE))
+        print(get_data_from_week_and_years(DIRECTORY_FOR_YEARS, NONEXISTENT_DATE))
+
+        it = tuple_for_next_data()
+        while True:
+            print(next(it))
     except FileNotFoundError:
         print("No such file exists!")
