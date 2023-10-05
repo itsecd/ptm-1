@@ -1,5 +1,4 @@
 import pandas as pd
-import autopep8
 
 
 def formatted_file(input_file: str) -> pd.DataFrame:

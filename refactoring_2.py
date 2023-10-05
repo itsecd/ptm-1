@@ -1,9 +1,8 @@
-import numpy
-import pandas as pd
 import datetime
+import numpy
 import os
+import pandas as pd
 from typing import Union
-import autopep8
 
 
 def formatted_file(input_file: str) -> pd.DataFrame:
