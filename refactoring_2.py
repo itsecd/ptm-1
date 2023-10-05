@@ -14,6 +14,13 @@ EXISTING_DATE = datetime.date(2022, 9, 15)
 NONEXISTENT_DATE = datetime.date(1991, 5, 12)
 
 def formatted_file(input_file: str) -> pd.DataFrame:
+    """
+     Reads a CSV file and formats it for further work.
+     
+     @param input_file - Path to the CSV file.
+     
+     @return DataFrame with the data from the CSV file.
+    """
     df = pd.read_csv(input_file)
     df["Day"] = pd.to_datetime(df.Day, format="%Y-%m-%d")
     df["Day"] = df["Day"].dt.date
@@ -21,6 +28,14 @@ def formatted_file(input_file: str) -> pd.DataFrame:
 
 
 def get_data(input_file: str, date: datetime.date) -> Union[numpy.float64, None]:
+    """
+     Get the data from the file that corresponds to the date.
+     
+     @param input_file - Path to the CSV file.
+     @param date - Date to look for in the file.
+     
+     @return A numpy array of the data or None if not found. 
+    """
     if os.path.exists(input_file):
         df = formatted_file(input_file)
         for i in range(0, df.shape[0], 1):
@@ -32,6 +47,15 @@ def get_data(input_file: str, date: datetime.date) -> Union[numpy.float64, None]
 
 def get_data_xy(input_file_x: str, input_file_y: str,
                 date: datetime.date) -> Union[numpy.float64, None]:
+    """
+     Get the data from the file that corresponds to the date.
+     
+     @param input_file_x - Path to the CSV file with date.
+     @param input_file_y - Path to the CSV file with data.
+     @param date - Date to look for in the file.
+     
+     @return A numpy array of the data or None if not found. 
+    """
     if os.path.exists(input_file_x) and os.path.exists(input_file_y):
         df_x = pd.read_csv(input_file_x)
         df_y = pd.read_csv(input_file_y)
@@ -47,6 +71,14 @@ def get_data_xy(input_file_x: str, input_file_y: str,
 
 
 def get_data_from_week_and_years(input_directory: str, date: datetime.date) -> Union[numpy.float64, None]:
+    """
+     Get the data from the file that corresponds to the date.
+     
+     @param input_file - Path to the CSV file.
+     @param date - Date to look for in the file.
+     
+     @return A numpy array of the data or None if not found. 
+    """
     int_datetime = int(date.strftime('%Y%m%d'))
     if os.path.exists(input_directory):
         for root, dirs, files in os.walk(input_directory):
@@ -56,7 +88,6 @@ def get_data_from_week_and_years(input_directory: str, date: datetime.date) -> U
                 for word in range(int(words[0]), int(words[1]) - 1, -1):
                     if word == int_datetime:
                         df = pd.read_csv(os.path.join(root, filename))
-
                         for i in range(0, df.shape[0], 1):
                             if df["Day"].iloc[i].replace("-", "") == str(date).replace("-", ""):
                                 return df.iloc[i]["Exchange rate"]
@@ -65,6 +96,13 @@ def get_data_from_week_and_years(input_directory: str, date: datetime.date) -> U
 
 
 def tuple_for_next_data(input_directory: str) -> tuple:
+    """
+     Yield data and exchanges for the next day.
+     
+     @param input_directory - Path to the CSV file.
+     
+     @return Tuple of data.
+    """
     if os.path.exists(input_directory):
         df = pd.read_csv(input_directory)
         for data in df["Day"]:
