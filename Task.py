@@ -1,19 +1,20 @@
-import mxnet as mx
-import sys
-import os
-import random
-import cv2
-import numpy as np
-import multiprocessing
-import logging
-import fnmatch
 import argparse
 import cPickle as pickle
+import cv2
+import fnmatch
+import logging
+import multiprocessing
+import mxnet as mx
+import numpy as np
+import os
+import random
+import sys
 from matplotlib import pyplot as plt
+from symbol_resnet import resnet
 
 cur_path = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(cur_path, "ResNet"))
-from symbol_resnet import resnet
+
 
 class DataBath(object):
     def __init__(self, data, label):
