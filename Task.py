@@ -38,7 +38,8 @@ class DataIter(mx.io.DataIter):
         self.provide_label = [("anchor", (self.batch_size, 3, height, width))]
         self.queue = multiprocessing.Queue(maxsize=4)
         self.started = True
-        self.processes = [multiprocessing.Process(target=self.write) for i in range(process_num)]
+        self.processes = [multiprocessing.Process(target=self.write)
+                          for i in range(process_num)]
         for process in self.processes:
             process.daemon = True
             process.start()
@@ -51,22 +52,29 @@ class DataIter(mx.io.DataIter):
         y_resize_scale = rows / (rows + abs(y_scale) * cols)
         if x_scale >= 0:
             if y_scale >= 0:
-                affine_matrix = np.float32([[x_resize_scale, x_resize_scale * x_scale, 0],
-                                            [y_resize_scale * y_scale, y_resize_scale, 0]])
+                affine_matrix = np.float32([[x_resize_scale,
+                                             x_resize_scale * x_scale, 0],
+                                            [y_resize_scale * y_scale,
+                                             y_resize_scale, 0]])
             else:
-                affine_matrix = np.float32([[x_resize_scale, x_resize_scale * x_scale, 0],
-                                            [y_resize_scale * y_scale, y_resize_scale,
-                                             y_resize_scale * abs(y_scale) * cols]])
+                affine_matrix = \
+                    np.float32([[x_resize_scale, x_resize_scale * x_scale, 0],
+                                [y_resize_scale * y_scale, y_resize_scale,
+                                 y_resize_scale * abs(y_scale) * cols]])
         else:
             if y_scale >= 0:
                 affine_matrix = np.float32(
-                    [[x_resize_scale, x_resize_scale * x_scale, x_resize_scale * abs(x_scale) * rows],
+                    [[x_resize_scale, x_resize_scale * x_scale,
+                      x_resize_scale * abs(x_scale) * rows],
                      [y_resize_scale * y_scale, y_resize_scale, 0]])
             else:
                 affine_matrix = np.float32(
-                    [[x_resize_scale, x_resize_scale * x_scale, x_resize_scale * abs(x_scale) * rows],
-                     [y_resize_scale * y_scale, y_resize_scale, y_resize_scale * abs(y_scale) * cols]])
-        affine_mat = cv2.warpAffine(mat, affine_matrix, (cols, rows), borderMode=cv2.BORDER_REPLICATE)
+                    [[x_resize_scale, x_resize_scale * x_scale,
+                      x_resize_scale * abs(x_scale) * rows],
+                     [y_resize_scale * y_scale, y_resize_scale,
+                      y_resize_scale * abs(y_scale) * cols]])
+        affine_mat = cv2.warpAffine(mat, affine_matrix, (cols, rows),
+                                    borderMode=cv2.BORDER_REPLICATE)
         return affine_mat
 
     def generate_batch(self):
@@ -82,7 +90,8 @@ class DataIter(mx.io.DataIter):
             n_mat = cv2.imread(self.images[n_idx])
             n_mat = cv2.resize(n_mat, (self.height, self.width))
             threshold = 250
-            if np.mean(a_mat) > threshold or np.mean(p_mat) > threshold or np.mean(n_mat) > threshold:
+            if np.mean(a_mat) > threshold or np.mean(p_mat) > threshold \
+                    or np.mean(n_mat) > threshold:
                 continue
             ret.append((a_mat, p_mat, n_mat))
         return ret
@@ -130,7 +139,8 @@ def get_network(batch_size):
     anchor = mx.symbol.Variable("anchor")
     positive = mx.symbol.Variable("positive")
     negative = mx.symbol.Variable("negative")
-    concat = mx.symbol.Concat(*[anchor, positive, negative], dim=0, name="concat")
+    concat = mx.symbol.Concat(*[anchor, positive, negative],
+                              dim=0, name="concat")
     share_net = resnet(
         data=concat,
         units=[2, 2, 2, 2],
@@ -144,8 +154,10 @@ def get_network(batch_size):
     one = mx.symbol.Variable("one")
     one = mx.symbol.Reshape(data=one, shape=(-1, 1))
     fa = mx.symbol.slice_axis(share_net, axis=0, begin=0, end=batch_size)
-    fp = mx.symbol.slice_axis(share_net, axis=0, begin=batch_size, end=2 * batch_size)
-    fn = mx.symbol.slice_axis(share_net, axis=0, begin=2 * batch_size, end=3 * batch_size)
+    fp = mx.symbol.slice_axis(share_net, axis=0, begin=batch_size,
+                              end=2 * batch_size)
+    fn = mx.symbol.slice_axis(share_net, axis=0, begin=2 * batch_size,
+                              end=3 * batch_size)
     fs = fa-fp
     fd = fa-fn
     fs = fs*fs
@@ -159,13 +171,17 @@ def get_network(batch_size):
 
 
 class Search(object):
-    def __init__(self, model_path, epoch, height, width, imgs=None, codebook="./index.pkl"):
-        symbol, arg_params, aux_params = mx.model.load_checkpoint(model_path, epoch)
+    def __init__(self, model_path, epoch, height, width, imgs=None,
+                 codebook="./index.pkl"):
+        symbol, arg_params, aux_params = \
+            mx.model.load_checkpoint(model_path, epoch)
         input_shape = dict([('data', (1, 3, height, width))])
         network = self.get_predict_net()
         self.executor = network.simple_bind(ctx=mx.gpu(), **input_shape)
-        self.executor.copy_params_from(arg_params, aux_params, allow_extra_params=True)
-        self.args = dict(zip(network.list_arguments(), self.executor.arg_arrays))
+        self.executor.copy_params_from(arg_params, aux_params,
+                                       allow_extra_params=True)
+        self.args = dict(zip(network.list_arguments(),
+                             self.executor.arg_arrays))
         self.data = self.args["data"]
         self.height = height
         self.width = width
@@ -188,7 +204,8 @@ class Search(object):
             self.codebook[idx, :] = self.get_feature(mat)
 
     def save(self, path):
-        pickle.dump((self.imgs, self.codebook), open(path, 'w'), pickle.HIGHEST_PROTOCOL)
+        pickle.dump((self.imgs, self.codebook), open(path, 'w'),
+                    pickle.HIGHEST_PROTOCOL)
 
     def preprocess(self, mat):
         mat = cv2.resize(mat, (self.width, self.height))
@@ -218,7 +235,8 @@ class Search(object):
 
     def search(self, mat, top_k=5):
         assert self.codebook is not None and self.imgs is not None
-        mat = cv2.GaussianBlur(mat, (3, 3), 0, 0, borderType=cv2.BORDER_REPLICATE)
+        mat = cv2.GaussianBlur(mat, (3, 3), 0, 0,
+                               borderType=cv2.BORDER_REPLICATE)
         mat = cv2.resize(mat, (self.height, self.width))
         mat = np.transpose(mat, (2, 0, 1))
         code = self.get_feature(mat, search=True)[0]
@@ -272,7 +290,8 @@ def train():
         for img in fnmatch.filter(filenames, "*.jpg"):
             images.append(os.path.abspath(os.path.join(root, img)))
 
-    train_set = DataIter(images=images, batch_size=batch_size, height=224, width=224, process_num=args.process_num)
+    train_set = DataIter(images=images, batch_size=batch_size,
+                         height=224, width=224, process_num=args.process_num)
     optimizer = mx.optimizer.SGD(momentum=0.99)
     model = mx.model.FeedForward(
         allow_extra_params=True,
@@ -281,7 +300,10 @@ def train():
         num_epoch=200,
         learning_rate=0.1*1e-2,
         wd=0.0001,
-        initializer=mx.init.Load("resnet-18-0000.params", default_init=mx.init.Xavier(rnd_type="gaussian", factor_type="in", magnitude=2)),
+        initializer=mx.init.Load("resnet-18-0000.params",
+                                 default_init=mx.init.Xavier
+                                 (rnd_type="gaussian",
+                                  factor_type="in", magnitude=2)),
         optimizer=optimizer)
     model.fit(X=train_set,
               eval_metric=Auc(),
@@ -302,7 +324,12 @@ def test():
     for root, dirnames, filenames in os.walk(root_dir):
         for img in fnmatch.filter(filenames, "*.jpg"):
             images.append(os.path.abspath(os.path.join(root, img)))
-    s = Search(model_path=args.model_path, epoch=args.epoch, height=224, width=224, imgs=images, codebook="./index.pkl")
+    s = Search(model_path=args.model_path,
+               epoch=args.epoch,
+               height=224,
+               width=224,
+               imgs=images,
+               codebook="./index.pkl")
     test_imgs = []
     root_dir = args.test_dir
     for root, dirnames, filenames in os.walk(root_dir):
