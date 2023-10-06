@@ -44,15 +44,9 @@ class DataIter(mx.io.DataIter):
             process.start()
 
     def augment(self, mat):
-        # bright = random.randint(60, 100)/100.0
-        # mat = cv2.convertScaleAbs(mat, None, bright, 0)
-        # mat = cv2.GaussianBlur(mat, (3, 3), 0, 0, borderType=cv2.BORDER_REPLICATE)
         rows, cols, _ = mat.shape
-        # print rows, cols
         x_scale = random.randint(-12, 12) / 100.0
         y_scale = random.randint(-12, 12) / 100.0
-        # x_scale = 0.1
-        # y_scale = -0.1
         x_resize_scale = cols / (cols + abs(x_scale) * rows)
         y_resize_scale = rows / (rows + abs(y_scale) * cols)
         if x_scale >= 0:
@@ -169,7 +163,6 @@ class Search(object):
         symbol, arg_params, aux_params = mx.model.load_checkpoint(model_path, epoch)
         input_shape = dict([('data', (1, 3, height, width))])
         network = self.get_predict_net()
-        # self.executor = mx.model.FeedForward(symbol=network, ctx=mx.gpu(), arg_params=arg_params, aux_params=aux_params, allow_extra_params=True)
         self.executor = network.simple_bind(ctx=mx.gpu(), **input_shape)
         self.executor.copy_params_from(arg_params, aux_params, allow_extra_params=True)
         self.args = dict(zip(network.list_arguments(), self.executor.arg_arrays))
@@ -202,7 +195,6 @@ class Search(object):
 
         def enhance(mat):
             rows, cols, channel = mat.shape
-            # mat = cv2.cvtColor(mat, cv2.COLOR_BGR2RGB)
             norm = cv2.normalize(mat, mat, 0, 255, cv2.NORM_MINMAX)
             scale = cv2.convertScaleAbs(norm, None, 1.2, 0)
             return scale
@@ -228,7 +220,6 @@ class Search(object):
         assert self.codebook is not None and self.imgs is not None
         mat = cv2.GaussianBlur(mat, (3, 3), 0, 0, borderType=cv2.BORDER_REPLICATE)
         mat = cv2.resize(mat, (self.height, self.width))
-        # mat = self.preprocess(mat)
         mat = np.transpose(mat, (2, 0, 1))
         code = self.get_feature(mat, search=True)[0]
         distance = np.linalg.norm(code - self.codebook, axis=1)
@@ -275,13 +266,6 @@ def train():
     batch_size = args.batch_size
     dev = args.gpus
     network = get_network(batch_size=batch_size)
-    # symbol, arg_params, aux_params = mx.model.load_checkpoint("resnet-18", 0)
-
-    # shape = {"anchor": (batch_size, 3, 224, 224),
-    #          "positive": (batch_size, 3, 224, 224),
-    #          "negative": (batch_size, 3, 224, 224),
-    #          "one": (batch_size, )}
-    # mx.visualization.plot_network(network, shape=shape).render("ir-resnet", cleanup=True)
     images = []
     root_dir = args.root
     for root, dirnames, filenames in os.walk(root_dir):
@@ -289,8 +273,7 @@ def train():
             images.append(os.path.abspath(os.path.join(root, img)))
 
     train_set = DataIter(images=images, batch_size=batch_size, height=224, width=224, process_num=args.process_num)
-    # lr_scheduler = mx.lr_scheduler.FactorScheduler(step=10, factor=0.1)
-    optimizer = mx.optimizer.SGD(momentum=0.99)  # lr_scheduler=lr_scheduler)
+    optimizer = mx.optimizer.SGD(momentum=0.99)
     model = mx.model.FeedForward(
         allow_extra_params=True,
         ctx=mx.gpu(dev),
@@ -320,9 +303,6 @@ def test():
         for img in fnmatch.filter(filenames, "*.jpg"):
             images.append(os.path.abspath(os.path.join(root, img)))
     s = Search(model_path=args.model_path, epoch=args.epoch, height=224, width=224, imgs=images, codebook="./index.pkl")
-    # s.save("index.pkl")
-    # -----build index ------
-    # search
     test_imgs = []
     root_dir = args.test_dir
     for root, dirnames, filenames in os.walk(root_dir):
@@ -364,4 +344,3 @@ if __name__ == "__main__":
     head = '%(asctime)-15s %(message)s'
     logging.basicConfig(level=logging.DEBUG, format=head)
     train()
-    # test()
