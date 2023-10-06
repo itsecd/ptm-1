@@ -21,6 +21,7 @@ class DataBath(object):
         self.data = data
         self.label = label
 
+
 class DataIter(mx.io.DataIter):
     def __init__(self, images, batch_size, height, width, process_num):
         assert process_num <= 40
@@ -130,6 +131,7 @@ class DataIter(mx.io.DataIter):
     def reset(self):
         self.cursor = -self.batch_size
 
+
 def get_network(batch_size):
     anchor = mx.symbol.Variable("anchor")
     positive = mx.symbol.Variable("positive")
@@ -160,6 +162,7 @@ def get_network(batch_size):
     loss = one - loss
     loss = mx.symbol.Activation(data=loss, act_type='relu')
     return mx.symbol.MakeLoss(loss)
+
 
 class Search(object):
     def __init__(self, model_path, epoch, height, width, imgs=None, codebook="./index.pkl"):
@@ -251,6 +254,7 @@ class Search(object):
             workspace=512)
         return network
 
+
 class Auc(mx.metric.EvalMetric):
     def __init__(self):
         super(Auc, self).__init__('auc')
@@ -259,6 +263,7 @@ class Auc(mx.metric.EvalMetric):
         pred = preds[0].asnumpy().reshape(-1)
         self.sum_metric += np.sum(pred)
         self.num_inst += len(pred)
+
 
 def train():
     parser = argparse.ArgumentParser(description="Image Search Using CNN")
@@ -300,6 +305,7 @@ def train():
               kvstore='local_allreduce_device',
               batch_end_callback=mx.callback.Speedometer(batch_size, 10),
               epoch_end_callback=mx.callback.do_checkpoint("models/ir-blur"))
+
 
 def test():
     paser = argparse.ArgumentParser(description="Test Search")
@@ -349,8 +355,11 @@ def test():
         processed_mat = np.transpose(processed_mat, (1, 2, 0))
         display(mat, processed_mat, sorted_imgs)
 
+
 def predict():
     pass
+
+
 if __name__ == "__main__":
     head = '%(asctime)-15s %(message)s'
     logging.basicConfig(level=logging.DEBUG, format=head)
