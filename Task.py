@@ -184,7 +184,7 @@ class Search(object):
         self.codebook = np.empty(shape=(len(imgs), 128))
         for idx, img in enumerate(imgs):
             if idx % 100 == 0:
-                print idx
+                print (idx)
             mat = cv2.imread(img)
             mat = self.preprocess(mat)
             mat = np.transpose(mat, (2, 0, 1))
@@ -229,9 +229,9 @@ class Search(object):
         mat = np.transpose(mat, (2, 0, 1))
         code = self.get_feature(mat, search=True)[0]
         distance = np.linalg.norm(code - self.codebook, axis=1)
-        print distance
+        print (distance)
         arg_result = np.argsort(distance)
-        print arg_result
+        print (arg_result)
         result = []
         for idx in arg_result[:top_k]:
             result.append(self.imgs[idx])
