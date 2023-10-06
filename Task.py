@@ -32,7 +32,7 @@ class DataIter(mx.io.DataIter):
         self.cursor = -self.batch_size
         self.provide_data = [("positive", (self.batch_size, 3, height, width)),
                              ("negative", (self.batch_size, 3, height, width)),
-                             ("one", (self.batch_size, ))]
+                             ("one", self.batch_size)]
         self.provide_label = [("anchor", (self.batch_size, 3, height, width))]
         self.queue = multiprocessing.Queue(maxsize=4)
         self.started = True
@@ -133,8 +133,7 @@ def get_network(batch_size):
     anchor = mx.symbol.Variable("anchor")
     positive = mx.symbol.Variable("positive")
     negative = mx.symbol.Variable("negative")
-    concat = mx.symbol.Concat(
-        *[anchor, positive, negative], dim=0, name="concat")
+    concat = mx.symbol.Concat(*[anchor, positive, negative], dim=0, name="concat")
     share_net = resnet(
         data=concat,
         units=[2, 2, 2, 2],
@@ -184,7 +183,7 @@ class Search(object):
         self.codebook = np.empty(shape=(len(imgs), 128))
         for idx, img in enumerate(imgs):
             if idx % 100 == 0:
-                print (idx)
+                print(idx)
             mat = cv2.imread(img)
             mat = self.preprocess(mat)
             mat = np.transpose(mat, (2, 0, 1))
@@ -229,9 +228,9 @@ class Search(object):
         mat = np.transpose(mat, (2, 0, 1))
         code = self.get_feature(mat, search=True)[0]
         distance = np.linalg.norm(code - self.codebook, axis=1)
-        print (distance)
+        print(distance)
         arg_result = np.argsort(distance)
-        print (arg_result)
+        print(arg_result)
         result = []
         for idx in arg_result[:top_k]:
             result.append(self.imgs[idx])
