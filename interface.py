@@ -1,12 +1,12 @@
+import os
+import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QInputDialog, QLineEdit
 from PyQt5.QtGui import QPixmap
-import sys
-import os
 import copy_
+import iter
 import rand
 import write_csv
-import iter
 
 class Interface(QMainWindow):
     def __init__(self):

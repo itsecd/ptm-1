@@ -1,8 +1,8 @@
 import csv
 import os
+import random
 import shutil
 import tqdm
-import random
 
 def copy_dataset(directory_obj: str, c_directory_obj: str, name: str):
     """Copies all files from one folder to another, return NONE.
