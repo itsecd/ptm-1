@@ -20,7 +20,6 @@ class Interface(QMainWindow):
         self.w_text.adjustSize()
         self.text = QtWidgets.QLabel("Введите путь к исходному датасету:", self)
         self.text.move(10, 0)
-        # self.text.setAlignment(QtCore.Qt.AlignLeft)
         self.text.adjustSize()
         self.button1 = QtWidgets.QPushButton("Аннотация", self)
         self.button1.move(90, 200)
