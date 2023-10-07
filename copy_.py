@@ -30,8 +30,8 @@ def write_csv_copy(directory_obj: str, c_directory_obj: str, name: str):
     data = os.listdir(directory_obj)
     r_directory_obj = "dataset_2"
     file = f"{c_directory_obj}copy.csv"
-    with open(file, "a", encoding = "utf-8", newline = "") as f:
-        f_writer = csv.DictWriter(f, fieldnames = ["Absolut_path", "Relative_patch", "Class"], delimiter = "|")
+    with open(file, "a", encoding="utf-8", newline="") as f:
+        f_writer = csv.DictWriter(f, fieldnames=["Absolut_path", "Relative_patch", "Class"], delimiter="|")
         for i in data:
             f_writer.writerow({"Absolut_path": c_directory_obj + "\\" + name + "_" + i, "Relative_patch":  r_directory_obj + "\\" + name + "_" + i, "Class": name})   
 
