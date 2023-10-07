@@ -15,7 +15,6 @@ class Iterator:
         with open(directory, "r", encoding="utf-8") as f:
             r = csv.DictReader(
                 f, fieldnames=["Absolut_path", "Relative_patch", "Class"], delimiter="|")
-
             for i in r:
                 if i["Class"] == name:
                     self.read_list.append(i["Absolut_path"])

@@ -64,7 +64,6 @@ class Interface(QMainWindow):
         else:
             self.d_text, self.ok = QInputDialog.getText(self, "Копирование", "Введите путь для копирования:")
             print(self.d_text)
-    
             directory = f"{self.w_text.text()} rose"
             copy_.copy_dataset(directory, self.d_text, "rose")
             directory = f"{self.w_text.text()} tulip" 
