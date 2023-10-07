@@ -1,5 +1,6 @@
 import csv
 
+
 class Iterator:
     def __init__(self, directory: str, name: str):
         """Сonstructor of the class object, return NONE.
@@ -11,7 +12,6 @@ class Iterator:
         self.name = name
         self.count = -1
         self.read_list = []
-
         with open(directory, "r", encoding="utf-8") as f:
             r = csv.DictReader(
                 f, fieldnames=["Absolut_path", "Relative_patch", "Class"], delimiter="|")
@@ -37,7 +37,6 @@ class Iterator:
         if self.count < len(self.read_list):
             self.count += 1
             return self.read_list[self.count]
-
         elif self.count == len(self.read_list):
             raise StopIteration
 
@@ -45,16 +44,14 @@ class Iterator:
 def main():
     """Separates code blocks."""
     s = Iterator("D:\Lab Python\dataset_2copy.csv", "rose")
-
     print(type(next(s)))
     print(next(s))
     print(next(s))
-
     t = Iterator("D:\Lab Python\dataset_2copy.csv", "tulip")
+    print(next(t))
+    print(next(t))
+    print(next(t))
 
-    print(next(t))
-    print(next(t))
-    print(next(t))
 
 if __name__ == "__main__":
 	main()
