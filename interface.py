@@ -64,7 +64,7 @@ class Interface(QMainWindow):
         else:
             self.d_text, self.ok = QInputDialog.getText(self, "Копирование", "Введите путь для копирования:")
             print(self.d_text)
-            
+    
             directory = f"{self.w_text.text()} rose"
             copy_.copy_dataset(directory, self.d_text, "rose")
             directory = f"{self.w_text.text()} tulip" 
@@ -145,13 +145,13 @@ class New_Interface(QMainWindow):
         self.show()
 
 
-def create():
+def main():
+    """Separates code blocks."""
     app = QApplication(sys.argv)
     w = Interface()
     w.show()
     sys.exit(app.exec_())
-    # D:\Lab Python\Lab_1\dataset\ 
-    # D:\Lab Python\
 
 
-create()
+if __name__ == "__main__":
+	main()  
