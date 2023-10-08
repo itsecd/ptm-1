@@ -1,19 +1,19 @@
 import turtle as te
 import time
 
-WriteStep = 15  # Sampling times of Bessel function
+WriteStep = 15
 Speed = 5
-Width = 600  # Interface width
-Height = 500  # Interface height
-Xh = 0  # Record the handle of the previous Bessel function
+Width = 600
+Height = 500
+Xh = 0
 Yh = 0
 
 
-def Bezier(p1, p2, t):  # First order Bessel function
+def Bezier(p1, p2, t):
     return p1 * (1 - t) + p2 * t
 
 
-def Bezier_2(x1, y1, x2, y2, x3, y3):  # Second-order Bessel function
+def Bezier_2(x1, y1, x2, y2, x3, y3):
     te.goto(x1, y1)
     te.pendown()
     for t in range(0, WriteStep + 1):
@@ -25,7 +25,7 @@ def Bezier_2(x1, y1, x2, y2, x3, y3):  # Second-order Bessel function
     te.penup()
 
 
-def Bezier_3(x1, y1, x2, y2, x3, y3, x4, y4):  # Third-order Bessel function
+def Bezier_3(x1, y1, x2, y2, x3, y3, x4, y4):
     x1 = -Width / 2 + x1
     y1 = Height / 2 - y1
     x2 = -Width / 2 + x2
@@ -33,7 +33,7 @@ def Bezier_3(x1, y1, x2, y2, x3, y3, x4, y4):  # Third-order Bessel function
     x3 = -Width / 2 + x3
     y3 = Height / 2 - y3
     x4 = -Width / 2 + x4
-    y4 = Height / 2 - y4  # Coordinate transformation
+    y4 = Height / 2 - y4
     te.goto(x1, y1)
     te.pendown()
     for t in range(0, WriteStep + 1):
@@ -45,12 +45,12 @@ def Bezier_3(x1, y1, x2, y2, x3, y3, x4, y4):  # Third-order Bessel function
     te.penup()
 
 
-def Moveto(x, y):  # Move to svg coordinates (x, y)
+def Moveto(x, y):
     te.penup()
     te.goto(-Width / 2 + x, Height / 2 - y)
 
 
-def line(x1, y1, x2, y2):  # Connect two points under svg coordinates
+def line(x1, y1, x2, y2):
     te.penup()
     te.goto(-Width / 2 + x1, Height / 2 - y1)
     te.pendown()
@@ -58,32 +58,32 @@ def line(x1, y1, x2, y2):  # Connect two points under svg coordinates
     te.penup()
 
 
-def lineto(dx, dy):  # Connect the current point and the point with relative coordinates (dx, dy)
+def lineto(dx, dy):
     te.pendown()
     te.goto(te.xcor() + dx, te.ycor() - dy)
     te.penup()
 
 
-def Lineto(x, y):  # Connect the current point and svg coordinates (x, y)
+def Lineto(x, y):
     te.pendown()
     te.goto(-Width / 2 + x, Height / 2 - y)
     te.penup()
 
 
-def Horizontal(x):  # Make the horizontal line with the abscissa x in the svg coordinates
+def Horizontal(x):
     te.pendown()
     te.setx(x - Width / 2)
     te.penup()
 
 
-def horizontal(dx):  # Make the horizontal line with relative abscissa dx
+def horizontal(dx):
     te.seth(0)
     te.pendown()
     te.fd(dx)
     te.penup()
 
 
-def vertical(dy):  # Make the vertical line with the relative ordinate dy
+def vertical(dy):
     te.seth(-90)
     te.pendown()
     te.fd(dy)
@@ -91,7 +91,7 @@ def vertical(dy):  # Make the vertical line with the relative ordinate dy
     te.seth(0)
 
 
-def polyline(x1, y1, x2, y2, x3, y3):  # Make a polyline under svg coordinates
+def polyline(x1, y1, x2, y2, x3, y3):
     te.penup()
     te.goto(-Width / 2 + x1, Height / 2 - y1)
     te.pendown()
@@ -100,7 +100,7 @@ def polyline(x1, y1, x2, y2, x3, y3):  # Make a polyline under svg coordinates
     te.penup()
 
 
-def Curveto(x1, y1, x2, y2, x, y):  # Third-order Bezier curve to (x, y)
+def Curveto(x1, y1, x2, y2, x, y):
     te.penup()
     X_now = te.xcor() + Width / 2
     Y_now = Height / 2 - te.ycor()
@@ -111,7 +111,7 @@ def Curveto(x1, y1, x2, y2, x, y):  # Third-order Bezier curve to (x, y)
     Yh = y - y2
 
 
-def curveto_r(x1, y1, x2, y2, x, y):  # Third-order Bezier curve to relative coordinates (x, y)
+def curveto_r(x1, y1, x2, y2, x, y):
     te.penup()
     X_now = te.xcor() + Width / 2
     Y_now = Height / 2 - te.ycor()
@@ -123,7 +123,7 @@ def curveto_r(x1, y1, x2, y2, x, y):  # Third-order Bezier curve to relative coo
     Yh = y - y2
 
 
-def Smooth(x2, y2, x, y):  # Smooth the third-order Bezier curve to (x, y)
+def Smooth(x2, y2, x, y):
     global Xh
     global Yh
     te.penup()
@@ -134,7 +134,7 @@ def Smooth(x2, y2, x, y):  # Smooth the third-order Bezier curve to (x, y)
     Yh = y - y2
 
 
-def smooth_r(x2, y2, x, y):  # Smooth the third-order Bezier curve to relative coordinates (x, y)
+def smooth_r(x2, y2, x, y):
     global Xh
     global Yh
     te.penup()
@@ -150,9 +150,8 @@ te.setup(Width, Height, 0, 0)
 te.pensize(1)
 te.speed(Speed)
 te.penup()
-# Layer_2
 time.sleep(20)
-te.color("black", "#F2F2F2")  # Coat
+te.color("black", "#F2F2F2")
 Moveto(61, 462)
 te.begin_fill()
 smooth_r(12, -41, 27, -58)
@@ -175,7 +174,7 @@ Curveto(99, 292, 174, 428, 173, 439)
 smooth_r(-8, 23, -8, 23)
 Lineto(61, 462)
 te.end_fill()
-Moveto(60.5, 461.5)  # Shadow
+Moveto(60.5, 461.5)
 te.color("black", "#D3DFF0")
 te.begin_fill()
 curveto_r(0, 0, 17, -42, 27, -59)
@@ -219,20 +218,17 @@ Horizontal(327.997)
 te.pencolor("#D3DFF0")
 te.end_fill()
 te.pencolor("black")
-line(94.5, 397.5, 107.5, 373.5)  # Wrinkles
+line(94.5, 397.5, 107.5, 373.5)
 line(122.5, 317.5, 95.875, 274.699)
 line(122.5, 341.5, 141.5, 402.5)
 line(141.5, 409.5, 153.5, 431.5)
-# line(328,47.712,344,175.977)
 line(340.023, 49, 360.5, 144)
-# line(353.5,47.5,395.5,208.5)
 line(478.5, 95.5, 518.5, 161.5)
 line(518.5, 332.5, 460.5, 359.5)
 polyline(506.5, 369.5, 493.5, 402.5, 502.5, 443.5)
 Moveto(530, 429)
 curveto_r(4, 16, -5, 33, -5, 33)
-# Layer_3
-te.color("black", "#2b1d2a")  # Inside the jacket
+te.color("black", "#2b1d2a")
 Moveto(225, 462)
 te.begin_fill()
 Horizontal(165)
@@ -243,14 +239,13 @@ Lineto(225, 462)
 te.end_fill()
 Moveto(390, 462)
 te.begin_fill()
-curveto_r(10, -23, 34, -180, 35, -222)  # !!!227
-curveto_r(7, 4, 54, 45, 61, 61)  # 61
+curveto_r(10, -23, 34, -180, 35, -222)
+curveto_r(7, 4, 54, 45, 61, 61)
 smooth_r(-73, 101, -72, 118)
 curveto_r(5, 15, 31, 46, 31, 45)
 Lineto(390, 462)
 te.end_fill()
-# Layer_4
-te.color("black", "#2b1d29")  # Inside the jacket
+te.color("black", "#2b1d29")
 Moveto(225, 462)
 te.begin_fill()
 curveto_r(-28, -50, -40, -166, -40, -250)
@@ -261,8 +256,7 @@ smooth_r(50, -10, 51, -85)
 curveto_r(0, 29, -25, 201, -36, 225)
 Lineto(225, 462)
 te.end_fill()
-# Layer_5
-te.color("black", "#3D3D3D")  # Clothes
+te.color("black", "#3D3D3D")
 Moveto(225, 462)
 te.begin_fill()
 curveto_r(-5, -5, -22, -53, -23, -70)
@@ -279,8 +273,7 @@ smooth_r(23, 4, 25, 6)
 smooth_r(-17, 83, -17, 78)
 Lineto(225, 462)
 te.end_fill()
-# Layer_6
-te.color("black", "#968281")  # Neck
+te.color("black", "#968281")
 Moveto(262, 329)
 te.begin_fill()
 vertical(17)
@@ -293,11 +286,10 @@ lineto(36, -14)
 curveto_r(1, -1, 3, -16, 2, -17)
 Curveto(318, 348, 296, 344, 262, 329)
 te.end_fill()
-# Layer_8
-te.color("black", "#E7F1FF")  # White folds
+te.color("black", "#E7F1FF")
 Moveto(225, 462)
 te.begin_fill()
-lineto(-3, -5)  # -3,-3,-3,-5
+lineto(-3, -5)
 curveto_r(0, -2, 4, -4, 5, -6)
 smooth_r(16, 3, 19, -8)
 smooth_r(0, -7, 0, -11)
@@ -323,8 +315,7 @@ smooth_r(0, 9, 3, 12)
 Moveto(372, 462)
 curveto_r(-2, -4, -5, -29, -7, -28)
 te.pensize(1)
-# Layer_7
-te.color("black", "#A2B8D6")  # Collar
+te.color("black", "#A2B8D6")
 Moveto(262, 331)
 te.begin_fill()
 curveto_r(0, 8, -1, 13, 0, 15)
@@ -348,8 +339,7 @@ Moveto(262, 346)
 lineto(-12, -6)
 Moveto(369, 333)
 curveto_r(2, 4, -6, 10, -15, 14)
-# Layer_9
-te.color("black", "#151515")  # Tie
+te.color("black", "#151515")
 Moveto(247, 358)
 te.begin_fill()
 curveto_r(-5, 3, -8, 20, -6, 23)
@@ -368,8 +358,7 @@ curveto_r(-18, -2, -49, 15, -52, 17)
 smooth_r(-11, -3, -15, -1)
 Smooth(252, 356, 247, 358)
 te.end_fill()
-# Layer_10
-te.color("black", "#A2B8D6")  # Collar (through bow tie)
+te.color("black", "#A2B8D6")
 Moveto(297, 387)
 te.begin_fill()
 lineto(-11, 6)
@@ -383,8 +372,7 @@ lineto(30, -14)
 curveto_r(1, -1, 5, -6, 4, -7)
 Smooth(329, 379, 323, 384)
 te.end_fill()
-# Layer_11
-te.color("black", "#F3EEEB")  # Face
+te.color("black", "#F3EEEB")
 Moveto(185, 212)
 te.begin_fill()
 curveto_r(4, -9, 46, -77, 52, -75)
@@ -396,8 +384,7 @@ curveto_r(-50, 28, -70, 30, -85, 30)
 smooth_r(-77, -22, -86, -26)
 Curveto(180, 302, 186, 228, 185, 212)
 te.end_fill()
-# Layer_12
-te.color("black", "#2B1D29")  # Hair
+te.color("black", "#2B1D29")
 Moveto(189, 202)
 te.begin_fill()
 curveto_r(-1, 22, 19, 51, 19, 51)
@@ -433,15 +420,13 @@ te.begin_fill()
 polyline(349, 180, 353, 203, 361, 203)
 polyline(361, 203, 362, 188, 349, 180)
 te.end_fill()
-# Layer_13
 te.pensize(2)
-Moveto(210, 180)  # Eyebrows
+Moveto(210, 180)
 curveto_r(5, -4, 63, 9, 63, 14)
 Moveto(338, 193)
 curveto_r(0, -3, 18, -6, 18, -6)
 te.pensize(1)
-# Layer_14
-te.color("black", "#D1D1D1")  # Eye 1
+te.color("black", "#D1D1D1")
 te.pensize(2)
 Moveto(206, 212)
 te.begin_fill()
@@ -469,8 +454,7 @@ te.pencolor("black")
 te.pensize(2)
 Lineto(384, 204)
 te.end_fill()
-# Layer_15
-te.color("#0C1631", "#0C1631")  # Eye 2
+te.color("#0C1631", "#0C1631")
 te.pensize(1)
 Moveto(216, 206)
 te.begin_fill()
@@ -487,8 +471,7 @@ smooth_r(6, -24, 4, -27)
 lineto(-11, -8)
 Curveto(382, 204, 357, 206, 354, 207)
 te.end_fill()
-# Layer_17
-te.color("#F5F5F5", "#F5F5F5")  # Eye 3
+te.color("#F5F5F5", "#F5F5F5")
 Moveto(253, 211)
 te.begin_fill()
 curveto_r(-3, 0, -8, 8, 1, 10)
@@ -501,8 +484,7 @@ vertical(4)
 lineto(-4, 2)
 Curveto(386, 214, 392, 209, 392, 209)
 te.end_fill()
-# Layer_18
-te.color("#352F53", "#352F53")  # Eye 4
+te.color("#352F53", "#352F53")
 Moveto(219, 229)
 te.begin_fill()
 smooth_r(2, -5, 6, -4)
@@ -521,8 +503,7 @@ lineto(-2, 9)
 curveto_r(-12, 3, -29, 0, -32, -2)
 Smooth(357, 227, 357, 227)
 te.end_fill()
-# Layer_19
-te.color("#9A90CB", "#9A90CB")  # Eye 5
+te.color("#9A90CB", "#9A90CB")
 Moveto(227, 231)
 te.begin_fill()
 curveto_r(-6, 0, -5, 5, -3, 8)
@@ -537,13 +518,8 @@ smooth_r(-1, -3, -2, -4)
 smooth_r(-15, 9, -24, -4)
 Curveto(363, 224, 361, 225, 361, 227)
 te.end_fill()
-# Layer_16
-te.pencolor("black")  # Eyes (lines)
+te.pencolor("black")
 te.pensize(3)
-# Moveto(206,213)
-# lineto(14,-8)
-# curveto_r(3,-1,30,0,33,1)
-# lineto(10,6)
 Moveto(225, 215)
 curveto_r(10, 28, 22, 16, 24, 6)
 Moveto(365, 219)
@@ -562,12 +538,9 @@ line(385.5, 210.5, 366.5, 215.5)
 line(384.5, 213.5, 366.5, 218.5)
 line(384.5, 215.5, 367.5, 220.5)
 line(384.5, 218.5, 368.5, 223.5)
-# line(383.5,220.5,368.5,225.5)
 line(382.5, 223.5, 370.5, 227.5)
-# line(381.5,226.5,373.5,229.5)
-# Layer_20
 te.pencolor("black")
-Moveto(309, 270)  # Nose, mouth
+Moveto(309, 270)
 curveto_r(0, 0, 4, 7, 1, 9)
 line(296.5, 307.5, 303.5, 307.5)
 Moveto(315, 307)
