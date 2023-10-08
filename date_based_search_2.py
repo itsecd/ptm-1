@@ -1,8 +1,8 @@
 import argparse
 import datetime
+import os
 from typing import Union
 import numpy
-import os
 import pandas as pd
 
 
