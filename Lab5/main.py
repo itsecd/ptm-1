@@ -9,23 +9,43 @@ Xh = 0
 Yh = 0
 
 
-def Bezier(p1, p2, t):
+def bezier(p1, p2, t):
+    """First order Bessel function
+    :param p1,
+     :param p2
+      :param t"""
     return p1 * (1 - t) + p2 * t
 
 
-def Bezier_2(x1, y1, x2, y2, x3, y3):
+def bezier_2(x1, y1, x2, y2, x3, y3):
+    """Second-order Bessel function
+       :param x1
+       :param y1
+        :param x2
+         :param y2
+          :param x3
+           :param y3"""
     te.goto(x1, y1)
     te.pendown()
     for t in range(0, WriteStep + 1):
-        x = Bezier(Bezier(x1, x2, t / WriteStep),
-                   Bezier(x2, x3, t / WriteStep), t / WriteStep)
-        y = Bezier(Bezier(y1, y2, t / WriteStep),
-                   Bezier(y2, y3, t / WriteStep), t / WriteStep)
+        x = bezier(bezier(x1, x2, t / WriteStep),
+                   bezier(x2, x3, t / WriteStep), t / WriteStep)
+        y = bezier(bezier(y1, y2, t / WriteStep),
+                   bezier(y2, y3, t / WriteStep), t / WriteStep)
         te.goto(x, y)
     te.penup()
 
 
-def Bezier_3(x1, y1, x2, y2, x3, y3, x4, y4):
+def bezier_3(x1, y1, x2, y2, x3, y3, x4, y4):
+    """Third-order bessel function
+          :param x1
+           :param y1
+            :param x2
+             :param y2
+              :param x3
+               :param y3
+                :param x4
+                :param y4"""
     x1 = -Width / 2 + x1
     y1 = Height / 2 - y1
     x2 = -Width / 2 + x2
@@ -37,20 +57,28 @@ def Bezier_3(x1, y1, x2, y2, x3, y3, x4, y4):
     te.goto(x1, y1)
     te.pendown()
     for t in range(0, WriteStep + 1):
-        x = Bezier(Bezier(Bezier(x1, x2, t / WriteStep), Bezier(x2, x3, t / WriteStep), t / WriteStep),
-                   Bezier(Bezier(x2, x3, t / WriteStep), Bezier(x3, x4, t / WriteStep), t / WriteStep), t / WriteStep)
-        y = Bezier(Bezier(Bezier(y1, y2, t / WriteStep), Bezier(y2, y3, t / WriteStep), t / WriteStep),
-                   Bezier(Bezier(y2, y3, t / WriteStep), Bezier(y3, y4, t / WriteStep), t / WriteStep), t / WriteStep)
+        x = bezier(bezier(bezier(x1, x2, t / WriteStep), bezier(x2, x3, t / WriteStep), t / WriteStep),
+                   bezier(bezier(x2, x3, t / WriteStep), bezier(x3, x4, t / WriteStep), t / WriteStep), t / WriteStep)
+        y = bezier(bezier(bezier(y1, y2, t / WriteStep), bezier(y2, y3, t / WriteStep), t / WriteStep),
+                   bezier(bezier(y2, y3, t / WriteStep), bezier(y3, y4, t / WriteStep), t / WriteStep), t / WriteStep)
         te.goto(x, y)
     te.penup()
 
 
 def Moveto(x, y):
+    """Move to svg coordinates (x, y)
+              :param x
+               :param y"""
     te.penup()
     te.goto(-Width / 2 + x, Height / 2 - y)
 
 
 def line(x1, y1, x2, y2):
+    """Connect two points under svg coordinates
+                 :param x1
+                  :param y1
+                  :param x2
+                  :param y2"""
     te.penup()
     te.goto(-Width / 2 + x1, Height / 2 - y1)
     te.pendown()
@@ -59,24 +87,34 @@ def line(x1, y1, x2, y2):
 
 
 def lineto(dx, dy):
+    """Connect the current point and the point with relative coordinates (dx, dy)
+                 :param dx
+                  :param dy"""
     te.pendown()
     te.goto(te.xcor() + dx, te.ycor() - dy)
     te.penup()
 
 
 def Lineto(x, y):
+    """Connect the current point and svg coordinates (x, y)
+                     :param x
+                      :param y"""
     te.pendown()
     te.goto(-Width / 2 + x, Height / 2 - y)
     te.penup()
 
 
 def Horizontal(x):
+    """Make the horizontal line with the abscissa x in the svg coordinates
+                         :param x"""
     te.pendown()
     te.setx(x - Width / 2)
     te.penup()
 
 
 def horizontal(dx):
+    """Make the horizontal line with relative abscissa dx
+                             :param dx"""
     te.seth(0)
     te.pendown()
     te.fd(dx)
@@ -84,6 +122,8 @@ def horizontal(dx):
 
 
 def vertical(dy):
+    """Make the vertical line with the relative ordinate dy
+                               :param dy"""
     te.seth(-90)
     te.pendown()
     te.fd(dy)
@@ -92,6 +132,13 @@ def vertical(dy):
 
 
 def polyline(x1, y1, x2, y2, x3, y3):
+    """Make a polyline under svg coordinates
+                                   :param x1
+                                   :param y1
+                                   :param x2
+                                   :param y2
+                                   :param x3
+                                   :param y3"""
     te.penup()
     te.goto(-Width / 2 + x1, Height / 2 - y1)
     te.pendown()
@@ -101,10 +148,17 @@ def polyline(x1, y1, x2, y2, x3, y3):
 
 
 def Curveto(x1, y1, x2, y2, x, y):
+    """Third-order Bezier curve to (x, y)
+                                       :param x1
+                                       :param y1
+                                       :param x2
+                                       :param y2
+                                       :param x
+                                       :param y"""
     te.penup()
     X_now = te.xcor() + Width / 2
     Y_now = Height / 2 - te.ycor()
-    Bezier_3(X_now, Y_now, x1, y1, x2, y2, x, y)
+    bezier_3(X_now, Y_now, x1, y1, x2, y2, x, y)
     global Xh
     global Yh
     Xh = x - x2
@@ -112,10 +166,17 @@ def Curveto(x1, y1, x2, y2, x, y):
 
 
 def curveto_r(x1, y1, x2, y2, x, y):
+    """Third-order Bezier curve to relative coordinates (x, y)
+                                           :param x1
+                                           :param y1
+                                           :param x2
+                                           :param y2
+                                           :param x
+                                           :param y"""
     te.penup()
     X_now = te.xcor() + Width / 2
     Y_now = Height / 2 - te.ycor()
-    Bezier_3(X_now, Y_now, X_now + x1, Y_now + y1,
+    bezier_3(X_now, Y_now, X_now + x1, Y_now + y1,
              X_now + x2, Y_now + y2, X_now + x, Y_now + y)
     global Xh
     global Yh
@@ -124,23 +185,33 @@ def curveto_r(x1, y1, x2, y2, x, y):
 
 
 def Smooth(x2, y2, x, y):
+    """Smooth the third-order Bezier curve to (x, y)
+                                               :param x2
+                                               :param y2
+                                               :param x
+                                               :param y"""
     global Xh
     global Yh
     te.penup()
     X_now = te.xcor() + Width / 2
     Y_now = Height / 2 - te.ycor()
-    Bezier_3(X_now, Y_now, X_now + Xh, Y_now + Yh, x2, y2, x, y)
+    bezier_3(X_now, Y_now, X_now + Xh, Y_now + Yh, x2, y2, x, y)
     Xh = x - x2
     Yh = y - y2
 
 
 def smooth_r(x2, y2, x, y):
+    """Smooth the third-order bezier curve to relative coordinates (x, y)
+                                                  :param x2
+                                                  :param y2
+                                                  :param x
+                                                  :param y"""
     global Xh
     global Yh
     te.penup()
     X_now = te.xcor() + Width / 2
     Y_now = Height / 2 - te.ycor()
-    Bezier_3(X_now, Y_now, X_now + Xh, Y_now + Yh,
+    bezier_3(X_now, Y_now, X_now + Xh, Y_now + Yh,
              X_now + x2, Y_now + y2, X_now + x, Y_now + y)
     Xh = x - x2
     Yh = y - y2
