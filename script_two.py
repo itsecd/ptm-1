@@ -8,9 +8,13 @@ from tqdm.notebook import tqdm_notebook
 
 FILE_NAME = "test_csv.csv"
 SECOND_FILE_NAME = "test_csv_two.csv"
+DATASET_TWO = "dataset_two"
+ABSOLUTE_PATH = "adsolut_path"
+RELATIVE_PATH = "relative_path"
+QUOTE = "quote"
 
 
-def script_two(path_dir: str) -> None:
+def process_file(path_dir: str) -> None:
     """The function is designed to process a CSV file.
 
     Args:
@@ -20,13 +24,13 @@ def script_two(path_dir: str) -> None:
     os.chdir(path_dir)
     with open(SECOND_FILE_NAME, mode="w") as w_file:
         writer = csv.writer(w_file, dialect="excel", delimiter=",", lineterminator="\r")
-        writer.writerow(("absolut path", "relativ path", "quote"))
+        writer.writerow((ABSOLUTE_PATH, RELATIVE_PATH, QUOTE))
     if not os.path.isfile(FILE_NAME):   first_script.first_script(path_dir)
-    with open("test_csv.csv", "r") as csv_file:
+    with open(FILE_NAME, "r") as csv_file:
         reader = csv.reader(csv_file)
         list = list(reader)
-        if not os.path.isdir("dataset_two"):
-            os.makedirs("dataset_two")
+        if not os.path.isdir(DATASET_TWO):
+            os.makedirs(DATASET_TWO)
         pbar = tqdm(list, ncols=100, colour="green")
         content = False
         for element in pbar:
@@ -37,11 +41,11 @@ def script_two(path_dir: str) -> None:
                     text = f.read()
                     namefile = element[1].split("/")
                 os.chdir(path_dir)
-                with open(os.path.join("dataset_two", element[2] + "_" + namefile[2]), "wb") as f:
+                with open(os.path.join(DATASET_TWO, element[2] + "_" + namefile[2]), "wb") as f:
                     f.write(text)
                 with open(SECOND_FILE_NAME, mode="a") as w_file:
                     writer = csv.writer(w_file, dialect="excel", delimiter=",", lineterminator="\r")
-                    writer.writerow([path_dir + "/dataset_two/" + element[2] + "_" + namefile[2],
-                                     path_dir + "dataset_two/" + element[2] + "_" + namefile[2], element[2]])
+                    writer.writerow([path_dir + DATASET_TWO + element[2] + "_" + namefile[2],
+                                     path_dir + DATASET_TWO + element[2] + "_" + namefile[2], element[2]])
 
             content = True

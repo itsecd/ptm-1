@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1)  AppleWebKit/537.36 (KHTML, like Gecko)"
                   "Chrome/39.0.2171.95 Safari/537.36"}
+MAX_QOUTES = 1000
+RATING = [1.5, 2.5, 3.5, 4.5, 5]
 
 
 def main():
@@ -54,36 +56,36 @@ def main():
                 continue
             print(i, min_length, len(authors), len(names), len(texts), new_quotes)
             rating = float(new_quotes[0])
-            if 4.5 <= rating <= 5:
+            if RATING[3] <= rating <= RATING[4]:
                 quotes_5 = quotes_5 + 1
-                if quotes_5 >= 1000:
+                if quotes_5 >= MAX_QOUTES:
                     continue
                 file_name = str(quotes_5).zfill(4)
                 with open("dataset/" + "5" + "/" + file_name + ".txt", "w+", encoding="utf-8") as file:
                     file.write("Оценка: " + str(rating) + "\n" + "Название: " + names[0].text + "\n" + "Автор книги: " +
                                authors[0].text + '\n' + "Рецензия:" + "\n" + texts[0].text)
                 number_elem = number_elem + 1
-            elif 3.5 <= rating < 4.5:
+            elif RATING[2] <= rating < RATING[3]:
                 quotes_4 = quotes_4 + 1
-                if quotes_4 >= 1000:
+                if quotes_4 >= MAX_QOUTES:
                     continue
                 file_name = str(quotes_4).zfill(4)
                 with open("dataset/" + "4" + "/" + file_name + ".txt", "w+", encoding="utf-8") as file:
                     file.write("Оценка: " + str(rating) + "\n" + "Название: " + names[0].text + "\n" + "Автор книги: " +
                                authors[0].text + "\n" + "Рецензия:" + "\n" + texts[0].text)
                 number_elem = number_elem + 1
-            elif 2.5 <= rating < 3.5:
+            elif RATING[1] <= rating < RATING[2]:
                 quotes_3 = quotes_3 + 1
-                if quotes_3 >= 1000:
+                if quotes_3 >= MAX_QOUTES:
                     continue
                 file_name = str(quotes_3).zfill(4)
                 with open("dataset/" + "3" + "/" + file_name + ".txt", "w+", encoding="utf-8") as file:
                     file.write("Оценка: " + str(rating) + "\n" + "Название: " + names[0].text + "\n" + "Автор книги: " +
                                authors[0].text + "\n" + "Рецензия:" + "\n" + texts[0].text)
                 number_elem = number_elem + 1
-            elif 1.5 <= rating < 2.5:
+            elif RATING[0] <= rating < RATING[1]:
                 quotes_2 = quotes_2 + 1
-                if quotes_2 >= 1000:
+                if quotes_2 >= MAX_QOUTES:
                     continue
                 file_name = str(quotes_2).zfill(4)
                 with open("dataset/" + "2" + "/" + file_name + ".txt", "w+", encoding="utf-8") as file:
@@ -92,7 +94,7 @@ def main():
                 number_elem = number_elem + 1
             else:
                 quotes_1 = quotes_1 + 1
-                if quotes_1 >= 1000:
+                if quotes_1 >= MAX_QOUTES:
                     continue
                 file_name = str(quotes_1).zfill(4)
                 with open("dataset/" + "1" + '/' + file_name + ".txt", "w+", encoding="utf-8") as file:
