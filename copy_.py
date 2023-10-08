@@ -16,7 +16,8 @@ def copy_dataset(directory_obj: str, c_directory_obj: str, name: str) -> None:
         os.makedirs(c_directory_obj1)
     data = os.listdir(directory_obj)
     for i in tqdm.tqdm(data):
-        shutil.copy(directory_obj + "\\" + i, c_directory_obj1 + "\\"+ name + "_" + i)
+        shutil.copy(directory_obj + "\\" + i,
+                    c_directory_obj1 + "\\" + name + "_" + i)
     write_csv_copy(directory_obj, c_directory_obj1, name)
 
 
@@ -31,14 +32,20 @@ def write_csv_copy(directory_obj: str, c_directory_obj: str, name: str) -> None:
     r_directory_obj = "dataset_2"
     file = f"{c_directory_obj}copy.csv"
     with open(file, "a", encoding="utf-8", newline="") as f:
-        f_writer = csv.DictWriter(f, fieldnames=["Absolut_path", "Relative_patch", "Class"], delimiter="|")
+        f_writer = csv.DictWriter(f,
+                                  fieldnames=["Absolut_path",
+                                              "Relative_patch",
+                                              "Class"],
+                                  delimiter="|")
         for i in data:
-            f_writer.writerow({"Absolut_path": c_directory_obj + "\\" + name + "_" + i, "Relative_patch":  r_directory_obj + "\\" + name + "_" + i, "Class": name})   
+            f_writer.writerow({"Absolut_path": c_directory_obj + "\\" + name + "_" + i,
+                               "Relative_patch":  r_directory_obj + "\\" + name + "_" + i,
+                               "Class": name})
 
 
 def main() -> None:
     """Separates code blocks."""
-    c_directory =  "D:\Lab Python\\"   
+    c_directory = "D:\Lab Python\\"
     directory_rose = "D:\Lab Python\Lab_1\dataset\ rose"
     directory_tulip = "D:\Lab Python\Lab_1\dataset\ tulip"
     copy_dataset(directory_rose, c_directory, "rose")
@@ -46,5 +53,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-	main()  
-   
+    main()
