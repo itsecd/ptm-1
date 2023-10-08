@@ -2,7 +2,7 @@ import csv
 import os
 
 
-def write_csv(directory_obj: str, file: str, name: str):
+def write_csv(directory_obj: str, file: str, name: str) -> None:
     """Writes the absolute and relative path of the image to csv, return NONE.
     Args:
         directory_obj (str): full path to the folder.
@@ -18,7 +18,7 @@ def write_csv(directory_obj: str, file: str, name: str):
         f_writer.writerow({"Absolut_path": directory_obj + "\\" + i, "Relative_patch":  r_directory_obj + "\\" + name + "\\" + i, "Class": name})
 
 
-def main():
+def main() -> None:
     """Separates code blocks."""
     directory_rose = "D:\Lab Python\Lab_1\dataset\ rose"
     directory_tulip = "D:\Lab Python\Lab_1\dataset\ tulip"

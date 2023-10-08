@@ -2,7 +2,7 @@ import csv
 
 
 class Iterator:
-    def __init__(self, directory: str, name: str):
+    def __init__(self, directory: str, name: str) -> None:
         """Сonstructor of the class object, return NONE.
         Args:
             directory (str): full path to the folder.
@@ -22,11 +22,11 @@ class Iterator:
     def __iter__(self):
         """Return iterator object.
         Returns:
-            self: iterstor object.
+            self: iterator object.
         """
         return self
 
-    def __next__(self):
+    def __next__(self) -> str:
         """Return the next element in the sequence.
         Raises:
             StopIteration: stopping the iterator.
@@ -40,7 +40,7 @@ class Iterator:
             raise StopIteration
 
 
-def main():
+def main() -> None:
     """Separates code blocks."""
     s = Iterator("D:\Lab Python\dataset_2copy.csv", "rose")
     print(type(next(s)))

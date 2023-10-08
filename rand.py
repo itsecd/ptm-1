@@ -5,7 +5,7 @@ import shutil
 import tqdm
 
 
-def copy_dataset(directory_obj: str, c_directory_obj: str, name: str):
+def copy_dataset(directory_obj: str, c_directory_obj: str, name: str) -> None:
     """Copies all files from one folder to another, return NONE.
     Args:
         directory_obj (str): the path of the source folder.
@@ -36,7 +36,7 @@ def copy_dataset(directory_obj: str, c_directory_obj: str, name: str):
     write_csv_copy(c_directory_obj1, name, copy_list)
 
 
-def write_csv_copy(c_directory_obj: str, name: str, copy_list: list):
+def write_csv_copy(c_directory_obj: str, name: str, copy_list: list) -> None:
     """Writes the absolute and relative path of the image to csv, return NONE.
     Args:
         c_directory_obj (str): folder path to copy.
@@ -51,7 +51,7 @@ def write_csv_copy(c_directory_obj: str, name: str, copy_list: list):
         f_writer.writerow({"Absolut_path": c_directory_obj + "\\" + i, "Relative_patch":  r_directory_obj + "\\" + i, "Class": name})
 
 
-def main():
+def main() -> None:
     """Separates code blocks."""
     c_directory = "D:\Lab Python\\"
     directory_rose = "D:\Lab Python\Lab_1\dataset\ rose"

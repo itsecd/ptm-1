@@ -10,7 +10,7 @@ import write_csv
 
 
 class Interface(QMainWindow):
-    def __init__(self):
+    def __init__(self) -> None:
         super(Interface, self).__init__()
         self.setWindowTitle("ROSE and TULIP")
         self.move(700, 200)
@@ -38,7 +38,7 @@ class Interface(QMainWindow):
         self.button4.clicked.connect(self.click_img)
         self.button4.adjustSize()
         
-    def click_csv(self):
+    def click_csv(self) -> None:
         if not self.w_text.text():
             self.w = New_Interface()
             self.w.new_path()
@@ -53,7 +53,7 @@ class Interface(QMainWindow):
         directory = f"{self.w_text.text()} tulip" 
         write_csv.write_csv(directory, self.d_text, "tulip")   
 
-    def click_copy(self):
+    def click_copy(self) -> None:
         if not self.w_text.text():
             self.w = New_Interface()
             self.w.new_path()
@@ -68,7 +68,7 @@ class Interface(QMainWindow):
             directory = f"{self.w_text.text()} tulip" 
             copy_.copy_dataset(directory, self.d_text, "tulip")
     
-    def click_rand(self):
+    def click_rand(self) -> None:
         if not self.w_text.text():
             self.w = New_Interface()
             self.w.new_path()
@@ -83,18 +83,18 @@ class Interface(QMainWindow):
             directory = f"{self.w_text.text()} tulip" 
             rand.copy_dataset(directory, self.d_text, "tulip")
    
-    def click_img(self):
+    def click_img(self) -> None:
         self.w = New_Interface()
         self.w.img()
 
 
 class New_Interface(QMainWindow):
-    def __init__(self):
+    def __init__(self) -> None:
         super(New_Interface, self).__init__()
         self.label = QtWidgets.QLabel(self)
         self.setCentralWidget(self.label)
     
-    def new_path(self):
+    def new_path(self) -> None:
         self.setWindowTitle("Предупреждение")
         self.move(700, 200)
         self.resize(300, 150)
@@ -103,7 +103,7 @@ class New_Interface(QMainWindow):
         self.wtext.adjustSize()
         self.show()
     
-    def not_path(self):
+    def not_path(self) -> None:
         self.setWindowTitle("Предупреждение")
         self.move(700, 200)
         self.resize(300, 150)
@@ -112,7 +112,7 @@ class New_Interface(QMainWindow):
         self.wtext.adjustSize()
         self.show()   
     
-    def img(self):
+    def img(self) -> None:
         self.setWindowTitle("Изображения")
         self.move(700, 200)
         self.resize(500, 400)
@@ -128,14 +128,14 @@ class New_Interface(QMainWindow):
         self.tulip = iter.Iterator("D:\Lab Python\dataset_2copy.csv", "tulip")
         self.show()
     
-    def click_rose(self):
+    def click_rose(self) -> None:
         self.pixmap = QPixmap(next(self.rose))
         self.label.setPixmap(self.pixmap)
         self.setCentralWidget(self.label) 
         self.label.resize(self.pixmap.width(), self.pixmap.height())
         self.show()
     
-    def click_tulip(self):
+    def click_tulip(self) -> None:
         self.pixmap = QPixmap(next(self.tulip))
         self.label.setPixmap(self.pixmap)
         self.setCentralWidget(self.label) 
@@ -143,7 +143,7 @@ class New_Interface(QMainWindow):
         self.show()
 
 
-def main():
+def main() -> None:
     """Separates code blocks."""
     app = QApplication(sys.argv)
     w = Interface()
