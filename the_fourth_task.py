@@ -48,4 +48,3 @@ def search_tuple(search) -> None:
     search_all = tuple()
     search_all += search
     print("Comon", search)
-    
