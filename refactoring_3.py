@@ -1,7 +1,6 @@
+import argparse
 import pandas as pd
 
-
-FILE = "C:/Users/artyo/Desktop/dataset.csv"
 
 def formatted_file(input_file: str) -> pd.DataFrame:
     """
@@ -100,4 +99,10 @@ def write_to_file(input_file: str) -> None:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Process data files")
+    parser.add_argument("--file", help="Path to the CSV file", required=True)
+
+    args = parser.parse_args()
+
+    FILE = args.file
     write_to_file(FILE)

@@ -1,18 +1,10 @@
+import argparse
 import datetime
 from typing import Union
 import numpy
 import os
 import pandas as pd
 
-
-
-FILE = "C:/Users/artyo/Desktop/dataset.csv"
-FILE_X = "C:/Users/artyo/PycharmProjects/labs/lab2/1/X.csv"
-FILE_Y = "C:/Users/artyo/PycharmProjects/labs/lab2/1/Y.csv"
-DIRECTORY_FOR_WEEKS = "C:/Users/artyo/PycharmProjects/labs/lab2/3/"
-DIRECTORY_FOR_YEARS = "C:/Users/artyo/PycharmProjects/labs/lab2/2/"
-EXISTING_DATE = datetime.date(2022, 9, 15)
-NONEXISTENT_DATE = datetime.date(1991, 5, 12)
 
 def formatted_file(input_file: str) -> pd.DataFrame:
     """
@@ -113,6 +105,25 @@ def tuple_for_next_data(input_directory: str) -> tuple:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Process data files")
+    parser.add_argument("--file", help="Path to the CSV file", required=True)
+    parser.add_argument("--file_x", help="Path to the CSV file X", required=True)
+    parser.add_argument("--file_y", help="Path to the CSV file Y", required=True)
+    parser.add_argument("--dir_weeks", help="Path to directory with weekly data", required=True)
+    parser.add_argument("--dir_years", help="Path to directory with yearly data", required=True)
+    parser.add_argument("--existing_date", help="Date for existing data (YYYY-MM-DD)", required=True)
+    parser.add_argument("--nonexistent_date", help="Date for nonexistent data (YYYY-MM-DD)", required=True)
+
+    args = parser.parse_args()
+
+    FILE = args.file
+    FILE_X = args.file_x
+    FILE_Y = args.file_y
+    DIRECTORY_FOR_WEEKS = args.dir_weeks
+    DIRECTORY_FOR_YEARS = args.dir_years
+    EXISTING_DATE = datetime.datetime.strptime(args.existing_date, "%Y-%m-%d").date()
+    NONEXISTENT_DATE = datetime.datetime.strptime(args.nonexistent_date, "%Y-%m-%d").date()
+
     try:
         print(get_data(FILE, EXISTING_DATE))
         print(get_data(FILE, NONEXISTENT_DATE))
