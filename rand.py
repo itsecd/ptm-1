@@ -6,11 +6,11 @@ import tqdm
 
 
 def copy_dataset(directory_obj: str, c_directory_obj: str, name: str) -> None:
-    """Copies all files from one folder to another, return NONE.
+    """Copies all files from one folder to another.
     Args:
-        directory_obj (str): the path of the source folder.
-        c_directory_obj (str): folder path to copy.
-        name (str): object class.
+        directory_obj (str): The path of the source folder.
+        c_directory_obj (str): Folder path to copy.
+        name (str): Object class.
     """
     c_directory_obj1 = f"{c_directory_obj}dataset_3"
     if not os.path.isdir(c_directory_obj1):
@@ -37,11 +37,11 @@ def copy_dataset(directory_obj: str, c_directory_obj: str, name: str) -> None:
 
 
 def write_csv_copy(c_directory_obj: str, name: str, copy_list: list) -> None:
-    """Writes the absolute and relative path of the image to csv, return NONE.
+    """Writes the absolute and relative path of the image to csv.
     Args:
-        c_directory_obj (str): folder path to copy.
-        name (str): object class.
-        copy_list (list): numbers of copied objects.
+        c_directory_obj (str): Folder path to copy.
+        name (str): Object class.
+        copy_list (list): Numbers of copied objects.
     """
     file = f"{c_directory_obj}rand.csv"
     f = open(file, "a", encoding="utf-8", newline="")

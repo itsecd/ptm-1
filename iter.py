@@ -3,10 +3,10 @@ import csv
 
 class Iterator:
     def __init__(self, directory: str, name: str) -> None:
-        """Сonstructor of the class object, return NONE.
+        """Initializes an object of the class.
         Args:
-            directory (str): full path to the folder.
-            name (str): object class.
+            directory (str): Full path to the folder.
+            name (str): Object class.
         """
         self.directory = directory
         self.name = name
@@ -22,16 +22,16 @@ class Iterator:
     def __iter__(self):
         """Return iterator object.
         Returns:
-            self: iterator object.
+            self: Iterator object.
         """
         return self
 
     def __next__(self) -> str:
         """Return the next element in the sequence.
         Raises:
-            StopIteration: stopping the iterator.
+            StopIteration: Stopping the iterator.
         Returns:
-           str: patch to the file.
+           str: Patch to the file.
         """
         if self.count < len(self.read_list):
             self.count += 1

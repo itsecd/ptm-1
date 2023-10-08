@@ -11,6 +11,8 @@ import write_csv
 
 class Interface(QMainWindow):
     def __init__(self) -> None:
+        """Initializates of the application window.
+        """
         super(Interface, self).__init__()
         self.setWindowTitle("ROSE and TULIP")
         self.move(700, 200)
@@ -39,6 +41,8 @@ class Interface(QMainWindow):
         self.button4.adjustSize()
         
     def click_csv(self) -> None:
+        """Сreates a csv file with an annotation.
+        """
         if not self.w_text.text():
             self.w = New_Interface()
             self.w.new_path()
@@ -54,6 +58,8 @@ class Interface(QMainWindow):
         write_csv.write_csv(directory, self.d_text, "tulip")   
 
     def click_copy(self) -> None:
+        """Copies the dataset to another directory.
+        """
         if not self.w_text.text():
             self.w = New_Interface()
             self.w.new_path()
@@ -69,6 +75,8 @@ class Interface(QMainWindow):
             copy_.copy_dataset(directory, self.d_text, "tulip")
     
     def click_rand(self) -> None:
+        """Copies the dataset to another directory and replaces the file name with a random one.
+        """
         if not self.w_text.text():
             self.w = New_Interface()
             self.w.new_path()
@@ -84,17 +92,23 @@ class Interface(QMainWindow):
             rand.copy_dataset(directory, self.d_text, "tulip")
    
     def click_img(self) -> None:
+        """Displays picture on the screen.
+        """
         self.w = New_Interface()
         self.w.img()
 
 
 class New_Interface(QMainWindow):
     def __init__(self) -> None:
+        """Initializes the second application window.
+        """
         super(New_Interface, self).__init__()
         self.label = QtWidgets.QLabel(self)
         self.setCentralWidget(self.label)
     
     def new_path(self) -> None:
+        """Warns that the path to the dataset is not specified.
+        """
         self.setWindowTitle("Предупреждение")
         self.move(700, 200)
         self.resize(300, 150)
@@ -104,6 +118,8 @@ class New_Interface(QMainWindow):
         self.show()
     
     def not_path(self) -> None:
+        """Warns that the dataset on the specified path does not exist.
+        """
         self.setWindowTitle("Предупреждение")
         self.move(700, 200)
         self.resize(300, 150)
@@ -113,6 +129,8 @@ class New_Interface(QMainWindow):
         self.show()   
     
     def img(self) -> None:
+        """Displays picture on the screen.
+        """
         self.setWindowTitle("Изображения")
         self.move(700, 200)
         self.resize(500, 400)
@@ -129,6 +147,8 @@ class New_Interface(QMainWindow):
         self.show()
     
     def click_rose(self) -> None:
+        """Displays picture "rose" on the screen.
+        """
         self.pixmap = QPixmap(next(self.rose))
         self.label.setPixmap(self.pixmap)
         self.setCentralWidget(self.label) 
@@ -136,6 +156,8 @@ class New_Interface(QMainWindow):
         self.show()
     
     def click_tulip(self) -> None:
+        """Displays picture "tulip" on the screen.
+        """
         self.pixmap = QPixmap(next(self.tulip))
         self.label.setPixmap(self.pixmap)
         self.setCentralWidget(self.label) 

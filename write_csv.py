@@ -3,11 +3,11 @@ import os
 
 
 def write_csv(directory_obj: str, file: str, name: str) -> None:
-    """Writes the absolute and relative path of the image to csv, return NONE.
+    """Writes the absolute and relative path of the image to csv.
     Args:
-        directory_obj (str): full path to the folder.
-        file (str): the path to the file to save.
-        name (str): object class.
+        directory_obj (str): Full path to the folder.
+        file (str): The path to the file to save.
+        name (str): Object class.
     """
     file = f"{file}annotation.csv"
     f = open(file, "a", encoding="utf-8", newline="")
