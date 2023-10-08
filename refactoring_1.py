@@ -1,9 +1,10 @@
 import datetime
+import time
+from typing import Union
 import numpy
 import os
 import pandas as pd
-import time
-from typing import Union
+
 
 
 FILE = "C:/Users/artyo/Desktop/dataset.csv"

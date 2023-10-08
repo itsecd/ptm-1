@@ -1,8 +1,9 @@
 import datetime
+from typing import Union
 import numpy
 import os
 import pandas as pd
-from typing import Union
+
 
 
 FILE = "C:/Users/artyo/Desktop/dataset.csv"
