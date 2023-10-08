@@ -148,7 +148,14 @@ if __name__ == "__main__":
         print(get_data(FILE, NONEXISTENT_DATE))
         print(get_data_xy(FILE_X, FILE_Y, EXISTING_DATE))
         print(get_data_xy(FILE_X, FILE_Y, NONEXISTENT_DATE))
+        t1 = time.time()
+        print(get_data_from_week_and_years_new(DIRECTORY_FOR_WEEKS, EXISTING_DATE))
+        t2 = time.time()
         print(get_data_from_week_and_years(DIRECTORY_FOR_WEEKS, EXISTING_DATE))
+        t3 = time.time()
+        dt1 = t3-t2
+        dt2 = t2-t1
+        print(dt1, dt2, dt1/dt2)
         print(get_data_from_week_and_years(DIRECTORY_FOR_WEEKS, NONEXISTENT_DATE))
         print(get_data_from_week_and_years(DIRECTORY_FOR_YEARS, EXISTING_DATE))
         print(get_data_from_week_and_years(DIRECTORY_FOR_YEARS, NONEXISTENT_DATE))
@@ -157,4 +164,3 @@ if __name__ == "__main__":
             print(next(it))
     except FileNotFoundError:
         print("No such file exists!")
-        
