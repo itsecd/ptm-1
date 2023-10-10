@@ -1,7 +1,8 @@
 class Yahtzee:
 
     @staticmethod
-    def init_score(dice_1, dice_2, dice_3, dice_4, dice_5):
+    def init_score(dice_1: int, dice_2: int, dice_3: int,
+                   dice_4: int, dice_5: int) -> int:
         """Count and return score
         after the first round
         """
@@ -14,7 +15,7 @@ class Yahtzee:
         return total_score
 
     @staticmethod
-    def check_for_five_identical_dice(dice):
+    def check_for_five_identical_dice(dice: list) -> int:
         """Check if there are
         five identical dice
         among the dice
@@ -29,7 +30,8 @@ class Yahtzee:
         return 0
     
     @staticmethod
-    def check_for_ones(dice_1, dice_2, dice_3, dice_4, dice_5):
+    def check_for_ones(dice_1: int, dice_2: int, dice_3: int,
+                       dice_4: int, dice_5: int) -> int:
         """Check if there are
         several ones dice
         among the dice
@@ -48,7 +50,8 @@ class Yahtzee:
         return sum
     
     @staticmethod
-    def check_for_twos(dice_1, dice_2, dice_3, dice_4, dice_5):
+    def check_for_twos(dice_1: int, dice_2: int, dice_3: int,
+                       dice_4: int, dice_5: int) -> int:
         """Check if there are
         several twos dice
         among the dice
@@ -67,7 +70,8 @@ class Yahtzee:
         return sum
     
     @staticmethod
-    def check_for_threes(dice_1, dice_2, dice_3, dice_4, dice_5):
+    def check_for_threes(dice_1: int, dice_2: int, dice_3: int,
+                         dice_4: int, dice_5: int) -> int:
         """Check if there are
         several threes dice
         among the dice
@@ -85,7 +89,8 @@ class Yahtzee:
             sum += 3
         return sum
 
-    def __init__(self, dice_1, dice_2, dice_3, dice_4, dice_5):
+    def __init__(self, dice_1: int, dice_2: int, dice_3: int,
+                 dice_4: int, dice_5: int) -> None:
         """Constructor of
         an element of the class
         """
@@ -96,7 +101,7 @@ class Yahtzee:
         self.dice[3] = dice_4
         self.dice[4] = dice_5
     
-    def check_for_fours(self):
+    def check_for_fours(self) -> int:
         """Check if there are
         several fours dice
         among the dice
@@ -107,7 +112,7 @@ class Yahtzee:
                 sum += 4
         return sum    
 
-    def check_for_fives(self):
+    def check_for_fives(self) -> int:
         """Check if there are
         several fives dice
         among the dice
@@ -119,7 +124,7 @@ class Yahtzee:
                 sum = sum + 5
         return sum    
 
-    def check_for_sixes(self):
+    def check_for_sixes(self) -> int:
         """Check if there are
         several sixes dice
         among the dice
@@ -131,7 +136,8 @@ class Yahtzee:
         return sum
     
     @staticmethod
-    def check_for_pairs(dice_1, dice_2, dice_3, dice_4, dice_5):
+    def check_for_pairs(dice_1: int, dice_2: int, dice_3: int,
+                        dice_4: int, dice_5: int) -> int:
         """Check if there is
         a pair of dice
         among the dice
@@ -149,7 +155,8 @@ class Yahtzee:
         return 0
     
     @staticmethod
-    def check_for_two_pairs(dice_1, dice_2, dice_3, dice_4, dice_5):
+    def check_for_two_pairs(dice_1: int, dice_2: int, dice_3: int,
+                            dice_4: int, dice_5: int) -> int:
         """Check if there are
         two pairs dice
         among the dice
@@ -173,8 +180,8 @@ class Yahtzee:
             return 0
     
     @staticmethod
-    def check_for_four_identical_dice(dice_1,  dice_2,  dice_3,  
-                                      dice_4,  dice_5):
+    def check_for_four_identical_dice(dice_1: int, dice_2: int, dice_3: int,
+                                      dice_4: int, dice_5: int) -> int:
         """Check if there are
         four identical dice
         among the dice
@@ -191,8 +198,8 @@ class Yahtzee:
         return 0    
 
     @staticmethod
-    def check_for_three_identical_dice(dice_1,  dice_2,  dice_3,
-                                       dice_4,  dice_5):
+    def check_for_three_identical_dice(dice_1: int, dice_2: int, dice_3: int,
+                                       dice_4: int, dice_5: int) -> int:
         """Check if there are
         three identical dice
         among the dice
@@ -209,7 +216,8 @@ class Yahtzee:
         return 0    
 
     @staticmethod
-    def check_for_small_straight(dice_1, dice_2, dice_3, dice_4, dice_5):
+    def check_for_small_straight(dice_1: int, dice_2: int, dice_3: int,
+                                 dice_4: int, dice_5: int) -> int:
         """Check if there are
         1, 2, 3, 4, 5 combination
         among the dice
@@ -229,7 +237,8 @@ class Yahtzee:
         return 0    
 
     @staticmethod
-    def check_for_large_straight(dice_1, dice_2, dice_3, dice_4, dice_5):
+    def check_for_large_straight(dice_1: int, dice_2: int, dice_3: int,
+                                 dice_4: int, dice_5: int) -> int:
         """Check if there are
         2, 3, 4, 5, 6 combination
         among the dice
@@ -249,7 +258,8 @@ class Yahtzee:
         return 0    
 
     @staticmethod
-    def check_for_full_house(d1, d2, d3, d4, d5):
+    def check_for_full_house(dice_1: int, dice_2: int, dice_3: int,
+                             dice_4: int, dice_5: int) -> int:
         """Check if there are
         two identical and 
         other three identical dice
@@ -262,11 +272,11 @@ class Yahtzee:
         one_triple = False
         triple_number = 0
         count = [0] * 6
-        count[d1 - 1] += 1
-        count[d2 - 1] += 1
-        count[d3 - 1] += 1
-        count[d4 - 1] += 1
-        count[d5 - 1] += 1
+        count[dice_1 - 1] += 1
+        count[dice_2 - 1] += 1
+        count[dice_3 - 1] += 1
+        count[dice_4 - 1] += 1
+        count[dice_5 - 1] += 1
 
         for i in range(6):
             if (count[i] == 2): 
