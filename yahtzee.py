@@ -40,30 +40,30 @@ class Yahtzee:
     def check_for_twos( dice_1,  dice_2,  dice_3,  dice_4,  dice_5):
         sum = 0
         if (dice_1 == 2):
-             sum += 2
+            sum += 2
         if (dice_2 == 2):
-             sum += 2
+            sum += 2
         if (dice_3 == 2):
-             sum += 2
+            sum += 2
         if (dice_4 == 2):
-             sum += 2
+            sum += 2
         if (dice_5 == 2):
-             sum += 2
+            sum += 2
         return sum
     
     @staticmethod
     def check_for_threes( dice_1,  dice_2,  dice_3,  dice_4,  dice_5):
         sum = 0
         if (dice_1 == 3):
-             sum += 3
+            sum += 3
         if (dice_2 == 3):
-             sum += 3
+            sum += 3
         if (dice_3 == 3):
-             sum += 3
+            sum += 3
         if (dice_4 == 3):
-             sum += 3
+            sum += 3
         if (dice_5 == 3):
-             sum += 3
+            sum += 3
         return sum
 
     def __init__(self, dice_1, dice_2, dice_3, dice_4, dice_5):
