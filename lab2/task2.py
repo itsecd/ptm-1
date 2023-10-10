@@ -1,6 +1,6 @@
-import codecs
-import csv
 import os
+import csv
+import codecs
 
 
 def copy_to_new_directory(path_old: str, path_new: str):

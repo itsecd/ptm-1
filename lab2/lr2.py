@@ -1,10 +1,9 @@
-import pandas as pd
 import codecs
-from task5 import MyIter
-import matplotlib
+import pandas as pd
 import matplotlib.pyplot as plt
-from pymystem3 import Mystem
 import numpy as np
+from pymystem3 import Mystem
+from task5 import MyIter
 
 
 def create_hist(mark: str) -> plt:

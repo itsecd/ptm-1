@@ -1,15 +1,12 @@
-from bs4 import BeautifulSoup
-import requests
-from time import sleep
 import codecs
+import requests
+from bs4 import BeautifulSoup
 
 
 def find_good(url, pages, count_good):
     for page in range(1, pages+1):
         print(page)
         url1 = url + f"/{page}/"
-        delay_value = 30 + 2 * page
-        sleep(delay_value)
         r = requests.get(url1)
         soup = BeautifulSoup(r.text, "lxml")
         film_name = soup.find("a", class_="breadcrumbs__link")
@@ -44,8 +41,6 @@ def find_bad(url, pages, count_bad):
     for page in range(1, pages+1):
         print(page)
         url1 = url + f"/{page}/"
-        delay_value = 30 + 2 * page
-        sleep(delay_value)
         r = requests.get(url1)
         soup = BeautifulSoup(r.text, "lxml")
         film_name = soup.find("a", class_="breadcrumbs__link")
