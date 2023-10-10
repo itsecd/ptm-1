@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import unittest
+from tennis import tennis_game
 
-from tennis import TennisGame
+import unittest
 
 test_cases = [
     (0, 0, "Love-All", 'player1', 'player2'),
@@ -50,21 +50,21 @@ test_cases = [
     (5, 6, 'Advantage Two', 'player1', 'Two'),
     ]
 
-def play_game(p1Points, p2Points, p1Name, p2Name):
-    game = TennisGame(p1Name, p2Name)
-    for i in range(max(p1Points, p2Points)):
-        if i < p1Points:
-            game.won_point(p1Name)
-        if i < p2Points:
-            game.won_point(p2Name)
+def play_game(first_player_points, second_player_points, first_player_name, second_player_name):
+    game = tennis_game(first_player_name, second_player_name)
+    for i in range(max(first_player_points, second_player_points)):
+        if i < first_player_points:
+            game.won_point(first_player_name)
+        if i < second_player_points:
+            game.won_point(second_player_name)
     return game
 
-class TestTennis(unittest.TestCase):
+class test_tennis(unittest.TestCase):
      
     def test_Score(self):
-        for testcase in test_cases:
-            (p1Points, p2Points, score, p1Name, p2Name) = testcase
-            game = play_game(p1Points, p2Points, p1Name, p2Name)
+        for test_case in test_cases:
+            (first_player_points, second_player_points, score, first_player_name, second_player_name) = test_case
+            game = play_game(first_player_points, second_player_points, first_player_name, second_player_name)
             self.assertEquals(score, game.score())
  
 if __name__ == "__main__":
