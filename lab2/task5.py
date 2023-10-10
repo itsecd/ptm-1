@@ -1,7 +1,7 @@
 import os
 
 
-class MyIter:
+class DataIter:
     def __init__(self, cls: str):
         self.mark = cls
         self.path_num = 0

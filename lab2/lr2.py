@@ -43,9 +43,9 @@ def lemmatize_and_count(df: pd, mark: str, ing: str):
     информацию в файл
     '''
     words = {}
-    df_n = filter_by_mark(df, mark)
+    df_new = filter_by_mark(df, mark)
     lemmatizer = Mystem()
-    text = df_n["rev_text"]
+    text = df_new["rev_text"]
     text = list(text)
     for sent in text:
         sent_lemmas = lemmatizer.lemmatize(sent)
