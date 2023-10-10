@@ -23,7 +23,7 @@ class TennisGameDefactored1:
                 1 : "Fifteen-All",
                 2 : "Thirty-All",
                 3 : "Forty-All",
-            }.get(self.p1points, "Deuce")
+                }.get(self.p1points, "Deuce")
         elif (self.p1points>=4 or self.p2points>=4):
             minusResult = self.p1points-self.p2points
             if (minusResult==1):
@@ -46,7 +46,7 @@ class TennisGameDefactored1:
                     1 : "Fifteen",
                     2 : "Thirty",
                     3 : "Forty",
-                }[tempScore]
+                    }[tempScore]
         return result
 
 
