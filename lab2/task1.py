@@ -19,10 +19,10 @@ def create_main_ann(path: str) -> None:
                 file = os.path.join(directory, files)
                 if os.path.isfile(file) and file.endswith(".txt"):
                     rev_type = file[-12] + file[-11] + file[-10]
-                    if rev_type == 'bad':
+                    if rev_type == "bad":
                         file_info = (file, rev_type + "/" + file[-8] + file[-7] + file[-6] + file[-5], rev_type)
                         writer.writerow(file_info)
                     else:
                         rev_type = file[-13] + file[-12] + file[-11] + file[-10]
-                        file_info = (file, rev_type + '/' + file[-8] + file[-7] + file[-6] + file[-5], rev_type)
+                        file_info = (file, rev_type + "/" + file[-8] + file[-7] + file[-6] + file[-5], rev_type)
                         writer.writerow(file_info)

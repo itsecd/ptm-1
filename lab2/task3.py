@@ -20,11 +20,11 @@ def copy_to_new_dir_with_random_naming(path_old: str, path_new: str) -> None:
             directory = os.path.join(path_old, directory_name)
             for files in os.listdir(directory):
                 path = os.path.join(directory, files)
-                if os.path.isfile(path) and path.endswith('.txt'):
+                if os.path.isfile(path) and path.endswith(".txt"):
                     new_name = str(randint(0, 9999)).zfill(4)
                     rev_type = path[-12] + path[-11] + path[-10]
-                    if rev_type == 'bad':
-                        file_info = (path_new + "/" + new_name, 'dataset3/' + new_name, rev_type)
+                    if rev_type == "bad":
+                        file_info = (path_new + "/" + new_name, "dataset3/" + new_name, rev_type)
                         writer.writerow(file_info)
                     else:
                         rev_type = path[-13] + path[-12] + path[-11] + path[-10]
