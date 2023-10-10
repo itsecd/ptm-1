@@ -2,6 +2,9 @@ class Yahtzee:
 
     @staticmethod
     def init_score(dice_1, dice_2, dice_3, dice_4, dice_5):
+        """Count and return score
+        after the first round
+        """
         total_score = 0
         total_score += dice_1
         total_score += dice_2
@@ -12,6 +15,10 @@ class Yahtzee:
 
     @staticmethod
     def check_for_five_identical_dice(dice):
+        """Check if there are
+        five identical dice
+        among the dice
+        """
         count = [0] * (len(dice) + 1)
         for one_dice in dice:
             count[one_dice - 1] += 1
@@ -23,6 +30,10 @@ class Yahtzee:
     
     @staticmethod
     def check_for_ones(dice_1, dice_2, dice_3, dice_4, dice_5):
+        """Check if there are
+        several ones dice
+        among the dice
+        """
         sum = 0
         if (dice_1 == 1):
             sum += 1
@@ -38,6 +49,10 @@ class Yahtzee:
     
     @staticmethod
     def check_for_twos(dice_1, dice_2, dice_3, dice_4, dice_5):
+        """Check if there are
+        several twos dice
+        among the dice
+        """
         sum = 0
         if (dice_1 == 2):
             sum += 2
@@ -53,6 +68,10 @@ class Yahtzee:
     
     @staticmethod
     def check_for_threes(dice_1, dice_2, dice_3, dice_4, dice_5):
+        """Check if there are
+        several threes dice
+        among the dice
+        """
         sum = 0
         if (dice_1 == 3):
             sum += 3
@@ -67,6 +86,9 @@ class Yahtzee:
         return sum
 
     def __init__(self, dice_1, dice_2, dice_3, dice_4, dice_5):
+        """Constructor of
+        an element of the class
+        """
         self.dice = [0] * 5
         self.dice[0] = dice_1
         self.dice[1] = dice_2
@@ -75,6 +97,10 @@ class Yahtzee:
         self.dice[4] = dice_5
     
     def check_for_fours(self):
+        """Check if there are
+        several fours dice
+        among the dice
+        """
         sum = 0
         for i in range(5):
             if (self.dice[i] == 4): 
@@ -82,6 +108,10 @@ class Yahtzee:
         return sum    
 
     def check_for_fives(self):
+        """Check if there are
+        several fives dice
+        among the dice
+        """
         sum = 0
         i = 0
         for i in range(len(self.dice)): 
@@ -90,6 +120,10 @@ class Yahtzee:
         return sum    
 
     def check_for_sixes(self):
+        """Check if there are
+        several sixes dice
+        among the dice
+        """
         sum = 0
         for i in range(len(self.dice)): 
             if (self.dice[i] == 6):
@@ -98,6 +132,10 @@ class Yahtzee:
     
     @staticmethod
     def check_for_pairs(dice_1, dice_2, dice_3, dice_4, dice_5):
+        """Check if there is
+        a pair of dice
+        among the dice
+        """
         count = [0] * 6
         count[dice_1 - 1] += 1
         count[dice_2 - 1] += 1
@@ -112,6 +150,10 @@ class Yahtzee:
     
     @staticmethod
     def check_for_two_pairs(dice_1, dice_2, dice_3, dice_4, dice_5):
+        """Check if there are
+        two pairs dice
+        among the dice
+        """
         count = [0] * 6
         count[dice_1 - 1] += 1
         count[dice_2 - 1] += 1
@@ -133,6 +175,10 @@ class Yahtzee:
     @staticmethod
     def check_for_four_identical_dice(dice_1,  dice_2,  dice_3,  
                                       dice_4,  dice_5):
+        """Check if there are
+        four identical dice
+        among the dice
+        """
         count = [0] * 6
         count[dice_1 - 1] += 1
         count[dice_2 - 1] += 1
@@ -147,6 +193,10 @@ class Yahtzee:
     @staticmethod
     def check_for_three_identical_dice(dice_1,  dice_2,  dice_3,
                                        dice_4,  dice_5):
+        """Check if there are
+        three identical dice
+        among the dice
+        """
         count = [0] * 6
         count[dice_1 - 1] += 1
         count[dice_2 - 1] += 1
@@ -160,6 +210,10 @@ class Yahtzee:
 
     @staticmethod
     def check_for_small_straight(dice_1, dice_2, dice_3, dice_4, dice_5):
+        """Check if there are
+        1, 2, 3, 4, 5 combination
+        among the dice
+        """
         count = [0] * 6
         count[dice_1 - 1] += 1
         count[dice_2 - 1] += 1
@@ -176,6 +230,10 @@ class Yahtzee:
 
     @staticmethod
     def check_for_large_straight(dice_1, dice_2, dice_3, dice_4, dice_5):
+        """Check if there are
+        2, 3, 4, 5, 6 combination
+        among the dice
+        """
         count = [0] * 6
         count[dice_1 - 1] += 1
         count[dice_2 - 1] += 1
@@ -192,6 +250,11 @@ class Yahtzee:
 
     @staticmethod
     def check_for_full_house(d1, d2, d3, d4, d5):
+        """Check if there are
+        two identical and 
+        other three identical dice
+        among the dice
+        """
         count = []
         one_pair = False
         i = 0
