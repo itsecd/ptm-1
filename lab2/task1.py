@@ -2,12 +2,12 @@ import os
 import csv
 
 
-def create_main_ann(path: str):
+def create_main_ann(path: str) -> None:
     """
     Функция создания файла-аннотации для изначального датасета. Принимает на вход абсолютный путь к одной из папок
     изначального датасета и, пробегая по всем файлам составляет аннотацию.
     :param path: Путь к папке с датасетом
-    :return:
+    :return: None
     """
     columns = ("Path1", "Path2", "Class")
     with open("data.csv", "w") as file:

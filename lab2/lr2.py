@@ -38,7 +38,7 @@ def create_hist(mark: str) -> plt:
     return fig
 
 
-def lemmatize_and_count(df: pd, mark: str, ing: str):
+def lemmatize_and_count(df: pd, mark: str, ing: str) -> None:
     """
     Функция производит токенизацию и лемматизацию обзоров из датафрейма по заданной метке и записывает полученную
     информацию в файл
