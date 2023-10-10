@@ -8,6 +8,9 @@ def copy_to_new_dir_with_random_naming(path_old: str, path_new: str):
     """
     Функция копирования исходного датасета в новую директорию с присваиванием случайного номера.
     Также, чтобы не потерять метку класса, создаёт файл-аннотацию для нового датасета.
+    :param path_old: путь к старому датасету
+    :param path_new: путь к новому расположению датасета
+    :return:
     """
     columns = ("Path1", "Path2", "Class")
     with open("data2.csv", "w") as file:

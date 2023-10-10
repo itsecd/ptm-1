@@ -4,6 +4,13 @@ from bs4 import BeautifulSoup
 
 
 def find_good(url, pages, count_good):
+    """
+    Функция записывает положительные отзывы со страницы фильма на сайте кинопоиск в датасет.
+    :param url: Ссылка на страницу фильма
+    :param pages: количество страниц с отзывами на фильм
+    :param count_good: текущее значение счетчика записанных отзывов
+    :return:
+    """
     for page in range(1, pages+1):
         print(page)
         url1 = url + f"/{page}/"
@@ -38,6 +45,13 @@ def find_good(url, pages, count_good):
 
 
 def find_bad(url, pages, count_bad):
+    """
+    Функция записывает отрицательные отзывы со страницы фильма на сайте кинопоиск в датасет.
+    :param url: Ссылка на страницу фильма
+    :param pages: количество страниц с отзывами на фильм
+    :param count_bad: текущее значение счетчика записанных отзывов
+    :return:
+    """
     for page in range(1, pages+1):
         print(page)
         url1 = url + f"/{page}/"

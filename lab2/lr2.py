@@ -7,9 +7,11 @@ from task5 import MyIter
 
 
 def create_hist(mark: str) -> plt:
-    '''
-     Функция считывает использование слов в обзорах и возвращает столбичную диаграмму
-    '''
+    """
+    Функция считывает использование слов в обзорах и возвращает столбичную диаграмму
+    :param mark: Тип обзора
+    :return: гистограмма
+    """
     keys = []
     vals = []
     if mark == "good":
@@ -37,10 +39,14 @@ def create_hist(mark: str) -> plt:
 
 
 def lemmatize_and_count(df: pd, mark: str, ing: str):
-    '''
+    """
     Функция производит токенизацию и лемматизацию обзоров из датафрейма по заданной метке и записывает полученную
     информацию в файл
-    '''
+    :param df: Датафрейм с обзорами
+    :param mark: Тип обзора
+    :param ing: Название папки для сохранения информации
+    :return:
+    """
     words = {}
     df_new = filter_by_mark(df, mark)
     lemmatizer = Mystem()
@@ -62,17 +68,31 @@ def lemmatize_and_count(df: pd, mark: str, ing: str):
 
 
 def filter_by_mark(df: pd, mark: str) -> pd:
+    """
+    Функция создает новый датафрейм в котором присутствуют только обзоры соответствующего типа
+    :param df: старый датафрейм
+    :param mark: тип обзора
+    :return: новый датафрейм
+    """
     return df[df["rev_type"] == mark]
 
 
 def filter_by_number(df: pd, w_num: int) -> pd:
+    """
+    Функция фильтрует датафрейм по количеству слов в обзоре, возвращает новый датафрейм, в котором присутствую
+    обзоры только с соответствующим количеством слов
+    :param df: старый датафрейм
+    :param w_num: количество слов
+    :return: новый датафрейм
+    """
     return df[df["word_num"] <= w_num]
 
 
 def read_all_data() -> pd:
-    '''
+    """
     С использованием класса итератора из предыдущей работы записывает обзоры в датафрейм.
-    '''
+    :return: новый датафрейм
+    """
     rev_types = []
     rev_text = []
     word_num = []
