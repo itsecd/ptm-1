@@ -131,8 +131,8 @@ class Yahtzee:
             return 0
     
     @staticmethod
-    def check_for_four_identical_dice( dice_1,  dice_2,  dice_3,  
-                                       dice_4,  dice_5):
+    def check_for_four_identical_dice(dice_1,  dice_2,  dice_3,  
+                                      dice_4,  dice_5):
         count = [0]*6
         count[dice_1-1] += 1
         count[dice_2-1] += 1
@@ -145,8 +145,8 @@ class Yahtzee:
         return 0    
 
     @staticmethod
-    def check_for_three_identical_dice( dice_1,  dice_2,  dice_3,
-                                        dice_4,  dice_5):
+    def check_for_three_identical_dice(dice_1,  dice_2,  dice_3,
+                                       dice_4,  dice_5):
         count = [0]*6
         count[dice_1-1] += 1
         count[dice_2-1] += 1
@@ -167,10 +167,10 @@ class Yahtzee:
         count[dice_4-1] += 1
         count[dice_5-1] += 1
         if (count[0] == 1 and
-            count[1] == 1 and
-            count[2] == 1 and
-            count[3] == 1 and
-            count[4] == 1):
+                count[1] == 1 and
+                count[2] == 1 and
+                count[3] == 1 and
+                count[4] == 1):
             return 15
         return 0    
 
@@ -183,10 +183,10 @@ class Yahtzee:
         count[dice_4-1] += 1
         count[dice_5-1] += 1
         if (count[1] == 1 and
-            count[2] == 1 and
-            count[3] == 1 and
-            count[4] == 1
-            and count[5] == 1):
+                count[2] == 1 and
+                count[3] == 1 and
+                count[4] == 1
+                and count[5] == 1):
             return 20
         return 0    
 
