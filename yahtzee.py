@@ -15,6 +15,7 @@ class Yahtzee:
         count = [0]*(len(dice)+1)
         for one_dice in dice:
             count[one_dice-1] += 1
+
         for i in range(len(count)):
             if count[i] == 5:
                 return 50
@@ -33,10 +34,8 @@ class Yahtzee:
             sum += 1
         if (dice_5 == 1): 
             sum += 1
-
         return sum
     
-
     @staticmethod
     def check_for_twos( dice_1,  dice_2,  dice_3,  dice_4,  dice_5):
         sum = 0
@@ -66,7 +65,6 @@ class Yahtzee:
         if (dice_5 == 3):
              sum += 3
         return sum
-    
 
     def __init__(self, dice_1, dice_2, dice_3, dice_4, dice_5):
         self.dice = [0]*5
@@ -81,8 +79,7 @@ class Yahtzee:
         for i in range(5):
             if (self.dice[i] == 4): 
                 sum += 4
-        return sum
-    
+        return sum    
 
     def check_for_fives(self):
         sum = 0
@@ -90,8 +87,7 @@ class Yahtzee:
         for i in range(len(self.dice)): 
             if (self.dice[i] == 5):
                 sum = sum + 5
-        return sum
-    
+        return sum    
 
     def check_for_sixes(self):
         sum = 0
@@ -145,8 +141,7 @@ class Yahtzee:
         for i in range(6):
             if (count[i] == 4):
                 return (i+1) * 4
-        return 0
-    
+        return 0    
 
     @staticmethod
     def check_for_three_identical_dice( dice_1,  dice_2,  dice_3,  dice_4,  dice_5):
@@ -159,8 +154,7 @@ class Yahtzee:
         for i in range(6):
             if (count[i] == 3):
                 return (i+1) * 3
-        return 0
-    
+        return 0    
 
     @staticmethod
     def check_for_small_straight( dice_1,  dice_2,  dice_3,  dice_4,  dice_5):
@@ -176,8 +170,7 @@ class Yahtzee:
             count[3] == 1 and
             count[4] == 1):
             return 15
-        return 0
-    
+        return 0    
 
     @staticmethod
     def check_for_large_straight( dice_1,  dice_2,  dice_3,  dice_4,  dice_5):
@@ -193,8 +186,7 @@ class Yahtzee:
             count[4] == 1
             and count[5] == 1):
             return 20
-        return 0
-    
+        return 0    
 
     @staticmethod
     def check_for_full_house( d1,  d2,  d3,  d4,  d5):
@@ -204,7 +196,6 @@ class Yahtzee:
         pair_number = 0
         one_triple = False
         triple_number = 0
-
         count = [0]*6
         count[d1-1] += 1
         count[d2-1] += 1
@@ -216,14 +207,11 @@ class Yahtzee:
             if (count[i] == 2): 
                 one_pair = True
                 pair_number = i+1
-            
-
         for i in range(6):
             if (count[i] == 3): 
                 one_triple = True
                 triple_number = i+1
             
-
         if (one_pair and one_triple):
             return pair_number * 2 + triple_number * 3
         else:

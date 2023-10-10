@@ -91,4 +91,3 @@ def test_check_for_large_straight():
 def test_check_for_full_house():
         assert 18 == Yahtzee.check_for_full_house(6,2,2,2,6)
         assert 0 == Yahtzee.check_for_full_house(2,3,4,5,6)
-   
