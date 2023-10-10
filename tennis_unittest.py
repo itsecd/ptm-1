@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from tennis import tennis_game
-
 import unittest
+
+from tennis import tennis_game
 
 test_cases = [
     (0, 0, "Love-All", 'player1', 'player2'),
