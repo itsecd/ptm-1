@@ -1,5 +1,17 @@
 class Yahtzee:
 
+    def __init__(self, dice_1: int, dice_2: int, dice_3: int,
+                 dice_4: int, dice_5: int) -> None:
+        """Constructor of
+        an element of the class
+        """
+        self.dice = [0] * 5
+        self.dice[0] = dice_1
+        self.dice[1] = dice_2
+        self.dice[2] = dice_3
+        self.dice[3] = dice_4
+        self.dice[4] = dice_5
+
     @staticmethod
     def init_score(dice_1: int, dice_2: int, dice_3: int,
                    dice_4: int, dice_5: int) -> int:
@@ -28,7 +40,7 @@ class Yahtzee:
             if count[i] == 5:
                 return 50
         return 0
-    
+
     @staticmethod
     def check_for_ones(dice_1: int, dice_2: int, dice_3: int,
                        dice_4: int, dice_5: int) -> int:
@@ -48,7 +60,7 @@ class Yahtzee:
         if (dice_5 == 1): 
             sum += 1
         return sum
-    
+
     @staticmethod
     def check_for_twos(dice_1: int, dice_2: int, dice_3: int,
                        dice_4: int, dice_5: int) -> int:
@@ -68,7 +80,7 @@ class Yahtzee:
         if (dice_5 == 2):
             sum += 2
         return sum
-    
+
     @staticmethod
     def check_for_threes(dice_1: int, dice_2: int, dice_3: int,
                          dice_4: int, dice_5: int) -> int:
@@ -89,18 +101,6 @@ class Yahtzee:
             sum += 3
         return sum
 
-    def __init__(self, dice_1: int, dice_2: int, dice_3: int,
-                 dice_4: int, dice_5: int) -> None:
-        """Constructor of
-        an element of the class
-        """
-        self.dice = [0] * 5
-        self.dice[0] = dice_1
-        self.dice[1] = dice_2
-        self.dice[2] = dice_3
-        self.dice[3] = dice_4
-        self.dice[4] = dice_5
-    
     def check_for_fours(self) -> int:
         """Check if there are
         several fours dice
@@ -110,7 +110,7 @@ class Yahtzee:
         for i in range(5):
             if (self.dice[i] == 4): 
                 sum += 4
-        return sum    
+        return sum
 
     def check_for_fives(self) -> int:
         """Check if there are
@@ -122,7 +122,7 @@ class Yahtzee:
         for i in range(len(self.dice)): 
             if (self.dice[i] == 5):
                 sum = sum + 5
-        return sum    
+        return sum
 
     def check_for_sixes(self) -> int:
         """Check if there are
@@ -134,7 +134,7 @@ class Yahtzee:
             if (self.dice[i] == 6):
                 sum = sum + 6
         return sum
-    
+
     @staticmethod
     def check_for_pairs(dice_1: int, dice_2: int, dice_3: int,
                         dice_4: int, dice_5: int) -> int:
@@ -153,7 +153,7 @@ class Yahtzee:
             if (count[6 - i - 1] == 2):
                 return (6 - i) * 2
         return 0
-    
+
     @staticmethod
     def check_for_two_pairs(dice_1: int, dice_2: int, dice_3: int,
                             dice_4: int, dice_5: int) -> int:
@@ -173,29 +173,11 @@ class Yahtzee:
             if (count[6 - i - 1] == 2):
                 pairs_count = pairs_count + 1
                 score += (6 - i)
-                    
+
         if (pairs_count == 2):
             return score * 2
         else:
             return 0
-    
-    @staticmethod
-    def check_for_four_identical_dice(dice_1: int, dice_2: int, dice_3: int,
-                                      dice_4: int, dice_5: int) -> int:
-        """Check if there are
-        four identical dice
-        among the dice
-        """
-        count = [0] * 6
-        count[dice_1 - 1] += 1
-        count[dice_2 - 1] += 1
-        count[dice_3 - 1] += 1
-        count[dice_4 - 1] += 1
-        count[dice_5 - 1] += 1
-        for i in range(6):
-            if (count[i] == 4):
-                return (i + 1) * 4
-        return 0    
 
     @staticmethod
     def check_for_three_identical_dice(dice_1: int, dice_2: int, dice_3: int,
@@ -213,7 +195,25 @@ class Yahtzee:
         for i in range(6):
             if (count[i] == 3):
                 return (i + 1) * 3
-        return 0    
+        return 0
+
+    @staticmethod
+    def check_for_four_identical_dice(dice_1: int, dice_2: int, dice_3: int,
+                                      dice_4: int, dice_5: int) -> int:
+        """Check if there are
+        four identical dice
+        among the dice
+        """
+        count = [0] * 6
+        count[dice_1 - 1] += 1
+        count[dice_2 - 1] += 1
+        count[dice_3 - 1] += 1
+        count[dice_4 - 1] += 1
+        count[dice_5 - 1] += 1
+        for i in range(6):
+            if (count[i] == 4):
+                return (i + 1) * 4
+        return 0
 
     @staticmethod
     def check_for_small_straight(dice_1: int, dice_2: int, dice_3: int,
@@ -234,7 +234,7 @@ class Yahtzee:
                 count[3] == 1 and
                 count[4] == 1):
             return 15
-        return 0    
+        return 0
 
     @staticmethod
     def check_for_large_straight(dice_1: int, dice_2: int, dice_3: int,
@@ -255,7 +255,7 @@ class Yahtzee:
                 count[4] == 1
                 and count[5] == 1):
             return 20
-        return 0    
+        return 0
 
     @staticmethod
     def check_for_full_house(dice_1: int, dice_2: int, dice_3: int,
@@ -286,7 +286,7 @@ class Yahtzee:
             if (count[i] == 3): 
                 one_triple = True
                 triple_number = i + 1
-            
+
         if (one_pair and one_triple):
             return pair_number * 2 + triple_number * 3
         else:
