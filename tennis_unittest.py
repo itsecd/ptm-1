@@ -52,11 +52,14 @@ test_cases = [
 
 def play_game(first_player_points, second_player_points, first_player_name, second_player_name):
     game = tennis_game(first_player_name, second_player_name)
+
     for i in range(max(first_player_points, second_player_points)):
         if i < first_player_points:
             game.won_point(first_player_name)
+
         if i < second_player_points:
             game.won_point(second_player_name)
+
     return game
 
 class test_tennis(unittest.TestCase):
@@ -69,4 +72,3 @@ class test_tennis(unittest.TestCase):
  
 if __name__ == "__main__":
     unittest.main() 
-        

@@ -8,6 +8,7 @@ from gilded_rose import Item, update_quality
 
 if __name__ == "__main__":
     print ("OMGHAI!")
+
     items = [
         Item(name="+5 Dexterity Vest", sell_in = 10, quality = 20),
         Item(name="Aged Brie", sell_in = 2, quality = 0),
@@ -21,12 +22,16 @@ if __name__ == "__main__":
         ]
 
     days = 2
+
     if len(sys.argv) > 1:
         days = int(sys.argv[1]) + 1
+
     for day in range(days):
         print("-------- day %s --------" % day)
         print("name, sellIn, quality")
+
         for item in items:
             print(item)
+            
         print("")
         update_quality(items)
