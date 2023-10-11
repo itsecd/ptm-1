@@ -25,8 +25,10 @@ class tennis_game_defactored_one:
                 2: "Thirty-All",
                 3: "Forty-All",
                 }.get(self.first_player_points, "Deuce")
-        elif (self.first_player_points >= 4 or self.second_player_points >= 4):
+        elif (self.first_player_points >= 4 or 
+              self.second_player_points >= 4):
             sub_result = self.first_player_points - self.second_player_points
+
             if (sub_result == 1):
                 result = "Advantage " + self.first_player_name
             elif (sub_result == -1):
@@ -69,7 +71,9 @@ class tennis_game_defactored_two:
     def score(self):
         result = ""
 
-        if (self.first_player_points == self.second_player_points and self.first_player_points < 4):
+        if (self.first_player_points == self.second_player_points and
+            self.first_player_points < 4):
+
             if (self.first_player_points == 0):
                 result = "Love"
 
@@ -84,7 +88,8 @@ class tennis_game_defactored_two:
 
             result += "-All"
 
-        if (self.first_player_points == self.second_player_points and self.first_player_points > 3):
+        if (self.first_player_points == self.second_player_points and
+            self.first_player_points > 3):
             result = "Deuce"
         
         first_player_result = ""
@@ -116,7 +121,8 @@ class tennis_game_defactored_two:
             first_player_result = "Love"
             result = first_player_result + "-" + second_player_result
 
-        if (self.first_player_points > self.second_player_points and self.first_player_points < 4):
+        if (self.first_player_points > self.second_player_points and
+            self.first_player_points < 4):
             if (self.first_player_points == 2):
                 first_player_result = "Thirty"
 
@@ -131,7 +137,8 @@ class tennis_game_defactored_two:
 
             result = first_player_result + "-" + second_player_result
 
-        if (self.second_player_points > self.first_player_points and self.second_player_points < 4):
+        if (self.second_player_points > self.first_player_points and
+            self.second_player_points < 4):
             if (self.second_player_points == 2):
                 second_player_result = "Thirty"
 
@@ -146,16 +153,22 @@ class tennis_game_defactored_two:
 
             result = first_player_result + "-" + second_player_result
 
-        if (self.first_player_points > self.second_player_points and self.second_player_points >= 3):
+        if (self.first_player_points > self.second_player_points and
+            self.second_player_points >= 3):
             result = "Advantage " + self.first_player_name
 
-        if (self.second_player_points > self.first_player_points and self.first_player_points >= 3):
+        if (self.second_player_points > self.first_player_points and
+            self.first_player_points >= 3):
             result = "Advantage " + self.second_player_name
         
-        if (self.first_player_points >= 4 and self.second_player_points >= 0 and (self.first_player_points - self.second_player_points) >= 2):
+        if (self.first_player_points >= 4 and
+            self.second_player_points >= 0 and
+            (self.first_player_points - self.second_player_points) >= 2):
             result = "Win for " + self.first_player_name
 
-        if (self.second_player_points >= 4 and self.first_player_points >= 0 and (self.second_player_points - self.first_player_points) >= 2):
+        if (self.second_player_points >= 4 and
+            self.first_player_points >= 0 and
+            (self.second_player_points - self.first_player_points) >= 2):
             result = "Win for " + self.second_player_name
 
         return result
@@ -193,14 +206,23 @@ class tennis_game_defactored_three:
             amount = ["Love", "Fifteen", "Thirty", "Forty"]
             source = amount[self.first_player]
 
-            return source + "-All" if (self.first_player == self.second_player) else source + "-" + amount[self.second_player]
+            if(self.first_player == self.second_player):
+                return source + "-All"
+            else:
+                return source + "-" + amount[self.second_player]
         else:
             if (self.first_player == self.second_player):
                 return "Deuce"
             
-            source = self.first_player_name if self.first_player > self.second_player else self.second_player_name
+            if(self.first_player > self.second_player):
+                source = self.first_player_name
+            else:
+                source = self.second_player_name
             
-            return "Advantage " + source if ((self.first_player - self.second_player) * (self.first_player - self.second_player) == 1) else "Win for " + source
+            if((self.first_player - self.second_player) \
+               * (self.first_player - self.second_player) == 1):
+                return "Advantage " + source
+            else:
+                return "Win for " + source
 
-# NOTE: You must change this to point at the one of the three examples that you're working on!
 tennis_game = tennis_game_defactored_one
