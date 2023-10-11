@@ -61,13 +61,13 @@ class tennis_game_defactored_two:
         self.second_player_name = second_player_name
         self.first_player_points = 0
         self.second_player_points = 0
-        
+
     def won_point(self, player_name):
         if player_name == self.first_player_name:
             self.first_player_score()
         else:
             self.second_player_score()
-    
+
     def score(self):
         result = ""
 
@@ -172,21 +172,21 @@ class tennis_game_defactored_two:
             result = "Win for " + self.second_player_name
 
         return result
-    
+
     def set_first_player_score(self, number):
         for i in range(number):
             self.first_player_score()
-    
+
     def set_second_player_number(self, number):
         for i in range(number):
             self.second_player_score()
-    
+
     def first_player_score(self):
         self.first_player_points += 1
 
     def second_player_score(self):
         self.second_player_points += 1
-      
+
 
 class tennis_game_defactored_three:
     def __init__(self, first_player_name, second_player_name):
@@ -194,13 +194,13 @@ class tennis_game_defactored_three:
         self.second_player_name = second_player_name
         self.first_player = 0
         self.second_player = 0
-        
+
     def won_point(self, name):
         if name == self.first_player_name:
             self.first_player += 1
         else:
             self.second_player += 1
-    
+
     def score(self):
         if (self.first_player < 4 and self.second_player < 4):
             amount = ["Love", "Fifteen", "Thirty", "Forty"]
@@ -213,12 +213,12 @@ class tennis_game_defactored_three:
         else:
             if (self.first_player == self.second_player):
                 return "Deuce"
-            
+
             if(self.first_player > self.second_player):
                 source = self.first_player_name
             else:
                 source = self.second_player_name
-            
+
             if((self.first_player - self.second_player) \
                * (self.first_player - self.second_player) == 1):
                 return "Advantage " + source

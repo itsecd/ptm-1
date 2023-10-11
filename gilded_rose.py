@@ -34,7 +34,7 @@ def update_quality(items):
             else:
                 if item.quality < 50:
                     item.quality = item.quality + 1
-                    
+
     return items
 
 

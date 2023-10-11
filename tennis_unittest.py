@@ -64,15 +64,15 @@ def play_game(first_player_points, second_player_points,
     return game
 
 class test_tennis(unittest.TestCase):
-     
+
     def test_Score(self):
         for test_case in test_cases:
             (first_player_points, second_player_points,
              score, first_player_name, second_player_name) = test_case
-            
+
             game = play_game(first_player_points, second_player_points,
                              first_player_name, second_player_name)
             self.assertEquals(score, game.score())
- 
+
 if __name__ == "__main__":
     unittest.main() 

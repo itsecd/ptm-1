@@ -35,6 +35,6 @@ if __name__ == "__main__":
 
         for item in items:
             print(item)
-            
+
         print("")
         update_quality(items)
