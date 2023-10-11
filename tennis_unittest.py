@@ -50,8 +50,8 @@ test_cases = [
     (5, 6, 'Advantage Two', 'player1', 'Two'),
     ]
 
-def play_game(first_player_points, second_player_points,
-              first_player_name, second_player_name):
+def play_game(first_player_points: int, second_player_points: int,
+              first_player_name: str, second_player_name:str) -> tennis_game:
     game = tennis_game(first_player_name, second_player_name)
 
     for i in range(max(first_player_points, second_player_points)):
@@ -65,7 +65,7 @@ def play_game(first_player_points, second_player_points,
 
 class test_tennis(unittest.TestCase):
 
-    def test_Score(self):
+    def test_Score(self) -> None:
         for test_case in test_cases:
             (first_player_points, second_player_points,
              score, first_player_name, second_player_name) = test_case

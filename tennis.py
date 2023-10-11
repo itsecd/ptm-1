@@ -2,19 +2,19 @@
 
 class tennis_game_defactored_one:
 
-    def __init__(self, first_player_name, second_player_name):
+    def __init__(self, first_player_name: str, second_player_name: str) -> None:
         self.first_player_name = first_player_name
         self.second_player_name = second_player_name
         self.first_player_points = 0
         self.second_player_points = 0
         
-    def won_point(self, player_name):
+    def won_point(self, player_name:str) -> None:
         if player_name == self.first_player_name:
             self.first_player_points += 1
         else:
             self.second_player_points += 1
     
-    def score(self):
+    def score(self) -> str:
         result = ""
         temp_score = 0
 
@@ -56,19 +56,20 @@ class tennis_game_defactored_one:
 
 
 class tennis_game_defactored_two:
-    def __init__(self, first_player_name, second_player_name):
+
+    def __init__(self, first_player_name: str, second_player_name: str) -> None:
         self.first_player_name = first_player_name
         self.second_player_name = second_player_name
         self.first_player_points = 0
         self.second_player_points = 0
 
-    def won_point(self, player_name):
+    def won_point(self, player_name: str) -> None:
         if player_name == self.first_player_name:
             self.first_player_score()
         else:
             self.second_player_score()
 
-    def score(self):
+    def score(self) -> str:
         result = ""
 
         if (self.first_player_points == self.second_player_points and
@@ -173,35 +174,36 @@ class tennis_game_defactored_two:
 
         return result
 
-    def set_first_player_score(self, number):
+    def set_first_player_score(self, number: int) -> None:
         for i in range(number):
             self.first_player_score()
 
-    def set_second_player_number(self, number):
+    def set_second_player_number(self, number: int) -> None:
         for i in range(number):
             self.second_player_score()
 
-    def first_player_score(self):
+    def first_player_score(self) -> None:
         self.first_player_points += 1
 
-    def second_player_score(self):
+    def second_player_score(self) -> None:
         self.second_player_points += 1
 
 
 class tennis_game_defactored_three:
-    def __init__(self, first_player_name, second_player_name):
+
+    def __init__(self, first_player_name: str, second_player_name: str) -> None:
         self.first_player_name = first_player_name
         self.second_player_name = second_player_name
         self.first_player = 0
         self.second_player = 0
 
-    def won_point(self, name):
+    def won_point(self, name: str) -> None:
         if name == self.first_player_name:
             self.first_player += 1
         else:
             self.second_player += 1
 
-    def score(self):
+    def score(self) -> str:
         if (self.first_player < 4 and self.second_player < 4):
             amount = ["Love", "Fifteen", "Thirty", "Forty"]
             source = amount[self.first_player]
@@ -224,5 +226,6 @@ class tennis_game_defactored_three:
                 return "Advantage " + source
             else:
                 return "Win for " + source
+
 
 tennis_game = tennis_game_defactored_one

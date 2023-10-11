@@ -1,6 +1,16 @@
 # -*- coding: utf-8 -*-
 
-def update_quality(items):
+class Item:
+    def __init__(self, name, sell_in, quality):
+        self.name = name
+        self.sell_in = sell_in
+        self.quality = quality
+
+    def __repr__(self):
+        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+
+def update_quality(items: Item) -> Item:
     for item in items:
         if (item.name != "Aged Brie" and
             item.name != "Backstage passes to a TAFKAL80ETC concert"):
@@ -36,13 +46,3 @@ def update_quality(items):
                     item.quality = item.quality + 1
 
     return items
-
-
-class Item:
-    def __init__(self, name, sell_in, quality):
-        self.name = name
-        self.sell_in = sell_in
-        self.quality = quality
-
-    def __repr__(self):
-        return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
