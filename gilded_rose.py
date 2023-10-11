@@ -1,16 +1,40 @@
 # -*- coding: utf-8 -*-
 
 class Item:
-    def __init__(self, name, sell_in, quality):
+
+    def __init__(self, name: str, sell_in: int, quality: int) -> None:
+        '''
+        This function initialise an object
+
+        Parameters:
+            name: object name
+            sell_in: sold objects amount
+            quality: object quality
+        '''
         self.name = name
         self.sell_in = sell_in
         self.quality = quality
 
-    def __repr__(self):
+    def __repr__(self) -> str:
+        '''
+        This function returns object parameters
+
+        Returns:
+            str: object parameters
+        '''
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
 
 
 def update_quality(items: Item) -> Item:
+    '''
+    This function updates an item qualities
+
+    Parameters:
+        itens: number of items
+
+    Returns:
+        Item: updated items
+    '''
     for item in items:
         if (item.name != "Aged Brie" and
             item.name != "Backstage passes to a TAFKAL80ETC concert"):

@@ -52,6 +52,18 @@ test_cases = [
 
 def play_game(first_player_points: int, second_player_points: int,
               first_player_name: str, second_player_name: str) -> tennis_game:
+    '''
+    This function calculats the result of the tennis game
+
+    Paraneters:
+        first_player_points: nomber of first player points
+        second_player_points: number of second player points
+        first_player_name: first palyer name
+        second_player_name: second player name
+        
+    Returns:
+        game: the game result
+    '''
     game = tennis_game(first_player_name, second_player_name)
 
     for i in range(max(first_player_points, second_player_points)):
@@ -66,6 +78,9 @@ def play_game(first_player_points: int, second_player_points: int,
 class test_tennis(unittest.TestCase):
 
     def test_Score(self) -> None:
+        '''
+        This function tests the game for correct working
+        '''
         for test_case in test_cases:
             (first_player_points, second_player_points,
              score, first_player_name, second_player_name) = test_case
