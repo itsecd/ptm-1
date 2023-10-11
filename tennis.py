@@ -8,7 +8,7 @@ class tennis_game_defactored_one:
         self.first_player_points = 0
         self.second_player_points = 0
         
-    def won_point(self, player_name:str) -> None:
+    def won_point(self, player_name: str) -> None:
         if player_name == self.first_player_name:
             self.first_player_points += 1
         else:
@@ -226,6 +226,5 @@ class tennis_game_defactored_three:
                 return "Advantage " + source
             else:
                 return "Win for " + source
-
 
 tennis_game = tennis_game_defactored_one

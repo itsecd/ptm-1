@@ -51,7 +51,7 @@ test_cases = [
     ]
 
 def play_game(first_player_points: int, second_player_points: int,
-              first_player_name: str, second_player_name:str) -> tennis_game:
+              first_player_name: str, second_player_name: str) -> tennis_game:
     game = tennis_game(first_player_name, second_player_name)
 
     for i in range(max(first_player_points, second_player_points)):
