@@ -51,7 +51,18 @@ test_cases = [
     
     ]
 
-def play_game(p_1_points, p_2_points, p_1_name, p_2_name):
+def play_game(p_1_points:int, p_2_points:int, p_1_name:str, p_2_name:str):
+    """Play game functional unit test
+
+    Args:
+        p_1_points (int): Player 1 game score
+        p_2_points (int): Player 2 game score
+        p_1_name (str): Player 1 nickname
+        p_2_name (str): Player 2 nickname
+
+    Returns:
+        TennisGame: game
+    """
     game = TennisGame(p_1_name, p_2_name)
     for i in range(max(p_1_points, p_2_points)):
         if i < p_1_points:
@@ -63,6 +74,8 @@ def play_game(p_1_points, p_2_points, p_1_name, p_2_name):
 class TestTennis(unittest.TestCase):
      
     def test_Score(self):
+        """Scoring functional unit test
+        """
         for testcase in test_cases:
             (p_1_points, p_2_points, score, p_1_name, p_2_name) = testcase
             game = play_game(p_1_points, p_2_points, p_1_name, p_2_name)

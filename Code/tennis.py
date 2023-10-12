@@ -8,13 +8,23 @@ class TennisGameDefactored1:
         self.p_1_points = 0
         self.p_2_points = 0
         
-    def won_point(self, player_name):
+    def won_point(self, player_name:str):
+        """Increment the player's score
+
+        Args:
+            player_name (string): the player
+        """
         if player_name == self.player_1_name:
             self.p_1_points += 1
         else:
             self.p_2_points += 1
     
     def score(self):
+        """Counts score inside the game process
+
+        Returns:
+            str: String explaining the winner
+        """
         result = ""
         temp_score = 0
         if self.p_1_points == self.p_2_points:
@@ -57,13 +67,23 @@ class TennisGameDefactored2:
         self.p_1_points = 0
         self.p_2_points = 0
         
-    def won_point(self, playerName):
+    def won_point(self, playerName:int):
+        """Increment the player's score
+
+        Args:
+            player_name (int): the player
+        """
         if playerName == self.player_1_name:
             self.p_1_score()
         else:
             self.p_2_score()
     
     def score(self):
+        """Counts score inside the game process
+
+        Returns:
+            str: String explaining the winner
+        """
         result = ""
         if self.p_1_points == self.p_2_points and self.p_1_points < 4:
             if self.p_1_points == 0:
@@ -135,19 +155,33 @@ class TennisGameDefactored2:
             result = "Win for " + self.player_2_name
         return result
     
-    def set_p_1_score(self, number):
+    def set_p_1_score(self, number:int ):
+        """Adds to the 1 player score
+
+        Args:
+            number (int): Add to the current score
+        """
         for i in range(number):
             self.p_1_score()
     
     def set_p_2_score(self, number):
+        """Adds to the  player score
+
+        Args:
+            number (int): Add to the current score
+        """
         for i in range(number):
             self.p_2_score()
     
     def p_1_score(self):
+        """Increment first player score
+        """
         self.p_1_points +=1
     
     
     def p_2_score(self):
+        """Increment second player score
+        """
         self.p_2_points +=1
         
 class TennisGameDefactored3:
@@ -157,13 +191,23 @@ class TennisGameDefactored3:
         self.p_1 = 0
         self.p_2 = 0
         
-    def won_point(self, n):
+    def won_point(self, n:int):
+        """Increment the player's score
+
+        Args:
+            player_name (int): current score to match the player
+        """
         if n == self.p_1_name:
             self.p_1 += 1
         else:
             self.p_2 += 1
     
     def score(self):
+        """Counts score inside the game process
+
+        Returns:
+            srt: String explaining the winner
+        """
         if self.p_1 < 4 and self.p_2 < 4:
             p = [
                 "Love", 
