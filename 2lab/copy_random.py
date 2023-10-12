@@ -4,7 +4,7 @@ import random
 import shutil
 
 
-def create_file_paths(path: str, label: str) -> None:
+def create_file_paths(path="dataset/tiger", label="tiger") -> None:
     """Function creates a directory with random names and
     creates csv file
 
@@ -31,5 +31,4 @@ def create_file_paths(path: str, label: str) -> None:
 
 
 if __name__ == "__main__":
-    create_file_paths("dataset/tiger", "tiger")
-    create_file_paths("dataset/leopard", "leopard")
+    create_file_paths()

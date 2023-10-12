@@ -1,12 +1,12 @@
-import cv2
 import os
-import requests
 import time
 from bs4 import BeautifulSoup
+import cv2
+import requests
 from selenium import webdriver
 
 
-def parse_photo(label: str) -> None:
+def parse_photo(label="tiger") -> None:
     """Function parses and saves photos
 
     Args:
@@ -52,7 +52,7 @@ def parse_photo(label: str) -> None:
         driver.quit()
 
 
-def create_jpg_format(label):
+def create_jpg_format(label="tiger", count_photo=20) -> None:
     """Function resaves the image as jpg
     
     Args:
@@ -62,7 +62,7 @@ def create_jpg_format(label):
         os.mkdir("dataset1")
     if not os.path.isdir("dataset1/" + label):
         os.mkdir("dataset1/" + label)
-    for i in range(20):
+    for i in range(count_photo):
         filename = str("dataset/" + label + "/" + str(i).zfill(4) + ".jpg")
         image = cv2.imread(filename)
         filewrite = str("dataset1/" + label + "/" + str(i).zfill(4) + ".jpg")
@@ -70,5 +70,5 @@ def create_jpg_format(label):
 
 
 if __name__ == "__main__":
-    parse_photo("tiger")
-    create_jpg_format("tiger")
+    parse_photo()
+    create_jpg_format()

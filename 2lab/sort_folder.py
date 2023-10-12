@@ -1,7 +1,7 @@
 import os
 
 
-def sort_by_label(label: str, dataset_name: str) -> list:
+def sort_by_label(label="tiger", dataset_name="dataset_copy") -> list:
     """Function sorts the directory by label
 
     Args:

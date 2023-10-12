@@ -2,7 +2,7 @@ import os
 
 
 class SimpleIterator:
-    def __init__(self, label: str, dataset_name: str):
+    def __init__(self, label="tiger", dataset_name="dataset_copy"):
         self.label = label
         self.dataset_name = dataset_name
         self.counter = 0
@@ -27,7 +27,7 @@ class SimpleIterator:
 
 
 if __name__ == "__main__":
-    s = SimpleIterator("tiger", "dataset_copy")
+    s = SimpleIterator()
     print(next(s))
     print(next(s))
     print(next(s))

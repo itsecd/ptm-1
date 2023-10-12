@@ -2,7 +2,7 @@ import csv
 
 
 class SimpleIterator:
-    def __init__(self, label: str, file_name: str):
+    def __init__(self, label="leopard", file_name="data.csv"):
         self.label = label
         self.file_name = file_name
         self.counter = 0
@@ -27,7 +27,7 @@ class SimpleIterator:
 
 
 if __name__ == "__main__":
-    s = SimpleIterator("leopard", "data.csv")
+    s = SimpleIterator()
     print(next(s))
     print(next(s))
     print(next(s))

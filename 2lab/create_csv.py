@@ -2,7 +2,7 @@ import csv
 import os
 
 
-def create_csv(path: str) -> None:
+def create_csv(path="dataset/") -> None:
     """Function creates a csv file
 
     Args:
@@ -22,4 +22,4 @@ def create_csv(path: str) -> None:
 
 
 if __name__ == "__main__":
-    create_csv("dataset/")
+    create_csv()

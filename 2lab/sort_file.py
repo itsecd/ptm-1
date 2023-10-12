@@ -15,7 +15,7 @@ def compare_label(path: str, name: str, label: str):
         return None
 
 
-def sort_by_label(label: str, file_name: str) -> list:
+def sort_by_label(label="tiger", file_name="data.csv") -> list:
     """Function sorts csv file by label
 
     Args:
