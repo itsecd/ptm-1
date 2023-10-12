@@ -8,7 +8,7 @@ from tennis.tennis_unittest import test_cases, play_game
 
 class TestTennis:
 
-    @pytest.mark.parametrize('p1Points p2Points score p1Name p2Name'.split(), test_cases)
-    def test_get_score(self, p1Points, p2Points, score, p1Name, p2Name):
-        game = play_game(p1Points, p2Points, p1Name, p2Name)
+    @pytest.mark.parametrize('points_player1 points_player2 score name_player1 name_player2'.split(), test_cases)
+    def test_get_score(self, points_player1, points_player2, score, name_player1, name_player2):
+        game = play_game(points_player1, points_player2, name_player1, name_player2)
         assert score == game.score()
