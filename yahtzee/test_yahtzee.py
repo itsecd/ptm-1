@@ -1,7 +1,5 @@
 from yahtzee.yahtzee import Yahtzee
 
-# These unit tests can be run using the py.test framework
-# available from http://pytest.org/
 
 def test_chance_scores_sum_of_all_dice():
         expected = 15
@@ -90,5 +88,4 @@ def test_largeStraight():
 
 def test_fullHouse():
         assert 18 == Yahtzee.fullHouse(6,2,2,2,6)
-        assert 0 == Yahtzee.fullHouse(2,3,4,5,6)
-   
+        assert 0 == Yahtzee.fullHouse(2,3,4,5,6)                                
