@@ -26,7 +26,7 @@ class SimpleIterator:
             raise StopIteration
 
 
-def main():
+if __name__ == "__main__":
     s = SimpleIterator("leopard", "data.csv")
     print(next(s))
     print(next(s))
@@ -41,7 +41,3 @@ def main():
     print(next(s))
     for tiger_path in s:
         print(tiger_path)
-
-
-if __name__ == "__main__":
-    main()

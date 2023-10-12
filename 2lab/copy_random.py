@@ -5,9 +5,9 @@ import shutil
 
 
 def create_file_paths(path: str, label: str) -> None:
-    """Function creates a directory with random names and 
+    """Function creates a directory with random names and
     creates csv file
-    
+
     Args:
         path (str): path to folder
         label (str): name folder
@@ -30,10 +30,6 @@ def create_file_paths(path: str, label: str) -> None:
         writer.writerows(data)
 
 
-def main():
+if __name__ == "__main__":
     create_file_paths("dataset/tiger", "tiger")
     create_file_paths("dataset/leopard", "leopard")
-
-
-if __name__ == "__main__":
-    main()

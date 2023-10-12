@@ -3,7 +3,7 @@ import csv
 
 def compare_label(path: str, name: str, label: str):
     """Function compares two labels
-    
+
     Args:
         path (str): path to file
         name(str): path label
@@ -17,7 +17,7 @@ def compare_label(path: str, name: str, label: str):
 
 def sort_by_label(label: str, file_name: str) -> list:
     """Function sorts csv file by label
-    
+
     Args:
         label (str): sort label
         file_name(str): sort file
@@ -35,14 +35,10 @@ def sort_by_label(label: str, file_name: str) -> list:
     return data
 
 
-def main():
+if __name__ == "__main__":
     data_1 = sort_by_label("tiger", "data.csv")
     data_2 = sort_by_label("leopard", "data_copy.csv")
     for i in range(10):
         print(data_1[i])
     for i in range(10):
         print(data_2[i])
-
-
-if __name__ == "__main__":
-    main()

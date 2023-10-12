@@ -26,13 +26,9 @@ class SimpleIterator:
             raise StopIteration
 
 
-def main():
+if __name__ == "__main__":
     s = SimpleIterator("tiger", "dataset_copy")
     print(next(s))
     print(next(s))
     print(next(s))
     print(next(s))
-
-
-if __name__ == "__main__":
-    main()

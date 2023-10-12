@@ -3,7 +3,7 @@ import os
 
 def sort_by_label(label: str, dataset_name: str) -> list:
     """Function sorts the directory by label
-    
+
     Args:
         label (str): sort label
         dataset_name(str): sort folder
@@ -20,11 +20,7 @@ def sort_by_label(label: str, dataset_name: str) -> list:
     return data
 
 
-def main():
+if __name__ == "__main__":
     data = sort_by_label("tiger", "dataset_copy")
     for i in range(10):
         print(data[i])
-
-
-if __name__ == "__main__":
-    main()

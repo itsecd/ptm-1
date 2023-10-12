@@ -3,8 +3,8 @@ import os
 
 
 def create_csv(path: str) -> None:
-    """Function creates a csv file 
-    
+    """Function creates a csv file
+
     Args:
         path (str): path to folder
     """
@@ -21,9 +21,5 @@ def create_csv(path: str) -> None:
         writer.writerows(data)
 
 
-def main():
-    create_csv("dataset/")
-
-
 if __name__ == "__main__":
-    main()
+    create_csv("dataset/")

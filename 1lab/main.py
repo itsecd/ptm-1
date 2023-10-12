@@ -69,10 +69,6 @@ def create_jpg_format(label):
         cv2.imwrite(filewrite, image)
 
 
-def main():
+if __name__ == "__main__":
     parse_photo("tiger")
     create_jpg_format("tiger")
-
-
-if __name__ == "__main__":
-    main()
