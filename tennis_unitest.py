@@ -52,6 +52,7 @@ test_cases = [
     ]
 
 def play_game(points_player_1, points_player_2, player_1_name, player_2_name):
+    """ Воспроизводит игру с заданными очками и именами игроков. """
     game = TennisGame(player_1_name, player_2_name)
     for i in range(max(points_player_1, points_player_2)):
         if i < points_player_1:
@@ -63,6 +64,7 @@ def play_game(points_player_1, points_player_2, player_1_name, player_2_name):
 class TestTennis(unittest.TestCase):
      
     def test_Score(self):
+        """ Проверяет правильность получения текущего счета в игре тенниса. """
         for testcase in test_cases:
             (points_player_1, points_player_2, score, player_1_name, player_2_name) = testcase
             game = play_game(points_player_1, points_player_2, player_1_name, player_2_name)

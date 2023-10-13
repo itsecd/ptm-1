@@ -3,18 +3,21 @@
 class TennisGameDefactored1:
 
     def __init__(self, player_1_name, player_2_name):
+        """ Инициализирует игру тенниса."""
         self.player_1_name = player_1_name
         self.player_2_name = player_2_name
         self.points_player_1 = 0
         self.points_player_2 = 0
 
     def won_point(self, player_name):
+        """ Увеличивает количество очков для указанного игрока. """
         if player_name == self.player_1_name:
             self.points_player_1 += 1
         else:
             self.points_player_2 += 1
 
     def score(self):
+        """ Возвращает текущий счет в игре тенниса. """
         result = ""
         temp_score = 0
         if self.points_player_1 == self.points_player_2:
@@ -51,19 +54,23 @@ class TennisGameDefactored1:
 
 
 class TennisGameDefactored2:
+
     def __init__(self, player_1_name, player_2_name):
+        """ Инициализирует игру тенниса."""
         self.player_1_name = player_1_name
         self.player_2_name = player_2_name
         self.points_player_1 = 0
         self.points_player_2 = 0
         
     def won_point(self, player_name):
+        """ Увеличивает количество очков для указанного игрока. """
         if player_name == self.player_1_name:
             self.score_player_1()
         else:
             self.score_player_2()
     
     def score(self):
+        """ Возвращает текущий счет в игре тенниса. """
         result = ""
         if self.points_player_1 == self.points_player_2 and self.points_player_1 < 4:
             if self.points_player_1 == 0:
@@ -134,34 +141,42 @@ class TennisGameDefactored2:
         return result
     
     def set_score_player_1(self, number):
+        """ Увеличивает количество очков второго игрока указанное количество раз. """
         for i in range(number):
             self.score_player_1()
     
     def set_score_player_2(self, number):
+        """ Увеличивает количество очков второго игрока указанное количество раз. """
         for i in range(number):
             self.score_player_2()
     
     def score_player_1(self):
+        """ Увеличивает количество очков первого игрока. """
         self.points_player_1 +=1
     
     def score_player_2(self):
+        """ Увеличивает количество очков второго игрока. """
         self.points_player_2 +=1
         
         
 class TennisGameDefactored3:
+
     def __init__(self, player_1_name, player_2_name):
+        """ Инициализирует игру тенниса."""
         self.player_1_name = player_1_name
         self.player_2_name = player_2_name
         self.points_player_1 = 0
         self.points_player_2  = 0
         
     def won_point(self, player_name):
+        """ Увеличивает количество очков для указанного игрока. """
         if player_name == self.player_1_name:
             self.points_player_1 += 1
         else:
             self.points_player_2 += 1
     
     def score(self):
+        """ Возвращает текущий счет в игре тенниса. """
         if self.points_player_1 < 4 and self.points_player_2  < 4:
             points = ["Love", "Fifteen", "Thirty", "Forty"]
             score = points[self.points_player_1]
