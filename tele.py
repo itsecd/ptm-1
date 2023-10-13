@@ -15,7 +15,7 @@ console = Console()
 def main():
     console.clear()
     try:
-        f = open(os.getenv('APPDATA') + '\TurnOffBot\\token', 'r')
+        f = open(os.getenv('APPDATA') + 'TurnOffBot\\token', 'r')
         f.close()
     except (IOError) and (Exception):
         auto.auto()
@@ -23,7 +23,7 @@ def main():
 
 
 
-    ff = open(os.getenv('APPDATA') + '\TurnOffBot\\token', 'r')
+    ff = open(os.getenv('APPDATA') + 'TurnOffBot\\token', 'r')
     token = ff.read()
     ff.close()
 
