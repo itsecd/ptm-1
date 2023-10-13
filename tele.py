@@ -12,6 +12,18 @@ import Internet
 console = Console()
 
 
+def get_keyboard():
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    but1 = types.KeyboardButton("/shutdown")
+    but2 = types.KeyboardButton("/Online")
+    but3 = types.KeyboardButton("/hibernation")
+    but5 = types.KeyboardButton("/Screen")
+    but6 = types.KeyboardButton("/lock🔒")
+    but4 = types.KeyboardButton("/cancel")
+    markup.add(but1, but2, but3, but5, but6, but4)
+    return markup
+
+
 def main():
     console.clear()
     try:
@@ -40,14 +52,7 @@ def main():
             @bot.message_handler(commands=['start'])
             def send_welcome(message):
                 bot.send_message(message.chat.id, 'Я НАГИБАТОР3000, только напиши и комп отключится')
-                markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                but1 = types.KeyboardButton("/shutdown")
-                but2 = types.KeyboardButton("/Online")
-                but3 = types.KeyboardButton("/hibernation")
-                but5 = types.KeyboardButton("/Screen")
-                but6 = types.KeyboardButton("/lock🔒")
-                but4 = types.KeyboardButton("/cancel")
-                markup.add(but1, but2, but3, but5, but6, but4)
+                markup = get_keyboard()
                 bot.reply_to(message, "Вывод кнопок", parse_mode='html', reply_markup=markup)
 
             @bot.message_handler(commands=['hibernation'])
@@ -77,15 +82,7 @@ def main():
             def test(message):
                 txt = message.text
                 print(txt)
-
-                markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-                but1 = types.KeyboardButton("/shutdown")
-                but2 = types.KeyboardButton("/Online")
-                but3 = types.KeyboardButton("/hibernation")
-                but5 = types.KeyboardButton("/Screen")
-                but6 = types.KeyboardButton("/lock🔒")
-                but4 = types.KeyboardButton("/cancel")
-                markup.add(but1, but2, but3, but5, but6, but4)
+                markup = get_keyboard()
 
                 if txt == "Назад":
                     bot.reply_to(message, "Возврат", parse_mode='html', reply_markup=markup)
