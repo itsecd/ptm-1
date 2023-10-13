@@ -30,6 +30,26 @@ def execute_and_reply(bot, message, command, reply_text):
     return
 
 
+def get_shutdown_message(txt):
+    time_ranges = [
+        (18000, "часов 🕑"),
+        (7200, "часа 🕑"),
+        (3600, "час 🕑"),
+        (120, "минуты 🕑"),
+        (60, "минуту 🕑"),
+        (0, "секунд 🕑")
+    ]
+
+    for limit, label in time_ranges:
+        if int(txt) > limit:
+            if limit == 0:
+                return f"Компьютер выключится через {txt} {label}"
+            time_value = int(txt) / (3600 if "час" in label else 60)
+            return f"Компьютер выключится через {round(time_value)} {label}"
+
+    return None
+
+
 def main():
     console.clear()
 
@@ -96,65 +116,15 @@ def main():
                 return
 
             try:
-                if int(txt) >= 18000:
-                    cas = int(txt) / 3600
-                    print(cas)
-                    bot.reply_to(message, "Компьютер выключится через " + str(round(int(cas))) + " часов 🕑",
-                                 parse_mode='html',
-                                 reply_markup=markup)
-
-                if (int(txt) >= 7200) and (int(txt) < 18000):
-                    cas = int(txt) / 3600
-                    print(cas)
-                    bot.reply_to(message, "Компьютер выключится через " + str(round(int(cas))) + " часа 🕑",
-                                 parse_mode='html',
-                                 reply_markup=markup)
-
-                if (int(txt) > 3599) and (int(txt) < 7200):
-                    cas = int(txt) / 3600
-                    print(cas)
-                    bot.reply_to(message, "Компьютер выключится через " + str(round(int(cas))) + " час 🕑",
-                                 parse_mode='html',
-                                 reply_markup=markup)
-
-                if (int(txt) > 60) and (int(txt) < 120):
-                    menu = int(txt) / 60
-                    print(menu)
-                    bot.reply_to(message, "Компьютер выключится через " + str(round(int(menu))) + " минуту 🕑",
-                                 parse_mode='html',
-                                 reply_markup=markup)
-
-                if (int(txt) > 119) and (int(txt) < 300):
-                    menu = int(txt) / 60
-                    print(menu)
-                    bot.reply_to(message, "Компьютер выключится через " + str(round(int(menu))) + " минуты 🕑",
-                                 parse_mode='html',
-                                 reply_markup=markup)
-
-                if (int(txt) > 299) and (int(txt) < 3600):
-                    menu = int(txt) / 60
-                    print(menu)
-                    bot.reply_to(message, "Компьютер выключится через " + str(round(int(menu))) + " минут 🕑",
-                                 parse_mode='html',
-                                 reply_markup=markup)
-
-                if (int(txt) > 0) and (int(txt) < 61):
-                    menu = int(txt) / 60
-                    print(menu)
-                    bot.reply_to(message, "Компьютер выключится через " + txt + " секунд 🕑", parse_mode='html',
-                                 reply_markup=markup)
-
-                if int(txt) == 0:
-                    bot.reply_to(message, "Компьютер отключается ", parse_mode='html',
-                                 reply_markup=markup)
-                os.system('shutdown /s /t ' + txt)
+                shutdown_message = get_shutdown_message(txt)
+                if shutdown_message:
+                    bot.reply_to(message, shutdown_message, parse_mode='html', reply_markup=markup)
+                    os.system(f'shutdown /s /t {txt}')
+                else:
+                    raise ValueError(f"Недопустимое значение времени: {txt}")
 
             except Exception as _ex:
-                bot.reply_to(message,
-                             str(_ex),
-                             parse_mode='html',
-                             reply_markup=markup)
-                return
+                bot.reply_to(message, str(_ex), parse_mode='html', reply_markup=markup)
 
         @bot.message_handler(commands=['cancel'])
         def send(message):
