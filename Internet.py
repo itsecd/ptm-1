@@ -1,10 +1,18 @@
 import requests
 import time
+
 from rich import print
 from rich.console import Console
 
 
-def check_internet_connection(timeout=1, max_retries=10):
+def check_internet_connection(timeout: int = 1, max_retries: int = 10) -> bool:
+    """
+    Проверяет наличие интернет-соединения, пытаясь отправить запрос на заданный URL.
+
+    :param timeout: Максимальное время ожидания ответа от сервера (в секундах).
+    :param max_retries: Максимальное количество попыток соединения.
+    :return: True, если соединение установлено. В противном случае False.
+    """
     console = Console()
     retries = 0
 
