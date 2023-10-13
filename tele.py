@@ -32,21 +32,20 @@ def execute_and_reply(bot, message, command, reply_text):
 
 def main():
     console.clear()
-    try:
-        f = open(os.getenv('APPDATA') + 'TurnOffBot\\token', 'r')
-        f.close()
-    except IOError and Exception:
-        auto.auto()
 
-    ff = open(os.getenv('APPDATA') + 'TurnOffBot\\token', 'r')
-    token = ff.read()
-    ff.close()
+    try:
+        with open(os.path.join(os.getenv('APPDATA'), 'TurnOffBot', 'token'), 'r') as ff:
+            token = ff.read()
+    except (IOError, Exception):
+        auto.auto()
+        with open(os.path.join(os.getenv('APPDATA'), 'TurnOffBot', 'token'), 'r') as ff:
+            token = ff.read()
 
     turn_on = False
 
     while not turn_on:
         try:
-            Internet.main()
+            Internet.check_internet_connection()
 
             print('Made by rus152')
             print('')
