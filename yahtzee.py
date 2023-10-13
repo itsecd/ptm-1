@@ -2,7 +2,9 @@ class Yahtzee:
 
     @staticmethod
     def chance(dice_1, dice_2, dice_3, dice_4, dice_5):
-        """counting and returning the number of points"""
+        """
+        counting and returning the number of points
+        """
         total_score = 0
         total_score += dice_1
         total_score += dice_2
@@ -13,7 +15,9 @@ class Yahtzee:
 
     @staticmethod
     def yahtzee(dice):
-        """checking for five equal dice"""
+        """
+        checking for five equal dice
+        """
         counts = [0] * (len(dice) + 1)
         for die in dice:
             counts[die - 1] += 1
@@ -24,7 +28,9 @@ class Yahtzee:
     
     @staticmethod
     def ones(dice_1, dice_2, dice_3, dice_4, dice_5):
-        """"checking for diсe with a value one and returning number of points"""
+        """
+        checking for diсe with a value one
+        """
         sum = 0
         if dice_1 == 1:
             sum += 1
@@ -40,7 +46,9 @@ class Yahtzee:
     
     @staticmethod
     def twos(dice_1, dice_2, dice_3, dice_4, dice_5):
-        """"checking for diсe with a value two and returning number of points"""
+        """
+        checking for diсe with a value two
+        """
         sum = 0
         if dice_1 == 2:
             sum += 2
@@ -56,7 +64,9 @@ class Yahtzee:
     
     @staticmethod
     def threes(dice_1, dice_2, dice_3, dice_4, dice_5):
-        """"checking for diсe with a value three and returning number of points"""
+        """
+        checking for diсe with a value three
+        """
         s = 0
         if dice_1 == 3:
             s += 3
@@ -80,7 +90,9 @@ class Yahtzee:
         self.dice[4] = dice_5
     
     def fours(self):
-        """"checking for diсe with a value four and returning number of points"""
+        """
+        checking for diсe with a value four
+        """
         sum = 0
         for at in range(5):
             if self.dice[at] == 4: 
@@ -88,7 +100,9 @@ class Yahtzee:
         return sum
     
     def fives(self):
-        """"checking for diсe with a value five and returning number of points"""
+        """
+        checking for diсe with a value five
+        """
         s = 0
         i = 0
         for i in range(len(self.dice)): 
@@ -97,7 +111,9 @@ class Yahtzee:
         return s
     
     def sixes(self):
-        """"checking for diсe with a value six and returning number of points"""
+        """
+        checking for diсe with a value six 
+        """
         sum = 0
         for at in range(len(self.dice)): 
             if self.dice[at] == 6:
@@ -106,7 +122,9 @@ class Yahtzee:
     
     @staticmethod
     def score_pair(dice_1, dice_2, dice_3, dice_4, dice_5):
-        """"checking for one pair of dice with equal score"""
+        """
+        checking for one pair of dice with equal score
+        """
         counts = [0] * 6
         counts[dice_1 - 1] += 1
         counts[dice_2 - 1] += 1
@@ -121,7 +139,9 @@ class Yahtzee:
     
     @staticmethod
     def two_pair(dice_1, dice_2, dice_3, dice_4, dice_5):
-        """"checking for two pairs of dice with equal score"""
+        """
+        checking for two pairs of dice with equal score
+        """
         counts = [0] * 6
         counts[dice_1 - 1] += 1
         counts[dice_2 - 1] += 1
@@ -142,7 +162,9 @@ class Yahtzee:
     
     @staticmethod
     def four_of_a_kind(dice_1, dice_2, dice_3, dice_4, dice_5):
-        """"checking for four dice with equal score"""
+        """
+        checking for four dice with equal score
+        """
         counts = [0] * 6
         counts[dice_1 - 1] += 1
         counts[dice_2 - 1] += 1
@@ -156,7 +178,9 @@ class Yahtzee:
     
     @staticmethod
     def three_of_a_kind(dice_1, dice_2, dice_3, dice_4, dice_5):
-        """"checking for three dice with equal score"""
+        """
+        checking for three dice with equal score
+        """
         t = [0] * 6
         t[dice_1 - 1] += 1
         t[dice_2 - 1] += 1
@@ -170,7 +194,9 @@ class Yahtzee:
     
     @staticmethod
     def small_straight(dice_1, dice_2, dice_3, dice_4, dice_5):
-        """"checking for a combination of values 1, 2, 3, 4, 5"""
+        """
+        checking for a combination of values 1, 2, 3, 4, 5
+        """
         counts = [0] * 6
         counts[dice_1 - 1] += 1
         counts[dice_2 - 1] += 1
@@ -187,7 +213,9 @@ class Yahtzee:
     
     @staticmethod
     def large_straight(dice_1, dice_2, dice_3, dice_4, dice_5):
-        """"checking for a combination of values 2, 3, 4, 5, 6"""
+        """
+        checking for a combination of values 2, 3, 4, 5, 6
+        """
         counts = [0] * 6
         counts[dice_1 - 1] += 1
         counts[dice_2 - 1] += 1
@@ -204,7 +232,10 @@ class Yahtzee:
     
     @staticmethod
     def full_house(dice_1, dice_2, dice_3, dice_4, dice_5):
-        """"checking for a combination of pair and three dice with other equal value"""
+        """
+        checking for a combination of pair 
+        and three dice with other equal value
+        """
         counts = []
         _2 = False
         i = 0
