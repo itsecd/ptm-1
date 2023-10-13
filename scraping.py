@@ -13,7 +13,7 @@ def scraping(url:str,count:int):
     if not os.path.isdir("temp/" + url):
         os.mkdir("temp/" + url)
     url_full="https://yandex.ru/images/search?text=" + url
-    driver=webdriver.Chrome(executable_path='C:/Users/user/Desktop/1lab/chromedriver.exe')
+    driver=webdriver.Chrome(executable_path="C:/Users/user/Desktop/1lab/chromedriver.exe")
     array=[]
     try:
         driver.get(url=url_full)
@@ -28,12 +28,12 @@ def scraping(url:str,count:int):
             time.sleep(2)
         html=driver.page_source
         time.sleep(5)
-        soup=BeautifulSoup(html,'lxml')
+        soup=BeautifulSoup(html,"lxml")
         resp_0=soup.find("div",class_="serp-list")
         index=0
         for i in range(count):
             str_0=str(i)
-            str_1='serp-item_pos_' + str_0
+            str_1="serp-item_pos_" + str_0
             resp_1=resp_0.find("div",class_=str_1)
             resp_2=resp_1.find("div",class_="serp-item__preview")
             resp_3=resp_2.find("a",class_="serp-item__link")
@@ -41,11 +41,11 @@ def scraping(url:str,count:int):
             if not url_img in array:
                 array.append(url_img)  
                 
-                img=requests.get('https:' + array[i]).content
+                img=requests.get("https:" + array[i]).content
                 
                 a=str(index)
-                ul='temp/' + url + '/' + a.zfill(4) +'.jpg'
-                with open(ul,'wb') as handler:
+                ul="temp/" + url + "/" + a.zfill(4) +".jpg"
+                with open(ul,"wb") as handler:
                     handler.write(img)
                 index += 1
     except Exception as ex:
@@ -63,9 +63,9 @@ def jpg(url:str,count:int):
         os.mkdir("dataset/" + url)
     for i in range(count):
         a=str(i)
-        filename=str('temp/' + url + '/' + a.zfill(4) +'.jpg')
+        filename=str("temp/" + url + "/" + a.zfill(4) +".jpg")
         image=cv2.imread(filename)
-        filewrite=str('dataset/' + url + '/' + a.zfill(4) +'.jpg')
+        filewrite=str("dataset/" + url + "/" + a.zfill(4) +".jpg")
         cv2.imwrite(filewrite,image)
 
 def main():

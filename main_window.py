@@ -44,7 +44,7 @@ class Example(QWidget):
         self.center()
         self.setWindowTitle("lab3")
         self.show()
-        self.folderpath = QFileDialog.getExistingDirectory(self, 'Select Folder')
+        self.folderpath = QFileDialog.getExistingDirectory(self, "Select Folder")
 
     def center(self):
         qr = self.frameGeometry()
