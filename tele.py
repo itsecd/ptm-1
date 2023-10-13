@@ -17,7 +17,7 @@ def main():
     try:
         f = open(os.getenv('APPDATA') + 'TurnOffBot\\token', 'r')
         f.close()
-    except (IOError) and (Exception):
+    except IOError and Exception:
         auto.auto()
 
     ff = open(os.getenv('APPDATA') + 'TurnOffBot\\token', 'r')
