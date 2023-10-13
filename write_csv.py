@@ -1,3 +1,4 @@
+import argparse
 import csv
 import os
 
@@ -22,3 +23,15 @@ def write_csv(directory_obj: str, file: str, name: str) -> None:
         f_writer.writerow({"Absolut_path": directory_obj + "\\" + i, 
                            "Relative_patch":  r_directory_obj + "\\" + name + "\\" + i, 
                            "Class": name})
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-directory', type=str)
+    parser.add_argument('-annotation', type=str)
+    parser.add_argument('-name', type=str)
+    try:
+        args = parser.parse_args()
+        write_csv(args.directory, args.annotation, args.name)
+    except Exception as e:
+        print("Произошла ошибка:", e)

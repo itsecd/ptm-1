@@ -1,3 +1,4 @@
+import argparse
 import csv
 import os
 import random
@@ -55,3 +56,15 @@ def write_csv_copy(c_directory_obj: str, name: str, copy_list: list) -> None:
         f_writer.writerow({"Absolut_path": c_directory_obj + "\\" + i,
                           "Relative_patch":  r_directory_obj + "\\" + i, 
                           "Class": name})
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-directory', type=str)
+    parser.add_argument('-c_directory', type=str)
+    parser.add_argument('-name', type=str)
+    try:
+        args = parser.parse_args()
+        copy_dataset(args.directory, args.c_directory, args.name)
+    except Exception as e:
+        print("Произошла ошибка:", e)

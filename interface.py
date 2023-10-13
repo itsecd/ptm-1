@@ -176,13 +176,8 @@ class New_Interface(QMainWindow):
         self.show()
 
 
-def main() -> None:
-    """Separates code blocks."""
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     w = Interface()
     w.show()
     sys.exit(app.exec_())
-
-
-if __name__ == "__main__":
-    main()

@@ -1,3 +1,4 @@
+import argparse
 import csv
 
 
@@ -40,3 +41,18 @@ class Iterator:
             return self.read_list[self.count]
         elif self.count == len(self.read_list):
             raise StopIteration
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-directory', type=str)
+    parser.add_argument('-name', type=str)
+    try:
+        args = parser.parse_args()
+        iter = Iterator(args.directory, args.name)
+        print(type(next(iter)))
+        print(next(iter))
+        print(next(iter))
+    except Exception as e:
+        print("Произошла ошибка:", e)
+       
