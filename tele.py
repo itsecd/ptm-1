@@ -88,6 +88,7 @@ def main() -> None:
     while not turn_on:
         try:
             Internet.check_internet_connection()
+            turn_on = True
         except Exception as ex:
             print(f"Ошибка при проверке интернета: {ex}")
             time.sleep(5)
