@@ -51,21 +51,21 @@ test_cases = [
     
     ]
 
-def play_game(p1Points, p2Points, p1Name, p2Name):
-    game = TennisGame(p1Name, p2Name)
-    for i in range(max(p1Points, p2Points)):
-        if i < p1Points:
-            game.won_point(p1Name)
-        if i < p2Points:
-            game.won_point(p2Name)
+def play_game(points_player_1, points_player_2, player_1_name, player_2_name):
+    game = TennisGame(player_1_name, player_2_name)
+    for i in range(max(points_player_1, points_player_2)):
+        if i < points_player_1:
+            game.won_point(player_1_name)
+        if i < points_player_2:
+            game.won_point(player_2_name)
     return game
 
 class TestTennis(unittest.TestCase):
      
     def test_Score(self):
         for testcase in test_cases:
-            (p1Points, p2Points, score, p1Name, p2Name) = testcase
-            game = play_game(p1Points, p2Points, p1Name, p2Name)
+            (points_player_1, points_player_2, score, player_1_name, player_2_name) = testcase
+            game = play_game(points_player_1, points_player_2, player_1_name, player_2_name)
             self.assertEquals(score, game.score())
  
 if __name__ == "__main__":
