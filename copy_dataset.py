@@ -13,5 +13,3 @@ def copy_dataset(path: str,path_to:str) -> None:
             shutil.copy(
                 os.path.join(path+"/"+i, j), os.path.join(path_to+"/", i + "_" + j)
             )
-
-

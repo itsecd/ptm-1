@@ -7,6 +7,7 @@ import cv2
 import shutil
 import math
 
+
 def scraping(url:str,count:int):
     if not os.path.isdir("temp"):
         os.mkdir("temp")
@@ -40,9 +41,7 @@ def scraping(url:str,count:int):
             url_img=resp_3.find("img",class_="serp-item__thumb justifier__thumb").get("src")
             if not url_img in array:
                 array.append(url_img)  
-                
                 img=requests.get("https:" + array[i]).content
-                
                 a=str(index)
                 ul="temp/" + url + "/" + a.zfill(4) +".jpg"
                 with open(ul,"wb") as handler:
@@ -56,6 +55,7 @@ def scraping(url:str,count:int):
     jpg(url,count)
     shutil.rmtree("temp")
 
+
 def jpg(url:str,count:int):
     if not os.path.isdir("dataset"):
         os.mkdir("dataset")
@@ -68,11 +68,10 @@ def jpg(url:str,count:int):
         filewrite=str("dataset/" + url + "/" + a.zfill(4) +".jpg")
         cv2.imwrite(filewrite,image)
 
+
 def main():
     scraping("dog",100)
-    
+
+   
 if __name__ =="__main__":
     main()
-
-
-

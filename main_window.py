@@ -22,7 +22,6 @@ class Example(QWidget):
         self.initUI()
 
     def initUI(self):
-        
         self.btn_1 = QPushButton("Создать файл анотацию исходного датасета", self)
         self.btn_1.move(50, 60)
         self.btn_1.clicked.connect(self.showDialog_1)
@@ -52,7 +51,6 @@ class Example(QWidget):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    
     def showDialog_1(self):
         text_2, _ =(QFileDialog.getSaveFileName(self, "Напишите название файла", filter=".csv"))
         self.create_file = create_csv(str(self.folderpath),str(text_2))
@@ -82,7 +80,6 @@ class Example(QWidget):
 
 
 if __name__ == "__main__":
-
     app = QApplication(sys.argv)
     ex = Example()
     sys.exit(app.exec_())
