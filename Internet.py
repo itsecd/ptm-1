@@ -12,7 +12,7 @@ def main():
     while not internet:
         print('Проверка соединения')
         try:
-            requests.head("http://www.google.com/", timeout=timeout)
+            requests.head("https://www.google.com/", timeout=timeout)
             print('Соединение с интернетом есть')
             internet = True
             time.sleep(2)
