@@ -1,18 +1,24 @@
+import os
 import time
+
 import telebot
 from telebot import types
-import os
 import win10toast
 from mss import mss
 from rich import print
 from rich.console import Console
+
 import auto
 import Internet
+
 
 console = Console()
 
 
-def get_keyboard():
+def get_keyboard() -> types.ReplyKeyboardMarkup:
+    """
+    Создает и возвращает клавиатуру для бота.
+    """
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     but1 = types.KeyboardButton("/shutdown")
     but2 = types.KeyboardButton("/Online")
@@ -24,13 +30,26 @@ def get_keyboard():
     return markup
 
 
-def execute_and_reply(bot, message, command, reply_text):
+def execute_and_reply(bot: telebot.TeleBot, message: types.Message, command: str, reply_text: str) -> None:
+    """
+    Выполняет команду ОС и отправляет ответное сообщение в чат.
+
+    :param bot: Экземпляр бота.
+    :param message: Сообщение от пользователя.
+    :param command: Команда для выполнения.
+    :param reply_text: Текст ответного сообщения.
+    """
     os.system(command)
     bot.reply_to(message, reply_text)
-    return
 
 
-def get_shutdown_message(txt):
+def get_shutdown_message(txt: str):
+    """
+    Возвращает соответствующее сообщение о времени выключения на основе заданной продолжительности.
+
+    :param txt: Продолжительность в секундах.
+    :return: Сообщение для пользователя о времени до выключения.
+    """
     time_ranges = [
         (18000, "часов 🕑"),
         (7200, "часа 🕑"),
@@ -50,7 +69,10 @@ def get_shutdown_message(txt):
     return None
 
 
-def main():
+def main() -> None:
+    """
+    Главная функция, запускающая бота и обрабатывающая команды пользователя.
+    """
     console.clear()
 
     try:
