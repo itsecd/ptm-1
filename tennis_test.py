@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from tennis import TennisGame
 
+from tennis import TennisGame
 from tennis_unitest import test_cases, play_game
 
 class TestTennis:
