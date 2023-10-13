@@ -27,9 +27,9 @@ def main():
     token = ff.read()
     ff.close()
 
-    turnon = False
+    turn_on = False
 
-    while not turnon:
+    while not turn_on:
         try:
             Internet.main()
 
@@ -42,20 +42,20 @@ def main():
 
             @bot.message_handler(commands=['start'])
             def send_welcome(message):
-                bot.send_message(message.chat.id, 'Я нагибатор3000, только напиши и комп отключится')
+                bot.send_message(message.chat.id, 'Я НАГИБАТОР3000, только напиши и комп отключится')
                 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
                 but1 = types.KeyboardButton("/shutdown")
                 but2 = types.KeyboardButton("/Online")
-                but3 = types.KeyboardButton("/hiberdown")
+                but3 = types.KeyboardButton("/hibernation")
                 but5 = types.KeyboardButton("/Screen")
                 but6 = types.KeyboardButton("/lock🔒")
                 but4 = types.KeyboardButton("/cancel")
                 markup.add(but1, but2, but3, but5, but6, but4)
                 bot.reply_to(message, "Вывод кнопок", parse_mode='html', reply_markup=markup)
 
-            @bot.message_handler(commands=['hiberdown'])
+            @bot.message_handler(commands=['hibernation'])
             def send(message):
-                bot.reply_to(message, "Комп переходит в режим гибернации", )
+                bot.reply_to(message, "Комп переходит в режим гибернация", )
                 os.system('shutdown /h')
 
             @bot.message_handler(commands=['lock🔒'])
@@ -73,9 +73,9 @@ def main():
                 but4 = types.KeyboardButton("21600")
                 but5 = types.KeyboardButton("Назад")
                 sec.add(but0, but1, but2, but3, but4, but5)
-                mesg: str = bot.send_message(message.chat.id, 'Через сколько отключить компьютер?(В секундах)',
+                msg: str = bot.send_message(message.chat.id, 'Через сколько отключить компьютер?(В секундах)',
                                              parse_mode='html', reply_markup=sec)
-                bot.register_next_step_handler(mesg, test)
+                bot.register_next_step_handler(msg, test)
 
             def test(message):
                 txt = message.text
@@ -84,7 +84,7 @@ def main():
                 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
                 but1 = types.KeyboardButton("/shutdown")
                 but2 = types.KeyboardButton("/Online")
-                but3 = types.KeyboardButton("/hiberdown")
+                but3 = types.KeyboardButton("/hibernation")
                 but5 = types.KeyboardButton("/Screen")
                 but6 = types.KeyboardButton("/lock🔒")
                 but4 = types.KeyboardButton("/cancel")
@@ -117,29 +117,29 @@ def main():
                                      reply_markup=markup)
 
                     if (int(txt) > 60) and (int(txt) < 120):
-                        minu = int(txt) / 60
-                        print(minu)
-                        bot.reply_to(message, "Компьютер выключится через " + str(round(int(minu))) + " минуту 🕑",
+                        menu = int(txt) / 60
+                        print(menu)
+                        bot.reply_to(message, "Компьютер выключится через " + str(round(int(menu))) + " минуту 🕑",
                                      parse_mode='html',
                                      reply_markup=markup)
 
                     if (int(txt) > 119) and (int(txt) < 300):
-                        minu = int(txt) / 60
-                        print(minu)
-                        bot.reply_to(message, "Компьютер выключится через " + str(round(int(minu))) + " минуты 🕑",
+                        menu = int(txt) / 60
+                        print(menu)
+                        bot.reply_to(message, "Компьютер выключится через " + str(round(int(menu))) + " минуты 🕑",
                                      parse_mode='html',
                                      reply_markup=markup)
 
                     if (int(txt) > 299) and (int(txt) < 3600):
-                        minu = int(txt) / 60
-                        print(minu)
-                        bot.reply_to(message, "Компьютер выключится через " + str(round(int(minu))) + " минут 🕑",
+                        menu = int(txt) / 60
+                        print(menu)
+                        bot.reply_to(message, "Компьютер выключится через " + str(round(int(menu))) + " минут 🕑",
                                      parse_mode='html',
                                      reply_markup=markup)
 
                     if (int(txt) > 0) and (int(txt) < 61):
-                        minu = int(txt) / 60
-                        print(minu)
+                        menu = int(txt) / 60
+                        print(menu)
                         bot.reply_to(message, "Компьютер выключится через " + txt + " секунд 🕑", parse_mode='html',
                                      reply_markup=markup)
 
@@ -164,7 +164,7 @@ def main():
             def send(message):
                 bot.reply_to(message, "В данный момент комп онлайн", )
                 toaster = win10toast.ToastNotifier()
-                toaster.show_toast("Ботяра 🔔", "Все знают, что комп онлайн", icon_path="icon.ico")
+                toaster.show_toast("БОТЯРА 🔔", "Все знают, что комп онлайн", icon_path="icon.ico")
 
             @bot.message_handler(commands=['Screen'])
             def send(message):
@@ -175,7 +175,7 @@ def main():
                 except Exception:
                     print("")
                 toaster = win10toast.ToastNotifier()
-                toaster.show_toast("Ботяра 🔔", "Запрос на скриншот", icon_path="icon.ico")
+                toaster.show_toast("БОТЯРА 🔔", "Запрос на скриншот", icon_path="icon.ico")
                 bot.send_message(message.chat.id, 'Скриншот сделан')
                 bot.send_document(message.chat.id, document=open('monitor-1.png', 'rb'))
                 try:

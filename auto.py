@@ -16,20 +16,20 @@ def auto():
         print()
 
     print('')
-    toknum = int()
-    while toknum < 3:
-        print('Введете свой токен. (Взять токен для своего бота можно у оффициального бота BotFather)')
-        tokenin = input()
+    token = int()
+    while token < 3:
+        print('Введете свой токен. (Взять токен для своего бота можно у официального бота BotFather)')
+        token2 = input()
         print('')
-        toknum == 0
+        token == 0
         print(
-            'Ваш токен: ' + tokenin + '? Это верно?(Для избежания дальнейших пролем с запуском, удостоверьтесь, что токен введён правильно) \n [Да/Нет]')
+            'Ваш токен: ' + token2 + '? Это верно?(Для избежания дальнейших пробоем с запуском, удостоверьтесь, что токен введён правильно) \n [Да/Нет]')
         print('')
-        yes_or_notnum = int()
-        while yes_or_notnum < 2:
+        yes_or_not_num = int()
+        while yes_or_not_num < 2:
             yes_or_not = input()
             if (yes_or_not == 'Да') or (yes_or_not == 'да'):
-                toknum = toknum + 3
+                token = token + 3
                 break
             if (yes_or_not == 'Нет') or (yes_or_not == 'нет'):
                 print('')
@@ -37,7 +37,7 @@ def auto():
             else:
                 print('Введите (Да) или (Нет)')
     f = open(os.getenv('APPDATA') + '\TurnOffBot\\token', 'w')
-    f.write(tokenin)
+    f.write(token2)
     f.close()
 
     print('Первоначальная настройка завершена.')
