@@ -1,6 +1,8 @@
 class Yahtzee:
     @staticmethod
     def chance(d1, d2, d3, d4, d5):
+        """takes 5 arguments - values on five dice.
+        It adds these values and returns the total"""
         total = 0
         total += d1
         total += d2
@@ -12,6 +14,7 @@ class Yahtzee:
 
     @staticmethod
     def yahtzee(dice):
+        """calculates the sum of the values on the dice if all values are the same"""
         counts = [0] * (len(dice) + 1)
         for die in dice:
             counts[die - 1] += 1
@@ -22,6 +25,7 @@ class Yahtzee:
 
     @staticmethod
     def ones(d1, d2, d3, d4, d5):
+        """calculates the sum of the values on the dice if there are values equal to 1"""
         sum = 0
         if d1 == 1:
             sum += 1
@@ -38,6 +42,7 @@ class Yahtzee:
 
     @staticmethod
     def twos(d1, d2, d3, d4, d5):
+        """calculates the sum of the values on the dice if there are values equal to 2"""
         sum = 0
         if d1 == 2:
             sum += 2
@@ -54,6 +59,7 @@ class Yahtzee:
 
     @staticmethod
     def threes(d1, d2, d3, d4, d5):
+        """calculates the sum of the values on the dice if there are values equal to 3"""
         s = 0
         if d1 == 3:
             s += 3
@@ -76,6 +82,7 @@ class Yahtzee:
         self.dice[4] = d5
 
     def fours(self):
+        """calculates the sum of the values on the dice if there are values equal to 4"""
         sum = 0
         for at in range(5):
             if self.dice[at] == 4:
@@ -84,6 +91,7 @@ class Yahtzee:
 
     
     def fives(self):
+        """calculates the sum of the values on the dice if there are values equal to 5"""
         s = 0
         i = 0
         for i in range(len(self.dice)):
@@ -93,6 +101,7 @@ class Yahtzee:
 
 
     def sixes(self):
+        """calculates the sum of the values on the dice if there are values equal to 6"""
         sum = 0
         for at in range(len(self.dice)):
             if self.dice[at] == 6:
@@ -102,6 +111,7 @@ class Yahtzee:
 
     @staticmethod
     def score_pair(d1, d2, d3, d4, d5):
+        """calculates the sum of the values on the dice if there are two equal values"""
         counts = [0] * 6
         counts[d1 - 1] += 1
         counts[d2 - 1] += 1
@@ -117,6 +127,7 @@ class Yahtzee:
 
     @staticmethod
     def two_pair(d1, d2, d3, d4, d5):
+        """calculates the sum of the values on the dice if there are two pairs of the same values"""
         counts = [0] * 6
         counts[d1 - 1] += 1
         counts[d2 - 1] += 1
@@ -136,6 +147,7 @@ class Yahtzee:
 
     @staticmethod
     def four_of_a_kind( _1, _2, d3, d4, d5):
+        """calculates the sum of the values on the dice if there are four identical values"""
         tallies = [0] * 6
         tallies[_1-1] += 1
         tallies[_2-1] += 1
@@ -150,6 +162,7 @@ class Yahtzee:
 
     @staticmethod
     def three_of_a_kind(d1, d2, d3, d4, d5):
+        """calculates the sum of the values on the dice if there are three identical values"""
         t = [0] * 6
         t[d1 - 1] += 1
         t[d2 - 1] += 1
@@ -164,6 +177,7 @@ class Yahtzee:
 
     @staticmethod
     def small_straight(d1, d2, d3, d4, d5):
+        """calculates the sum of the values on the dice if there is a combination of four consecutive values"""
         tallies = [0] * 6
         tallies[d1 - 1] += 1
         tallies[d2 - 1] += 1
@@ -177,6 +191,7 @@ class Yahtzee:
 
     @staticmethod
     def large_straight(d1, d2, d3, d4, d5):
+        """calculates the sum of the values on the dice if there is a sequence of five values"""
         tallies = [0] * 6
         tallies[d1 - 1] += 1
         tallies[d2 - 1] += 1
@@ -190,6 +205,8 @@ class Yahtzee:
 
     @staticmethod
     def full_house(d1, d2, d3, d4, d5):
+        """calculates the sum of the values on the dice if there are three values
+        that are the same and two other values that are the same."""
         tallies = [0] * 6
         tallies[d1 - 1] += 1
         tallies[d2 - 1] += 1
