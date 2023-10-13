@@ -1,8 +1,10 @@
-import scorer
-from scorer import IceCream
 import datetime
 
+import scorer
+from scorer import IceCream
+
 def long_range_forecast(quarter: str):
+    """ Функция осуществляет долгосрочный прогноз на квартал в отношении вкуса мороженого."""
     result = {}
     if quarter == "Q1" or quarter == "Q4":
         for flavour in IceCream:
@@ -20,7 +22,7 @@ def long_range_forecast(quarter: str):
     for day in interesting_dates:
         scorer.update_selection()
         days_forward = (day - datetime.date.fromisoformat("2023-04-26")).days
-        expected_weather.append(scorer.lookup_weather(days_forward=days_forward))
+        expected_weather.append(scorer.lookup_weather(days_forward = days_forward))
 
     for flavour in IceCream:
         result[flavour] += 10
