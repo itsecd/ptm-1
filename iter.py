@@ -40,19 +40,3 @@ class Iterator:
             return self.read_list[self.count]
         elif self.count == len(self.read_list):
             raise StopIteration
-
-
-def main() -> None:
-    """Separates code blocks."""
-    s = Iterator("D:\Lab Python\dataset_2copy.csv", "rose")
-    print(type(next(s)))
-    print(next(s))
-    print(next(s))
-    t = Iterator("D:\Lab Python\dataset_2copy.csv", "tulip")
-    print(next(t))
-    print(next(t))
-    print(next(t))
-
-
-if __name__ == "__main__":
-	main()

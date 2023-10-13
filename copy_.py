@@ -41,16 +41,3 @@ def write_csv_copy(directory_obj: str, c_directory_obj: str, name: str) -> None:
             f_writer.writerow({"Absolut_path": c_directory_obj + "\\" + name + "_" + i,
                                "Relative_patch":  r_directory_obj + "\\" + name + "_" + i,
                                "Class": name})
-
-
-def main() -> None:
-    """Separates code blocks."""
-    c_directory = "D:\Lab Python\\"
-    directory_rose = "D:\Lab Python\Lab_1\dataset\ rose"
-    directory_tulip = "D:\Lab Python\Lab_1\dataset\ tulip"
-    copy_dataset(directory_rose, c_directory, "rose")
-    copy_dataset(directory_tulip, c_directory, "tulip")
-
-
-if __name__ == "__main__":
-    main()

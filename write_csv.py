@@ -22,16 +22,3 @@ def write_csv(directory_obj: str, file: str, name: str) -> None:
         f_writer.writerow({"Absolut_path": directory_obj + "\\" + i, 
                            "Relative_patch":  r_directory_obj + "\\" + name + "\\" + i, 
                            "Class": name})
-
-
-def main() -> None:
-    """Separates code blocks."""
-    directory_rose = "D:\Lab Python\Lab_1\dataset\ rose"
-    directory_tulip = "D:\Lab Python\Lab_1\dataset\ tulip"
-    file = "D:\Lab Python\\"
-    write_csv(directory_rose, file, "rose")
-    write_csv(directory_tulip, file, "tulip")
-
-
-if __name__ == "__main__":
-	main()
