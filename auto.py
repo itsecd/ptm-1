@@ -10,8 +10,9 @@ def auto():
     print('Made by rus152')
     print('Файл токена не найден. Начинается первоначальная настройка')
 
+    turnoff_path = os.path.join(os.getenv('APPDATA'), 'TurnOffBot')
     try:
-        os.mkdir(os.getenv('APPDATA') + 'TurnOffBot')
+        os.mkdir(turnoff_path)
     except (IOError, Exception):
         print()
 
@@ -36,7 +37,7 @@ def auto():
                 break
             else:
                 print('Введите (Да) или (Нет)')
-    f = open(os.getenv('APPDATA') + 'TurnOffBot\\token', 'w')
+    f = open(os.path.join(turnoff_path, 'token'), 'w')
     f.write(token2)
     f.close()
 
