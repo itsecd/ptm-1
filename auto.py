@@ -1,12 +1,19 @@
-from rich.console import Console
 import os
-from rich import print
 import time
+from typing import NoReturn
+
+from rich import print
+from rich.console import Console
+
 
 console = Console()
 
 
-def auto():
+def auto() -> NoReturn:
+    """
+    Проводит первоначальную настройку бота, включая создание директории и запись токена.
+    Если директория уже существует или токен уже записан, пропускает соответствующие шаги.
+    """
     print('Made by rus152')
     print('Файл токена не найден. Начинается первоначальная настройка')
 
@@ -16,30 +23,31 @@ def auto():
     except (IOError, Exception):
         print()
 
-    print('')
-    token = int()
-    while token < 3:
+    token_count: int = 0
+    entered_token = ''
+    while token_count < 3:
         print('Введете свой токен. (Взять токен для своего бота можно у официального бота BotFather)')
-        token2 = input()
+        entered_token: str = input()
         print('')
         print(
-            'Ваш токен: ' + token2 + '? Это верно?(Для избежания дальнейших пробоем с запуском, удостоверьтесь, '
-                                     'что токен введён правильно) \n [Да/Нет]')
-        print('')
-        yes_or_not_num = int()
-        while yes_or_not_num < 2:
-            yes_or_not = input()
-            if (yes_or_not == 'Да') or (yes_or_not == 'да'):
-                token = token + 3
-                break
-            if (yes_or_not == 'Нет') or (yes_or_not == 'нет'):
-                print('')
-                break
+            f'Ваш токен: {entered_token}? Это верно? (Для избежания дальнейших проблем с запуском, удостоверьтесь, '
+            f'что токен введён правильно) \n [Да/Нет]')
+
+        confirmation_count: int = 0
+        while confirmation_count < 2:
+            user_confirmation: str = input()
+            if user_confirmation.lower() in ['да', 'нет']:
+                if user_confirmation.lower() == 'да':
+                    token_count += 3
+                    break
+                else:
+                    print('')
+                    break
             else:
                 print('Введите (Да) или (Нет)')
-    f = open(os.path.join(turnoff_path, 'token'), 'w')
-    f.write(token2)
-    f.close()
+
+    with open(os.path.join(turnoff_path, 'token'), 'w') as f:
+        f.write(entered_token)
 
     print('Первоначальная настройка завершена.')
     time.sleep(5)
