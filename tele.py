@@ -24,6 +24,12 @@ def get_keyboard():
     return markup
 
 
+def execute_and_reply(bot, message, command, reply_text):
+    os.system(command)
+    bot.reply_to(message, reply_text)
+    return
+
+
 def main():
     console.clear()
     try:
@@ -57,13 +63,11 @@ def main():
 
             @bot.message_handler(commands=['hibernation'])
             def send(message):
-                bot.reply_to(message, "Комп переходит в режим гибернация", )
-                os.system('shutdown /h')
+                execute_and_reply(bot, message, 'shutdown /h', "Комп переходит в режим гибернация")
 
             @bot.message_handler(commands=['lock🔒'])
             def send(message):
-                bot.reply_to(message, "Блокировка компа 🔒", )
-                os.system('rundll32.exe user32.dll, LockWorkStation')
+                execute_and_reply(bot, message, 'rundll32.exe user32.dll, LockWorkStation', "Блокировка компа 🔒")
 
             @bot.message_handler(commands=['shutdown'])
             def send(message):
@@ -151,8 +155,7 @@ def main():
 
             @bot.message_handler(commands=['cancel'])
             def send(message):
-                bot.reply_to(message, "Отключение отменено", )
-                os.system('shutdown /a')
+                execute_and_reply(bot, message, 'shutdown /a', "Отключение отменено")
 
             @bot.message_handler(commands=['Online'])
             def send(message):
