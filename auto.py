@@ -12,7 +12,7 @@ def auto():
 
     try:
         os.mkdir(os.getenv('APPDATA') + 'TurnOffBot')
-    except IOError and Exception:
+    except (IOError, Exception):
         print()
 
     print('')
