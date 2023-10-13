@@ -145,10 +145,9 @@ def main():
                                      reply_markup=markup)
                     os.system('shutdown /s /t ' + txt)
 
-                except Exception:
+                except Exception as _ex:
                     bot.reply_to(message,
-                                 "Произошла ошибка, скорее всего вы ввели буквы. Но может оказаться так, что это и "
-                                 "другая ошибка 🤬",
+                                 str(_ex),
                                  parse_mode='html',
                                  reply_markup=markup)
                     return
@@ -170,25 +169,25 @@ def main():
                 mss().shot(mon=1)
                 try:
                     mss().shot(mon=2)
-                except Exception:
-                    print("")
+                except Exception as _ex:
+                    print(_ex)
                 toaster = win10toast.ToastNotifier()
                 toaster.show_toast("БОТЯРА 🔔", "Запрос на скриншот", icon_path="icon.ico")
                 bot.send_message(message.chat.id, 'Скриншот сделан')
                 bot.send_document(message.chat.id, document=open('monitor-1.png', 'rb'))
                 try:
                     bot.send_document(message.chat.id, document=open('monitor-2.png', 'rb'))
-                except Exception:
-                    print('')
+                except Exception as _ex:
+                    print(_ex)
                 os.remove('monitor-1.png')
                 try:
                     os.remove('monitor-2.png')
-                except Exception:
-                    print('')
+                except Exception as _ex:
+                    print(_ex)
 
             bot.polling(none_stop=True)
-        except:
-            print("Произошла ошибка, попытка перезапуска")
+        except Exception as ex:
+            print("Произошла ошибка, попытка перезапуска", ex)
             time.sleep(5)
             console.clear()
 
