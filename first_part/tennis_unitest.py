@@ -2,7 +2,7 @@
 
 import unittest
 
-from tennis import TennisGame
+from first_part.tennis import TennisGame
 
 test_cases = [
     (0, 0, "Love-All", 'player1', 'player2'),
@@ -61,6 +61,7 @@ def play_game(points_player_1, points_player_2, player_1_name, player_2_name):
             game.won_point(player_2_name)
     return game
 
+
 class TestTennis(unittest.TestCase):
      
     def test_Score(self):
@@ -69,6 +70,7 @@ class TestTennis(unittest.TestCase):
             (points_player_1, points_player_2, score, player_1_name, player_2_name) = testcase
             game = play_game(points_player_1, points_player_2, player_1_name, player_2_name)
             self.assertEquals(score, game.score())
+ 
  
 if __name__ == "__main__":
     unittest.main() 
