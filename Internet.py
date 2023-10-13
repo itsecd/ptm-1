@@ -3,6 +3,7 @@ import time
 from rich import print
 from rich.console import Console
 
+
 def main():
     timeout = 1
     internet = False

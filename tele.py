@@ -20,9 +20,6 @@ def main():
     except (IOError) and (Exception):
         auto.auto()
 
-
-
-
     ff = open(os.getenv('APPDATA') + 'TurnOffBot\\token', 'r')
     token = ff.read()
     ff.close()
@@ -74,7 +71,7 @@ def main():
                 but5 = types.KeyboardButton("Назад")
                 sec.add(but0, but1, but2, but3, but4, but5)
                 msg: str = bot.send_message(message.chat.id, 'Через сколько отключить компьютер?(В секундах)',
-                                             parse_mode='html', reply_markup=sec)
+                                            parse_mode='html', reply_markup=sec)
                 bot.register_next_step_handler(msg, test)
 
             def test(message):
@@ -193,8 +190,6 @@ def main():
             print("Произошла ошибка, попытка перезапуска")
             time.sleep(5)
             console.clear()
-
-
 
 
 if __name__ == '__main__':
