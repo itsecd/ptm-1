@@ -22,19 +22,21 @@ class CustomerDataAccess:
         self.customerDataLayer = customer_data_layer(db)
 
     def load_company_customer(self, externalId, companyNumber):
+        """Loads a company customer from the database based on
+           the external ID or company number."""
         matches = customer_matches()
         matchByExternalId: Customer = 
-        self.customerDataLayer.find_by_external_id(externalId)
+                                     self.customerDataLayer.find_by_external_id(externalId)
         if matchByExternalId is not None:
             matches.customer = matchByExternalId
             matches.matchTerm = "ExternalId"
             matchByMasterId: Customer = 
-                    self.customerDataLayer.find_by_master_external_id(externalId)
+                                       self.customerDataLayer.find_by_master_external_id(externalId)
             if matchByMasterId is not None:
                 matches.add_duplicate(matchByMasterId)
         else:
             matchByCompanyNumber: Customer = 
-                    self.customerDataLayer.find_by_company_number(companyNumber)
+                                            self.customerDataLayer.find_by_company_number(companyNumber)
             if matchByCompanyNumber is not None:
                 matches.customer = matchByCompanyNumber
                 matches.matchTerm = "CompanyNumber"
@@ -42,9 +44,10 @@ class CustomerDataAccess:
         return matches
 
     def load_person_customer(self, externalId):
+        """ Loads a person customer from the database based on the external ID."""
         matches = customer_matches()
         matchByPersonalNumber: Customer = 
-            self.customerDataLayer.find_by_external_id(externalId)
+                                         self.customerDataLayer.find_by_external_id(externalId)
         matches.customer = matchByPersonalNumber
         if matchByPersonalNumber is not None:
             matches.matchTerm = "ExternalId"
@@ -68,6 +71,7 @@ class customer_data_layer:
         self.cursor = self.conn.cursor()
 
     def find_by_external_id(self, externalId):
+        """Finds a customer in the database based on the external ID."""
         self.cursor.execute(
                            'SELECT internalId, externalId, masterExternalId, name, customerType, companyNumber FROM customers WHERE externalId=?',
                            (externalId, ))
@@ -75,6 +79,7 @@ class customer_data_layer:
         return customer
 
     def _find_address_id(self, customer):
+        """Finds the address ID for a customer in the database."""
         self.cursor.execute('SELECT addressId FROM customers WHERE internalId=?', (customer.internalId,))
         (addressId,) = self.cursor.fetchone()
         if addressId:
@@ -82,6 +87,7 @@ class customer_data_layer:
         return None
 
     def _customer_from_sql_select_fields(self, fields):
+        """Converts SQL select fields into a Customer object."""
         if not fields:
             return None
 
@@ -124,6 +130,7 @@ class customer_data_layer:
         return self._customer_from_sql_select_fields(self.cursor.fetchone())
 
     def create_customer_record(self, customer):
+        """Creates a new customer record in the database."""
         customer.internalId = self._next_id("customers")
         self.cursor.execute('INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?, ?);', (
                             customer.internalId, customer.externalId, customer.masterExternalId, 
@@ -152,6 +159,7 @@ class customer_data_layer:
         return customer
 
     def _next_id(self, tablename):
+        """Retrieves the next available ID for a given table."""
         self.cursor.execute(f'SELECT MAX(ROWID) AS max_id FROM {tablename};')
         (id,) = self.cursor.fetchone()
         if id:
@@ -160,6 +168,7 @@ class customer_data_layer:
             return 1
 
     def update_customer_record(self, customer):
+        """Updates a customer record in the database."""
         self.cursor.execute(
                            'Update customers set externalId=?, masterExternalId=?, name=?, customerType=?, companyNumber=? WHERE internalId=?',
                            (customer.externalId, customer.masterExternalId, customer.name, 
