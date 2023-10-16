@@ -54,11 +54,10 @@ def get_images_url(name: str) -> None:
     for event in searcher:
         image_url = event.get("src")
         data.append([image_url])
-        if (image_url != ""):
+        if image_url != "":
             save_image(image_url, name, i)
             i += 1
-        if (i > 999):
-            page = 0
+        if i > 999:
             break
         page += 1
     print("Images save: ")
