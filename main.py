@@ -1,7 +1,7 @@
 import os
 import shutil
 import requests
-from bs4 import BeautifulSoup as BS
+from bs4 import BeautifulSoup
 
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 URL = "https://yandex.ru/images/"
@@ -36,7 +36,7 @@ def get_images_url(name):
     i = 1
     page = 0
     request = requests.get(f"{URL}search?p={page}&text={name}&lr=51&rpt=image", HEADERS)
-    html = BS(request.content, "html.parser")
+    html = BeautifulSoup(request.content, "html.parser")
     data = []
     searcher = html.findAll("img")
     try:
