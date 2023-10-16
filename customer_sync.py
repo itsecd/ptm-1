@@ -6,11 +6,11 @@ from model_objects import Customer, ExternalCustomer, CustomerType
 
 
 
-class conflict_exception(Exception):
+class ConflictException(Exception):
     pass
 
 
-class customer_sync:
+class CustomerSync:
 
     def __init__(self, customerDataAccess):
         self.customerDataAccess = customerDataAccess
