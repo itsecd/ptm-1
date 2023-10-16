@@ -10,7 +10,7 @@ class CustomerMatches:
         self.customer = None
         self.duplicates = []
 
-    def has_duplicates(self):
+    def has_duplicates(self) -> bool:
         return self.duplicates
 
     def add_duplicate(self, duplicate):
@@ -21,7 +21,7 @@ class CustomerDataAccess:
     def __init__(self, db):
         self.customerDataLayer = customer_data_layer(db)
 
-    def load_company_customer(self, externalId, companyNumber):
+    def load_company_customer(self, externalId, companyNumber) -> CustomerMatches:
         """Loads a company customer from the database based on
            the external ID or company number."""
         matches = customer_matches()
@@ -43,7 +43,7 @@ class CustomerDataAccess:
 
         return matches
 
-    def load_person_customer(self, externalId):
+    def load_person_customer(self, externalId) -> CustomerMatches:
         """ Loads a person customer from the database based on the external ID."""
         matches = customer_matches()
         matchByPersonalNumber: Customer = 
@@ -56,7 +56,7 @@ class CustomerDataAccess:
     def update_customer_record(self, customer):
         self.customerDataLayer.update_customer_record(customer)
 
-    def create_customer_record(self, customer):
+    def create_customer_record(self, customer) -> int:
         return self.customerDataLayer.create_customer_record(customer)
 
     def update_shopping_list(self, customer: Customer, shoppingList: ShoppingList):
@@ -70,7 +70,7 @@ class customer_data_layer:
         self.conn = conn
         self.cursor = self.conn.cursor()
 
-    def find_by_external_id(self, externalId):
+    def find_by_external_id(self, externalId) -> Customer:
         """Finds a customer in the database based on the external ID."""
         self.cursor.execute(
                            'SELECT internalId, externalId, masterExternalId, name, customerType, companyNumber FROM customers WHERE externalId=?',
@@ -78,7 +78,7 @@ class customer_data_layer:
         customer = self._customer_from_sql_select_fields(self.cursor.fetchone())
         return customer
 
-    def _find_address_id(self, customer):
+    def _find_address_id(self, customer) -> int:
         """Finds the address ID for a customer in the database."""
         self.cursor.execute('SELECT addressId FROM customers WHERE internalId=?', (customer.internalId,))
         (addressId,) = self.cursor.fetchone()
@@ -86,7 +86,7 @@ class customer_data_layer:
             return int(addressId)
         return None
 
-    def _customer_from_sql_select_fields(self, fields):
+    def _customer_from_sql_select_fields(self, fields) -> Optional[Customer]:
         """Converts SQL select fields into a Customer object."""
         if not fields:
             return None
@@ -117,19 +117,19 @@ class customer_data_layer:
             customer.addShoppingList(ShoppingList(products))
         return customer
 
-    def find_by_master_external_id(self, masterExternalId):
+    def find_by_master_external_id(self, masterExternalId) -> Optional[Customer]:
         self.cursor.execute(
                            'SELECT internalId, externalId, masterExternalId, name, customerType, companyNumber FROM customers WHERE masterExternalId=?',
                            (masterExternalId,))
         return self._customer_from_sql_select_fields(self.cursor.fetchone())
 
-    def find_by_company_number(self, companyNumber):
+    def find_by_company_number(self, companyNumber) -> Optional[Customer]:
         self.cursor.execute(
                            'SELECT internalId, externalId, masterExternalId, name, customerType, companyNumber FROM customers WHERE companyNumber=?',
                            (companyNumber,))
         return self._customer_from_sql_select_fields(self.cursor.fetchone())
 
-    def create_customer_record(self, customer):
+    def create_customer_record(self, customer) -> Customer:
         """Creates a new customer record in the database."""
         customer.internalId = self._next_id("customers")
         self.cursor.execute('INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?, ?);', (
@@ -158,7 +158,7 @@ class customer_data_layer:
         self.conn.commit()
         return customer
 
-    def _next_id(self, tablename):
+    def _next_id(self, tablename) -> int:
         """Retrieves the next available ID for a given table."""
         self.cursor.execute(f'SELECT MAX(ROWID) AS max_id FROM {tablename};')
         (id,) = self.cursor.fetchone()
