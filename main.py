@@ -7,7 +7,7 @@ HEADERS = {"User-Agent": "Mozilla/5.0"}
 URL = "https://yandex.ru/images/"
 
 
-def save_image(image_url, name, i):
+def save_image(image_url: str, name: str, i: int) -> None:
     """сохранение картинки в папку"""
     req = requests.get(f"https:{image_url}")
     file = os.path.join(f"dataset/{name}/{i:04d}.jpg")
@@ -15,7 +15,7 @@ def save_image(image_url, name, i):
         saver.write(req.content)
 
 
-def check_folder():
+def check_folder() -> None:
     """проверка существования папки"""
     try:
         if not os.path.isdir("dataset"):
@@ -27,7 +27,7 @@ def check_folder():
         print(f"Возникла ошибка!!{err}")
 
 
-def get_images_url(name):
+def get_images_url(name: str) -> None:
     """
     Основная функция программы в которой с помощью цикла мы пробегаемся по searcher потом записываем ссылку с тега img
     потом в массив добавляем значение переменной потом проверяем строку на пустоту, если не пустая,
