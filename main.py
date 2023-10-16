@@ -21,7 +21,7 @@ def save_image(image_url: str, name: str, i: int) -> None:
         saver.write(req.content)
 
 
-def check_folder() -> None:
+def check_dir() -> None:
     """
     Проверяет существование рабочей директории
     """
@@ -32,10 +32,10 @@ def check_folder() -> None:
             shutil.rmtree("dataset")
             os.mkdir("dataset")
     except OSError as err:
-        print(f"Возникла ошибка!!{err}")
+        print(f"Error! {err}")
 
 
-def get_images_url(name: str) -> None:
+def parse_images(name: str) -> None:
     """
     Парсит изображения по заданным параметрам и обращается к функции сохранения изображения
 
@@ -49,8 +49,8 @@ def get_images_url(name: str) -> None:
     searcher = html.findAll("img")
     try:
         os.mkdir(f"dataset/{name}")
-    except PermissionError:
-        print("Unable to create a directory")
+    except PermissionError as err:
+        print(f"Error! {err}")
     for event in searcher:
         image_url = event.get("src")
         data.append([image_url])
@@ -65,6 +65,6 @@ def get_images_url(name: str) -> None:
 
 
 if __name__ == "__main__":
-    check_folder()
-    get_images_url("rose")
-    get_images_url("tulip")
+    check_dir()
+    parse_images("rose")
+    parse_images("tulip")
