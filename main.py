@@ -2,9 +2,9 @@ import os
 import shutil
 import requests
 from bs4 import BeautifulSoup as BS
-HEADERS = {"User-Agent": "Mozilla/5.0"}
 
-URL = "https://yandex.ru/images/"  # ссылка на страничку html
+HEADERS = {"User-Agent": "Mozilla/5.0"}
+URL = "https://yandex.ru/images/"
 
 
 def save_image(image_url, name, i):
