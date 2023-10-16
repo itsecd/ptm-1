@@ -8,7 +8,13 @@ URL = "https://yandex.ru/images/"
 
 
 def save_image(image_url: str, name: str, i: int) -> None:
-    """сохранение картинки в папку"""
+    """
+    Сохраняет изображение в рабочую директорию
+
+    :param image_url: URL-ссылка на изображение
+    :param name: название изображения
+    :param i: числовой индекс изображения
+    """
     req = requests.get(f"https:{image_url}")
     file = os.path.join(f"dataset/{name}/{i:04d}.jpg")
     with open(file, "wb") as saver:
@@ -16,7 +22,9 @@ def save_image(image_url: str, name: str, i: int) -> None:
 
 
 def check_folder() -> None:
-    """проверка существования папки"""
+    """
+    Проверяет существование рабочей директории
+    """
     try:
         if not os.path.isdir("dataset"):
             os.mkdir("dataset")
@@ -29,9 +37,9 @@ def check_folder() -> None:
 
 def get_images_url(name: str) -> None:
     """
-    Основная функция программы в которой с помощью цикла мы пробегаемся по searcher потом записываем ссылку с тега img
-    потом в массив добавляем значение переменной потом проверяем строку на пустоту, если не пустая,
-     то сохраняем картинку.
+    Парсит изображения по заданным параметрам и обращается к функции сохранения изображения
+
+    :param name: название изображения
     """
     i = 1
     page = 0
