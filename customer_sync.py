@@ -5,7 +5,6 @@ from customer_data_access import CustomerMatches
 from model_objects import Customer, ExternalCustomer, CustomerType
 
 
-
 class ConflictException(Exception):
     pass
 
@@ -49,16 +48,13 @@ class CustomerSync:
 
         return created
 
-
     def update_relations(self, externalCustomer: ExternalCustomer, customer: Customer):
         consumerShoppingLists = externalCustomer.shoppingLists
         for consumerShoppingList in consumerShoppingLists:
             self.customerDataAccess.updateShoppingList(customer, consumerShoppingList)
 
-
     def update_customer(self, customer):
         return self.customerDataAccess.updateCustomerRecord(customer)
-
 
     def update_duplicate(self, externalCustomer: ExternalCustomer, duplicate: Customer):
         if duplicate is None:
@@ -73,14 +69,11 @@ class CustomerSync:
         else:
             self.updateCustomer(duplicate)
 
-
     def update_prefer_red_store(self, externalCustomer: ExternalCustomer, customer: Customer):
         customer.preferredStore = externalCustomer.preferredStore
 
-
     def create_customer(self, customer) -> Customer:
         return self.customerDataAccess.createCustomerRecord(customer)
-
 
     def populate_fields(self, externalCustomer: ExternalCustomer, customer: Customer):
         customer.name = externalCustomer.name
@@ -90,10 +83,8 @@ class CustomerSync:
         else:
             customer.customerType = CustomerType.PERSON
 
-
     def update_contact_info(self, externalCustomer: ExternalCustomer, customer: Customer):
         customer.address = externalCustomer.postalAddress
-
 
     def load_company(self, externalCustomer) -> CustomerMatches:
         externalId = externalCustomer.externalId
@@ -123,7 +114,6 @@ class CustomerSync:
             customerMatches.addDuplicate(None)
 
         return customerMatches
-
 
     def load_person(self, externalCustomer):
         externalId = externalCustomer.externalId
