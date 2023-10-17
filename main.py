@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 URL = "https://yandex.ru/images/"
+DIR = "dataset"
 
 
 def save_image(image_url: str, name: str, index: int) -> None:
@@ -16,7 +17,7 @@ def save_image(image_url: str, name: str, index: int) -> None:
     :param index: числовой индекс изображения
     """
     response = requests.get(f"https:{image_url}")
-    file = os.path.join(f"dataset/{name}/{index:04d}.jpg")
+    file = os.path.join(DIR, name, f"{index:04d}.jpg")
     with open(file, "wb") as img:
         img.write(response.content)
 
@@ -26,11 +27,11 @@ def check_dir() -> None:
     Проверяет существование рабочей директории
     """
     try:
-        if not os.path.isdir("dataset"):
-            os.mkdir("dataset")
+        if not os.path.isdir(DIR):
+            os.mkdir(DIR)
         else:
-            shutil.rmtree("dataset")
-            os.mkdir("dataset")
+            shutil.rmtree(DIR)
+            os.mkdir(DIR)
     except OSError as err:
         print(f"Error! {err}")
 
@@ -51,7 +52,7 @@ def parse_images(name: str) -> None:
     image_log = []
     images = html.findAll("img")
     try:
-        os.mkdir(f"dataset/{name}")
+        os.mkdir(f"{DIR}/{name}")
     except PermissionError as err:
         print(f"Error! {err}")
     for img in images:
