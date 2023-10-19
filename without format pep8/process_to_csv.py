@@ -18,33 +18,33 @@ def deduplicate(builds):
 
 
 def gather_builds_from(f):
-    all_builds=[]
+    all_builds = []
     for line in f:
         try:
             # This will fail if you havn't imported Build and Sync classes in this file
-            b=eval(line)
+            b = eval(line)
             all_builds.append(b)
         except NameError as e:
             print("Error gathering builds: ", e)
     return all_builds
 
 def gather_builds(folder, output_csv):
-    all_builds=[]
+    all_builds = []
     for root, directories, files in os.walk(folder):
         for file in files:
             if file.endswith(".log"):
                 with open(os.path.join(root, file)) as log_file:
-                    builds=gather_builds_from(log_file)
-                    builds=deduplicate(builds)
+                    builds = gather_builds_from(log_file)
+                    builds = deduplicate(builds)
                     all_builds.extend(builds)
-    sorted_builds=sorted(all_builds,key=lambda x: x.when)
+    sorted_builds = sorted(all_builds,key = lambda x: x.when)
     for build in sorted_builds:
         output_csv.write(build.to_csv())
         output_csv.write("\n")
     return sorted_builds
-def output_filename(user=None, date=None):
-    user=user or get_username()
-    date=date or datetime.date.today()
+def output_filename(user = None, date = None):
+    user = user or get_username()
+    date = date or datetime.date.today()
     return f"{date.isoformat()}-{user}.csv"
 def main(args):
     """Process the log files created by the 'buildstats' script into a csv file,
@@ -52,16 +52,16 @@ def main(args):
     By default it will look for the log files in the folder 'data'.
     Pass an argument to look in a different folder instead"""
     if args:
-        folder=args[0]
+        folder = args[0]
     else:
-        folder=Path.cwd() / "data"
+        folder = Path.cwd() / "data"
     processed_data_folder = Path.cwd() / "processed_data"
     if not processed_data_folder.exists():
         os.mkdir(processed_data_folder)
     output_path = processed_data_folder / output_filename()
     print(f"Will parse log files found under {folder} and write a csv file to {processed_data_folder}")
     with open(output_path, "w") as f:
-        builds=gather_builds(folder, f)
+        builds = gather_builds(folder, f)
         
     stats=summary_statistics(builds)
     sys.stdout.write(stats)

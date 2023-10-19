@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 
 import datetime
 import os
@@ -13,7 +13,7 @@ from pathlib import Path
 @dataclass(frozen=True, order=True)
 class Build:
     # Contains the raw test_data from the log about Gradle builds parsed into string fields,
-    #with methods to extract the processed test_data in more convenient formats
+    # with methods to extract the processed test_data in more convenient formats
     when: str
     time_taken: str
     outcome: str
@@ -30,7 +30,7 @@ class Build:
 
     def is_a_sync(self):
         return False
-@dataclass(frozen=True, order=True)
+@dataclass(frozen = True, order = True)
 class Sync:
     """Contains the raw test_data from the log about Project sync events parsed into string fields,
         with methods to extract the processed test_data in more convenient formats"""
@@ -147,10 +147,10 @@ def guess_path_to_idea_log():
     return None
 
 def main(args):
-    #Process the file created by the IDE into a log of builds,
-    #which it will put in the folder 'data'.
-    #By default it will look for the idea.log file in the default places for Android Studio versions 4.2 and 4.1.
-    #Pass an argument to look in a different place instead
+    # Process the file created by the IDE into a log of builds,
+    # which it will put in the folder 'data'.
+    # By default it will look for the idea.log file in the default places for Android Studio versions 4.2 and 4.1.
+    # Pass an argument to look in a different place instead
 
     if args:
         if "--help" in args:
