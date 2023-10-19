@@ -1,4 +1,3 @@
-
 import statistics
 
 
@@ -6,8 +5,11 @@ def total_time(builds):
     all_times = (b.time_taken_in_seconds() for b in builds)
     seconds = sum(all_times)
     return seconds
+
+
 def total_build_count(builds):
     return len(builds)
+
 
 def median_time(builds):
     all_times = [b.time_taken_in_seconds() for b in builds]
@@ -15,7 +17,6 @@ def median_time(builds):
         return None
     median_time = statistics.median(all_times)
     return median_time
-
 
 
 def pretty_print_timedelta(seconds):
@@ -35,6 +36,7 @@ def pretty_print_timedelta(seconds):
         return '%d s %d ms' % (seconds, milliseconds)
     else:
         return '%d ms' % (milliseconds)
+
 
 def summary_statistics(builds):
     builds_excluding_clean = [b for b in builds if not b.is_a_clean() and not b.is_a_sync()]
@@ -58,5 +60,7 @@ Total time: {pretty_print_timedelta(total_time(builds))}
 Median time: {pretty_print_timedelta(median_time(builds))}
 """
     return summary
+
+
 def remove_clean_builds(builds):
     return (b for b in builds if b.is_a_clean_or_sync())

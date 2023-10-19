@@ -1,20 +1,14 @@
-
-
 #!/usr/bin/env python3
 import os
 import sys
-
 import datetime
 from pathlib import Path
-
 from gather_build_data import Build, Sync, get_username
-
-
 from calculate_statistics import summary_statistics
+
 
 def deduplicate(builds):
     return list(set(builds))
-
 
 
 def gather_builds_from(f):
@@ -27,6 +21,7 @@ def gather_builds_from(f):
         except NameError as e:
             print("Error gathering builds: ", e)
     return all_builds
+
 
 def gather_builds(folder, output_csv):
     all_builds = []
@@ -42,10 +37,14 @@ def gather_builds(folder, output_csv):
         output_csv.write(build.to_csv())
         output_csv.write("\n")
     return sorted_builds
+
+
 def output_filename(user = None, date = None):
     user = user or get_username()
     date = date or datetime.date.today()
     return f"{date.isoformat()}-{user}.csv"
+
+
 def main(args):
     """Process the log files created by the 'buildstats' script into a csv file,
     which it will put in the folder 'processed_data'.
@@ -65,8 +64,8 @@ def main(args):
         
     stats=summary_statistics(builds)
     sys.stdout.write(stats)
-
     print(f"\nPlease share this file with your colleagues now:\n\n{output_path}")
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])

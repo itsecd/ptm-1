@@ -1,5 +1,4 @@
 # !/usr/bin/env python3
-
 import datetime
 import os
 import re
@@ -7,7 +6,6 @@ import sys
 import pwd
 from dataclasses import dataclass, field
 from pathlib import Path
-
 
 
 @dataclass(frozen=True, order=True)
@@ -30,6 +28,8 @@ class Build:
 
     def is_a_sync(self):
         return False
+    
+
 @dataclass(frozen = True, order = True)
 class Sync:
     """Contains the raw test_data from the log about Project sync events parsed into string fields,
@@ -50,6 +50,8 @@ class Sync:
 
     def is_a_sync(self):
         return True
+    
+
 def parse_to_secs(raw_time):
     ms = 0
     secs = 0
@@ -70,16 +72,18 @@ def parse_to_secs(raw_time):
     t = datetime.timedelta(hours=hours, minutes=mins, seconds=secs, milliseconds=ms)
     return t.total_seconds()
 
+
 @dataclass
 class NamedRegex:
     regex: re.Pattern
     name: str
 
+
 GRADLE_BUILD_START = re.compile(r"^.* About to execute Gradle tasks: \[([\w\s,:-]+)\].*$")
 GRADLE_BUILD_END = re.compile(r"^([\d\-:,\s]+) \[\d+\].* Gradle build (\w+) in ([\d\s\w]+)\n$")
-
 GRADLE_SYNC_START = re.compile(r"^.* sync with Gradle for project \'([^']+)\'.*$")
 GRADLE_SYNC_END = re.compile(r"^([\d\-:,\s]+) \[\d+\].* Gradle sync (\w+) in ([\d\s\w]+)\n$")
+
 
 def next_match(lines, regexes):
     for line in lines:
@@ -87,6 +91,8 @@ def next_match(lines, regexes):
             match = named_regex.regex.match(line)
             if match:
                 yield named_regex.name, match
+
+
 def next_build(matches):
     tasks = ""
     project = ""
@@ -109,8 +115,6 @@ def next_build(matches):
             project = ""  # reset project in case we get another sync end before another sync start
 
 
-
-
 def filter_gradle_builds(lines):
     matches = next_match(lines, [
         NamedRegex(GRADLE_BUILD_END, "build"),
@@ -120,8 +124,12 @@ def filter_gradle_builds(lines):
     ])
     builds = (build for build in next_build(matches))
     return builds
+
+
 def get_username():
     return pwd.getpwuid( os.getuid() )[ 0 ]
+
+
 def output_filename(user=None, date=None):
     user = user or get_username()
     date = date or datetime.date.today()
@@ -131,10 +139,14 @@ def output_filename(user=None, date=None):
 def parse_builds(idea_log, output):
     for build in filter_gradle_builds(idea_log):
         output.write(f"{build}\n")
+
+
 def parse_idea_log(log_file, output_filename):
     with open(log_file) as f:
         with open(output_filename, "a") as output_file:
             parse_builds(f, output_file)
+
+
 def guess_path_to_idea_log():
     possible_paths = [
         Path("idea.log"),
@@ -145,6 +157,7 @@ def guess_path_to_idea_log():
         if p.exists():
             return p
     return None
+
 
 def main(args):
     # Process the file created by the IDE into a log of builds,
@@ -164,12 +177,14 @@ def main(args):
     if not path:
         print("unable to locate 'idea.log'! You can find it in your JetBrains IDE on the 'help' menu - 'Show log in Finder'. You should give the full path to idea.log as an argument to this script.")
         return
-
+    
     data_folder = Path.cwd() / "data"
     if not data_folder.exists():
         os.mkdir(data_folder)
     output = data_folder / output_filename()
     print(f"Will parse log file {path} and write builds to {output}")
     parse_idea_log(path, output)
+
+    
 if __name__ == '__main__':
     main(sys.argv[1:])
