@@ -162,7 +162,8 @@ def guess_path_to_idea_log():
 def main(args):
     # Process the file created by the IDE into a log of builds,
     # which it will put in the folder 'data'.
-    # By default it will look for the idea.log file in the default places for Android Studio versions 4.2 and 4.1.
+    # By default it will look for the idea.log file in the 
+    # default places for Android Studio versions 4.2 and 4.1.
     # Pass an argument to look in a different place instead
 
     if args:
@@ -175,7 +176,9 @@ def main(args):
         path = guess_path_to_idea_log()
 
     if not path:
-        print("unable to locate 'idea.log'! You can find it in your JetBrains IDE on the 'help' menu - 'Show log in Finder'. You should give the full path to idea.log as an argument to this script.")
+        print("unable to locate 'idea.log'! You can find it in"
+              " your JetBrains IDE on the 'help' menu - 'Show log in Finder'." 
+              "You should give the full path to idea.log as an argument to this script.")
         return
     
     data_folder = Path.cwd() / "data"
@@ -185,6 +188,6 @@ def main(args):
     print(f"Will parse log file {path} and write builds to {output}")
     parse_idea_log(path, output)
 
-    
+
 if __name__ == '__main__':
     main(sys.argv[1:])

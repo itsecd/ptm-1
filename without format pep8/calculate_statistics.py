@@ -27,9 +27,11 @@ def pretty_print_timedelta(seconds):
     minutes, seconds = divmod(seconds, 60)
     milliseconds = round((seconds % 1) * 1000)
     if days > 0:
-        return '%d d %d h %d m %d s %d ms' % (days, hours, minutes, seconds, milliseconds)
+        return '%d d %d h %d m %d s %d ms' % (days, hours, 
+                                              minutes, seconds, milliseconds)
     elif hours > 0:
-        return '%d h %d m %d s %d ms' % (hours, minutes, seconds, milliseconds)
+        return '%d h %d m %d s %d ms' % (hours, 
+                                         minutes, seconds, milliseconds)
     elif minutes > 0:
         return '%d m %d s %d ms' % (minutes, seconds, milliseconds)
     elif seconds >= 1:

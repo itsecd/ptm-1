@@ -15,7 +15,8 @@ def gather_builds_from(f):
     all_builds = []
     for line in f:
         try:
-            # This will fail if you havn't imported Build and Sync classes in this file
+            # This will fail if you havn't imported Build 
+            # and Sync classes in this file
             b = eval(line)
             all_builds.append(b)
         except NameError as e:
@@ -46,8 +47,9 @@ def output_filename(user = None, date = None):
 
 
 def main(args):
-    """Process the log files created by the 'buildstats' script into a csv file,
-    which it will put in the folder 'processed_data'.
+    """Process the log files created by the 'buildstats' 
+    script into a csv file, which it will 
+    put in the folder 'processed_data'.
     By default it will look for the log files in the folder 'data'.
     Pass an argument to look in a different folder instead"""
     if args:
