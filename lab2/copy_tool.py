@@ -38,10 +38,10 @@ def create_new_dir_ann(directory: str):
                 rev_type = path[-12] + path[-11] + path[-10]
                 if rev_type == 'bad':
                     file_info = (path,
-                                 'dataset1/' + rev_type + '_' + path[-8] + path[-7] + path[-6] + path[-5], rev_type)
+                                 directory + rev_type + '_' + path[-8] + path[-7] + path[-6] + path[-5], rev_type)
                     writer.writerow(file_info)
                 else:
                     rev_type = path[-13] + path[-12] + path[-11] + path[-10]
                     file_info = (path,
-                                 "dataset1/" + rev_type + '_' + path[-8] + path[-7] + path[-6] + path[-5], rev_type)
+                                 directory + rev_type + '_' + path[-8] + path[-7] + path[-6] + path[-5], rev_type)
                     writer.writerow(file_info)

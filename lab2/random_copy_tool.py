@@ -24,11 +24,11 @@ def copy_to_new_dir_with_random_naming(path_old: str, path_new: str) -> None:
                     new_name = str(randint(0, 9999)).zfill(4)
                     rev_type = path[-12] + path[-11] + path[-10]
                     if rev_type == "bad":
-                        file_info = (path_new + "/" + new_name, "dataset3/" + new_name, rev_type)
+                        file_info = (path_new + "/" + new_name, path_new + new_name, rev_type)
                         writer.writerow(file_info)
                     else:
                         rev_type = path[-13] + path[-12] + path[-11] + path[-10]
-                        file_info = (path_new + "/" + new_name, "dataset3/" + new_name, rev_type)
+                        file_info = (path_new + "/" + new_name, path_new + new_name, rev_type)
                         writer.writerow(file_info)
                     f = codecs.open(u'' + path, "r", "utf-8")
                     content = f.read()

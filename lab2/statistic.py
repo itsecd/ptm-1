@@ -3,19 +3,21 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from pymystem3 import Mystem
-from task5 import MyIter
+from data_iter import MyIter
 
 
-def create_hist(mark: str) -> plt:
+def create_hist(mark: str, path_bad: str, path_good: str) -> plt:
     """
     Функция считывает использование слов в обзорах и возвращает столбичную диаграмму
     :param mark: Тип обзора
+    :param path_good: Путь к датасету положительных обзоров
+    :param path_bad: Путь к датасету отрицательных обзоров
     :return: гистограмма
     """
     keys = []
     vals = []
     if mark == "good":
-        fl = codecs.open("new1.txt", "r", "utf-8")
+        fl = codecs.open(path_good, "r", "utf-8")
         for i in fl.readlines():
             key, val = i.strip().split(":")
             val = int(val)
@@ -23,7 +25,7 @@ def create_hist(mark: str) -> plt:
                 keys.append(key)
                 vals.append(val)
     else:
-        fl = codecs.open("new2.txt", "r", "utf-8")
+        fl = codecs.open(path_bad, "r", "utf-8")
         for i in fl.readlines():
             key, val = i.strip().split(":")
             keys.append(key)
@@ -61,7 +63,7 @@ def lemmatize_and_count(df: pd, mark: str, ing: str) -> None:
             if word in words:
                 words[word] += 1
         print(words)
-    f = codecs.open(u'' + "new" + ing + ".txt", "a", "utf-8")
+    f = codecs.open(u'' + ing + ".txt", "a", "utf-8")
     for word in words:
         f.write(word + ": " + str(words[word] + "\n"))
     f.close()
@@ -88,16 +90,18 @@ def filter_by_number(df: pd, w_num: int) -> pd:
     return df[df["word_num"] <= w_num]
 
 
-def read_all_data() -> pd:
+def read_all_data(path_good: str, path_bad: str) -> pd:
     """
     С использованием класса итератора из предыдущей работы записывает обзоры в датафрейм.
+    :param path_bad: Путь к датасету с отрицательными обзорами
+    :param path_good: Путь к датасету с положительными обзорами
     :return: новый датафрейм
     """
     rev_types = []
     rev_text = []
     word_num = []
-    it_good = MyIter("good")
-    it_bad = MyIter("bad")
+    it_good = MyIter("good", path_good)
+    it_bad = MyIter("bad", path_bad)
     for data in it_good:
         rev_types.append("good")
         f = codecs.open(u'' + data, "r", "utf-8")
