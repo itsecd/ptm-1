@@ -18,11 +18,15 @@ def create_main_ann(path: str) -> None:
             for files in os.listdir(directory):
                 file = os.path.join(directory, files)
                 if os.path.isfile(file) and file.endswith(".txt"):
-                    rev_type = file[-12] + file[-11] + file[-10]
+                    rev_type = file[-12: -10]
                     if rev_type == "bad":
-                        file_info = (file, rev_type + "/" + file[-8] + file[-7] + file[-6] + file[-5], rev_type)
+                        number = file[-8: -5]
+                        name = os.path.join(rev_type, number)
+                        file_info = (file, name, rev_type)
                         writer.writerow(file_info)
                     else:
-                        rev_type = file[-13] + file[-12] + file[-11] + file[-10]
-                        file_info = (file, rev_type + "/" + file[-8] + file[-7] + file[-6] + file[-5], rev_type)
+                        rev_type = file[-13: -10]
+                        number = file[-8: -5]
+                        name = os.path.join(rev_type, number)
+                        file_info = (file, name, rev_type)
                         writer.writerow(file_info)

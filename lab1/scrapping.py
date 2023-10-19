@@ -1,4 +1,4 @@
-import codecs
+import os
 import requests
 from bs4 import BeautifulSoup
 
@@ -21,27 +21,13 @@ def find_good(url: str, pages: int, count_good: int, save_path: str) -> int:
         sources = soup.findAll("div", class_="response good")
         for src in sources:
             rev = src.find("span", class_="_reachbanner_").text
-            if count_good < 10:
-                name = str(count_good).zfill(4)
-                file = codecs.open(u'' + save_path + name + ".txt", "w", "utf-8")
-                file.write(film_name.text + "\n")
-                file.write(rev)
-                file.close()
-                count_good += 1
-            elif 10 <= count_good < 100:
-                name = str(count_good).zfill(4)
-                file = codecs.open(u'' + save_path + name + ".txt", "w", "utf-8")
-                file.write(film_name.text + "\n")
-                file.write(rev)
-                file.close()
-                count_good += 1
-            elif 100 <= count_good <= 999:
-                name = str(count_good).zfill(4)
-                file = codecs.open(u'' + save_path + name + ".txt", "w", "utf-8")
-                file.write(film_name.text + "\n")
-                file.write(rev)
-                file.close()
-                count_good += 1
+            name = "".join([str(count_good).zfill(4), ".txt"])
+            file_path = os.path.join(save_path, name)
+            file = open(file_path, "w")
+            file.write(film_name.text + "\n")
+            file.write(rev)
+            file.close()
+            count_good += 1
     return count_good
 
 
@@ -63,25 +49,11 @@ def find_bad(url: str, pages: int, count_bad: int, save_path: str) -> int:
         sources = soup.findAll("div", class_="response bad")
         for src in sources:
             rev = src.find("span", class_="_reachbanner_").text
-            if count_bad < 10:
-                name = str(count_bad).zfill(4)
-                file = codecs.open(u'' + save_path + name + ".txt", "w", "utf-8")
-                file.write(film_name.text + "\n")
-                file.write(rev)
-                file.close()
-                count_bad += 1
-            elif 10 <= count_bad < 100:
-                name = str(count_bad).zfill(4)
-                file = codecs.open(u'' + save_path + name + ".txt", "w", "utf-8")
-                file.write(film_name.text + "\n")
-                file.write(rev)
-                file.close()
-                count_bad += 1
-            elif 100 <= count_bad <= 999:
-                name = str(count_bad).zfill(4)
-                file = codecs.open(u'' + save_path + name + ".txt", "w", "utf-8")
-                file.write(film_name.text + "\n")
-                file.write(rev)
-                file.close()
-                count_bad += 1
+            name = "".join([str(count_bad).zfill(4), ".txt"])
+            file_path = os.path.join(save_path, name)
+            file = open(file_path, "w")
+            file.write(film_name.text + "\n")
+            file.write(rev)
+            file.close()
+            count_bad += 1
     return count_bad

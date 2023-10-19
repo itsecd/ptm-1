@@ -9,7 +9,9 @@ def find(mark: str, number: int, directory: str) -> str:
     :param directory: Путь к папке
     :return: путь
     """
-    path = directory + mark + "/" + str(number).zfill(4) + ".txt"
+    name = "".join([str(number).zfill(4), ".txt"])
+    path = os.path.join(directory, mark)
+    path = os.path.join(path, name)
     if os.path.isfile(path):
         return path
     else:

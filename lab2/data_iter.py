@@ -11,9 +11,11 @@ class DataIter:
         return self
 
     def __next__(self):
-        if os.path.isfile(self.path + self.mark + "/" + str(self.path_num).zfill(4) + ".txt"):
+        name = "".join([str(self.path_num).zfill(4), ".txt"])
+        full_path = os.path.join(self.path, self.mark, name)
+        if os.path.isfile(full_path):
             self.path_num += 1
-            return self.path + self.mark + "/" + str(self.path_num-1).zfill(4) + ".txt"
+            return full_path
         else:
             print("None")
             raise StopIteration

@@ -1,4 +1,3 @@
-import codecs
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -17,7 +16,7 @@ def create_hist(mark: str, path_bad: str, path_good: str) -> plt:
     keys = []
     vals = []
     if mark == "good":
-        fl = codecs.open(path_good, "r", "utf-8")
+        fl = open(path_good, "r")
         for i in fl.readlines():
             key, val = i.strip().split(":")
             val = int(val)
@@ -25,7 +24,7 @@ def create_hist(mark: str, path_bad: str, path_good: str) -> plt:
                 keys.append(key)
                 vals.append(val)
     else:
-        fl = codecs.open(path_bad, "r", "utf-8")
+        fl = open(path_bad, "r")
         for i in fl.readlines():
             key, val = i.strip().split(":")
             keys.append(key)
@@ -63,9 +62,10 @@ def lemmatize_and_count(df: pd, mark: str, ing: str) -> None:
             if word in words:
                 words[word] += 1
         print(words)
-    f = codecs.open(u'' + ing + ".txt", "a", "utf-8")
+    path = "".join([ing, ".txt"])
+    f = open(path, "a")
     for word in words:
-        f.write(word + ": " + str(words[word] + "\n"))
+        f.write(word + ": " + str(words[word]) + "\n")
     f.close()
 
 
@@ -104,14 +104,14 @@ def read_all_data(path_good: str, path_bad: str) -> pd:
     it_bad = MyIter("bad", path_bad)
     for data in it_good:
         rev_types.append("good")
-        f = codecs.open(u'' + data, "r", "utf-8")
+        f = open(data, "r")
         txt = f.read()
         word_num.append(len(txt.split()))
         rev_text.append(txt)
         f.close()
     for data in it_bad:
         rev_types.append("bad")
-        f = codecs.open(u'' + data, "r", "utf-8")
+        f = open(data, "r")
         txt = f.read()
         word_num.append(len(txt.split()))
         rev_text.append(txt)
