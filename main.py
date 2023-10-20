@@ -145,17 +145,17 @@ if __name__ == "__main__":
 
 class Iterator:
 
-    def __init__(self, path):
+    def __init__(self: Iterator, path: str) -> Iterator:
         self.counter = 0
         self.data = []
         for i in os.listdir(f"{path}/"):
             self.data.append(os.path.abspath(f"{path}/{i}"))
         self.limit = len(self.data)
 
-    def __iter__(self):
+    def __iter__(self: Iterator):
         return self
 
-    def __next__(self):
+    def __next__(self: Iterator) -> str:
         if self.counter < self.limit:
             i = self.counter
             self.counter += 1
@@ -163,7 +163,7 @@ class Iterator:
         else:
             raise StopIteration
 
-    def get_limit(self):
+    def get_limit(self: Iterator):
         return self.limit
 
 
@@ -176,7 +176,7 @@ if __name__ == "__main__":
 
 class MyWindow(QMainWindow):
 
-    def __init__(self):
+    def __init__(self: MyWindow) -> None:
         super().__init__()
         self.setWindowIcon(QIcon('icon.jpeg'))
         self.folder_path = QFileDialog.getExistingDirectory(self, 'Select dataset folder')
@@ -197,7 +197,7 @@ class MyWindow(QMainWindow):
         self.file_menu = self.menubar.addMenu('&File')
         self.init_ui()
 
-    def init_ui(self):
+    def init_ui(self: MyWindow) -> None:
         self.setGeometry(360, 190, 1200, 700)
         self.setWindowTitle("Lab3")
         self.map_cat.setPixmap(QPixmap(next(self.cat_iterator)))
@@ -229,25 +229,25 @@ class MyWindow(QMainWindow):
         self.file_menu.addAction(self.open_file)
         self.show()
 
-    def next_cat(self):
+    def next_cat(self: MyWindow) -> None:
         self.map_cat.setPixmap(QPixmap(next(self.cat_iterator)))
 
-    def next_dog(self):
+    def next_dog(self: MyWindow) -> None:
         self.map_dog.setPixmap(QPixmap(next(self.dog_iterator)))
 
-    def b_task1(self):
+    def b_task1(self: MyWindow) -> None:
         filename = QFileDialog.getSaveFileName(self, "Напишите название файла", filter=".csv")
         task1(filename[0], self.folder_path)
 
-    def b_task2(self):
+    def b_task2(self: MyWindow) -> None:
         directory = QFileDialog.getExistingDirectory(self, "Выберите новую директорию")
         task2(self.folder_path, directory)
 
-    def b_task3(self):
+    def b_task3(self: MyWindow) -> None:
         directory = QFileDialog.getExistingDirectory(self, "Выберите новую директорию")
         task3(self.folder_path, directory)
 
-    def show_dialog(self):
+    def show_dialog(self: MyWindow) -> None:
         self.folder_path = QFileDialog.getExistingDirectory(self, 'Open file')
         while not os.path.isdir(f"{self.folder_path}/cat") or not os.path.isdir(f"{self.folder_path}/dog"):
             self.folder_path = QFileDialog.getExistingDirectory(self, 'Select dataset folder')
@@ -255,7 +255,7 @@ class MyWindow(QMainWindow):
 
 class CustomImageDataset(Dataset):
 
-    def __init__(self, path_to_annotation_file: str, transform: Any = None, target_transform: Any = None) -> None:
+    def __init__(self: CustomImageDataset, path_to_annotation_file: str, transform: Any = None, target_transform: Any = None) -> None:
         self.path_to_annotation_file = path_to_annotation_file
         self.dataset_info = pd.read_csv(path_to_annotation_file, header=None)
         self.dataset_info.drop(self.dataset_info.columns[[0]], axis=1, inplace=True)
@@ -263,10 +263,10 @@ class CustomImageDataset(Dataset):
         self.transform = transform
         self.target_transform = target_transform
 
-    def __len__(self) -> int:
+    def __len__(self: CustomImageDataset) -> int:
         return len(self.dataset_info)
 
-    def __getitem__(self, index: int) -> Tuple[torch.tensor, int]:
+    def __getitem__(self: CustomImageDataset, index: int) -> Tuple[torch.tensor, int]:
         path_to_image = self.dataset_info.iloc[index, 0]
         image = cv2.cvtColor(cv2.imread(path_to_image), cv2.COLOR_BGR2RGB)
         label = self.dataset_info.iloc[index, 1]
@@ -279,7 +279,7 @@ class CustomImageDataset(Dataset):
 
 class CNN(nn.Module):
 
-    def __init__(self) -> None:
+    def __init__(self: CNN) -> None:
         super(CNN, self).__init__()
         self.conv_1 = nn.Conv2d(3, 16, kernel_size=3, padding=0, stride=2)
         self.conv_2 = nn.Conv2d(16, 32, kernel_size=3, padding=0, stride=2)
@@ -290,7 +290,7 @@ class CNN(nn.Module):
         self.fc_1 = nn.Linear(576, 10)
         self.fc_2 = nn.Linear(10, 1)
 
-    def forward(self, x: torch.tensor) -> torch.tensor:
+    def forward(self: CNN, x: torch.tensor) -> torch.tensor:
         output = self.relu(self.conv_1(x))
         output = self.max_pool(output)
         output = self.relu(self.conv_2(output))
