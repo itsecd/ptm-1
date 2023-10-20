@@ -11,7 +11,9 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QProgressBar
 
 
 class Window(QMainWindow):
+    """Основной класс нашей програмы"""
     def create_graph(self):
+        """Создаем и передаем данные для  """
         self.cores = [1, 2, 3, 4, 5, 6, 7, 8]
         self.times = []
         for i in self.cores:
@@ -25,6 +27,7 @@ class Window(QMainWindow):
         self.main_function()
 
     def main_function(self):
+        """Предлагаем пользователю что нужно выполнить"""
         self.check_by_alg_moon.show()
         self.button_restart.show()
         self.button_show_graph.show()
@@ -33,11 +36,14 @@ class Window(QMainWindow):
         self.first_text.adjustSize()
 
     def progress(self, variant):
+        """Работа прогресс бара"""
         self.data = read_settings.read_json(variant)
         self.pbar.setValue(0)
         self.create_graph()
 
     def button_start_click(self):
+        """Начало работы программы, предлагает выбрать вариант, после корректного
+        ввода передает данные в функцию progress, для дальнейших вычислений."""
         if self.variant_label.text() != '':
             if int(self.variant_label.text()) > 20:
                 QMessageBox.about(self, "Ошибка", "Нет такого варианта")
@@ -53,6 +59,7 @@ class Window(QMainWindow):
             QMessageBox.about(self, "Ошибка", "Пустое поле недопустимо")
 
     def button_restart_click(self):
+        """Возвращает стартовый экран"""
         print("restart")
         self.first_text.setText("Введите номер варианта")
         self.first_text.adjustSize()
@@ -64,15 +71,18 @@ class Window(QMainWindow):
         self.button_start.show()
 
     def button_show_graph_click(self):
+        """Вызываем функцию создания графика"""
         graph.show_plt(self.cores, self.times)
 
     def check_by_alg_moon_click(self):
+        """Вызываем алгоритм луна"""
         if alg_luhn.alg_luhn(self.result):
             QMessageBox.about(self, "Успех", "Последовательность прошла алгоритм луна")
         else:
             QMessageBox.about(self, "Провал", "Последовательность провалила алгоритм луна")
 
     def set_position(self):
+        """Устанавливаем позицию для каждого элемента, кнопки, текст и тд"""
         self.first_text.move(390, 200)
         self.variant_label.move(465, 250)
         self.button_start.move(445, 310)
@@ -82,6 +92,7 @@ class Window(QMainWindow):
         self.pbar.move(375, 310)
 
     def set_size(self):
+        """Устанавливаем размер для каждого элемента, кнопки, текст и тд"""
         self.variant_label.setFixedSize(60, 40)
         self.first_text.adjustSize()
         self.button_start.setFixedSize(100, 30)
@@ -91,6 +102,7 @@ class Window(QMainWindow):
         self.pbar.setFixedSize(300, 30)
 
     def set_value(self):
+        """Устанавливаем текст для обектов"""
         self.first_text.setFont(QFont('Times', 14))
         self.first_text.setText("Введите номер варианта")
         self.button_start.setText("Продолжить")
@@ -99,6 +111,7 @@ class Window(QMainWindow):
         self.button_restart.setText("Перезапустить")
 
     def __init__(self) -> None:
+        """конструктор, инициализируем все, и даже больше"""
         super(Window, self).__init__()
         self.cores = None
         self.end = None
@@ -143,4 +156,5 @@ def application() -> None:
 
 
 if __name__ == "__main__":
+    """Начало начал, запускаем основную функцию application()"""
     application()

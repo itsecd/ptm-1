@@ -3,6 +3,7 @@ import multiprocessing as mp
 
 
 def check_hash(lst: list) -> str:
+    """Сравниваем хэши, в случае успеха возвращаем номер карты, иначе False"""
     hash = lst[3]
     full_card_num = f"{lst[0]}{lst[1]:06d}{lst[2]}"
     match lst[4]:
@@ -46,11 +47,12 @@ def check_hash(lst: list) -> str:
 
 
 def num_selection(data: dict, core) -> str:
+    """Перебираем номера карт, (прогоняем каждый номер через функцию выше) в случае успеха возвращаем номер карты"""
     arguments_for_check_hash = [[data["bins"][j], i, data["last_num"], data["hash"], data["hash_format"]]
                                 for j in range(len(data["bins"])) for i in range(10 ** 6)]
     with mp.Pool(processes=core) as p:
-        for result in p.map(check_hash, arguments_for_check_hash):
-            if result:
+        for fulk_card_num in p.map(check_hash, arguments_for_check_hash):
+            if fulk_card_num:
                 p.terminate()
-                print(result)
-                return result
+                print(fulk_card_num)
+                return fulk_card_num

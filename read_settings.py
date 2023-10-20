@@ -2,6 +2,7 @@ import json
 
 
 def read_json(variant: str) -> dict:
+    """Читаем начальные параметры, вовзращаем словарь"""
     result = {
         "hash": '',
         "bins": [],

@@ -1,4 +1,5 @@
-def alg_luhn(number: str) -> str:
+def alg_luhn(number: str) -> bool:
+    """Алгоритм луна"""
     summa = 0
     for index in range(len(number)):
         if index % 2 != 1:
