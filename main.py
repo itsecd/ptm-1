@@ -36,8 +36,8 @@ def task1(filename: str, path: str) -> None:
 
 
 a = create_csv("annotation")
-get_csv(a, "C:\\Users\Professional\\PycharmProjects\\Lab_4-app_prog-Python\\dataset\\cat")
-get_csv(a, "C:\\Users\Professional\\PycharmProjects\\Lab_4-app_prog-Python\\dataset\\dog")
+get_csv(a, "C:\\Users\\Professional\\PycharmProjects\\Lab_4-app_prog-Python\\dataset\\cat")
+get_csv(a, "C:\\Users\\Professional\\PycharmProjects\\Lab_4-app_prog-Python\\dataset\\dog")
 
 
 def dataset_copy(class_label: str, source: str, destination: str) -> None:
