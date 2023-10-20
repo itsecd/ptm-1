@@ -48,11 +48,11 @@ def check_hash(lst: list) -> str:
 
 def num_selection(data: dict, core) -> str:
     """Перебираем номера карт, (прогоняем каждый номер через функцию выше) в случае успеха возвращаем номер карты"""
-    arguments_for_check_hash = [[data["bins"][j], i, data["last_num"], data["hash"], data["hash_format"]]
-                                for j in range(len(data["bins"])) for i in range(10 ** 6)]
+    arguments_for_check_hash = [[data["bins"][j], i, data["last_num"], data["hash"],
+                                 data["hash_format"]] for j in range(len(data["bins"])) for i in range(10 ** 6)]
     with mp.Pool(processes=core) as p:
-        for fulk_card_num in p.map(check_hash, arguments_for_check_hash):
-            if fulk_card_num:
+        for full_card_num in p.map(check_hash, arguments_for_check_hash):
+            if full_card_num:
                 p.terminate()
-                print(fulk_card_num)
-                return fulk_card_num
+                print(full_card_num)
+                return full_card_num

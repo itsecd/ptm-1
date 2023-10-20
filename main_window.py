@@ -3,6 +3,7 @@ import alg_luhn
 import graph
 import gen_num
 import read_settings
+
 from time import time
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QRegExp
@@ -12,6 +13,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QProgressBar
 
 class Window(QMainWindow):
     """Основной класс нашей програмы"""
+
     def create_graph(self):
         """Создаем и передаем данные для  """
         self.cores = [1, 2, 3, 4, 5, 6, 7, 8]
@@ -21,8 +23,8 @@ class Window(QMainWindow):
             self.result = gen_num.num_selection(self.data, i)
             self.end = time()
             self.times.append(self.end - self.start)
-            print(self.end-self.start)
-            self.pbar.setValue(12*i)
+            print(self.end - self.start)
+            self.pbar.setValue(12 * i)
         self.pbar.setValue(100)
         self.main_function()
 
@@ -32,7 +34,8 @@ class Window(QMainWindow):
         self.button_restart.show()
         self.button_show_graph.show()
         self.pbar.hide()
-        self.first_text.setText("Вуаля, процесс закончен!\n   Что желаете сделать?")
+        self.first_text.setText(
+            "Вуаля, процесс закончен!\n   Что желаете сделать?")
         self.first_text.adjustSize()
 
     def progress(self, variant):
@@ -77,9 +80,13 @@ class Window(QMainWindow):
     def check_by_alg_moon_click(self):
         """Вызываем алгоритм луна"""
         if alg_luhn.alg_luhn(self.result):
-            QMessageBox.about(self, "Успех", "Последовательность прошла алгоритм луна")
+            QMessageBox.about(
+                self, "Успех", "Последовательность прошла алгоритм луна")
         else:
-            QMessageBox.about(self, "Провал", "Последовательность провалила алгоритм луна")
+            QMessageBox.about(
+                self,
+                "Провал",
+                "Последовательность провалила алгоритм луна")
 
     def set_position(self):
         """Устанавливаем позицию для каждого элемента, кнопки, текст и тд"""
