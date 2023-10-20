@@ -5,7 +5,6 @@ import multiprocessing as mp
 def check_hash(lst: list) -> str:
     hash = lst[3]
     full_card_num = f"{lst[0]}{lst[1]:06d}{lst[2]}"
-    # print(full_card_num)
     match lst[4]:
         case 'blake2b':
             if hashlib.blake2b(full_card_num.encode()).hexdigest() == hash:

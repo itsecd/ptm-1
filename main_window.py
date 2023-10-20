@@ -1,8 +1,8 @@
 import sys
-import Moooooon_ALG
+import alg_luhn
 import graph
-import Gen_num
-import main
+import gen_num
+import read_settings
 from time import time
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QRegExp
@@ -16,7 +16,7 @@ class Window(QMainWindow):
         self.times = []
         for i in self.cores:
             self.start = time()
-            self.result = Gen_num.num_selection(self.data, i)
+            self.result = gen_num.num_selection(self.data, i)
             self.end = time()
             self.times.append(self.end - self.start)
             print(self.end-self.start)
@@ -33,7 +33,7 @@ class Window(QMainWindow):
         self.first_text.adjustSize()
 
     def progress(self, variant):
-        self.data = main.read_json(variant)
+        self.data = read_settings.read_json(variant)
         self.pbar.setValue(0)
         self.create_graph()
 
@@ -67,12 +67,12 @@ class Window(QMainWindow):
         graph.show_plt(self.cores, self.times)
 
     def check_by_alg_moon_click(self):
-        if Moooooon_ALG.luna(self.result):
+        if alg_luhn.alg_luhn(self.result):
             QMessageBox.about(self, "Успех", "Последовательность прошла алгоритм луна")
         else:
             QMessageBox.about(self, "Провал", "Последовательность провалила алгоритм луна")
 
-    def position(self):
+    def set_position(self):
         self.first_text.move(390, 200)
         self.variant_label.move(465, 250)
         self.button_start.move(445, 310)
@@ -126,7 +126,7 @@ class Window(QMainWindow):
         self.button_restart.hide()
         self.check_by_alg_moon.hide()
         self.set_value()
-        self.position()
+        self.set_position()
         self.set_size()
 
 
