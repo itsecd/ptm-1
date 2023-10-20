@@ -1,9 +1,5 @@
 import json
-from time import time
 
-import Gen_num
-import Moooooon_ALG
-import graph
 
 def read_json(variant: str) -> dict:
     result = {
@@ -21,15 +17,3 @@ def read_json(variant: str) -> dict:
         result["hash_format"] = data[variant]["hash_format"]
     print(result)
     return result
-
-
-if __name__ == "__main__":
-    Moooooon_ALG.luna('2200700417413837')
-    data = read_json("3")
-    graph.create_graph(data)
-    #Gen_num.check_hash(data["bins"][1], 41741, data["last_num"], data["hash"], data["hash_format"])
-    start = time()
-    #Gen_num.num_selection(data, 8)
-    print(time()-start)
-
-

@@ -1,10 +1,7 @@
 import hashlib
 import multiprocessing as mp
 
-import Moooooon_ALG
 
-
-#bin: str, six_numbers: int, last_num: str, hash: str, hash_format: str
 def check_hash(lst: list) -> str:
     hash = lst[3]
     full_card_num = f"{lst[0]}{lst[1]:06d}{lst[2]}"
@@ -13,7 +10,6 @@ def check_hash(lst: list) -> str:
         case 'blake2b':
             if hashlib.blake2b(full_card_num.encode()).hexdigest() == hash:
                 return full_card_num
-
         case 'blake2s':
             if hashlib.blake2s(full_card_num.encode()).hexdigest() == hash:
                 return full_card_num
@@ -51,14 +47,11 @@ def check_hash(lst: list) -> str:
 
 
 def num_selection(data: dict, core) -> str:
-    arguments_for_check_hash = [[data["bins"][j], i, data["last_num"], data["hash"], data["hash_format"]] for j in range(len(data["bins"])) for i in range(10 ** 6)
-    ]
-    #print(arguments_for_check_hash)
+    arguments_for_check_hash = [[data["bins"][j], i, data["last_num"], data["hash"], data["hash_format"]]
+                                for j in range(len(data["bins"])) for i in range(10 ** 6)]
     with mp.Pool(processes=core) as p:
         for result in p.map(check_hash, arguments_for_check_hash):
             if result:
                 p.terminate()
                 print(result)
-                #Moooooon_ALG.luna(result)
                 return result
-

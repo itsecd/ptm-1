@@ -9,7 +9,6 @@ def luna(number: str) -> str:
                 temp += tmp
         else:
             temp += int(number[i])
-    #print(number)
     if temp % 10 == 0:
         print("Последовательность верна")
         return True

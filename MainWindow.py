@@ -1,32 +1,19 @@
-## супер-мега-скрипт.... всех Рахит
-# Куплинов :)
-import hashlib
 import sys
 import Moooooon_ALG
 import graph
 import Gen_num
 import main
 from time import time
-import multiprocessing as mp
-
-
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QFont, QRegExpValidator
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QProgressBar
 
 
-
-
-
 class Window(QMainWindow):
-
-
-
     def create_graph(self):
         self.cores = [1, 2, 3, 4, 5, 6, 7, 8]
         self.times = []
-
         for i in self.cores:
             self.start = time()
             self.result = Gen_num.num_selection(self.data, i)
@@ -61,7 +48,6 @@ class Window(QMainWindow):
                 self.first_text.adjustSize()
                 self.variant_label.hide()
                 self.pbar.show()
-
                 self.progress(self.variant_label.text())
         else:
             QMessageBox.about(self, "Ошибка", "Пустое поле недопустимо")
@@ -127,11 +113,6 @@ class Window(QMainWindow):
         self.button_restart = QtWidgets.QPushButton(self)
         self.button_show_graph = QtWidgets.QPushButton(self)
         self.check_by_alg_moon = QtWidgets.QPushButton(self)
-
-        self.button_show_graph.hide()
-        self.button_restart.hide()
-        self.check_by_alg_moon.hide()
-
         reg_variant = QRegExp("[1-9][0-9]")
         input_validator = QRegExpValidator(reg_variant, self.variant_label)
         self.variant_label.setValidator(input_validator)
@@ -139,10 +120,11 @@ class Window(QMainWindow):
         self.button_restart.clicked.connect(self.button_restart_click)
         self.button_show_graph.clicked.connect(self.button_show_graph_click)
         self.check_by_alg_moon.clicked.connect(self.check_by_alg_moon_click)
-
         self.pbar = QProgressBar(self)
         self.pbar.hide()
-
+        self.button_show_graph.hide()
+        self.button_restart.hide()
+        self.check_by_alg_moon.hide()
         self.set_value()
         self.position()
         self.set_size()
@@ -150,11 +132,9 @@ class Window(QMainWindow):
 
 def application() -> None:
     """"Start aplication mainwindow"""
-
     app = QApplication(sys.argv)
     window = Window()
     window.setObjectName("MainWindow")
-    # window.setWindowIcon(QtGui.QIcon("phon.png"))
     window.setMinimumSize(1000, 800)
     window.setMaximumSize(1024, 720)
     window.setStyleSheet("#MainWindow{border-image:url(phon.png)}")
