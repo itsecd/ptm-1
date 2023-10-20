@@ -255,7 +255,8 @@ class MyWindow(QMainWindow):
 
 class CustomImageDataset(Dataset):
 
-    def __init__(self: CustomImageDataset, path_to_annotation_file: str, transform: Any = None, target_transform: Any = None) -> None:
+    def __init__(self: CustomImageDataset, path_to_annotation_file: str, transform: Any = None,
+                 target_transform: Any = None) -> None:
         self.path_to_annotation_file = path_to_annotation_file
         self.dataset_info = pd.read_csv(path_to_annotation_file, header=None)
         self.dataset_info.drop(self.dataset_info.columns[[0]], axis=1, inplace=True)
