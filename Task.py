@@ -24,6 +24,19 @@ class DataBath(object):
 
 class DataIter(mx.io.DataIter):
     def __init__(self, images, batch_size, height, width, process_num):
+        """
+        Initializes a DataIter object.
+
+        Args:
+            images (list): List of image paths.
+            batch_size (int): Number of images per batch.
+            height (int): Height of the input images.
+            width (int): Width of the input images.
+            process_num (int): Number of processes to use for data loading.
+
+        Returns:
+            None
+        """
         assert process_num <= 40
         super(DataIter, self).__init__()
         self.batch_size = batch_size
@@ -45,6 +58,15 @@ class DataIter(mx.io.DataIter):
             process.start()
 
     def augment(self, mat):
+        """
+        Applies random affine transformation to an input image.
+
+        Args:
+            mat (ndarray): Input image as a numpy array.
+
+        Returns:
+            Affine transformed image.
+        """
         rows, cols, _ = mat.shape
         x_scale = random.randint(-12, 12) / 100.0
         y_scale = random.randint(-12, 12) / 100.0
@@ -78,6 +100,12 @@ class DataIter(mx.io.DataIter):
         return affine_mat
 
     def generate_batch(self):
+        """
+        Generates a batch of augmented images.
+
+        Returns: A list of tuples, where each tuple contains three images: anchor image (a_mat), positive image
+        (p_mat), and negative image (n_mat)
+        """
         ret = []
         while len(ret) < self.batch_size:
             a_idx, n_idx = random.sample(range(self.conut), 2)
@@ -97,6 +125,11 @@ class DataIter(mx.io.DataIter):
         return ret
 
     def write(self):
+        """
+        Generates batches of data and puts them into a queue
+
+        Returns: None
+        """
         while True:
             if not self.started:
                 break
@@ -113,6 +146,11 @@ class DataIter(mx.io.DataIter):
             self.queue.put(data_batch)
 
     def __del__(self):
+        """
+          Stops the execution of the processes and clears the queue.
+
+          Returns: None
+          """
         self.started = False
         for process in self.processes:
             process.join()
@@ -120,8 +158,11 @@ class DataIter(mx.io.DataIter):
                 self.queue.get(block=False)
 
     def next(self):
+        """
+            Returns the next batch of data from the queue.
+        """
         if self.queue.empty():
-            logging.debug("waitting for data......")
+            logging.debug("waiting for data......")
         if self.iter_next():
             return self.queue.get(block=True)
         else:
@@ -136,6 +177,15 @@ class DataIter(mx.io.DataIter):
 
 
 def get_network(batch_size):
+    """
+        Constructs a network for triplet loss.
+
+        Args:
+            batch_size (int): The batch size of the network.
+
+        Returns:
+            The symbol representing the network.
+        """
     anchor = mx.symbol.Variable("anchor")
     positive = mx.symbol.Variable("positive")
     negative = mx.symbol.Variable("negative")
@@ -173,6 +223,20 @@ def get_network(batch_size):
 class Search(object):
     def __init__(self, model_path, epoch, height, width, imgs=None,
                  codebook="./index.pkl"):
+        """
+               Initializes the object for image retrieval.
+
+               Args:
+                   model_path (str): The path to the trained model.
+                   epoch (int): The epoch number of the trained model.
+                   height (int): The height of the input images.
+                   width (int): The width of the input images.
+                   imgs (list): A list of input images. Default is None.
+                   codebook (str): The path to the codebook file. Default is "./index.pkl".
+
+               Returns:
+                   None
+               """
         symbol, arg_params, aux_params = \
             mx.model.load_checkpoint(model_path, epoch)
         input_shape = dict([('data', (1, 3, height, width))])
@@ -193,6 +257,15 @@ class Search(object):
             self.imgs, self.codebook = pickle.load(open(codebook))
 
     def build_index(self, imgs):
+        """
+            Builds the codebook index for image retrieval.
+
+            Args:
+                imgs (list): A list of input images.
+
+            Returns:
+                None
+            """
         self.codebook = np.empty(shape=(len(imgs), 128))
         for idx, img in enumerate(imgs):
             if idx % 100 == 0:
@@ -208,15 +281,42 @@ class Search(object):
                     pickle.HIGHEST_PROTOCOL)
 
     def preprocess(self, mat):
+        """
+            Preprocesses the input image matrix.
+
+            Args:
+                mat (numpy.ndarray): The input image matrix.
+
+            Returns:
+                The preprocessed image matrix.
+            """
         mat = cv2.resize(mat, (self.width, self.height))
 
         def enhance(mat):
+            """
+                Enhances the input image by applying normalization and scaling.
+
+                Args:
+                    mat (numpy.ndarray): The input image matrix.
+
+                Returns:
+                    The enhanced image matrix.
+                """
             rows, cols, channel = mat.shape
             norm = cv2.normalize(mat, mat, 0, 255, cv2.NORM_MINMAX)
             scale = cv2.convertScaleAbs(norm, None, 1.2, 0)
             return scale
 
         def need_enhance(mat):
+            """
+               Determines if the input image matrix needs to be enhanced.
+
+               Args:
+                   mat (numpy.ndarray): The input image matrix.
+
+               Returns:
+                    If the image needs to be enhanced, False otherwise.
+               """
             mat = cv2.cvtColor(mat, cv2.COLOR_BGR2HSV)[:, :, 2]
             hist, _ = np.histogram(mat, 256, (0, 256))
             if np.argmax(hist) < 200:
@@ -230,10 +330,30 @@ class Search(object):
             return mat
 
     def get_feature(self, mat, search=False):
+        """
+            Extracts the feature vector from the input image matrix.
+
+            Args:
+                mat (numpy.ndarray): The input image matrix.
+                search (bool, optional): Whether to perform a search. Defaults to False.
+
+            Returns:
+                The feature vector extracted from the input image matrix.
+            """
         self.data[:] = mx.nd.array([mat])
         return self.executor.forward(is_train=False)[0].asnumpy()[0]
 
     def search(self, mat, top_k=5):
+        """
+            Performs a search using the input image matrix.
+
+            Args:
+                mat (numpy.ndarray): The input image matrix.
+                top_k (int, optional): The number of top results to return. Defaults to 5.
+
+            Returns:
+                A tuple containing the modified input image matrix and a list of top results.
+            """
         assert self.codebook is not None and self.imgs is not None
         mat = cv2.GaussianBlur(mat, (3, 3), 0, 0,
                                borderType=cv2.BORDER_REPLICATE)
@@ -250,6 +370,15 @@ class Search(object):
         return mat, result
 
     def get_predict_net(self):
+        """
+            Returns the prediction network.
+
+            Args:
+                self (object): The instance of the class.
+
+            Returns:
+                The prediction network.
+        """
         data = mx.symbol.Variable("data")
         network = resnet(
             data=data,
@@ -268,13 +397,27 @@ class Auc(mx.metric.EvalMetric):
     def __init__(self):
         super(Auc, self).__init__('auc')
 
-    def update(self, labels, preds):
+    def update(self, preds):
+        """
+            Update the metric with the given labels and predictions.
+
+            Args:
+            - preds (array-like): The predicted labels.
+
+            Returns:
+            None
+        """
         pred = preds[0].asnumpy().reshape(-1)
         self.sum_metric += np.sum(pred)
         self.num_inst += len(pred)
 
 
 def train():
+    """
+        Trains a CNN model for image search.
+
+        Returns: None
+    """
     parser = argparse.ArgumentParser(description="Image Search Using CNN")
     parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--gpus", type=int, default=0)
@@ -313,6 +456,15 @@ def train():
 
 
 def test():
+    """
+        Tests the image search functionality.
+        Loads the trained model from the specified path and epoch. It then loads the images
+        from the root directory and test directory, and performs a search on each test image.
+        The search results are displayed using matplotlib.
+
+        Returns:
+        None
+    """
     paser = argparse.ArgumentParser(description="Test Search")
     paser.add_argument("--model_path", type=str, default="models/ir")
     paser.add_argument("--epoch", type=int, default=20)
