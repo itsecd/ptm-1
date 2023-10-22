@@ -10,7 +10,7 @@ import requests
 from mutagen.flac import FLAC, Picture
 
 
-class zvukdown:
+class ZvukDown:
     def __init__(self):
         self.verify = True
         self.headers = []
@@ -279,7 +279,7 @@ class zvukdown:
 if __name__ == '__main__':
     release_ids = []
     track_ids = []
-    z = zvukdown()
+    z = ZvukDown()
 
     if "login" in sys.argv:
         # print(sys.argv[2], sys.argv[3])
