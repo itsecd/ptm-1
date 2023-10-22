@@ -3,10 +3,9 @@ import os
 import subprocess
 import sys
 import time
+import requests
 from pathlib import Path
 from shutil import copyfile
-
-import requests
 from mutagen.flac import FLAC, Picture
 
 
@@ -45,7 +44,8 @@ class ZvukDown:
                         raise Exception("Wrong token length")
                     self.headers = {"x-auth-token": token}
 
-    def __ntfs(self, filename):
+    @staticmethod
+    def __ntfs(filename):
         for ch in ['<', '>', '@', '%', '!', '+', ':', '"', '/', '\\', '|',
                    '?', '*']:
             if ch in filename:
@@ -54,7 +54,8 @@ class ZvukDown:
         filename = filename.replace(" .flac", ".flac")
         return filename
 
-    def __launch(self, args):
+    @staticmethod
+    def __launch(args):
         try:
             pipe = subprocess.Popen(args, creationflags=0x08000000, stdin=subprocess.PIPE,
                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
@@ -68,9 +69,10 @@ class ZvukDown:
                 raise Exception("Unable to launch")
             return output
         except FileNotFoundError:
-            return ("Install pingo and imagemagick!")
+            return "Install pingo and imagemagick!"
 
-    def __to_str(self, l):
+    @staticmethod
+    def __to_str(l):
         if isinstance(l, int):
             return [l]
         elif not isinstance(l, str):
@@ -223,7 +225,7 @@ class ZvukDown:
         r = requests.get(url, allow_redirects=True, verify=self.verify)
         open(filename, 'wb').write(r.content)
 
-        audio = FLAC(filename)
+        audio = fl.FLAC(filename)
         audio["ARTIST"] = metadata["author"]
         audio["TITLE"] = metadata["name"]
         audio["ALBUM"] = metadata["album"]
@@ -238,7 +240,7 @@ class ZvukDown:
         audio["RELEASE_ID"] = str(metadata["release_id"])
         audio["TRACK_ID"] = str(metadata["track_id"])
 
-        covart = Picture()
+        covart = fl.Picture()
         covart.data = open(pic, 'rb').read()
         covart.type = 3  # as the front cover
         covart.mime = "image/jpeg"
