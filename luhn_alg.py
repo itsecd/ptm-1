@@ -1,4 +1,4 @@
-def alg_luhn(number: str) -> bool:
+def luhn_alg(number: str) -> bool:
     """Алгоритм луна"""
     summa = 0
     for index in range(len(number)):

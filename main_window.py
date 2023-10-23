@@ -1,5 +1,5 @@
 import sys
-import alg_luhn
+import luhn_alg
 import graph
 import gen_num
 import read_settings
@@ -79,7 +79,7 @@ class Window(QMainWindow):
 
     def check_by_alg_moon_click(self):
         """Вызываем алгоритм луна"""
-        if alg_luhn.alg_luhn(self.result):
+        if luhn_alg.luhn_alg(self.result):
             QMessageBox.about(
                 self, "Успех", "Последовательность прошла алгоритм луна")
         else:
