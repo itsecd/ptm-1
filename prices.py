@@ -11,33 +11,33 @@ connection_options = {
     "database": 'lift_pass',
     "password": 'mysql'}
 
-connection = None
+db_connection = None
 
 
 @app.route("/prices", methods=['GET', 'PUT'])
 def prices():
     res = {}
-    global connection
-    if connection is None:
-        connection = create_lift_pass_db_connection(connection_options)
+    global db_connection
+    if db_connection is None:
+        db_connection = create_lift_pass_db_connection(connection_options)
     if request.method == 'PUT':
         lift_pass_cost = request.args["cost"]
         lift_pass_type = request.args["type"]
-        cursor = connection.cursor()
+        cursor = db_connection.cursor()
         cursor.execute('INSERT INTO `base_price` (type, cost) VALUES (?, ?) ' +
                        'ON DUPLICATE KEY UPDATE cost = ?', (lift_pass_type, lift_pass_cost, lift_pass_cost))
         return {}
     elif request.method == 'GET':
-        cursor = connection.cursor()
+        cursor = db_connection.cursor()
         cursor.execute(f'SELECT cost FROM base_price '
                        + 'WHERE type = ? ', (request.args['type'],))
         row = cursor.fetchone()
         result = {"cost": row[0]}
-        if 'age' in request.args and request.args.get('age', type=int) < 6:
+        if 'age' in request.args and int(request.args.get('age')) < 6:
             res["cost"] = 0
         else:
             if "type" in request.args and request.args["type"] != "night":
-                cursor = connection.cursor()
+                cursor = db_connection.cursor()
                 cursor.execute('SELECT * FROM holidays')
                 is_holiday = False
                 reduction = 0
