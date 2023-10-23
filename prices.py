@@ -1,6 +1,6 @@
+from datetime import datetime
 import math
 from flask import Flask, request
-from datetime import datetime
 from db import create_lift_pass_db_connection
 
 app = Flask("lift-pass-pricing")
