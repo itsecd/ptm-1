@@ -51,7 +51,6 @@ def prices():
                         request.args["date"]).weekday() == 0:
                     reduction = 35
 
-                # TODO: apply reduction for others
                 if 'age' in request.args and request.args.get('age', type=int) < 15:
                     res['cost'] = math.ceil(result["cost"] * .7)
                 else:
