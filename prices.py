@@ -41,8 +41,8 @@ def prices():
                 cursor.execute('SELECT * FROM holidays')
                 is_holiday = False
                 reduction = 0
-                for row in cursor.fetchall():
-                    holiday = row[0]
+                for line in cursor.fetchall():
+                    holiday = line[0]
                     if "date" in request.args:
                         d = datetime.fromisoformat(request.args["date"])
                         if d.year == holiday.year and d.month == holiday.month and holiday.day == d.day:
