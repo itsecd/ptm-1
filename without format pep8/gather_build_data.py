@@ -1,9 +1,4 @@
 # !/usr/bin/env python3
-GRADLE_BUILD_START = re.compile(r"^.* About to execute Gradle tasks: \[([\w\s,:-]+)\].*$")
-GRADLE_BUILD_END = re.compile(r"^([\d\-:,\s]+) \[\d+\].* Gradle build (\w+) in ([\d\s\w]+)\n$")
-GRADLE_SYNC_START = re.compile(r"^.* sync with Gradle for project \'([^']+)\'.*$")
-GRADLE_SYNC_END = re.compile(r"^([\d\-:,\s]+) \[\d+\].* Gradle sync (\w+) in ([\d\s\w]+)\n$")
-
 import datetime
 import os
 import re
@@ -11,6 +6,12 @@ import sys
 import pwd
 from dataclasses import dataclass, field
 from pathlib import Path
+
+
+GRADLE_BUILD_START = re.compile(r"^.* About to execute Gradle tasks: \[([\w\s,:-]+)\].*$")
+GRADLE_BUILD_END = re.compile(r"^([\d\-:,\s]+) \[\d+\].* Gradle build (\w+) in ([\d\s\w]+)\n$")
+GRADLE_SYNC_START = re.compile(r"^.* sync with Gradle for project \'([^']+)\'.*$")
+GRADLE_SYNC_END = re.compile(r"^([\d\-:,\s]+) \[\d+\].* Gradle sync (\w+) in ([\d\s\w]+)\n$")
 
 
 @dataclass(frozen=True, order=True)
