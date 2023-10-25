@@ -1,129 +1,130 @@
 import turtle as te
 import time
 
-WriteStep = 15
-Speed = 5
-Width = 600
-Height = 500
-Xh = 0
-Yh = 0
+WRITE_STEP = 15
+SPEED = 5
+WIDTH = 600
+HEIGHT = 500
+XH = 0
+YH = 0
 
 
-def bezier(p1, p2, t):
+def bezier(p1: float, p2: float, t: float)-> float:
     """First order Bessel function
-    :param p1,
-     :param p2
-      :param t"""
+    :param p1: First control point
+    :param p2: Second control point
+    :param t: Parameter value between 0 and 1
+    :return: Interpolated value at parameter t"""
     return p1 * (1 - t) + p2 * t
 
 
-def bezier_2(x1, y1, x2, y2, x3, y3):
+def bezier_2(x1: float, y1: float, x2: float, y2: float, x3: float, y3: float) -> None:
     """Second-order Bessel function
-       :param x1
-       :param y1
-        :param x2
-         :param y2
-          :param x3
-           :param y3"""
+       :param x1: x-coordinate of the first control point
+    :param y1: y-coordinate of the first control point
+    :param x2: x-coordinate of the second control point
+    :param y2: y-coordinate of the second control point
+    :param x3: x-coordinate of the third control point
+    :param y3: y-coordinate of the third control point"""
     te.goto(x1, y1)
     te.pendown()
-    for t in range(0, WriteStep + 1):
-        x = bezier(bezier(x1, x2, t / WriteStep),
-                   bezier(x2, x3, t / WriteStep), t / WriteStep)
-        y = bezier(bezier(y1, y2, t / WriteStep),
-                   bezier(y2, y3, t / WriteStep), t / WriteStep)
+    for t in range(0, WRITE_STEP + 1):
+        x = bezier(bezier(x1, x2, t / WRITE_STEP),
+                   bezier(x2, x3, t / WRITE_STEP), t / WRITE_STEP)
+        y = bezier(bezier(y1, y2, t / WRITE_STEP),
+                   bezier(y2, y3, t / WRITE_STEP), t / WRITE_STEP)
         te.goto(x, y)
     te.penup()
 
 
-def bezier_3(x1, y1, x2, y2, x3, y3, x4, y4):
+def bezier_3(x1: float, y1: float, x2: float, y2: float, x3: float, y3: float, x4: float, y4: float) -> None:
     """Third-order bessel function
-          :param x1
-           :param y1
-            :param x2
-             :param y2
-              :param x3
-               :param y3
-                :param x4
-                :param y4"""
-    x1 = -Width / 2 + x1
-    y1 = Height / 2 - y1
-    x2 = -Width / 2 + x2
-    y2 = Height / 2 - y2
-    x3 = -Width / 2 + x3
-    y3 = Height / 2 - y3
-    x4 = -Width / 2 + x4
-    y4 = Height / 2 - y4
+          :param x1: x-coordinate of the first control point
+    :param y1: y-coordinate of the first control point
+    :param x2: x-coordinate of the second control point
+    :param y2: y-coordinate of the second control point
+    :param x3: x-coordinate of the third control point
+    :param y3: y-coordinate of the third control point
+    :param x4: x-coordinate of the fourth control point
+    :param y4: y-coordinate of the fourth control point"""
+    x1 = -WIDTH / 2 + x1
+    y1 = HEIGHT / 2 - y1
+    x2 = -WIDTH / 2 + x2
+    y2 = HEIGHT / 2 - y2
+    x3 = -WIDTH / 2 + x3
+    y3 = HEIGHT / 2 - y3
+    x4 = -WIDTH / 2 + x4
+    y4 = HEIGHT / 2 - y4
     te.goto(x1, y1)
     te.pendown()
-    for t in range(0, WriteStep + 1):
-        x = bezier(bezier(bezier(x1, x2, t / WriteStep), bezier(x2, x3, t / WriteStep), t / WriteStep),
-                   bezier(bezier(x2, x3, t / WriteStep), bezier(x3, x4, t / WriteStep), t / WriteStep), t / WriteStep)
-        y = bezier(bezier(bezier(y1, y2, t / WriteStep), bezier(y2, y3, t / WriteStep), t / WriteStep),
-                   bezier(bezier(y2, y3, t / WriteStep), bezier(y3, y4, t / WriteStep), t / WriteStep), t / WriteStep)
+    for t in range(0, WRITE_STEP + 1):
+        x = bezier(bezier(bezier(x1, x2, t / WRITE_STEP), bezier(x2, x3, t / WRITE_STEP), t / WRITE_STEP),
+                   bezier(bezier(x2, x3, t / WRITE_STEP), bezier(x3, x4, t / WRITE_STEP), t / WRITE_STEP), t / WRITE_STEP)
+        y = bezier(bezier(bezier(y1, y2, t / WRITE_STEP), bezier(y2, y3, t / WRITE_STEP), t / WRITE_STEP),
+                   bezier(bezier(y2, y3, t / WRITE_STEP), bezier(y3, y4, t / WRITE_STEP), t / WRITE_STEP), t / WRITE_STEP)
         te.goto(x, y)
     te.penup()
 
 
-def moveto_a(x, y):
+def moveto_a(x: float, y: float) -> None:
     """Move to svg coordinates (x, y)
-              :param x
-               :param y"""
+    :param x: x-coordinate
+    :param y: y-coordinate"""
     te.penup()
-    te.goto(-Width / 2 + x, Height / 2 - y)
+    te.goto(-WIDTH / 2 + x, HEIGHT / 2 - y)
 
 
-def line(x1, y1, x2, y2):
+def line(x1: float, y1: float, x2: float, y2: float) -> None:
     """Connect two points under svg coordinates
-                 :param x1
-                  :param y1
-                  :param x2
-                  :param y2"""
+    :param x1: x-coordinate of the first point
+    :param y1: y-coordinate of the first point
+    :param x2: x-coordinate of the second point
+    :param y2: y-coordinate of the second point"""
     te.penup()
-    te.goto(-Width / 2 + x1, Height / 2 - y1)
+    te.goto(-WIDTH / 2 + x1, HEIGHT / 2 - y1)
     te.pendown()
-    te.goto(-Width / 2 + x2, Height / 2 - y2)
+    te.goto(-WIDTH / 2 + x2, HEIGHT / 2 - y2)
     te.penup()
 
 
-def lineto(dx, dy):
+def lineto(dx: float, dy: float) -> None:
     """Connect the current point and the point with relative coordinates (dx, dy)
-                 :param dx
-                  :param dy"""
+    :param dx: relative x-coordinate
+    :param dy: relative y-coordinate"""
     te.pendown()
     te.goto(te.xcor() + dx, te.ycor() - dy)
     te.penup()
 
 
-def lineto_a(x, y):
+def lineto_a(x: float, y: float) -> None:
     """Connect the current point and svg coordinates (x, y)
-                     :param x
-                      :param y"""
+    :param x: x-coordinate
+    :param y: y-coordinate"""
     te.pendown()
-    te.goto(-Width / 2 + x, Height / 2 - y)
+    te.goto(-WIDTH / 2 + x, HEIGHT / 2 - y)
     te.penup()
 
 
-def horizontal_a(x):
+def horizontal_a(x: float) -> None:
     """Make the horizontal line with the abscissa x in the svg coordinates
-                         :param x"""
+                          :param x: x-coordinate"""
     te.pendown()
-    te.setx(x - Width / 2)
+    te.setx(x - WIDTH / 2)
     te.penup()
 
 
-def horizontal(dx):
+def horizontal(dx: float) -> None:
     """Make the horizontal line with relative abscissa dx
-                             :param dx"""
+                             :param dx-coordinate"""
     te.seth(0)
     te.pendown()
     te.fd(dx)
     te.penup()
 
 
-def vertical(dy):
+def vertical(dy: float) -> None:
     """Make the vertical line with the relative ordinate dy
-                               :param dy"""
+                               :param dy: dy-coordinate"""
     te.seth(-90)
     te.pendown()
     te.fd(dy)
@@ -131,23 +132,23 @@ def vertical(dy):
     te.seth(0)
 
 
-def polyline(x1, y1, x2, y2, x3, y3):
+def polyline(x1: float, y1: float, x2: float, y2: float, x3: float, y3: float) -> None:
     """Make a polyline under svg coordinates
-                                   :param x1
-                                   :param y1
-                                   :param x2
-                                   :param y2
-                                   :param x3
-                                   :param y3"""
+    :param x1: x-coordinate of the first point
+    :param y1: y-coordinate of the first point
+    :param x2: x-coordinate of the second point
+    :param y2: y-coordinate of the second point
+    :param x3: x-coordinate of the third point
+    :param y3: y-coordinate of the third point"""
     te.penup()
-    te.goto(-Width / 2 + x1, Height / 2 - y1)
+    te.goto(-WIDTH / 2 + x1, HEIGHT / 2 - y1)
     te.pendown()
-    te.goto(-Width / 2 + x2, Height / 2 - y2)
-    te.goto(-Width / 2 + x3, Height / 2 - y3)
+    te.goto(-WIDTH / 2 + x2, HEIGHT / 2 - y2)
+    te.goto(-WIDTH / 2 + x3, HEIGHT / 2 - y3)
     te.penup()
 
 
-def curveto_a(x1, y1, x2, y2, x, y):
+def curveto_a(x1: float, y1: float, x2: float, y2: float, x: float, y: float) -> None:
     """Third-order Bezier curve to (x, y)
                                        :param x1
                                        :param y1
@@ -156,70 +157,70 @@ def curveto_a(x1, y1, x2, y2, x, y):
                                        :param x
                                        :param y"""
     te.penup()
-    X_now = te.xcor() + Width / 2
-    Y_now = Height / 2 - te.ycor()
+    X_now = te.xcor() + WIDTH / 2
+    Y_now = HEIGHT / 2 - te.ycor()
     bezier_3(X_now, Y_now, x1, y1, x2, y2, x, y)
-    global Xh
-    global Yh
-    Xh = x - x2
-    Yh = y - y2
+    global XH
+    global YH
+    XH = x - x2
+    YH = y - y2
 
 
-def curveto_r(x1, y1, x2, y2, x, y):
+def curveto_r(x1: float, y1: float, x2: float, y2: float, x: float, y: float) -> None:
     """Third-order Bezier curve to relative coordinates (x, y)
-                                           :param x1
-                                           :param y1
-                                           :param x2
-                                           :param y2
-                                           :param x
-                                           :param y"""
+                                           :param x1: relative x-coordinate of the first control point
+    :param y1: relative y-coordinate of the first control point
+    :param x2: relative x-coordinate of the second control point
+    :param y2: relative y-coordinate of the second control point
+    :param x: relative x-coordinate of the end point
+    :param y: relative y-coordinate of the end point"""
     te.penup()
-    X_now = te.xcor() + Width / 2
-    Y_now = Height / 2 - te.ycor()
+    X_now = te.xcor() + WIDTH / 2
+    Y_now = HEIGHT / 2 - te.ycor()
     bezier_3(X_now, Y_now, X_now + x1, Y_now + y1,
              X_now + x2, Y_now + y2, X_now + x, Y_now + y)
-    global Xh
-    global Yh
-    Xh = x - x2
-    Yh = y - y2
+    global XH
+    global YH
+    XH = x - x2
+    YH = y - y2
 
 
-def smooth_a(x2, y2, x, y):
+def smooth_a(x2: float, y2: float, x: float, y: float) -> None:
     """Smooth the third-order Bezier curve to (x, y)
-                                               :param x2
-                                               :param y2
-                                               :param x
-                                               :param y"""
-    global Xh
-    global Yh
+                                               :param x2: x-coordinate of the second control point
+    :param y2: y-coordinate of the second control point
+    :param x: x-coordinate of the end point
+    :param y: y-coordinate of the end point"""
+    global XH
+    global YH
     te.penup()
-    X_now = te.xcor() + Width / 2
-    Y_now = Height / 2 - te.ycor()
-    bezier_3(X_now, Y_now, X_now + Xh, Y_now + Yh, x2, y2, x, y)
-    Xh = x - x2
-    Yh = y - y2
+    X_now = te.xcor() + WIDTH / 2
+    Y_now = HEIGHT / 2 - te.ycor()
+    bezier_3(X_now, Y_now, X_now + XH, Y_now + YH, x2, y2, x, y)
+    XH = x - x2
+    YH = y - y2
 
 
-def smooth_r(x2, y2, x, y):
+def smooth_r(x2: float, y2: float, x: float, y: float) -> None:
     """Smooth the third-order bezier curve to relative coordinates (x, y)
-                                                  :param x2
-                                                  :param y2
-                                                  :param x
-                                                  :param y"""
-    global Xh
-    global Yh
+                                                  :param x2: x-coordinate of the second control point
+    :param y2: y-coordinate of the second control point
+    :param x: x-coordinate of the end point
+    :param y: y-coordinate of the end point"""
+    global XH
+    global YH
     te.penup()
-    X_now = te.xcor() + Width / 2
-    Y_now = Height / 2 - te.ycor()
-    bezier_3(X_now, Y_now, X_now + Xh, Y_now + Yh,
+    X_now = te.xcor() + WIDTH / 2
+    Y_now = HEIGHT / 2 - te.ycor()
+    bezier_3(X_now, Y_now, X_now + XH, Y_now + YH,
              X_now + x2, Y_now + y2, X_now + x, Y_now + y)
-    Xh = x - x2
-    Yh = y - y2
+    XH = x - x2
+    YH = y - y2
 
 te.tracer(10)
-te.setup(Width, Height, 0, 0)
+te.setup(WIDTH, HEIGHT, 0, 0)
 te.pensize(1)
-te.speed(Speed)
+te.speed(SPEED)
 te.penup()
 time.sleep(20)
 te.color("black", "#F2F2F2")
