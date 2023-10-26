@@ -33,7 +33,6 @@ class SelfDrivingCar(Driver):
 
 
 class Race(object):
-
     _points = [25, 18, 15]
 
     def __init__(self, name, results):

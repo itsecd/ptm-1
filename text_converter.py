@@ -1,9 +1,4 @@
-
-# This is for Python 3
 import html as html_converter
-
-# for Python 2 uncomment this line
-# import cgi as html_converter
 
 
 class UnicodeFileToHtmlTextConverter(object):
@@ -18,5 +13,4 @@ class UnicodeFileToHtmlTextConverter(object):
             line = line.rstrip()
             html += html_converter.escape(line, quote=True)
             html += "<br />"
-
         return html
