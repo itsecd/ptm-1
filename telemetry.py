@@ -4,11 +4,11 @@ from client import TelemetryClient
 class TelemetryDiagnostics:
     DiagnosticChannelConnectionString = "*111#"
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._telemetry_client = TelemetryClient()
         self.diagnostic_info = ""
 
-    def check_transmission(self):
+    def check_transmission(self) -> None:
         self.diagnostic_info = ""
         self._telemetry_client.disconnect()
         retryLeft = 3

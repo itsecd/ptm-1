@@ -3,7 +3,7 @@ import html as html_converter
 
 class HtmlPagesConverter:
 
-    def __init__(self, filename):
+    def __init__(self, filename: str) -> None:
         """Read the file and note the positions of the page breaks so we can access them quickly"""
         self.filename = filename
         self.breaks = [0]
@@ -18,7 +18,7 @@ class HtmlPagesConverter:
                     self.breaks.append(f.tell())
             self.breaks.append(f.tell())
 
-    def get_html_page(self, page):
+    def get_html_page(self, page: int) -> str:
         """Return html page with the given number (zero indexed)"""
         page_start = self.breaks[page]
         page_end = self.breaks[page+1]
