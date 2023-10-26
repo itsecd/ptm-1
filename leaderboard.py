@@ -2,7 +2,7 @@ from collections import defaultdict
 
 
 class Leaderboard(object):
-    
+
     def __init__(self, races):
         self.races = races
 
@@ -15,7 +15,8 @@ class Leaderboard(object):
         return driver_points
 
     def driver_rankings(self):
-        rankings = sorted(self.driver_points().items(), key=lambda x: x[1], reverse=True)
+        rankings = sorted(self.driver_points().items(),
+                          key=lambda x: x[1], reverse=True)
         return [name for (name, points) in rankings]
 
 
@@ -24,11 +25,13 @@ class Driver(object):
         self.name = name
         self.country = country
 
+
 class SelfDrivingCar(Driver):
     def __init__(self, algorithm_version, company):
         Driver.__init__(self, None, company)
         self.algorithm_version = algorithm_version
-        
+
+
 class Race(object):
 
     _points = [25, 18, 15]
@@ -40,7 +43,8 @@ class Race(object):
         for driver in results:
             name = driver.name
             if isinstance(driver, SelfDrivingCar):
-                name = "Self Driving Car - {} ({})".format(driver.country, driver.algorithm_version)
+                name = "Self Driving Car - {} ({})".format(
+                    driver.country, driver.algorithm_version)
             self.driver_names[driver] = name
 
     def points(self, driver):

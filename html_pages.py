@@ -4,7 +4,8 @@
 import html as html_converter
 
 # for Python 2 uncomment this line
-#import cgi as html_converter
+# import cgi as html_converter
+
 
 class HtmlPagesConverter:
 
@@ -21,7 +22,7 @@ class HtmlPagesConverter:
                 if "PAGE_BREAK" in line:
                     page_break_position = f.tell()
                     self.breaks.append(f.tell())
-            self.breaks.append(f.tell())                
+            self.breaks.append(f.tell())
 
     def get_html_page(self, page):
         """Return html page with the given number (zero indexed)"""

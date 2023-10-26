@@ -3,7 +3,8 @@
 import html as html_converter
 
 # for Python 2 uncomment this line
-#import cgi as html_converter
+# import cgi as html_converter
+
 
 class UnicodeFileToHtmlTextConverter(object):
 
