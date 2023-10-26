@@ -1,4 +1,5 @@
 import unittest
+
 from text_converter import UnicodeFileToHtmlTextConverter
 
 
