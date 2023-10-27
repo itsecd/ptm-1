@@ -7,9 +7,12 @@ import sys
 
 import cv2
 import fnmatch
+
+from autopep8 import List
 from matplotlib import pyplot as plt
 import numpy as np
 import mxnet as mx
+from numpy import ndarray
 from symbol_resnet import resnet
 
 import cPickle as pickle
@@ -19,13 +22,13 @@ sys.path.insert(0, os.path.join(cur_path, "ResNet"))
 
 
 class DataBath(object):
-    def __init__(self, data, label):
+    def __init__(self, data, label) -> None:
         self.data = data
         self.label = label
 
 
 class DataIter(mx.io.DataIter):
-    def __init__(self, images, batch_size, height, width, process_num):
+    def __init__(self, images, batch_size, height, width, process_num) -> None:
         """
         Initializes a DataIter object.
 
@@ -59,7 +62,7 @@ class DataIter(mx.io.DataIter):
             process.daemon = True
             process.start()
 
-    def augment(self, mat):
+    def augment(self, mat) -> ndarray:
         """
         Applies random affine transformation to an input image.
 
@@ -101,7 +104,7 @@ class DataIter(mx.io.DataIter):
                                     borderMode=cv2.BORDER_REPLICATE)
         return affine_mat
 
-    def generate_batch(self):
+    def generate_batch(self) -> List:
         """
         Generates a batch of augmented images.
 
@@ -126,7 +129,7 @@ class DataIter(mx.io.DataIter):
             ret.append((a_mat, p_mat, n_mat))
         return ret
 
-    def write(self):
+    def write(self) -> None:
         """
         Generates batches of data and puts them into a queue
 
@@ -147,7 +150,7 @@ class DataIter(mx.io.DataIter):
             data_batch = DataBath(data_all, label_all)
             self.queue.put(data_batch)
 
-    def __del__(self):
+    def __del__(self) -> None:
         """
           Stops the execution of the processes and clears the queue.
 
@@ -159,7 +162,7 @@ class DataIter(mx.io.DataIter):
             while not self.queue.empty():
                 self.queue.get(block=False)
 
-    def next(self):
+    def next(self) -> None:
         """
             Returns the next batch of data from the queue.
         """
@@ -170,15 +173,15 @@ class DataIter(mx.io.DataIter):
         else:
             raise StopIteration
 
-    def iter_next(self):
+    def iter_next(self) -> bool:
         self.cursor += self.batch_size
         return self.cursor < self.conut
 
-    def reset(self):
+    def reset(self) -> None:
         self.cursor = -self.batch_size
 
 
-def get_network(batch_size):
+def get_network(batch_size) -> mx.symbol.Symbol:
     """
         Constructs a network for triplet loss.
 
@@ -224,7 +227,7 @@ def get_network(batch_size):
 
 class Search(object):
     def __init__(self, model_path, epoch, height, width, imgs=None,
-                 codebook="./index.pkl"):
+                 codebook="./index.pkl") -> None:
         """
                Initializes the object for image retrieval.
 
@@ -258,7 +261,7 @@ class Search(object):
         else:
             self.imgs, self.codebook = pickle.load(open(codebook))
 
-    def build_index(self, imgs):
+    def build_index(self, imgs) -> None:
         """
             Builds the codebook index for image retrieval.
 
@@ -278,11 +281,11 @@ class Search(object):
             mat = np.array([mat])
             self.codebook[idx, :] = self.get_feature(mat)
 
-    def save(self, path):
+    def save(self, path) -> None:
         pickle.dump((self.imgs, self.codebook), open(path, 'w'),
                     pickle.HIGHEST_PROTOCOL)
 
-    def preprocess(self, mat):
+    def preprocess(self, mat) -> None:
         """
             Preprocesses the input image matrix.
 
@@ -294,7 +297,7 @@ class Search(object):
             """
         mat = cv2.resize(mat, (self.width, self.height))
 
-        def enhance(mat):
+        def enhance(mat) -> np.ndarray:
             """
                 Enhances the input image by applying normalization and scaling.
 
@@ -309,7 +312,7 @@ class Search(object):
             scale = cv2.convertScaleAbs(norm, None, 1.2, 0)
             return scale
 
-        def need_enhance(mat):
+        def need_enhance(mat) -> bool:
             """
                Determines if the input image matrix needs to be enhanced.
 
@@ -331,7 +334,7 @@ class Search(object):
         else:
             return mat
 
-    def get_feature(self, mat, search=False):
+    def get_feature(self, mat, search=False) -> ndarray:
         """
             Extracts the feature vector from the input image matrix.
 
@@ -345,7 +348,7 @@ class Search(object):
         self.data[:] = mx.nd.array([mat])
         return self.executor.forward(is_train=False)[0].asnumpy()[0]
 
-    def search(self, mat, top_k=5):
+    def search(self, mat, top_k=5) -> tuple:
         """
             Performs a search using the input image matrix.
 
@@ -371,7 +374,7 @@ class Search(object):
             result.append(self.imgs[idx])
         return mat, result
 
-    def get_predict_net(self):
+    def get_predict_net(self) -> mx.symbol.Symbol:
         """
             Returns the prediction network.
 
@@ -396,10 +399,10 @@ class Search(object):
 
 
 class Auc(mx.metric.EvalMetric):
-    def __init__(self):
+    def __init__(self) -> None:
         super(Auc, self).__init__('auc')
 
-    def update(self, preds):
+    def update(self, preds) -> None:
         """
             Update the metric with the given labels and predictions.
 
@@ -414,7 +417,7 @@ class Auc(mx.metric.EvalMetric):
         self.num_inst += len(pred)
 
 
-def train():
+def train() -> None:
     """
         Trains a CNN model for image search.
 
@@ -457,7 +460,7 @@ def train():
               epoch_end_callback=mx.callback.do_checkpoint("models/ir-blur"))
 
 
-def test():
+def test() -> None:
     """
         Tests the image search functionality.
         Loads the trained model from the specified path and epoch. It then loads the images
@@ -517,7 +520,7 @@ def test():
         display(mat, processed_mat, sorted_imgs)
 
 
-def predict():
+def predict() -> None:
     pass
 
 
