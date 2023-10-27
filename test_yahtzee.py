@@ -60,21 +60,21 @@ def test_one_pair():
     assert 12 == Yahtzee.score_pair([5, 3, 6, 6, 5])
 
 
-def test_two_Pair():
+def test_two_pair():
     assert 16 == Yahtzee.two_pair([3, 3, 5, 4, 5])
     assert 0 == Yahtzee.two_pair([3, 3, 5, 5, 5])
 
 
-def test_three_of_a_kind():
-    assert 9 == Yahtzee.three_of_a_kind(3, 3, 3, 4, 5)
-    assert 15 == Yahtzee.three_of_a_kind(5, 3, 5, 4, 5)
-    assert 0 == Yahtzee.three_of_a_kind(3, 3, 3, 3, 5)
+def test_three_pair():
+    assert 9 == Yahtzee.three_four_pair([3, 3, 3, 4, 5], 3)
+    assert 15 == Yahtzee.three_four_pair([5, 3, 5, 4, 5], 3)
+    assert 0 == Yahtzee.three_four_pair([3, 3, 3, 3, 5], 3)
 
 
-def test_four_of_a_knd():
-    assert 12 == Yahtzee.four_of_a_kind(3, 3, 3, 3, 5)
-    assert 20 == Yahtzee.four_of_a_kind(5, 5, 5, 4, 5)
-    assert 0 == Yahtzee.three_of_a_kind(3, 3, 3, 3, 3)
+def test_four_pair():
+    assert 12 == Yahtzee.three_four_pair([3, 3, 3, 3, 5], 4)
+    assert 20 == Yahtzee.three_four_pair([5, 5, 5, 4, 5], 4)
+    assert 0 == Yahtzee.three_four_pair([3, 3, 3, 3, 3], 4)
 
 
 def test_smallStraight():
