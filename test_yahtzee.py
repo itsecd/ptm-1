@@ -5,9 +5,9 @@ from yahtzee import Yahtzee
 
 def test_chance_scores_sum_of_all_dice():
         expected = 15
-        actual = Yahtzee.chance(2, 3, 4, 5, 1)
+        actual = Yahtzee.chance([2, 3, 4, 5, 1])
         assert expected == actual
-        assert 16 == Yahtzee.chance(3, 3, 4, 5, 1)
+        assert 16 == Yahtzee.chance([3, 3, 4, 5, 1])
   
 
 def test_yahtzee_scores_50():
@@ -19,20 +19,20 @@ def test_yahtzee_scores_50():
   
 
 def test_1s():
-        assert Yahtzee.ones(1, 2, 3, 4, 5) == 1
-        assert 2 == Yahtzee.ones(1, 2, 1, 4, 5)
-        assert 0 == Yahtzee.ones(6, 2, 2, 4, 5)
-        assert 4 == Yahtzee.ones(1, 2, 1, 1, 1)
+        assert Yahtzee.ones_twos_threes([1, 2, 3, 4, 5], 1) == 1
+        assert 2 == Yahtzee.ones_twos_threes([1, 2, 1, 4, 5], 1)
+        assert 0 == Yahtzee.ones_twos_threes([6, 2, 2, 4, 5], 1)
+        assert 4 == Yahtzee.ones_twos_threes([1, 2, 1, 1, 1], 1)
   
 
 def test_2s():
-        assert 4 == Yahtzee.twos(1, 2, 3, 2, 6)
-        assert 10 == Yahtzee.twos(2, 2, 2, 2, 2)
+        assert 4 == Yahtzee.ones_twos_threes([1, 2, 3, 2, 6], 2)
+        assert 10 == Yahtzee.ones_twos_threes([2, 2, 2, 2, 2], 2)
   
 
 def test_threes():
-        assert 6 == Yahtzee.threes(1, 2, 3, 2, 3)
-        assert 12 == Yahtzee.threes(2, 3, 3, 3, 3)
+        assert 6 == Yahtzee.ones_twos_threes([1, 2, 3, 2, 3], 3)
+        assert 12 == Yahtzee.ones_twos_threes([2, 3, 3, 3, 3], 3)
   
 
 def test_fours_test():
