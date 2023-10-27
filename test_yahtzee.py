@@ -36,21 +36,21 @@ def test_threes():
   
 
 def test_fours_test():
-        assert 12 == Yahtzee(4, 4, 4, 5, 5).fours()
-        assert 8 == Yahtzee(4, 4, 5, 5, 5).fours()
-        assert 4 == Yahtzee(4, 5, 5, 5, 5).fours()
+        assert 12 == Yahtzee([4, 4, 4, 5, 5]).fours()
+        assert 8 == Yahtzee([4, 4, 5, 5, 5]).fours()
+        assert 4 == Yahtzee([4, 5, 5, 5, 5]).fours()
   
 
 def test_fives():
-        assert 10 == Yahtzee(4, 4, 4, 5, 5).fives()
-        assert 15 == Yahtzee(4, 4, 5, 5, 5).fives()
-        assert 20 == Yahtzee(4, 5, 5, 5, 5).fives()
+        assert 10 == Yahtzee([4, 4, 4, 5, 5]).fives()
+        assert 15 == Yahtzee([4, 4, 5, 5, 5]).fives()
+        assert 20 == Yahtzee([4, 5, 5, 5, 5]).fives()
   
 
 def test_sixes_test():
-        assert 0 == Yahtzee(4, 4, 4, 5, 5).sixes()
-        assert 6 == Yahtzee(4, 4, 6, 5, 5).sixes()
-        assert 18 == Yahtzee(6, 5, 6, 6, 5).sixes()
+        assert 0 == Yahtzee([4, 4, 4, 5, 5]).sixes()
+        assert 6 == Yahtzee([4, 4, 6, 5, 5]).sixes()
+        assert 18 == Yahtzee([6, 5, 6, 6, 5]).sixes()
    
 
 def test_one_pair():
