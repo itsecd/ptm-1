@@ -28,30 +28,13 @@ class Yahtzee:
         self.dice = digits[:]
 
 
-    def fours(self):
+    def fours_fives_sixes(self, mod):
         sum = 0
-        for at in range(5):
-            if (self.dice[at] == 4): 
-                sum += 4
+        for elem in self.dice:
+            if elem == mod:
+                sum += mod
         return sum
 
-
-    def fives(self):
-        s = 0
-        i = 0
-        for i in range(len(self.dice)): 
-            if (self.dice[i] == 5):
-                s = s + 5
-        return s
-
-
-    def sixes(self):
-        sum = 0
-        for at in range(len(self.dice)): 
-            if (self.dice[at] == 6):
-                sum = sum + 6
-        return sum
-    
     @staticmethod
     def score_pair(d1, d2, d3, d4, d5):
         counts = [0] * 6
