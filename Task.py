@@ -1,16 +1,18 @@
 import argparse
-import cPickle as pickle
-import cv2
-import fnmatch
 import logging
 import multiprocessing
-import mxnet as mx
-import numpy as np
 import os
 import random
 import sys
+
+import cv2
+import fnmatch
 from matplotlib import pyplot as plt
+import numpy as np
+import mxnet as mx
 from symbol_resnet import resnet
+
+import cPickle as pickle
 
 cur_path = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(cur_path, "ResNet"))
