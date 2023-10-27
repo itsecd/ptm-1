@@ -1,5 +1,8 @@
 class Yahtzee:
 
+    def __init__(self, digits):
+        self.dice = digits[:]
+
     @staticmethod
     def chance(digits):
         return sum(digits)
@@ -21,9 +24,6 @@ class Yahtzee:
             if digit == mod:
                 sum += mod
         return sum
-
-    def __init__(self, digits):
-        self.dice = digits[:]
 
     def fours_fives_sixes(self, mod):
         sum = 0

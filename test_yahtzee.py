@@ -19,14 +19,14 @@ def test_yahtzee_scores_50():
     assert 0 == Yahtzee.yahtzee([6, 6, 6, 6, 3])
 
 
-def test_1s():
+def test_ones():
     assert Yahtzee.ones_twos_threes([1, 2, 3, 4, 5], 1) == 1
     assert 2 == Yahtzee.ones_twos_threes([1, 2, 1, 4, 5], 1)
     assert 0 == Yahtzee.ones_twos_threes([6, 2, 2, 4, 5], 1)
     assert 4 == Yahtzee.ones_twos_threes([1, 2, 1, 1, 1], 1)
 
 
-def test_2s():
+def test_twos():
     assert 4 == Yahtzee.ones_twos_threes([1, 2, 3, 2, 6], 2)
     assert 10 == Yahtzee.ones_twos_threes([2, 2, 2, 2, 2], 2)
 
@@ -36,7 +36,7 @@ def test_threes():
     assert 12 == Yahtzee.ones_twos_threes([2, 3, 3, 3, 3], 3)
 
 
-def test_fours_test():
+def test_fours():
     assert 12 == Yahtzee([4, 4, 4, 5, 5]).fours_fives_sixes(4)
     assert 8 == Yahtzee([4, 4, 5, 5, 5]).fours_fives_sixes(4)
     assert 4 == Yahtzee([4, 5, 5, 5, 5]).fours_fives_sixes(4)
@@ -48,7 +48,7 @@ def test_fives():
     assert 20 == Yahtzee([4, 5, 5, 5, 5]).fours_fives_sixes(5)
 
 
-def test_sixes_test():
+def test_sixes():
     assert 0 == Yahtzee([4, 4, 4, 5, 5]).fours_fives_sixes(6)
     assert 6 == Yahtzee([4, 4, 6, 5, 5]).fours_fives_sixes(6)
     assert 18 == Yahtzee([6, 5, 6, 6, 5]).fours_fives_sixes(6)
@@ -77,18 +77,18 @@ def test_four_pair():
     assert 0 == Yahtzee.three_four_pair([3, 3, 3, 3, 3], 4)
 
 
-def test_smallStraight():
+def test_small_straight():
     assert 15 == Yahtzee.small_straight([1, 2, 3, 4, 5])
     assert 15 == Yahtzee.small_straight([2, 3, 4, 5, 1])
     assert 0 == Yahtzee.small_straight([1, 2, 2, 4, 5])
 
 
-def test_largeStraight():
+def test_large_straight():
     assert 20 == Yahtzee.large_straight([6, 2, 3, 4, 5])
     assert 20 == Yahtzee.large_straight([2, 3, 4, 5, 6])
     assert 0 == Yahtzee.large_straight([1, 2, 2, 4, 5])
 
 
-def test_fullHouse():
+def test_full_house():
     assert 18 == Yahtzee.full_house([6, 2, 2, 2, 6])
     assert 0 == Yahtzee.full_house([2, 3, 4, 5, 6])
