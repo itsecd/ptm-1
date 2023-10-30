@@ -1,21 +1,21 @@
-import argparse
+
 import logging
 import multiprocessing
 import os
 import random
 import sys
 
+import argparse
 import cv2
 import fnmatch
-
-from autopep8 import List
-from matplotlib import pyplot as plt
 import numpy as np
 import mxnet as mx
-from numpy import ndarray
-from symbol_resnet import resnet
-
 import cPickle as pickle
+
+from symbol_resnet import resnet
+from numpy import ndarray
+from autopep8 import List
+from matplotlib import pyplot as plt
 
 cur_path = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(cur_path, "ResNet"))
