@@ -2,14 +2,19 @@ import os
 import sys
 import shutil
 import csv
-import _csv
+import PyQt5.QtWidgets
 
-from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QPixmap, QIcon
 from random import randint
 
 
-def get_csv(file: '_csv.writer', path: str) -> None:
+def get_csv(file: 'csv.writer', path: str) -> None:
+    """
+    Записывает в csv-файл названия всех изображений из директории path
+    :param file: файл с расширением .csv
+    :param path: путь до файла
+    :return: None
+    """
     for i in os.listdir(path):
         if i.find(".jpg") != -1:
             file.writerow({
@@ -19,7 +24,12 @@ def get_csv(file: '_csv.writer', path: str) -> None:
             })
 
 
-def create_csv(name: str) -> '_csv.writer':
+def create_csv(name: str) -> 'csv.writer':
+    """
+    Создает файл с расширением .csv с именем name, записывает в него заголовок
+    :param name: имя csv-файла
+    :return: csv-файл с записанным заголовком
+    """
     file = open(f"{name}.csv", "a+")
     columns = ["Absolute path", "Relative path", "Class label"]
     created_csv = csv.DictWriter(file, lineterminator="\r", fieldnames=columns)
@@ -28,6 +38,12 @@ def create_csv(name: str) -> '_csv.writer':
 
 
 def task1(filename: str, path: str) -> None:
+    """
+    Формирует csv-файл собранного датасета.
+    :param filename: имя csv-файла
+    :param path: путь до директории с изображениями
+    :return: None
+    """
     if os.path.isfile(f"{filename}.csv"):
         os.remove(f"{filename}.csv")
     file = create_csv(filename)
@@ -41,12 +57,24 @@ get_csv(a, "C:\\Users\\Professional\\PycharmProjects\\Lab_4-app_prog-Python\\dat
 
 
 def dataset_copy(class_label: str, source: str, destination: str) -> None:
+    """
+    Копирует датасет в другую директорию.
+    :param class_label: метка класса
+    :param source: директория, из которой копируют файлы
+    :param destination: директория, куда копируют файлы
+    :return: None
+    """
     source = f"{source}/{class_label}"
     for i in os.listdir(source):
         shutil.copy(f"{source}\\{i}", f"{destination}\\{class_label}_{i}")
 
 
 def get_csv(destination: str) -> None:
+    """
+    Принимает путь к новой директории, записывает информацию по фото из этой директории в csv-файл.
+    :param destination: путь к новой директории
+    :return: None
+    """
     os.chdir(destination)
     if os.path.isfile("annotation.csv"):
         os.remove("annotation.csv")
@@ -62,6 +90,12 @@ def get_csv(destination: str) -> None:
 
 
 def task2(src: str, destination: str) -> None:
+    """
+    Копирует датасет в другую директорию таким образом, чтобы имена файлов содержали имя класса и его порядковый номер.
+    :param src: директория, из которой копируют файлы
+    :param destination: директория, куда копируют файлы
+    :return: None
+    """
     if os.path.isdir(destination):
         shutil.rmtree(destination)
     os.mkdir(destination)
@@ -70,7 +104,12 @@ def task2(src: str, destination: str) -> None:
     get_csv(destination)
 
 
-def create_csv(name: str) -> '_csv.writer':
+def create_csv(name: str) -> 'csv.writer':
+    """
+    Создает csv-файл и устанавливает значения столбцов.
+    :param name: имя csv-файла
+    :return: csv.writer
+    """
     file = open(f"{name}.csv", "a+")
     columns = ["Absolute path", "Relative path", "Class label"]
     created_csv = csv.DictWriter(file, lineterminator="\r", fieldnames=columns)
@@ -92,6 +131,15 @@ if __name__ == "__main__":
 
 
 def dataset_random(class_label: str, source: str, destination: str, file: '_csv.writer') -> None:
+    """
+    Создает копию датасета таким образом, чтобы каждый файл из исходного датасета получил случайный номер от 0 до 10000,
+    и датасет представлял собой следующую структуру: dataset/номер.jpg.
+    :param class_label: метка класса
+    :param source: директория, из которой копируют файлы
+    :param destination: директория, куда копируют файлы
+    :param file: имя csv-файла
+    :return: None
+    """
     source = f"{source}/{class_label}"
     for i in os.listdir(source):
         if i.find('.jpg') != -1:
@@ -106,15 +154,14 @@ def dataset_random(class_label: str, source: str, destination: str, file: '_csv.
             })
 
 
-def create_csv(name: str) -> '_csv.writer':
-    file = open(f"{name}.csv", "a+")
-    columns = ["Absolute path", "Relative path", "Class label"]
-    created_csv = csv.DictWriter(file, lineterminator="\r", fieldnames=columns)
-    created_csv.writeheader()
-    return created_csv
-
-
 def task3(source: str, destination: str) -> None:
+    """
+    Объединяет два исходных датасета в один, представляющий собой следующую структуру:
+    dataset/номер.jpg.
+    :param source: директория, из которой копируют файлы
+    :param destination: директория, куда копируют файлы
+    :return: None
+    """
     if os.path.isdir(destination):
         shutil.rmtree(destination)
     os.mkdir(destination)
@@ -144,7 +191,9 @@ if __name__ == "__main__":
 
 
 class Iterator:
-
+    """
+    Итератор для обхода элементов датасета
+    """
     def __init__(self: Iterator, path: str) -> Iterator:
         self.counter = 0
         self.data = []
@@ -175,7 +224,9 @@ if __name__ == "__main__":
 
 
 class MyWindow(QMainWindow):
-
+    """
+    Приложение на PyQT5
+    """
     def __init__(self: MyWindow) -> None:
         super().__init__()
         self.setWindowIcon(QIcon('icon.jpeg'))
@@ -254,6 +305,9 @@ class MyWindow(QMainWindow):
 
 
 class CustomImageDataset(Dataset):
+    """
+    Класс датасета
+    """
 
     def __init__(self: CustomImageDataset, path_to_annotation_file: str, transform: Any = None,
                  target_transform: Any = None) -> None:
@@ -279,7 +333,9 @@ class CustomImageDataset(Dataset):
 
 
 class CNN(nn.Module):
-
+    """
+    Свёрточная нейронная сеть
+    """
     def __init__(self: CNN) -> None:
         super(CNN, self).__init__()
         self.conv_1 = nn.Conv2d(3, 16, kernel_size=3, padding=0, stride=2)
