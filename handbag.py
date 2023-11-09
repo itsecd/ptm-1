@@ -1,11 +1,8 @@
-
-
-
 import dataclasses
+
 
 # Max handbag size in litres - larger than this and it's counted as luggage
 MAX_HANDBAG_CAPACITY = 25.0
-
 
 
 @dataclasses.dataclass
@@ -18,8 +15,6 @@ class Event:
     has_checksum:bool
 
 
-
-
 @dataclasses.dataclass
 class Handbag:
     compartments: int
@@ -27,6 +22,7 @@ class Handbag:
     market_segment: str
     strap_type:str
     capacity: float
+
 
 def predict_sales(handbag: Handbag):
     score =0
@@ -49,7 +45,6 @@ def predict_sales(handbag: Handbag):
     return score
 
 
-
 def fits_desired_market_segment(handbag:Handbag):
     predicted_sales= predict_sales(handbag)
     return predicted_sales> 0
@@ -58,9 +53,9 @@ def fits_desired_market_segment(handbag:Handbag):
 def has_recognized_brand(handbag:Handbag):
     return handbag.designer in ["H&M", "Zara", "Esprit"]
 
+
 def has_dead_brand(handbag:Handbag):
     return handbag.designer in ["Debenhams","Woolworths"]
-
 
 
 def init_handbag_event(handbag: Handbag,event: Event) ->bool:
@@ -83,13 +78,14 @@ def init_handbag_event(handbag: Handbag,event: Event) ->bool:
     else:
         # timeout
         pass
-
     if result:
         event.size= size
         event.checksum= calculate_checksum(event)
         event.has_checksum= True
         result= True
     return result
+
+
 def determine_event_payload(handbag: Handbag, event: Event):
     event.payload = None
     if handbag.strap_type== "Shoulder":
@@ -107,5 +103,7 @@ def determine_event_payload(handbag: Handbag, event: Event):
     else:
         event.status_code ="Unknown"
     return event.payload
+
+
 def calculate_checksum(event):
     return (event.type + len(event.status_code) + event.size + len(event.payload)) % 10
