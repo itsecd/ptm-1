@@ -11,67 +11,67 @@ def main():
     global api
     pygame.init()
     pygame.mixer.init()
-    screen=pygame.display.set_mode((WIDTH,HEIGHT))
+    screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Four in a row")
-    resource_folder='res'
-    drawing_api=DrawingAPI(screen, resource_folder)
-    audio_api=AudioAPI(resource_folder)
-    mainloop(drawing_api,audio_api)
+    resource_folder = 'res'
+    drawing_api = DrawingAPI(screen, resource_folder)
+    audio_api = AudioAPI(resource_folder)
+    mainloop(drawing_api, audio_api)
     pygame.quit()
 
 
 def mainloop(drawing_api, audio_api):
-    model=StartScreenState()
-    view(model,drawing_api)
+    model = StartScreenState()
+    view(model, drawing_api)
     pygame.display.update()
-    clock=pygame.time.Clock()
+    clock = pygame.time.Clock()
     while True:
-        old_model_repr=print_model(model)
+        old_model_repr = print_model(model)
         # A tick happens every time around the loop!
-        model=update(model,Tick(pygame.time.get_ticks()),audio_api)
+        model = update(model,Tick(pygame.time.get_ticks()), audio_api)
         # Translate low level events to domain events
-        while ev:=pygame.event.poll():
-            msg=None
-            if ev.type==pygame.MOUSEBUTTONDOWN:
-                if ev.button==1:
-                    msg=LeftMouseDownAt(ev.pos)
-            if ev.type==pygame.MOUSEBUTTONUP:
-                if ev.button==1:
-                    msg=LeftMouseUpAt(ev.pos)
-            if ev.type==pygame.MOUSEMOTION:
-                msg=MouseMovedTo(ev.pos)
-            if ev.type==pygame.KEYDOWN:
-                if ev.key==pygame.K_q:
+        while ev := pygame.event.poll():
+            msg = None
+            if ev.type == pygame.MOUSEBUTTONDOWN:
+                if ev.button == 1:
+                    msg = LeftMouseDownAt(ev.pos)
+            if ev.type == pygame.MOUSEBUTTONUP:
+                if ev.button == 1:
+                    msg = LeftMouseUpAt(ev.pos)
+            if ev.type == pygame.MOUSEMOTION:
+                msg = MouseMovedTo(ev.pos)
+            if ev.type == pygame.KEYDOWN:
+                if ev.key == pygame.K_q:
                     return
-            elif ev.type==pygame.QUIT:
+            elif ev.type == pygame.QUIT:
                 return
             if msg:
-                model=update(model, msg, audio_api)
+                model = update(model, msg, audio_api)
         # Display current model, if any change found
-        if old_model_repr!=print_model(model):
-            view(model,drawing_api)
+        if old_model_repr != print_model(model):
+            view(model, drawing_api)
         pygame.display.update()
         clock.tick(FPS)
 
 
 class DrawingAPI:
-    def __init__(self,screen,resource_path):
-        self.screen=screen
-        self.image_dict={}
-        self.resource_path=resource_path
-        self.font=pygame.font.Font(f'{self.resource_path}/font.ttf',30)
+    def __init__(self, screen, resource_path):
+        self.screen = screen
+        self.image_dict = {}
+        self.resource_path = resource_path
+        self.font = pygame.font.Font(f'{self.resource_path}/font.ttf',30)
 
-    def draw_rectangle(self,center,size,color):
+    def draw_rectangle(self, center, size, color):
         r = pygame.Rect(0, 0, *size)
         r.center = center
         pygame.draw.rect(self.screen, color, r)
 
-    def draw_disc(self,center,size,color):
-        pygame.draw.circle(self.screen,color,center,size,size)
+    def draw_disc(self, center, size, color):
+        pygame.draw.circle(self.screen, color, center, size, size)
 
-    def draw_text(self,center,text,color):
-        text_surface =self.font.render(text, True, color)
-        text_rect=text_surface.get_rect()
+    def draw_text(self, center,text,color):
+        text_surface = self.font.render(text, True, color)
+        text_rect = text_surface.get_rect()
         text_rect.center = center
         self.screen.blit(text_surface, text_rect)
 
@@ -79,17 +79,17 @@ class DrawingAPI:
         if (name, dimension) not in self.image_dict:
             self.image_dict[(name, dimension)] = self.load_and_scale(name, dimension)
         image=self.image_dict[(name, dimension)]
-        pos= center[0] - WIDTH // 2, center[1] - HEIGHT // 2
+        pos = center[0] - WIDTH // 2, center[1] - HEIGHT // 2
         self.screen.blit(image, pos)
 
     def load_and_scale(self, name, dimension):
         p = f'{self.resource_path}/{name}.png'
-        image=pygame.image.load(p)
+        image = pygame.image.load(p)
         return pygame.transform.scale(image, dimension)
     
 
 class AudioAPI:
-    def __init__(self,resource_path):
+    def __init__(self, resource_path):
         self.resource_path = resource_path
         self.sound ={}
 

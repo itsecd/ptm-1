@@ -16,22 +16,22 @@ def view(model, drawing_api):
 def view_startscreenstate(model, api):
     api.draw_image(CENTER, 'background', (WIDTH, HEIGHT))
     edged_text(api, "FOUR-IN-A-ROW", CENTER, Color.GREEN)
-    edged_text(api, "Click left mouse button to play!",(CENTER_X, CENTER_Y + 30),Color.YELLOW)
+    edged_text(api, "Click left mouse button to play!", (CENTER_X, CENTER_Y + 30), Color.YELLOW)
     for i in range(200):
-        api.draw_disc((int(model.time/2+i**2*37)%WIDTH,int(model.time+i*237)%HEIGHT),1,Color.BLUE)
+        api.draw_disc((int(model.time / 2 + i ** 2 * 37) % WIDTH, int(model.time + i * 237) % HEIGHT), 1, Color.BLUE)
     for i in range(4):
         bigger_disc = int(DISC_DIAMETER * 0.75)
-        api.draw_disc((40+i*(DISC_DIAMETER+5),100),bigger_disc,Color.YELLOW)
-        api.draw_disc((WIDTH-40-i*(DISC_DIAMETER+5),HEIGHT-100),bigger_disc, Color.RED)
+        api.draw_disc((40 + i * (DISC_DIAMETER + 5), 100), bigger_disc, Color.YELLOW)
+        api.draw_disc((WIDTH - 40 - i * (DISC_DIAMETER + 5), HEIGHT - 100), bigger_disc, Color.RED)
 
 
 def frac(begin, end, current):
-    return (float(current)-float(begin))/(float(end)-float(begin))
+    return (float(current) - float(begin)) / (float(end) - float(begin))
 
 
-assert frac(10,20,15)==0.5
-assert frac(10,20,10) ==0
-assert frac(10,20,17.5) ==0.75
+assert frac(10, 20, 15) == 0.5
+assert frac(10, 20, 10) == 0
+assert frac(10, 20, 17.5) == 0.75
 
 
 def view_gamestate(api, model):
@@ -59,7 +59,7 @@ def view_gamestate(api, model):
 
 
 def view_gameoverstate(api, model):
-    draw_board(api, model.board, scale=1.0)
+    draw_board(api, model.board, scale = 1.0)
     edged_text(api,"GAME OVER",(CENTER_X, CENTER_Y - 30),Color.WHITE)
     edged_text(api,f"{print_color(model.winner)} won!".upper(),((CENTER_X), (CENTER_Y + 30)),rgb_from_color(model.winner))
 
@@ -86,7 +86,7 @@ def clear_screen(api):
     api.draw_rectangle(CENTER, (WIDTH, HEIGHT), Color.BLACK)
 
 
-def draw_board(api, board, scale=1.0):
+def draw_board(api, board, scale = 1.0):
     api.draw_rectangle(CENTER, (DISC_DIAMETER *
                                  COLUMNS + 20, DISC_DIAMETER * ROWS + 20), Color.BLUE)
     for (x, y) in positions_in_print_order():
