@@ -87,14 +87,17 @@ def clear_screen(api):
 
 
 def draw_board(api, board, scale=1.0):
-    api.draw_rectangle(CENTER, (DISC_DIAMETER * COLUMNS + 20, DISC_DIAMETER * ROWS + 20), Color.BLUE)
+    api.draw_rectangle(CENTER, (DISC_DIAMETER *
+                                 COLUMNS + 20, DISC_DIAMETER * ROWS + 20), Color.BLUE)
     for (x, y) in positions_in_print_order():
         value = board[(x, y)]
         color = Color.BLACK
         if value != EMPTY:
             color = rgb_from_color(value)
-        x0 = int((WIDTH / 2 - COLUMNS * DISC_DIAMETER / 2 + x * DISC_DIAMETER + DISC_RADIUS))
-        y0 = int((HEIGHT / 2 - ROWS * DISC_DIAMETER / 2 + y * DISC_DIAMETER + DISC_RADIUS))
+        x0 = int((WIDTH / 2 - COLUMNS * DISC_DIAMETER 
+                  / 2 + x * DISC_DIAMETER + DISC_RADIUS))
+        y0 = int((HEIGHT / 2 - ROWS * DISC_DIAMETER 
+                  / 2 + y * DISC_DIAMETER + DISC_RADIUS))
         api.draw_disc((x0, y0), int(scale * DISC_RADIUS), color)
 
 
