@@ -118,4 +118,4 @@ if __name__ == '__main__':
             mask = model.predict(x, batch_size = None, verbose = 0, steps = None)
             mask = mask[0]
             mask = mask * 255
-            cv2.imwrite('./data/test/masks/imgs/%d.png'%i, mask)
+            cv2.imwrite('./data/test/masks/imgs/%d.png' % i, mask)
