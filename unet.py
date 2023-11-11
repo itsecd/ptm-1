@@ -1,9 +1,9 @@
 import numpy as np
-from keras.models import *
-from keras.layers import *
+from keras.models import Conv2D, Adam
+from keras.layers import Dropout
 from keras.applications.vgg16 import VGG16
 from keras.preprocessing.image import ImageDataGenerator
-from keras.optimizers import *
+from keras.optimizers import UpSampling2D, Concatenate, Model
 from keras.callbacks import ModelCheckpoint
 import cv2
 
@@ -160,7 +160,7 @@ def vgg10_unet(input_shape = (256, 256, 3), weights = 'imagenet'):
     block10_conv2 = Conv2D(1, 1, activation = 'sigmoid')(block10_conv1)
 
     model = Model(inputs = vgg16_model.input, outputs = block10_conv2)
-    
+
     return model
 
 
