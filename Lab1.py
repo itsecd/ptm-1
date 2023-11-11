@@ -186,14 +186,23 @@ if __name__ == "__main__":
     dataset = parse_pages(max_num_of_requests, least_num_of_marks)
     create_repo()
     # dataset.sort(key = lambda comment: comment.mark)
-    one_data = [el for el in dataset if el.get_mark() < 2.0]
+    one_data = [el for el in dataset 
+                if el.get_mark() < 2.0]
     save_comments(one_data, "dataset\\1")
-    two_data = [el for el in dataset if el.get_mark() < 3.0 and el.get_mark() >= 2.0]
+
+    two_data = [el for el in dataset 
+                if el.get_mark() < 3.0 and el.get_mark() >= 2.0]
     save_comments(two_data, "dataset\\2")
-    three_data = [el for el in dataset if el.get_mark() < 4.0 and el.get_mark() >= 3.0]
+
+    three_data = [el for el in dataset 
+                  if el.get_mark() < 4.0 and el.get_mark() >= 3.0]
     save_comments(three_data, "dataset\\3")
-    four_data = [el for el in dataset if el.get_mark() < 5.0 and el.get_mark() >= 4.0]
+
+    four_data = [el for el in dataset 
+                 if el.get_mark() < 5.0 and el.get_mark() >= 4.0]
     save_comments(four_data, "dataset\\4")
-    five_data = [el for el in dataset if el.get_mark() == 5.0]
+    
+    five_data = [el for el in dataset 
+                 if el.get_mark() == 5.0]
     save_comments(five_data, "dataset\\5")
     print("Работа окончена")
