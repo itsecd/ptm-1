@@ -39,7 +39,7 @@ headers = {"User-Agent": "Mozilla/5.0"}
 
 def get_page(url):
     try:
-        r = requests.get(url, headers=headers)
+        r = requests.get(url, headers = headers)
         sleep(2)
         if r.status_code == 200:
             return BS(r.content, "html.parser")
@@ -55,9 +55,9 @@ def get_marks(articles):
     marks = list()
     for article in articles:
         try:
-            lenta_card = article.find("div", class_="lenta-card")
-            h3 = lenta_card.find("h3", class_="lenta-card__title")
-            mark = h3.find("span", class_="lenta-card__mymark").text.strip()
+            lenta_card = article.find("div", class_ = "lenta-card")
+            h3 = lenta_card.find("h3", class_ = "lenta-card__title")
+            mark = h3.find("span", class_ = "lenta-card__mymark").text.strip()
             marks.append(mark)
         except AttributeError as e:
             print("Не найдена оценка")
@@ -69,12 +69,12 @@ def get_names(articles):
     names = list()
     for article in articles:
         try:
-            lenta_card = article.find("div", class_="lenta-card")
+            lenta_card = article.find("div", class_ = "lenta-card")
             lenta_card_book_wrapper = lenta_card.find(
-                "div", class_="lenta-card-book__wrapper"
+                "div", class_ = "lenta-card-book__wrapper"
             )
             name = lenta_card_book_wrapper.find(
-                "a", class_="lenta-card__book-title"
+                "a", class_ = "lenta-card__book-title"
             ).text.strip()
             names.append(name)
         except AttributeError as e:
@@ -87,12 +87,12 @@ def get_comments_texts(articles):
     comments_texts = list()
     for article in articles:
         try:
-            lenta_card = article.find("div", class_="lenta-card")
+            lenta_card = article.find("div", class_ = "lenta-card")
             text_without_readmore = lenta_card.find(
-                "div", class_="lenta-card__text without-readmore"
+                "div", class_ = "lenta-card__text without-readmore"
             )
             comment = text_without_readmore.find(
-                id="lenta-card__text-review-escaped"
+                id = "lenta-card__text-review-escaped"
             ).text
             comments_texts.append(comment)
         except AttributeError as e:
@@ -103,7 +103,7 @@ def get_comments_texts(articles):
 
 def save_comments(data, filename):
     for i in range(0, len(data)):
-        file = open(filename + f"\\{(i+1):04}" + ".txt", "w", encoding="utf-8")
+        file = open(filename + f"\\{(i+1):04}" + ".txt", "w", encoding = "utf-8")
         file.write(data[i].get_name())
         file.write("\n\n\n")
         file.write(data[i].get_comment())
@@ -131,9 +131,9 @@ def parse_pages(max_num_of_requests, least_num_of_marks):
             continue
         try:
             articles = (
-                soup.find("main", class_="main-body page-content")
-                .find("section", class_="lenta__content")
-                .find_all("article", class_="review-card lenta__item")
+                soup.find("main", class_ = "main-body page-content")
+                .find("section", class_ = "lenta__content")
+                .find_all("article", class_ = "review-card lenta__item")
             )
         except AttributeError as e:
             print('Не удалось загрузить страницу')
