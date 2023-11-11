@@ -2,6 +2,8 @@ from os import mkdir
 from time import sleep
 import requests
 from bs4 import BeautifulSoup as BS
+
+
 class Comment:
     def __init__(self, name, comment, mark):
         if name != "":
@@ -15,17 +17,26 @@ class Comment:
         self.comment = comment
         if mark <= 5 and mark >= 0:
             self.mark = mark
+
     def get_mark(self):
         return self.mark
+    
     def get_name(self):
         return self.name
+    
     def get_comment(self):
         return self.comment
+    
+
 def create_repo():
     mkdir("dataset")
     for i in range(1, 6):
         mkdir("dataset/" + str(i))
+
+
 headers = {"User-Agent": "Mozilla/5.0"}
+
+
 def get_page(url):
     try:
         r = requests.get(url, headers=headers)
@@ -38,6 +49,8 @@ def get_page(url):
     except:
         print("Ошибка соединения")
         return -1
+    
+
 def get_marks(articles):
     marks = list()
     for article in articles:
@@ -50,6 +63,7 @@ def get_marks(articles):
             print("Не найдена оценка")
             return -1
     return marks
+
 
 def get_names(articles):
     names = list()
@@ -68,6 +82,7 @@ def get_names(articles):
             return -1
     return names
 
+
 def get_comments_texts(articles):
     comments_texts = list()
     for article in articles:
@@ -83,8 +98,9 @@ def get_comments_texts(articles):
         except AttributeError as e:
             print("Не найден комментарий")
             return -1
-
     return comments_texts
+
+
 def save_comments(data, filename):
     for i in range(0, len(data)):
         file = open(filename + f"\\{(i+1):04}" + ".txt", "w", encoding="utf-8")
@@ -92,6 +108,8 @@ def save_comments(data, filename):
         file.write("\n\n\n")
         file.write(data[i].get_comment())
         file.close
+
+
 def parse_pages(max_num_of_requests, least_num_of_marks):
     dataset = list()
     one = 0
@@ -159,6 +177,8 @@ def parse_pages(max_num_of_requests, least_num_of_marks):
             i = max_num_of_requests
             break
     return dataset
+
+
 if __name__ == "__main__":
     url = "https://www.livelib.ru/reviews/"
     least_num_of_marks = 1000

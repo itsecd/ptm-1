@@ -7,6 +7,7 @@ from keras.optimizers import *
 from keras.callbacks import ModelCheckpoint
 import cv2
 
+
 def train_generator(batch_size=32):
     data_gen_args = dict(featurewise_center=True,
                          rotation_range=90.,
@@ -51,6 +52,7 @@ def vgg10_unet(input_shape=(256,256,3), weights='imagenet'):
     vgg16_model = VGG16(input_shape=input_shape, weights=weights, include_top=False)
 
     block4_pool = vgg16_model.get_layer('block4_pool').output
+    
     block5_conv1 = Conv2D(1024, 3, activation='relu', padding='same', kernel_initializer='he_normal')(block4_pool)
     block5_conv2 = Conv2D(1024, 3, activation='relu', padding='same', kernel_initializer='he_normal')(block5_conv1)
     block5_drop = Dropout(0.5)(block5_conv2)
@@ -85,11 +87,13 @@ def vgg10_unet(input_shape=(256,256,3), weights='imagenet'):
     block10_conv2 = Conv2D(1, 1, activation='sigmoid')(block10_conv1)
 
     model = Model(inputs=vgg16_model.input, outputs=block10_conv2)
+
     return model
 
 
 if __name__ == '__main__':
     is_train = False
+
     if is_train:
         model = vgg10_unet(input_shape=(512,512,3), weights='imagenet')
 
@@ -103,7 +107,6 @@ if __name__ == '__main__':
                             validation_data=train_generator(batch_size=4),
                             validation_steps=50,
                             callbacks=[model_checkpoint])
-
     else:
         model = vgg10_unet(input_shape=(512,512,3))
         model.load_weights('unet.h5')
