@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def Scraping(typename,indexs=None):
+def Scraping(typename: str,indexs=None):
 
     if not os.path.exists("dataset"):
         os.mkdir("dataset")
@@ -54,9 +54,9 @@ def Scraping(typename,indexs=None):
                 except Exception as ex:
                     print(ex)
                     
-def is_similar(image1,image2):
+def is_similar(image1: np.ndarray,image2: np.ndarray):
     return image1.shape == image2.shape and not(np.bitwise_xor(image1, image2).any())
-def Check_images(typename):
+def Check_images(typename: str):
     path = "dataset/"+ typename
 
     images = []
@@ -93,7 +93,7 @@ def Check_images(typename):
 
     return indexs
 
-def parser(typename):
+def parser(typename: str):
 
     Scraping(typename)
 
