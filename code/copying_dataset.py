@@ -3,8 +3,13 @@ import shutil
 import csv
 
 def copying_dataset(path: str,path_copier: str):
+    """
+    Возвращает копию папки с изображениями
 
-    """Функция принимает путь к файлам: path и путь к новой директории: path_new"""
+            Параметры:
+                    path(str): Путь к папке
+                    path_copier(str): Путь к новой папке
+    """
 
     if not os.path.exists(path_copier):
         os.mkdir(path_copier)

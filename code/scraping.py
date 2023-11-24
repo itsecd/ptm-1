@@ -9,6 +9,13 @@ from bs4 import BeautifulSoup
 
 
 def Scraping(typename: str,indexs=None):
+    """
+    Загружает изображения в папку dataset + typename
+
+            Параметры:
+                    typename(str): название папки с изображениями
+                    indexs: номер изображения   
+    """
 
     if not os.path.exists("dataset"):
         os.mkdir("dataset")
@@ -55,8 +62,23 @@ def Scraping(typename: str,indexs=None):
                     print(ex)
                     
 def is_similar(image1: np.ndarray,image2: np.ndarray):
+    """
+    Возвращает булевское значение сравнения изображений
+
+            Параметры:
+                    image1(np.ndarray): Первое изображение
+                    image2(np.ndarray): Второе изображение
+    """
+
     return image1.shape == image2.shape and not(np.bitwise_xor(image1, image2).any())
 def Check_images(typename: str):
+    """
+    Возвращает отредактированный номер изображения
+
+            Параметры:
+                    typename(str): название папки с изображениями
+    """
+    
     path = "dataset/"+ typename
 
     images = []
@@ -94,7 +116,12 @@ def Check_images(typename: str):
     return indexs
 
 def parser(typename: str):
+    """
+    Функция отредактированного заполнения папок с изображениями
 
+            Параметры:
+                    typename(str): название папки с изображениями
+    """
     Scraping(typename)
 
     indexs = Check_images(typename)

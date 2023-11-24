@@ -4,8 +4,13 @@ import random
 import csv
 
 def random_copying(path: str,path_copier: str):
+    """
+    Возвращает копию папки с изображениями с случайными номерами изображений
 
-    """Функция принимает путь к файлам: path и путь к новой директории: path_new"""
+            Параметры:
+                    path(str): Путь к папке
+                    path_copier(str): Путь к новой папке
+    """
 
     if not os.path.exists(path_copier):
         os.mkdir(path_copier)

@@ -2,8 +2,13 @@ import csv
 import os
 
 def Creating_csv(path: str,path_new: str) -> None:
-    
-    """Функция принимает путь к файлам: path и путь к новой директории: path_new"""
+    """
+    Возвращает csv-файл изображений
+
+            Параметры:
+                    path(str): Путь к папке
+                    path_new(str): Путь к csv-файлу
+    """
 
     data = []
     
