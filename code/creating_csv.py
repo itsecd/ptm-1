@@ -1,7 +1,7 @@
 import csv
 import os
 
-def Creating_csv(path: str,path_new: str) -> None:
+def creating_csv(path: str,path_new: str) -> None:
     """
     Возвращает csv-файл изображений
 
@@ -24,7 +24,7 @@ def Creating_csv(path: str,path_new: str) -> None:
         writer = csv.writer(file, delimiter=";")
         writer.writerows(data)
 def main():
-    Creating_csv("dataset", "dataset_csv")
+    creating_csv("dataset", "dataset_csv")
 
 if __name__ == "__main__":
     main()

@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def Scraping(typename: str,indexs=None):
+def scraping(typename: str,indexs=None):
     """
     Загружает изображения в папку dataset + typename
 
@@ -71,7 +71,7 @@ def is_similar(image1: np.ndarray,image2: np.ndarray):
     """
 
     return image1.shape == image2.shape and not(np.bitwise_xor(image1, image2).any())
-def Check_images(typename: str):
+def check_images(typename: str):
     """
     Возвращает отредактированный номер изображения
 
@@ -122,7 +122,7 @@ def parser(typename: str):
             Параметры:
                     typename(str): название папки с изображениями
     """
-    Scraping(typename)
+    scraping(typename)
 
-    indexs = Check_images(typename)
-    Scraping(typename, indexs)
+    indexs = check_images(typename)
+    scraping(typename, indexs)
