@@ -15,8 +15,10 @@ class Iterator:
                 if i[2] == self.label:
                     self.data.append(i[0])
             self.full = len(self.data)
+    
     def __iter__(self):
         return self
+    
     def __next__(self):
         if self.score < self.full:
             i = self.score
@@ -25,12 +27,14 @@ class Iterator:
         else:
             raise StopIteration
 
+
 def main():
     instance = Iterator("dog", "dataset_csv.csv")
     print(next(instance))
     print(next(instance))
     print(next(instance))
     print(next(instance))
+
 
 if __name__ == "__main__":
     main()

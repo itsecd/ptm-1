@@ -23,8 +23,11 @@ def creating_csv(path: str,path_new: str) -> None:
     with open(path_new + ".csv", "w", newline="") as file:
         writer = csv.writer(file, delimiter=";")
         writer.writerows(data)
+
+
 def main():
     creating_csv("dataset", "dataset_csv")
+
 
 if __name__ == "__main__":
     main()

@@ -30,8 +30,10 @@ def random_copying(path: str,path_copier: str):
     
             shutil.copy(os.path.join(path + "/", i + "/" + j), os.path.join(path_copier + "/", value + ".jpg"))            
                
+
 def main():
     random_copying("dataset", "dataset_another")
+
 
 if __name__ == "__main__":
     main()

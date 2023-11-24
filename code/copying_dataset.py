@@ -27,5 +27,6 @@ def copying_dataset(path: str,path_copier: str):
 def main():
     copying_dataset("dataset", "dataset_copier")
 
+
 if __name__ == "__main__":
     main()
