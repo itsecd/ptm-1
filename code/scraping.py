@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def scraping(typename: str,indexs=None):
+def scraping(typename: str, indexs=None):
     """
     Загружает изображения в папку dataset + typename
 
@@ -32,7 +32,7 @@ def scraping(typename: str,indexs=None):
 
         req = requests.get(url)
         soup = BeautifulSoup(req.text, 'html.parser')
-        images = soup.find_all('img', class_="justifier__thumb")
+        images = soup.find_all('img', class_ = "justifier__thumb")
 
         src_list = []
 
@@ -62,7 +62,7 @@ def scraping(typename: str,indexs=None):
                     print(ex)
                     
 
-def is_similar(image1: np.ndarray,image2: np.ndarray):
+def is_similar(image1: np.ndarray, image2: np.ndarray):
     """
     Возвращает булевское значение сравнения изображений
 

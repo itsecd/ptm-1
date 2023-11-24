@@ -2,7 +2,7 @@ import os
 import shutil
 import csv
 
-def copying_dataset(path: str,path_copier: str):
+def copying_dataset(path: str, path_copier: str):
     """
     Возвращает копию папки с изображениями
 

@@ -10,7 +10,7 @@ class Iterator:
         self.score = 0
         self.data = []
         with open(self.file) as reading_file:
-            file_reader = csv.reader(reading_file, delimiter=";")
+            file_reader = csv.reader(reading_file, delimiter = ";")
             for i in file_reader:
                 if i[2] == self.label:
                     self.data.append(i[0])

@@ -1,7 +1,7 @@
 import csv
 import os
 
-def creating_csv(path: str,path_new: str) -> None:
+def creating_csv(path: str, path_new: str) -> None:
     """
     Возвращает csv-файл изображений
 
@@ -20,8 +20,8 @@ def creating_csv(path: str,path_new: str) -> None:
             absolute = os.path.abspath(path + "/" + i + "/" + j)
             regarding = os.path.relpath(path + "/" + i + "/" + j)
             data.append([absolute, regarding, i])
-    with open(path_new + ".csv", "w", newline="") as file:
-        writer = csv.writer(file, delimiter=";")
+    with open(path_new + ".csv", "w", newline = "") as file:
+        writer = csv.writer(file, delimiter = ";")
         writer.writerows(data)
 
 

@@ -3,7 +3,7 @@ import shutil
 import random
 import csv
 
-def random_copying(path: str,path_copier: str):
+def random_copying(path: str, path_copier: str):
     """
     Возвращает копию папки с изображениями с случайными номерами изображений
 
