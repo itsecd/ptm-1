@@ -21,7 +21,8 @@ def copying_dataset(path: str, path_copier: str):
         source_data = os.listdir(path + "/" + i)
 
         for j in source_data:
-            shutil.copy(os.path.join(path + "/" + i, j), os.path.join(path_copier + "/", i + "__" + j))
+            shutil.copy(os.path.join(path + "/" + i, j),
+                        os.path.join(path_copier + "/", i + "__" + j))
             
 
 def main():

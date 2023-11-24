@@ -28,7 +28,8 @@ def random_copying(path: str, path_copier: str):
                 value = str(rand)
                 exist = os.path.exists(path_copier + "/" + value + ".jpg")    
     
-            shutil.copy(os.path.join(path + "/", i + "/" + j), os.path.join(path_copier + "/", value + ".jpg"))            
+            shutil.copy(os.path.join(path + "/", i + "/" + j),
+                        os.path.join(path_copier + "/", value + ".jpg"))            
                
 
 def main():
