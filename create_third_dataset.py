@@ -2,11 +2,13 @@ import os
 from shutil import copy
 from random import randint
 
+
 zebra_path = "C://Users/79376/python/dataset/zebra"
 dataset_path ="C://Users/79376/python/dataset"
 bay_horse_path = "C://Users/79376/python/dataset/bay_horse"
 second_dataset_path = "C://Users/79376/python/dataset2"
 third_dataset_path = "C://Users/79376/python/dataset3"
+
 
 def check_number(number: int, path: str) -> bool:
     '''Проверяет на совпадение сгенерированного номера с уже существующими'''
