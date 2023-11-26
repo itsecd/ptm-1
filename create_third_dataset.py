@@ -9,7 +9,7 @@ second_dataset_path = "C://Users/79376/python/dataset2"
 third_dataset_path = "C://Users/79376/python/dataset3"
 
 def check_number(number: int, path: str) -> bool:
-    '''проверяет на совпадение сгенерированного номера с уже существующими'''
+    '''Проверяет на совпадение сгенерированного номера с уже существующими'''
     files = []
     for filename1 in os.listdir(path):
         files.append((os.path.join(path, filename1)))
@@ -22,7 +22,7 @@ def check_number(number: int, path: str) -> bool:
 
 
 def create_dataset(source_path: str, destination_path: str) -> None:
-    '''создает новый датасет по третему заданию'''
+    '''Создает новый датасет по третему заданию'''
     if not os.path.exists(third_dataset_path):
         os.mkdir(third_dataset_path)  
     

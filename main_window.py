@@ -26,7 +26,7 @@ def csv_file(path: str) -> None:
 
 
 def create_dataset(path: str, flag: bool) -> None:
-    '''Фуекция принимает путь к датасету и метку и создает нужный датасет в зависимости от метки'''
+    '''Функция принимает путь к датасету и метку и создает нужный датасет в зависимости от метки'''
     dataset_path = filedialog.askdirectory()
     if flag:
         create_second_dataset.create_dataset(path + "/zebra", dataset_path)
@@ -39,27 +39,27 @@ def create_dataset(path: str, flag: bool) -> None:
 
     
 def start1() -> None:
-    '''Create annotation button'''
+    '''Создает кнопку "анотация"'''
     threading.Thread(target=csv_file, args=(file, )).start()
 
 
 def start2() -> None:
-    '''Create first dataset button'''
+    '''Созадет кнопку "первый датасет"'''
     threading.Thread(target=create_dataset, args=(file ,True, )).start()
 
 
 def start3() -> None:
-    '''Create second dataset button'''
+    '''Создает кнопку "второй датасет"'''
     threading.Thread(target=create_dataset, args=(file ,False, )).start()
 
 
 def start4() -> None:
-    '''Next hourse button'''
+    '''Кнопка "следующая лошадь"'''
     threading.Thread(target=get_picture, args=(next(horse_picture_path), )).start()
     
     
 def start5() -> None:
-    '''Next zebra button'''
+    '''Кнопка "следующая зебра"'''
     threading.Thread(target=get_picture, args=(next(zebra_picture_path), )).start()
     
 

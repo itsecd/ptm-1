@@ -23,13 +23,12 @@ for filename1 in os.listdir(zebra_path):
 
 
 def is_similar(image1:np.ndarray, image2:np.ndarray) -> bool:
-    '''сравнивает две картинки'''
+    '''Сравнивает две картинки'''
     return image1.shape == image2.shape and not(np.bitwise_xor(image1,image2).any())
 
 
 def defining_mark(image:np.ndarray) -> bool:
-    '''проверяет является ли картинка проверяемым типом'''
-
+    '''Проверяет является ли картинка проверяемым типом'''
     for im in images:
        if(is_similar(im, image)):
            return True
@@ -40,7 +39,6 @@ def defining_mark(image:np.ndarray) -> bool:
 
 def create_annotation_file(path:str, path_destination:str) -> None:
     '''Записывает объекты из передaнного файла в csv-файл'''
-    
     with open(path_destination, mode="a", encoding='utf-8') as w_file:
         file_writer = csv.writer(w_file, delimiter = "|", lineterminator="\r")
         
@@ -53,16 +51,10 @@ def create_annotation_file(path:str, path_destination:str) -> None:
 
 
 if __name__ == "__main__":
-
-    '''create_annotation_file(zebra_path, annotation_path)
-    print("ok")
-    create_annotation_file(bay_horse_path, annotation_path) 
-    print("ok")
+    create_annotation_file(zebra_path, annotation_path)  
+    create_annotation_file(bay_horse_path, annotation_path)  
     create_annotation_file(second_dataset_path, annotation_path)
-    print("ok")
     create_annotation_file(third_dataset_path, annotation_path)
-    print("ok")'''
-    #create_annotation_file(third_dataset_path, annotation_2_path)
 
     print(time.perf_counter())
     create_annotation_file(third_dataset_path, annotation_2_path)

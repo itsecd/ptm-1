@@ -8,7 +8,7 @@ bay_horse_path = "C://Users/79376/python/dataset/bay_horse"
 second_dataset_path = "C://Users/79376/python/dataset2"
 
 def create_dataset(source_path: str, destination_path: str) -> None:
-    '''создает новый датасет по второму заданию'''
+    '''Создает новый датасет по второму заданию'''
     if not os.path.exists(destination_path):
         os.mkdir(destination_path)  
 

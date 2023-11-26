@@ -12,7 +12,7 @@ dataset_path ="C://Users/79376/python/dataset"
 bay_horse_path = "C://Users/79376/python/dataset/bay_horse"
 
 def get_data_zebra(count_imgs):
-
+    '''Парсит картинки с зебрами'''
     if not os.path.exists(dataset_path):
         os.mkdir(dataset_path)   
     if not os.path.exists(zebra_path):
@@ -68,7 +68,7 @@ def get_data_zebra(count_imgs):
 
 
 def get_data_bay_horse(count_imgs):
-    
+    '''Парсит картинки с лошадьми'''
     if not os.path.exists(dataset_path):
         os.mkdir(dataset_path)   
     if not os.path.exists(bay_horse_path):
@@ -124,10 +124,12 @@ def get_data_bay_horse(count_imgs):
 
 
 def is_similar(image1, image2):
+    '''Проверяет две картинки на повторение'''
     return image1.shape == image2.shape and not(np.bitwise_xor(image1,image2).any())
 
 
 def check_images(path,count):
+    '''Проверяет датасет на повторяющиеся картинки'''
     from tqdm import tqdm
     c=count
     images = []
