@@ -41,7 +41,8 @@ def defining_mark(image: np.ndarray) -> bool:
 def create_annotation_file(path: str, path_destination: str) -> None:
     '''Записывает объекты из передaнного файла в csv-файл'''
     with open(path_destination, mode = "a", encoding = 'utf-8') as w_file:
-        file_writer = csv.writer(w_file, delimiter = "|", lineterminator = "\r")
+        file_writer = csv.writer(w_file, 
+                                 delimiter = "|", lineterminator = "\r")
         
         for filename1 in os.listdir(path):
             

@@ -22,7 +22,8 @@ def create_dataset(source_path: str, destination_path: str) -> None:
     for filename in files:
         copy(filename, destination_path, follow_symlinks = True)
         number = os.path.split(filename)
-        os.rename(os.path.join(destination_path, number[1]), os.path.join(destination_path, mark[1] + number[1]))
+        os.rename(os.path.join(destination_path, number[1]), 
+                  os.path.join(destination_path, mark[1] + number[1]))
 
 
 if __name__ == '__main__':

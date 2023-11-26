@@ -39,7 +39,9 @@ def create_dataset(source_path: str, destination_path: str) -> None:
             number = randint(0, 10000)
             if check_number(number, destination_path):
                 break
-        os.rename(os.path.join(destination_path, filename), os.path.join(destination_path, str(number).zfill(5) + '.jpg'))
+        os.rename(os.path.join(destination_path, filename), 
+                  os.path.join(destination_path, 
+                               str(number).zfill(5) + '.jpg'))
 
 
 if __name__ == '__main__':

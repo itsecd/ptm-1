@@ -56,7 +56,8 @@ def get_data_zebra(count_imgs: int) -> None:
                     
                     name_file = str(count)
                           
-                    out = open(zebra_path + '/' + name_file.zfill(4) + '.jpg', 'wb') 
+                    out = open(zebra_path + '/' +
+                                name_file.zfill(4) + '.jpg', 'wb') 
                     out.write(picture.content)
                     out.close()
                     
@@ -112,7 +113,8 @@ def get_data_bay_horse(count_imgs: int) -> None:
                     
                     name_file = str(count)
                           
-                    out = open(bay_horse_path + '/' + name_file.zfill(4) + '.jpg', 'wb') 
+                    out = open(bay_horse_path + '/' +
+                                name_file.zfill(4) + '.jpg', 'wb') 
                     out.write(picture.content)
                     out.close()
                     
@@ -136,7 +138,8 @@ def check_images(path: str, count: int) ->int:
     c = count
     images = []
     for filename1 in os.listdir(path):
-        images.append((cv2.imread(os.path.join(path, filename1)), os.path.join(path, filename1)))
+        images.append((cv2.imread(os.path.join(path, filename1)),
+                        os.path.join(path, filename1)))
     
     for im, fname in tqdm(images):
         for im2, fname2 in images:
