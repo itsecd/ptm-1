@@ -2,7 +2,6 @@ import os
 import cv2
 import csv
 import numpy as np
-
 import time
 
 zebra_path = "C://Users/79376/python/dataset/zebra"
@@ -22,12 +21,12 @@ for filename1 in os.listdir(zebra_path):
    images.append(cv2.imread(os.path.join(zebra_path, filename1)))
 
 
-def is_similar(image1:np.ndarray, image2:np.ndarray) -> bool:
+def is_similar(image1: np.ndarray, image2: np.ndarray) -> bool:
     '''Сравнивает две картинки'''
     return image1.shape == image2.shape and not(np.bitwise_xor(image1,image2).any())
 
 
-def defining_mark(image:np.ndarray) -> bool:
+def defining_mark(image: np.ndarray) -> bool:
     '''Проверяет является ли картинка проверяемым типом'''
     for im in images:
        if(is_similar(im, image)):
@@ -37,7 +36,7 @@ def defining_mark(image:np.ndarray) -> bool:
     return False
 
 
-def create_annotation_file(path:str, path_destination:str) -> None:
+def create_annotation_file(path: str, path_destination: str) -> None:
     '''Записывает объекты из передaнного файла в csv-файл'''
     with open(path_destination, mode="a", encoding='utf-8') as w_file:
         file_writer = csv.writer(w_file, delimiter = "|", lineterminator="\r")

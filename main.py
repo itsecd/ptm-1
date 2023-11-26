@@ -6,12 +6,13 @@ import requests
 from bs4 import BeautifulSoup
 import cv2
 import numpy as np
+from tqdm import tqdm
 
 zebra_path = "C://Users/79376/python/dataset/zebra"
 dataset_path ="C://Users/79376/python/dataset"
 bay_horse_path = "C://Users/79376/python/dataset/bay_horse"
 
-def get_data_zebra(count_imgs):
+def get_data_zebra(count_imgs: int) -> None:
     '''Парсит картинки с зебрами'''
     if not os.path.exists(dataset_path):
         os.mkdir(dataset_path)   
@@ -67,7 +68,7 @@ def get_data_zebra(count_imgs):
                     print("Error in: ", count)
 
 
-def get_data_bay_horse(count_imgs):
+def get_data_bay_horse(count_imgs: int) -> None:
     '''Парсит картинки с лошадьми'''
     if not os.path.exists(dataset_path):
         os.mkdir(dataset_path)   
@@ -123,14 +124,13 @@ def get_data_bay_horse(count_imgs):
                     print("Error in: ", count)
 
 
-def is_similar(image1, image2):
+def is_similar(image1: np.ndarray, image2: np.ndarray) -> bool:
     '''Проверяет две картинки на повторение'''
     return image1.shape == image2.shape and not(np.bitwise_xor(image1,image2).any())
 
 
-def check_images(path,count):
+def check_images(path: str, count: int) ->int:
     '''Проверяет датасет на повторяющиеся картинки'''
-    from tqdm import tqdm
     c=count
     images = []
     for filename1 in os.listdir(path):
