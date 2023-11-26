@@ -21,7 +21,8 @@ class Iterator:
 
         if(self.counter < self.limit):
             self.counter += 1
-            while (self.counter < self.limit) and (self.file_reader[self.counter][2] != self.mark):    
+            while (self.counter < self.limit) and (
+                    self.file_reader[self.counter][2] != self.mark):    
                 self.counter += 1
             
             if (self.counter == self.limit):

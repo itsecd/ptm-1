@@ -25,7 +25,8 @@ for filename1 in os.listdir(zebra_path):
 
 def is_similar(image1: np.ndarray, image2: np.ndarray) -> bool:
     '''Сравнивает две картинки'''
-    return image1.shape == image2.shape and not(np.bitwise_xor(image1,image2).any())
+    return image1.shape == image2.shape and not(
+        np.bitwise_xor(image1,image2).any())
 
 
 def defining_mark(image: np.ndarray) -> bool:
@@ -49,7 +50,7 @@ def create_annotation_file(path: str, path_destination: str) -> None:
             if (defining_mark(cv2.imread(os.path.join(path, filename1)))):
                 file_writer.writerow([os.path.join(path, filename1), 'zebra'])
             else:
-                file_writer.writerow([os.path.join(path, filename1), 'bay_horse'])   
+                file_writer.writerow([os.path.join(path, filename1), 'bay_horse'])
 
 
 if __name__ == "__main__":

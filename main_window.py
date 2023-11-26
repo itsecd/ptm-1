@@ -69,7 +69,8 @@ if __name__ == "__main__":
     app = Tk()
     app.title("Лабораторная работа по прикладному программированию")
 
-    start = Label(app, text = "select main dataset", font = ("Arial Bold", 20))
+    start = Label(app, text = "select main dataset", 
+                  font = ("Arial Bold", 20))
     start.grid(column = 0, row = 0)
     file = filedialog.askdirectory()
     start.destroy()

@@ -130,7 +130,8 @@ def get_data_bay_horse(count_imgs: int) -> None:
 
 def is_similar(image1: np.ndarray, image2: np.ndarray) -> bool:
     '''Проверяет две картинки на повторение'''
-    return image1.shape == image2.shape and not(np.bitwise_xor(image1,image2).any())
+    return image1.shape == image2.shape and not(
+        np.bitwise_xor(image1,image2).any())
 
 
 def check_images(path: str, count: int) ->int:
