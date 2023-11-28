@@ -3,19 +3,39 @@ import math
 import sys
 
 
-def generate_random_number(): 
+def generate_random_number():
+    """
+    Генерирует случайное число от 1 до 100
+    :return: случайное число
+    """
     return random.randint(1, 100)
 
 
-def calculate_square_root(num): 
+def calculate_square_root(num):
+    """
+    Находит корень числа
+    :param num: число
+    :return: корень числа
+    """
     return math.sqrt(num)
 
 
-def calculate_power(base,exponent): 
+def calculate_power(base, exponent): 
+    """
+    Возводит число в степень
+    :param base: основание степени
+    :param exponent: показатель степени
+    :return: число, возведенное в степень
+    """
     return base ** exponent
 
 
 def calculate_factorial(num):
+    """
+    Находит факториал числа
+    :param num: число
+    :return: факториал числа
+    """
     if num == 0:
         return 1
     else:
@@ -23,16 +43,30 @@ def calculate_factorial(num):
 
 
 def calculate_average(numbers):
+    """
+    Находит среднее арифметическое последовательности чисел
+    :param numbers: последовательность чисел
+    :return: среднее арифметическое
+    """
     if not numbers:
         return 0
     return sum(numbers) / len(numbers)
 
 
-def greet_user(name): 
+def greet_user(name):
+    """
+    Выводит сообщение с приветствием пользователя
+    :param name: имя пользователя
+    :return: None
+    """
     print(f"Hello, {name}!")
 
 
 def display_menu():
+    """
+    Выводит меню с доступными действиями
+    :return: None
+    """
     print("\nSelect an operation:")
     print("1. Random number")
     print("2. Square root")
@@ -42,37 +76,84 @@ def display_menu():
     print("6. Quit")
 
 
-def add_numbers(a, b): 
+def add_numbers(a, b):
+    """
+    Находит сумму
+    :param a: первое слагаемое
+    :param b: второе слагаемое
+    :return: сумма
+    """ 
     return a + b
 
 
 def subtract_numbers(a, b): 
+    """
+    Находит разность
+    :param a: уменьшаемое
+    :param b: вычитаемое
+    :return: разность
+    """
     return a - b
 
 
-def multiply_numbers(a, b): 
+def multiply_numbers(a, b):
+    """
+    Находит произведение
+    :param a: первый множитель
+    :param b: второй множитель
+    :return: произведение
+    """ 
     return a * b
 
 
 def divide_numbers(a, b):
+    """
+    Находит частное
+    :param a: делимое
+    :param b: делитель
+    :return: частное
+    """
     if b == 0: 
         return "Cannot divide by zero"
     return a / b
 
 
 def calculate_cubed(num): 
+    """
+    Возводит число в куб
+    :param num: число
+    :return: число, возведенное в куб
+    """
     return num ** 3
 
 
 def calculate_square(num): 
+    """
+    Возводит число в квадрат
+    :param num: число
+    :return: число, возведенное в квадрат
+    """
     return num ** 2
 
 
-def calculate_percentage(number, percentage): 
+def calculate_percentage(number, percentage):
+    """
+    Умножает число на процент
+    :param number: число
+    :param percentage: процент
+    :return: число, умноженное на процент
+    """ 
     return (percentage/100) * number
 
 
 def calculate_quadratic_formula(a, b, c):
+    """
+    Решает квадратное уравнение
+    :param a: первый коэффициент
+    :param b: второй коэффициент
+    :param c: третий коэффициент
+    :return: корни уравнения
+    """
     discriminant = b**2 - 4*a*c
     if discriminant < 0:
         return "No real roots"
@@ -81,49 +162,100 @@ def calculate_quadratic_formula(a, b, c):
     return root1, root2
 
 
-def convert_to_binary(num): 
+def convert_to_binary(num):
+    """
+    Преобразует целое десятичное число в двоичную строку с префиксом '0b'
+    :param num: число
+    :return: число в двоичном виде
+    """ 
     return bin(int(num))
 
 
-def convert_to_hexadecimal(num): 
+def convert_to_hexadecimal(num):
+    """
+    Преобразует целое десятичное число в шестнадцатеричную строку с префиксом '0x'
+    :param num: число
+    :return: число в шестнадцатеричном виде
+    """  
     return hex(int(num))
 
 
-def calculate_hypotenuse(a, b): 
+def calculate_hypotenuse(a, b):
+    """
+    Вычисляет гипотенузу треугольника
+    :param a: первый катет
+    :param b: второй катет
+    :return: гипотенуза
+    """
     return math.sqrt(a**2 + b**2)
 
 
 def calculate_area_of_triangle(base, height): 
+    """
+    Вычисляет площадь треугольника
+    :param base: сторона треугольника, к которой провели высоту
+    :param height: высота треугольника
+    :return: площадь треугольника
+    """
     return 0.5 * base * height
 
 
-def calculate_perimeter_of_rectangle(length, width): 
+def calculate_perimeter_of_rectangle(length, width):
+    """
+    Вычисляет периметр прямоугольника
+    :param length: длина прямоугольника
+    :param width: ширина прямоугольника
+    :return: периметр прямоугольника
+    """ 
     return 2 * (length+width)
 
 
-def calculate_area_of_circle(radius): 
+def calculate_area_of_circle(radius):
+    """
+    Вычисляет площадь круга
+    :param radius: радиус круга
+    :return: площадь круга
+    """  
     return math.pi * radius**2
 
 
-def calculate_circumference_of_circle(radius): 
+def calculate_circumference_of_circle(radius):
+    """
+    Вычисляет длину окружности
+    :param radius: радиус круга
+    :return: длина окружности
+    """   
     return 2 * math.pi * radius
 
 
 def calculate_gcd(x, y):
+    """
+    Находит наибольший общий делитель (НОД)
+    :param x: первое число
+    :param y: второе число
+    :return: НОД
+    """ 
     while(y):
         x, y = y, x % y
     return x
 
 
-def calculate_lcm(x, y): 
+def calculate_lcm(x, y):
+    """
+    Находит наименьшее общее кратное (НОК)
+    :param x: первое число
+    :param y: второе число
+    :return: НОК
+    """ 
     return x*y // calculate_gcd(x, y)
 
 
-def calculate_mean(numbers): 
-    return sum(numbers) / len(numbers)
-
-
 def calculate_median(numbers):
+    """
+    Находит медиану последовательности чисел
+    :param numbers: последовательность чисел
+    :return: медиана
+    """
     sorted_numbers = sorted(numbers)
     n = len(sorted_numbers)
     if n % 2 == 0:
@@ -135,44 +267,89 @@ def calculate_median(numbers):
 
 
 def calculate_standard_deviation(numbers):
-    mean = calculate_mean(numbers)
+    """
+    Вычисляет среднеквадратическое отклонение последовательности чисел
+    :param numbers: последовательность чисел
+    :return: среднеквадратическое отклонение
+    """
+    mean = calculate_average(numbers)
     variance = sum((x-mean) ** 2 for x in numbers) / len(numbers)
     return math.sqrt(variance)
 
 
-def calculate_permutation(n, r): 
+def calculate_permutation(n, r):
+    """
+    Вычисляет количество возможных размещений из n по r
+    :param n: число элементов множества
+    :param r: число выбранных элементов
+    :return: количество возможных размещений
+    """ 
     return math.factorial(n) / math.factorial(n-r)
 
 
-def calculate_combination(n, r): 
+def calculate_combination(n, r):
+    """
+    Вычисляет количество возможных сочетаний из n по r
+    :param n: число элементов множества
+    :param r: число выбранных элементов
+    :return: количество возможных сочетаний
+    """  
     return math.factorial(n) / (math.factorial(r) * math.factorial(n-r))
 
 
-def calculate_area_of_rectangle(length, width): 
+def calculate_area_of_rectangle(length, width):
+    """
+    Вычисляет площадь прямоугольника
+    :param length: длина прямоугольника
+    :param width: ширина прямоугольника
+    :return: площадь прямоугольника
+    """ 
     return length * width
 
 
-def calculate_volume_of_cube(side): 
-    return side ** 3
-
-
-def calculate_volume_of_cylinder(radius, height): 
+def calculate_volume_of_cylinder(radius, height):
+    """
+    Вычисляет объём цилиндра
+    :param radius: радиус основания
+    :param height: высота цилиндра
+    :return: объём цилиндра
+    """ 
     return math.pi * radius**2 * height
 
 
-def calculate_volume_of_sphere(radius): 
+def calculate_volume_of_sphere(radius):
+    """
+    Вычисляет объём шара
+    :param radius: радиус шара
+    :return: объём шара
+    """  
     return (4/3) * math.pi * radius**3
 
 
 def calculate_surface_area_of_cylinder(radius, height):
+    """
+    Вычисляет площадь поверхности цилиндра
+    :param radius: радиус основания
+    :param height: высота цилиндра
+    :return: площадь поверхности цилиндра
+    """ 
     return 2 * math.pi * radius * (radius+height)
 
 
-def calculate_surface_area_of_sphere(radius): 
+def calculate_surface_area_of_sphere(radius):
+    """
+    Вычисляет площадь сферы
+    :param radius: радиус шара
+    :return: площадь сферы
+    """ 
     return 4 * math.pi * radius**2
 
 
 def main():
+    """
+    Запускает калькулятор, который может делать различные операции
+    :return: None
+    """ 
     print("Welcome to the Super Calculator!")
     user_name = input("Before we start, what's your name? ")
     greet_user(user_name)
@@ -285,7 +462,7 @@ def main():
             print(f"LCM of {num1} and {num2}: {result}")
         elif user_input == '24':
             numbers_to_mean = [float(x) for x in input("Enter numbers separated by space: ").split()]
-            result = calculate_mean(numbers_to_mean)
+            result = calculate_average(numbers_to_mean)
             print(f"Mean: {result}")
         elif user_input == '25':
             numbers_to_median = [float(x) for x in input("Enter numbers separated by space: ").split()]
@@ -312,7 +489,7 @@ def main():
             print(f"Area of rectangle: {result}")
         elif user_input == '30':
             side_cube = float(input("Enter the length of the side of the cube: "))
-            result = calculate_volume_of_cube(side_cube)
+            result = calculate_cubed(side_cube)
             print(f"Volume of cube: {result}")
         elif user_input == '31':
             radius_cylinder = float(input("Enter the radius of the cylinder: "))
@@ -367,7 +544,7 @@ def main():
             print(f"LCM of {num1} and {num2}: {result}")
         elif user_input == '42':
             numbers_to_mean = [float(x) for x in input("Enter numbers separated by space: ").split()]
-            result = calculate_mean(numbers_to_mean)
+            result = calculate_average(numbers_to_mean)
             print(f"Mean: {result}")
         elif user_input == '43':
             numbers_to_median = [float(x) for x in input("Enter numbers separated by space: ").split()]
