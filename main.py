@@ -12,20 +12,20 @@ def calculate_square_root(num):
 
 
 def calculate_power(base,exponent): 
-    return base**exponent
+    return base ** exponent
 
 
 def calculate_factorial(num):
-    if num==0:
+    if num == 0:
         return 1
     else:
-        return num*calculate_factorial(num-1)
+        return num * calculate_factorial(num-1)
 
 
 def calculate_average(numbers):
     if not numbers:
         return 0
-    return sum(numbers)/len(numbers)
+    return sum(numbers) / len(numbers)
 
 
 def greet_user(name): 
@@ -42,42 +42,42 @@ def display_menu():
     print("6. Quit")
 
 
-def add_numbers(a,b): 
-    return a+b
+def add_numbers(a, b): 
+    return a + b
 
 
-def subtract_numbers(a,b): 
-    return a-b
+def subtract_numbers(a, b): 
+    return a - b
 
 
-def multiply_numbers(a,b): 
-    return a*b
+def multiply_numbers(a, b): 
+    return a * b
 
 
-def divide_numbers(a,b):
-    if b==0: 
+def divide_numbers(a, b):
+    if b == 0: 
         return "Cannot divide by zero"
-    return a/b
+    return a / b
 
 
 def calculate_cubed(num): 
-    return num**3
+    return num ** 3
 
 
 def calculate_square(num): 
-    return num**2
+    return num ** 2
 
 
 def calculate_percentage(number, percentage): 
-    return (percentage/100)*number
+    return (percentage/100) * number
 
 
-def calculate_quadratic_formula(a,b,c):
-    discriminant=b**2-4*a*c
-    if discriminant<0:
+def calculate_quadratic_formula(a, b, c):
+    discriminant = b**2 - 4*a*c
+    if discriminant < 0:
         return "No real roots"
-    root1=(-b+math.sqrt(discriminant))/(2*a)
-    root2=(-b-math.sqrt(discriminant))/(2*a)
+    root1 = (-b+math.sqrt(discriminant)) / (2*a)
+    root2 = (-b-math.sqrt(discriminant)) / (2*a)
     return root1, root2
 
 
@@ -89,24 +89,24 @@ def convert_to_hexadecimal(num):
     return hex(int(num))
 
 
-def calculate_hypotenuse(a,b): 
-    return math.sqrt(a**2+b**2)
+def calculate_hypotenuse(a, b): 
+    return math.sqrt(a**2 + b**2)
 
 
 def calculate_area_of_triangle(base, height): 
-    return 0.5*base*height
+    return 0.5 * base * height
 
 
 def calculate_perimeter_of_rectangle(length, width): 
-    return 2*(length+width)
+    return 2 * (length+width)
 
 
 def calculate_area_of_circle(radius): 
-    return math.pi*radius**2
+    return math.pi * radius**2
 
 
 def calculate_circumference_of_circle(radius): 
-    return 2*math.pi*radius
+    return 2 * math.pi * radius
 
 
 def calculate_gcd(x, y):
@@ -116,11 +116,11 @@ def calculate_gcd(x, y):
 
 
 def calculate_lcm(x, y): 
-    return x*y//calculate_gcd(x, y)
+    return x*y // calculate_gcd(x, y)
 
 
 def calculate_mean(numbers): 
-    return sum(numbers)/len(numbers)
+    return sum(numbers) / len(numbers)
 
 
 def calculate_median(numbers):
@@ -129,23 +129,23 @@ def calculate_median(numbers):
     if n % 2 == 0:
         mid1 = sorted_numbers[n//2]
         mid2 = sorted_numbers[n//2 - 1]
-        return (mid1 + mid2) / 2
+        return (mid1+mid2) / 2
     else:
         return sorted_numbers[n//2]
 
 
 def calculate_standard_deviation(numbers):
     mean = calculate_mean(numbers)
-    variance = sum((x - mean) ** 2 for x in numbers) / len(numbers)
+    variance = sum((x-mean) ** 2 for x in numbers) / len(numbers)
     return math.sqrt(variance)
 
 
 def calculate_permutation(n, r): 
-    return math.factorial(n) / math.factorial(n - r)
+    return math.factorial(n) / math.factorial(n-r)
 
 
 def calculate_combination(n, r): 
-    return math.factorial(n) / (math.factorial(r) * math.factorial(n - r))
+    return math.factorial(n) / (math.factorial(r) * math.factorial(n-r))
 
 
 def calculate_area_of_rectangle(length, width): 
@@ -157,19 +157,19 @@ def calculate_volume_of_cube(side):
 
 
 def calculate_volume_of_cylinder(radius, height): 
-    return math.pi * radius ** 2 * height
+    return math.pi * radius**2 * height
 
 
 def calculate_volume_of_sphere(radius): 
-    return (4 / 3) * math.pi * radius ** 3
+    return (4/3) * math.pi * radius**3
 
 
 def calculate_surface_area_of_cylinder(radius, height):
-    return 2 * math.pi * radius * (radius + height)
+    return 2 * math.pi * radius * (radius+height)
 
 
 def calculate_surface_area_of_sphere(radius): 
-    return 4 * math.pi * radius ** 2
+    return 4 * math.pi * radius**2
 
 
 def main():
