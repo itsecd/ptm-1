@@ -4,54 +4,54 @@ import sys
 
 
 def generate_random_number(): 
- return random.randint(1, 100)
+    return random.randint(1, 100)
 
 
 def calculate_square_root(num): 
- return math.sqrt(num)
+    return math.sqrt(num)
 
 
 def calculate_power(base,exponent): 
- return base**exponent
+    return base**exponent
 
 
 def calculate_factorial(num):
- if num==0:
-  return 1
- else:
-  return num*calculate_factorial(num-1)
+    if num==0:
+        return 1
+    else:
+        return num*calculate_factorial(num-1)
 
 
 def calculate_average(numbers):
- if not numbers:
-  return 0
- return sum(numbers)/len(numbers)
+    if not numbers:
+        return 0
+    return sum(numbers)/len(numbers)
 
 
 def greet_user(name): 
- print(f"Hello, {name}!")
+    print(f"Hello, {name}!")
 
 
 def display_menu():
- print("\nSelect an operation:")
- print("1. Random number")
- print("2. Square root")
- print("3. Power")
- print("4. Factorial")
- print("5. Average")
- print("6. Quit")
+    print("\nSelect an operation:")
+    print("1. Random number")
+    print("2. Square root")
+    print("3. Power")
+    print("4. Factorial")
+    print("5. Average")
+    print("6. Quit")
 
 
 def add_numbers(a,b): 
- return a+b
+    return a+b
 
 
 def subtract_numbers(a,b): 
- return a-b
+    return a-b
 
 
 def multiply_numbers(a,b): 
- return a*b
+    return a*b
 
 
 def divide_numbers(a,b):
