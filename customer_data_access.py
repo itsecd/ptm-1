@@ -82,17 +82,18 @@ class CustomerDataLayer:
             return None
 
         customer = Customer(internalId=fields[0], externalId=fields[1], masterExternalId=fields[2], name=fields[3],
-                        customerType=CustomerType(fields[4]), companyNumber=fields[5])
+                            customerType=CustomerType(fields[4]), companyNumber=fields[5])
         address_id = self._find_address_id(customer)
         if address_id:
             self.cursor.execute('SELECT street, city, postalCode FROM addresses WHERE addressId=?',
-                                          (address_id, ))
+                                (address_id,))
             addresses = self.cursor.fetchone()
             if addresses:
                 (street, city, postalCode) = addresses
                 address = Address(street, city, postalCode)
                 customer.address = address
-        self.cursor.execute('SELECT shoppinglistId FROM customer_shoppinglists WHERE customerId=?', (customer.internal_id,))
+        self.cursor.execute('SELECT shoppinglistId FROM customer_shoppinglists WHERE customerId=?',
+                            (customer.internal_id,))
         shoppinglists = self.cursor.fetchall()
         for sl in shoppinglists:
             self.cursor.execute('SELECT products FROM shoppinglists WHERE shoppinglistId=?', (sl[0],))
@@ -116,13 +117,15 @@ class CustomerDataLayer:
     def create_customer_record(self, customer):
         customer.internal_id = self._nextid("customers")
         self.cursor.execute('INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?, ?);', (
-            customer.internal_id, customer.externalId, customer.masterExternalId, customer.name, customer.customerType.value,
+            customer.internal_id, customer.externalId, customer.masterExternalId, customer.name,
+            customer.customerType.value,
             customer.companyNumber, None))
         if customer.address:
             address_id = self._nextid("addresses")
             self.cursor.execute('INSERT INTO addresses VALUES (?, ?, ?, ?)', (
                 address_id, customer.address.street, customer.address.city, customer.address.postalCode))
-            self.cursor.execute('UPDATE customers set addressId=? WHERE internalId=?', (address_id, customer.internal_id))
+            self.cursor.execute('UPDATE customers set addressId=? WHERE internalId=?',
+                                (address_id, customer.internal_id))
 
         if customer.shoppingLists:
             for sl in customer.shoppingLists:
@@ -132,7 +135,8 @@ class CustomerDataLayer:
                 if not shoppinglist_id:
                     shoppinglist_id = self._nextid("shoppinglists")
                     self.cursor.execute('INSERT INTO shoppinglists VALUES (?, ?)', (shoppinglist_id, data))
-                self.cursor.execute('INSERT INTO customer_shoppinglists VALUES (?, ?)', (customer.internal_id, shoppinglist_id))
+                self.cursor.execute('INSERT INTO customer_shoppinglists VALUES (?, ?)',
+                                    (customer.internal_id, shoppinglist_id))
         self.conn.commit()
         return customer
 
@@ -148,13 +152,15 @@ class CustomerDataLayer:
         self.cursor.execute(
             'Update customers set externalId=?, masterExternalId=?, name=?, customerType=?, companyNumber=? WHERE internalId=?',
             (customer.externalId, customer.masterExternalId, customer.name, customer.customerType.value,
-                customer.companyNumber, customer.internal_id))
+             customer.companyNumber, customer.internal_id))
         if customer.address:
             address_id = self._find_address_id(customer)
             if not address_id:
                 address_id = self._nextid("addresses")
-                self.cursor.execute('INSERT INTO addresses VALUES (?, ?, ?, ?)', (address_id, customer.address.street, customer.address.city, customer.address.postalCode))
-                self.cursor.execute('UPDATE customers set addressId=? WHERE internalId=?', (address_id, customer.internal_id))
+                self.cursor.execute('INSERT INTO addresses VALUES (?, ?, ?, ?)', (
+                address_id, customer.address.street, customer.address.city, customer.address.postalCode))
+                self.cursor.execute('UPDATE customers set addressId=? WHERE internalId=?',
+                                    (address_id, customer.internal_id))
 
         self.cursor.execute('DELETE FROM customer_shoppinglists WHERE customerId=?', (customer.internal_id,))
         if customer.shoppingLists:
@@ -169,7 +175,8 @@ class CustomerDataLayer:
                 else:
                     shoppinglist_id = self._nextid("shoppinglists")
                     self.cursor.execute('INSERT INTO shoppinglists VALUES (?, ?)', (shoppinglist_id, products))
-                    self.cursor.execute('INSERT INTO customer_shoppinglists VALUES (?, ?)', (customer.internal_id, shoppinglist_id))
+                    self.cursor.execute('INSERT INTO customer_shoppinglists VALUES (?, ?)',
+                                        (customer.internal_id, shoppinglist_id))
 
         self.conn.commit()
 
