@@ -12,131 +12,131 @@ class ConflictException(Exception):
 
 class CustomerSync:
 
-    def __init__(self, customerDataAccess):
-        self.customerDataAccess = customerDataAccess
+    def __init__(self, customer_data_access):
+        self.customer_data_access = customer_data_access
 
-    def syncWithDataLayer(self, externalCustomer):
-        customerMatches: CustomerMatches
-        if externalCustomer.isCompany:
-            customerMatches = self.loadCompany(externalCustomer)
+    def sync_with_data_layer(self, external_customer):
+        customer_matches: CustomerMatches
+        if external_customer.isCompany:
+            customer_matches = self.load_company(external_customer)
         else:
-            customerMatches = self.loadPerson(externalCustomer)
+            customer_matches = self.load_person(external_customer)
 
-        customer = customerMatches.customer
+        customer = customer_matches.customer
 
         if customer is None:
             customer = Customer()
-            customer.externalId = externalCustomer.externalId
-            customer.masterExternalId = externalCustomer.externalId
+            customer.externalId = external_customer.externalId
+            customer.masterExternalId = external_customer.externalId
 
-        self.populateFields(externalCustomer, customer)
+        self.populate_fields(external_customer, customer)
 
         created = False
-        if customer.internalId is None:
-            customer = self.createCustomer(customer)
+        if customer.internal_id is None:
+            customer = self.create_customer(customer)
             created = True
         else:
-            self.updateCustomer(customer)
+            self.update_customer(customer)
 
-        self.updateContactInfo(externalCustomer, customer)
+        self.update_contact_info(external_customer, customer)
 
-        if customerMatches.has_duplicates:
-            for duplicate in customerMatches.duplicates:
-                self.updateDuplicate(externalCustomer, duplicate)
+        if customer_matches.has_duplicates:
+            for duplicate in customer_matches.duplicates:
+                self.update_duplicate(external_customer, duplicate)
 
-        self.updateRelations(externalCustomer, customer)
-        self.updatePreferredStore(externalCustomer, customer)
+        self.update_relations(external_customer, customer)
+        self.update_preferred_store(external_customer, customer)
 
         return created
 
 
-    def updateRelations(self, externalCustomer: ExternalCustomer, customer: Customer):
-        consumerShoppingLists = externalCustomer.shoppingLists
-        for consumerShoppingList in consumerShoppingLists:
-            self.customerDataAccess.updateShoppingList(customer, consumerShoppingList)
+    def update_relations(self, external_customer: ExternalCustomer, customer: Customer):
+        consumer_shopping_lists = external_customer.shoppingLists
+        for consumer_shopping_list in consumer_shopping_lists:
+            self.customer_data_access.update_shopping_list(customer, consumer_shopping_list)
 
 
-    def updateCustomer(self, customer):
-        return self.customerDataAccess.updateCustomerRecord(customer)
+    def update_customer(self, customer):
+        return self.customer_data_access.update_customer_record(customer)
 
 
-    def updateDuplicate(self, externalCustomer: ExternalCustomer, duplicate: Customer):
+    def update_duplicate(self, external_customer: ExternalCustomer, duplicate: Customer):
         if duplicate is None:
             duplicate = Customer()
-            duplicate.externalId = externalCustomer.externalId
-            duplicate.masterExternalId = externalCustomer.externalId
+            duplicate.externalId = external_customer.externalId
+            duplicate.masterExternalId = external_customer.externalId
 
-        duplicate.name = externalCustomer.name
+        duplicate.name = external_customer.name
 
         if duplicate.internalId is None:
-            self.createCustomer(duplicate)
+            self.create_customer(duplicate)
         else:
-            self.updateCustomer(duplicate)
+            self.update_customer(duplicate)
 
 
-    def updatePreferredStore(self, externalCustomer: ExternalCustomer, customer: Customer):
-        customer.preferredStore = externalCustomer.preferredStore
+    def update_preferred_store(self, external_customer: ExternalCustomer, customer: Customer):
+        customer.preferredStore = external_customer.preferredStore
 
 
-    def createCustomer(self, customer) -> Customer:
-        return self.customerDataAccess.createCustomerRecord(customer)
+    def create_customer(self, customer) -> Customer:
+        return self.customer_data_access.create_customer_record(customer)
 
 
-    def populateFields(self, externalCustomer: ExternalCustomer, customer: Customer):
-        customer.name = externalCustomer.name
-        if externalCustomer.isCompany:
-            customer.companyNumber = externalCustomer.companyNumber
+    def populate_fields(self, external_customer: ExternalCustomer, customer: Customer):
+        customer.name = external_customer.name
+        if external_customer.isCompany:
+            customer.companyNumber = external_customer.companyNumber
             customer.customerType = CustomerType.COMPANY
         else:
             customer.customerType = CustomerType.PERSON
 
 
-    def updateContactInfo(self, externalCustomer: ExternalCustomer, customer: Customer):
-        customer.address = externalCustomer.postalAddress
+    def update_contact_info(self, external_customer: ExternalCustomer, customer: Customer):
+        customer.address = external_customer.postalAddress
 
 
-    def loadCompany(self, externalCustomer) -> CustomerMatches:
-        externalId = externalCustomer.externalId
-        companyNumber = externalCustomer.companyNumber
+    def load_company(self, external_customer) -> CustomerMatches:
+        external_id = external_customer.externalId
+        company_number = external_customer.companyNumber
 
-        customerMatches = self.customerDataAccess.loadCompanyCustomer(externalId, companyNumber)
+        customer_matches = self.customer_data_access.load_company_customer(external_id, company_number)
 
-        if customerMatches.customer is not None and CustomerType.COMPANY != customerMatches.customer.customerType:
+        if customer_matches.customer is not None and CustomerType.COMPANY != customer_matches.customer.customerType:
             raise ConflictException("Existing customer for externalCustomer {externalId} already exists and is not a company")
 
-        if "ExternalId" == customerMatches.matchTerm:
-            customerCompanyNumber = customerMatches.customer.companyNumber
-            if companyNumber != customerCompanyNumber:
-                customerMatches.customer.masterExternalId = None
-                customerMatches.add_duplicate(customerMatches.customer)
-                customerMatches.customer = None
-                customerMatches.matchTerm = None
+        if "ExternalId" == customer_matches.matchTerm:
+            customer_company_number = customer_matches.customer.companyNumber
+            if company_number != customer_company_number:
+                customer_matches.customer.masterExternalId = None
+                customer_matches.add_duplicate(customer_matches.customer)
+                customer_matches.customer = None
+                customer_matches.matchTerm = None
 
-        elif "CompanyNumber" == customerMatches.matchTerm:
-            customerExternalId = customerMatches.customer.externalId
-            if customerExternalId is not None and externalId != customerExternalId:
-                raise ConflictException(f"Existing customer for externalCustomer {companyNumber} doesn't match external id {externalId} instead found {customerExternalId}")
+        elif "CompanyNumber" == customer_matches.matchTerm:
+            customer_external_id = customer_matches.customer.externalId
+            if customer_external_id is not None and external_id != customer_external_id:
+                raise ConflictException(f"Existing customer for externalCustomer {company_number} doesn't match external id {external_id} instead found {customer_external_id}")
 
-            customer = customerMatches.customer
-            customer.externalId = externalId
-            customer.masterExternalId = externalId
-            customerMatches.addDuplicate(None)
+            customer = customer_matches.customer
+            customer.externalId = external_id
+            customer.masterExternalId = external_id
+            customer_matches.addDuplicate(None)
 
-        return customerMatches
+        return customer_matches
 
 
-    def loadPerson(self, externalCustomer):
-        externalId = externalCustomer.externalId
+    def load_person(self, external_customer):
+        external_id = external_customer.externalId
 
-        customerMatches = self.customerDataAccess.loadPersonCustomer(externalId)
+        customer_matches = self.customer_data_access.load_person_customer(external_id)
 
-        if customerMatches.customer is not None:
-            if CustomerType.PERSON != customerMatches.customer.customerType:
-                raise ConflictException(f"Existing customer for externalCustomer {externalId} already exists and is not a person")
+        if customer_matches.customer is not None:
+            if CustomerType.PERSON != customer_matches.customer.customerType:
+                raise ConflictException(f"Existing customer for externalCustomer {external_id} already exists and is not a person")
 
-            if "ExternalId" != customerMatches.matchTerm:
-                customer = customerMatches.customer
-                customer.externalId = externalId
-                customer.masterExternalId = externalId
+            if "ExternalId" != customer_matches.matchTerm:
+                customer = customer_matches.customer
+                customer.externalId = external_id
+                customer.masterExternalId = external_id
 
-        return customerMatches
+        return customer_matches
