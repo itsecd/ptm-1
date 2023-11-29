@@ -9,6 +9,23 @@ class ConflictException(Exception):
     pass
 
 
+def update_preferred_store(external_customer: ExternalCustomer, customer: Customer):
+    customer.preferredStore = external_customer.preferredStore
+
+
+def populate_fields(external_customer: ExternalCustomer, customer: Customer):
+    customer.name = external_customer.name
+    if external_customer.isCompany:
+        customer.companyNumber = external_customer.companyNumber
+        customer.customerType = CustomerType.COMPANY
+    else:
+        customer.customerType = CustomerType.PERSON
+
+
+def update_contact_info(external_customer: ExternalCustomer, customer: Customer):
+    customer.address = external_customer.postalAddress
+
+
 class CustomerSync:
 
     def __init__(self, customer_data_access):
@@ -28,7 +45,7 @@ class CustomerSync:
             customer.externalId = external_customer.externalId
             customer.masterExternalId = external_customer.externalId
 
-        self.populate_fields(external_customer, customer)
+        populate_fields(external_customer, customer)
 
         created = False
         if customer.internal_id is None:
@@ -37,14 +54,14 @@ class CustomerSync:
         else:
             self.update_customer(customer)
 
-        self.update_contact_info(external_customer, customer)
+        update_contact_info(external_customer, customer)
 
         if customer_matches.has_duplicates:
             for duplicate in customer_matches.duplicates:
                 self.update_duplicate(external_customer, duplicate)
 
         self.update_relations(external_customer, customer)
-        self.update_preferred_store(external_customer, customer)
+        update_preferred_store(external_customer, customer)
 
         return created
 
@@ -69,22 +86,8 @@ class CustomerSync:
         else:
             self.update_customer(duplicate)
 
-    def update_preferred_store(self, external_customer: ExternalCustomer, customer: Customer):
-        customer.preferredStore = external_customer.preferredStore
-
     def create_customer(self, customer) -> Customer:
         return self.customer_data_access.create_customer_record(customer)
-
-    def populate_fields(self, external_customer: ExternalCustomer, customer: Customer):
-        customer.name = external_customer.name
-        if external_customer.isCompany:
-            customer.companyNumber = external_customer.companyNumber
-            customer.customerType = CustomerType.COMPANY
-        else:
-            customer.customerType = CustomerType.PERSON
-
-    def update_contact_info(self, external_customer: ExternalCustomer, customer: Customer):
-        customer.address = external_customer.postalAddress
 
     def load_company(self, external_customer) -> CustomerMatches:
         external_id = external_customer.externalId
