@@ -17,9 +17,5 @@ def create_csv(path: str, path_to: str) -> None:
         writer.writerows(data)
 
 
-def main():
-    create_csv("dataset")
-
-
 if __name__ == "__main__":
-    main()
+    create_csv("dataset")
