@@ -3,7 +3,7 @@ import shutil
 
 
 def copy_dataset(path: str,path_to:str) -> None:
-    """Функция принимает путь к файлам: path и метку класса: label"""
+    """The function takes the path to the files: path and the class label: label"""
     if not os.path.isdir(path_to):
         os.mkdir(path_to)
     info = os.listdir(path+"/")

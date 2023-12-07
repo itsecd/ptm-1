@@ -5,7 +5,7 @@ import csv
 
 
 def copy_random(path: str, path_to: str) -> None:
-    """Функция принимает путь: path и метку класса: label"""
+    """The function takes a path: path and a class label: label"""
     if not os.path.isdir(path_to):
         os.mkdir(path_to)
     data = []

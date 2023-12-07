@@ -3,7 +3,7 @@ import csv
 
 
 def create_csv(path: str, path_to: str) -> None:
-    """Функция принимает путь к файлам: path"""
+    """The function accepts the path to the files: path"""
     info = os.listdir(path + "/")
     data = []
     for i in info:

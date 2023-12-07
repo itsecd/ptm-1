@@ -68,10 +68,6 @@ def jpg(url:str,count:int):
         filewrite=str("dataset/" + url + "/" + a.zfill(4) +".jpg")
         cv2.imwrite(filewrite,image)
 
-
-def main():
-    scraping("dog",100)
-
-   
+        
 if __name__ =="__main__":
-    main()
+    scraping("dog",100)

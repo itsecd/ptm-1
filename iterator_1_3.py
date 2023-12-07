@@ -2,7 +2,7 @@ import csv
 
 
 class SimpleIterator:
-    """Класс итератор - задается итерируемый объект и файл"""
+    """Iterator class - the iterable object and file are specified"""
     def __init__(self, label: str, file_name: str):
         self.label = label
         self.file_name = file_name
@@ -28,6 +28,7 @@ class SimpleIterator:
 
 
 def main():
+    """using a SimpleIterator function"""
     s = SimpleIterator("leopard", "data.csv")
     print(next(s))
     print(next(s))
