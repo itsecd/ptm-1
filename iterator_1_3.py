@@ -26,14 +26,10 @@ class SimpleIterator:
             raise StopIteration
 
 
-def main():
+if __name__ == "__main__":
     """using a SimpleIterator function"""
     s = SimpleIterator()
     print(next(s))
     print(next(s))
     print(next(s))
     print(next(s))
-
-
-if __name__ == "__main__":
-    main()

@@ -30,9 +30,5 @@ def copy_random(path: str, path_to: str) -> None:
         writer.writerows(data)
 
 
-def main():
-    copy_random("dataset/")
-
-
 if __name__ == "__main__":
-    main()
+    copy_random("dataset/")
