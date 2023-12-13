@@ -60,7 +60,8 @@ def scraping(url="dog", count=100):
     shutil.rmtree("temp")
 
 
-def jpg(url: str, count: int):
+def dataset_jpg(url: str, count: int)-> None:
+    """creates a dataset in the jpg format"""
     if not os.path.isdir("dataset"):
         os.mkdir("dataset")
     if not os.path.isdir("dataset/" + url):
