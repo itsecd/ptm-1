@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 
-def scraping(url="dog", count=100):
+def scraping(url: str ="dog", count: int = 100):
     """scrolling the page"""
     if not os.path.isdir("temp"):
         os.mkdir("temp")
